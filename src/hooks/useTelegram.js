@@ -13,6 +13,10 @@ export function useTelegram() {
         }
     }
 
+    const showBackButton = () => {
+        tg.BackButton.show();
+    }
+
     return {
         onClose,
         onToggleButton,
