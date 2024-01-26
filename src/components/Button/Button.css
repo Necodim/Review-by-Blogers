@@ -1,8 +1,28 @@
 .button {
-    padding: 16px;
-    background: var(--tg-theme-button-color);
-    color: var(--tg-theme-button-text-color);
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-  }
+  padding: var(--m);
+  background: var(--primary);
+  color: var(--text-color);
+  /* background: var(--tg-theme-button-color); */
+  /* color: var(--tg-theme-button-text-color); */
+  border: 0;
+  border-radius: var(--m);
+  outline: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--xs);
+}
+
+.button.light {
+  color: var(--dark);
+  background-color: var(--light);
+}
+
+.button.size-l {
+  font-size: var(--l);
+}
+
+.button.size-xl {
+  font-size: var(--xl);
+}

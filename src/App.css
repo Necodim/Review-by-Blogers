@@ -4,7 +4,29 @@
   box-sizing: border-box;
 }
 
+:root {
+  --xxs: 4px;
+  --xs: 8px;
+  --s: 12px;
+  --m: 16px;
+  --l: 20px;
+  --xl: 24px;
+  --xxl: 32px;
+  --xxxl: 48px;
+  --text-size: 16px;
+  --text-color: #ffffff;
+  --primary: #47A7FF;
+  --light: #daedff;
+  --dark: #0E2133;
+}
+
 body {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-size);
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
   background: var(--tg-theme-bg-color);
   color: var(--tg-theme-text-color);
+  padding: 0 var(--xs);
 }

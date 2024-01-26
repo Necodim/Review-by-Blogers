@@ -1,0 +1,20 @@
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: var(--xxxl);
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: var(--xl);
+}
