@@ -15,11 +15,11 @@ const StartScreen = (props) => {
             </h1>
             <div className='buttons-wrapper'>
                 <Button className='light size-xl'>
-                    <Icon icon={'face_retouching_natural'}></Icon>
+                    <Icon icon={'face_retouching_natural'} />
                     Блогер
                 </Button>
                 <Button className='light size-xl'>
-                    <Icon icon='store'></Icon>
+                    <Icon icon='store' />
                     Селлер
                 </Button>
             </div>

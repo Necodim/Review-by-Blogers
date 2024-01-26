@@ -1,8 +1,8 @@
 .content-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: var(--xxxl);
 }
 
@@ -14,7 +14,7 @@ h1 {
 .buttons-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: var(--xl);
 }
