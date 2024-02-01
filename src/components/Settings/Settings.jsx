@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTelegram } from '../../hooks/useTelegram'
 
 const Settings = (props) => {
     const { user, showBackButton } = useTelegram();
