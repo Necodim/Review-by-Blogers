@@ -12,14 +12,14 @@ import Profile from './components/Profile/Profile'
 import Settings from './components/Settings/Settings';
 
 function App() {
-  const {onToggleButton, settingsButton, tg} = useTelegram();
+  const {onToggleButton, defaultSettings, tg} = useTelegram();
   const {userType, onboarding} = getProfile();
 
   useEffect(() => {
     tg.ready();
   }, [])
 
-  settingsButton(true);
+  defaultSettings();
 
   return (
     <div className="app">
@@ -29,7 +29,7 @@ function App() {
         <Route path={userType + '/store'} element={<Store />}/>
         <Route path={userType + '/barter'} element={<Barter />}/>
         <Route path={userType + '/profile'} element={<Profile />}/>
-        <Route path='/settings' element={<Settings />}/>
+        <Route path='settings' element={<Settings />}/>
       </Routes>
     </div>
   );
