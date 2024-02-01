@@ -1,9 +1,10 @@
-.content-wrapper {
+.startscreen-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     gap: var(--xxxl);
+    margin-top: 96px;
 }
 
 h1 {
@@ -13,7 +14,8 @@ h1 {
 
 .buttons-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
     gap: var(--xl);

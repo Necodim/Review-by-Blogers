@@ -1,9 +1,21 @@
 .header {
     width: 100%;
-    height: 50px;
+    /* height: 50px; */
     display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     align-items: center;
-    padding: 0 var(--m);
+    gap: var(--xs);
+    padding: var(--xs) 0;
+}
+
+.header .nav-buttons-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--xs);
 }
 
 .username {
