@@ -16,6 +16,13 @@ export function useTelegram() {
         }
     }
 
+    const BackButton = () => {
+        const backButtonCallback = () => {
+            navigate(-1);
+        }
+        tg.BackButton.onClick(backButtonCallback);
+    }
+
     const showBackButton = () => {
         tg.BackButton.show();
     }
@@ -54,6 +61,7 @@ export function useTelegram() {
         // theme.subtitle_text_color = '#93ADC5';
         // theme.destructive_text_color = '#992B64';
         tg.setHeaderColor('#0E2133');
+        BackButton();
         settingsButton(true);
     }
 
