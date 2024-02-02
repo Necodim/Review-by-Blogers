@@ -49,7 +49,7 @@ const Profile = (props) => {
                     <div className='list'>
                         <div className='list-item'>
                             <h2>Мои бренды</h2>
-                            <small>10 товаров</small>
+                            <small>Сумма товаров</small>
                         </div>
                     </div>
                     <BrandsList />

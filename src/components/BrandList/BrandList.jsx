@@ -1,24 +1,24 @@
 // src/components/BrandList.js
 import React, { useEffect, useState } from 'react';
 import getCardsList from '../../api/api';
-import { getProfile } from '../../hooks/getProfile';
+import { useTelegram } from '../../hooks/useTelegram'
 
 function BrandList() {
-    const { api } = getProfile();
+    const {user} = useTelegram();
     const [cards, setCards] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const cardsData = await getCardsList(api);
+                const cardsData = await getCardsList(user?.id);
                 setCards(cardsData);
             } catch (error) {
                 setErrorMessage(error.message);
             }
         };
         fetchData();
-    }, [api]);
+    }, [user?.id]);
 
     if (errorMessage) {
         return <div className='error-message'>{errorMessage}</div>;
