@@ -1,6 +1,5 @@
 import React from 'react'
 import './StartScreen.css'
-import { useTelegram } from '../../hooks/useTelegram'
 import Button from '../../components/Button/Button'
 import Icon from '../../components/Icon/Icon'
 const StartScreen = (props) => {

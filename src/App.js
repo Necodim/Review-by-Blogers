@@ -29,6 +29,7 @@ function App() {
         <Route path={userType + '/store'} element={<Store />}/>
         <Route path={userType + '/barter'} element={<Barter />}/>
         <Route path={userType + '/profile'} element={<Profile />}/>
+        <Route path='settings' element={<Settings />}/>
       </Routes>
     </div>
   );
