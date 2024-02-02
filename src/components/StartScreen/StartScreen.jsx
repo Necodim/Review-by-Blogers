@@ -4,10 +4,6 @@ import { useTelegram } from '../../hooks/useTelegram'
 import Button from '../../components/Button/Button'
 import Icon from '../../components/Icon/Icon'
 const StartScreen = (props) => {
-    const {showBackButton} = useTelegram();
-    
-    showBackButton();
-
     const renderButtons = () => {
         return (
             <div className='buttons-wrapper'>

@@ -12,8 +12,8 @@ import Profile from './components/Profile/Profile'
 import Settings from './components/Settings/Settings';
 
 function App() {
-  const {onToggleButton, defaultSettings, tg} = useTelegram();
-  const {userType, onboarding} = getProfile();
+  const {defaultSettings, tg} = useTelegram();
+  const {userType} = getProfile();
 
   useEffect(() => {
     tg.ready();
@@ -29,7 +29,6 @@ function App() {
         <Route path={userType + '/store'} element={<Store />}/>
         <Route path={userType + '/barter'} element={<Barter />}/>
         <Route path={userType + '/profile'} element={<Profile />}/>
-        <Route path='settings' element={<Settings />}/>
       </Routes>
     </div>
   );
