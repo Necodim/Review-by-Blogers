@@ -12,6 +12,21 @@ const Profile = (props) => {
     const {subscription, subscriptionExpiration, api, trial, trialUsed} = getProfile();
     showBackButton();
 
+    const popupApi = () => {
+        showPopup({
+            title: 'API-ключ',
+            message: 'Окошко дл ввода апи',
+            buttons: [
+                {id: 'link', type: 'default', text: 'Сохранить'},
+                {type: 'cancel'},
+            ]
+        }, function(btn) {
+            if (btn === 'link') {
+                Telegram.WebApp.openLink('https://ton.org/');
+            }
+        });
+    }
+
     return (
         <div className='content-wrapper'>
             <div className='container' id='subscription' >
@@ -23,7 +38,7 @@ const Profile = (props) => {
                     { subscriptionExpiration > new Date() && <div className='list-item'>{ 'до ' + moment(subscriptionExpiration).format('DD.MM.YYYY') }</div> }
                 </div>
                 <div className='list'>
-                    { subscription && <Button className='list-item'>{ `${!!api ? 'Изменить' : 'Добавить'} API-ключ` }</Button> }
+                    { subscription && <Button className='list-item' onClick={popupApi}>{ `${!!api ? 'Изменить' : 'Добавить'} API-ключ` }</Button> }
                     { !subscription && <Button className='list-item'>Оформить</Button> }
                     { !subscription && !trialUsed && <Button className='list-item'>Попробовать бесплатно</Button> }
                 </div>

@@ -2,6 +2,8 @@ const tg = window.Telegram.WebApp;
 import { useNavigate } from 'react-router-dom';
 
 export function useTelegram() {
+    let navigate = useNavigate();
+    
     const onClose = () => {
         tg.close()
     }
@@ -24,7 +26,6 @@ export function useTelegram() {
 
     const settingsButton = (boolean) => {
         const settingsButtonCallback = () => {
-            let navigate = useNavigate();
             navigate('settings');
         }
 

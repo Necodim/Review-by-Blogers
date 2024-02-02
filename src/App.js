@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { useTelegram } from './hooks/useTelegram';
 import { getProfile } from './hooks/getProfile'
-import {Route, Routes, redirect} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Header from './components/Header/Header';
 import StartScreen from './components/StartScreen/StartScreen'
 // import Onboarding from './components/Onboarding/Onboarding'
