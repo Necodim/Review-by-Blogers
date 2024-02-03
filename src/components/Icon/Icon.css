@@ -1,3 +1,7 @@
+.icon {
+    position: relative;
+}
+
 .small {
     font-size: var(--m);
 }
@@ -8,4 +12,8 @@
 
 .big {
     font-size: var(--xl);
+}
+
+.large {
+    font-size: var(--xxl);
 }

@@ -1,27 +1,45 @@
-import React from 'react';
-import './Profile.css'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Profile.css';
+import moment from 'moment';
 import { useTelegram } from '../../hooks/useTelegram'
+import { useUserProfile } from '../../UserProfileContext';
 import { getProfile } from '../../hooks/getProfile';
-// import { Link, useLocation } from 'react-router-dom';
+import Preloader from '../Preloader/Preloader';
+import Header from '../Header/Header';
 import Button from '../Button/Button';
 import BrandsList from '../BrandList/BrandList';
-import moment from 'moment';
+import PopupApi from '../Popup/PopupApi';
 
 const Profile = (props) => {
-    const {showBackButton, showPopup, user} = useTelegram();
-    const {subscription, subscriptionExpiration, api, trial, trialUsed} = getProfile();
-    showBackButton();
+    const { profile, loading } = useUserProfile();
+    if (loading) {
+        return <Preloader>Загружаюсь...</Preloader>;
+    }
 
-    const popupApi = () => {
+    const { showPopup } = useTelegram();
+    const { subscription, subscriptionExpiration, trial, trialUsed } = getProfile();
+
+    const [isPopupOpen, setIsModalOpen] = useState(false);
+    const openPopupApi = () => setIsModalOpen(true);
+    const closePopupApi = () => setIsModalOpen(false);
+
+    const navigate = useNavigate();
+
+    const goToSubscribe = () => {
+        navigate('subscribe')
+    }
+
+    const cancelSubscription = () => {
         showPopup({
-            title: 'API-ключ',
-            message: 'Окошко дл ввода апи',
+            title: 'Отменить подписку',
+            message: `Вы уверены, что хотите отменить подписку? Вы не сможете пользоваться сервисом после истечения оплаченного срока действия (${moment(subscriptionExpiration).format('DD.MM.YYYY')})`,
             buttons: [
-                {id: 'link', type: 'default', text: 'Сохранить'},
-                {type: 'cancel'},
+                { id: 'cancel_subscription', type: 'default', text: 'Да' },
+                { type: 'cancel' },
             ]
-        }, function(btn) {
-            if (btn === 'link') {
+        }, function (btn) {
+            if (btn === 'cancel_subscription') {
                 Telegram.WebApp.openLink('https://ton.org/');
             }
         });
@@ -29,22 +47,22 @@ const Profile = (props) => {
 
     return (
         <div className='content-wrapper'>
+            <Header />
             <div className='container' id='subscription' >
-                <div className='list'>    
+                <div className='list'>
                     <div className='list-item'>
-                        <h2>{ subscription ? 'Подписка' : 'Нет подписки' }</h2>
-                        <Button onClick={showPopup} className='link'>Отменить</Button>
+                        <h2>{subscription ? 'Подписка' : 'Нет подписки'}</h2>
+                        <Button onClick={cancelSubscription} className='link'>Отменить</Button>
                     </div>
-                    { subscriptionExpiration > new Date() && <div className='list-item'>{ 'до ' + moment(subscriptionExpiration).format('DD.MM.YYYY') }</div> }
+                    {subscriptionExpiration > new Date() && <div className='list-item'>{'до ' + moment(subscriptionExpiration).format('DD.MM.YYYY')}</div>}
                 </div>
                 <div className='list'>
-                    { subscription && <Button className='list-item' onClick={popupApi}>{ `${!!api ? 'Изменить' : 'Добавить'} API-ключ` }</Button> }
-                    { !subscription && <Button className='list-item'>Оформить</Button> }
-                    { !subscription && !trialUsed && <Button className='list-item'>Попробовать бесплатно</Button> }
+                    {subscription && <Button className='list-item' onClick={openPopupApi}>{`${profile.api ? 'Изменить' : 'Добавить'} API-ключ`}</Button>}
+                    {!subscription && <Button className='list-item' onClick={goToSubscribe}>Оформить</Button>}
+                    {!subscription && !trialUsed && <Button className='list-item'>Попробовать бесплатно</Button>}
                 </div>
-                {/* <span>{user?.username}</span> */}
             </div>
-            { subscription && 
+            {subscription &&
                 <div className='container' id='brands' >
                     <div className='list'>
                         <div className='list-item'>
@@ -55,6 +73,7 @@ const Profile = (props) => {
                     <BrandsList />
                 </div>
             }
+            {subscription && <PopupApi isOpen={isPopupOpen} onClose={closePopupApi} />}
         </div>
     )
 }

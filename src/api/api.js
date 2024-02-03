@@ -1,11 +1,34 @@
 import axios from 'axios';
 
-const getCardsList = async (userId) => {
-    const response = await axios.post(`http://localhost:3000/products/${userId}`);
+const getUser = async (userId) => {
+    const response = await axios.get(`http://localhost:3001/user/${userId}`);
     return response.data;
 }
 
-export default getCardsList;
+const updateRole = async (userId, role) => {
+    const data = {
+        'id': userId,
+        'role': role
+    }
+    const response = await axios.post('http://localhost:3001/user', data, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        redirect: 'follow'
+    });
+    return response.data;
+}
+
+const getCardsList = async (userId) => {
+    const response = await axios.get(`http://localhost:3001/products/${userId}`);
+    return response.data;
+}
+
+export default {
+    getUser,
+    updateRole,
+    getCardsList
+}
 
 // const API_WB_BASE_URL = 'https://suppliers-api.wildberries.ru/content/v2/';
 

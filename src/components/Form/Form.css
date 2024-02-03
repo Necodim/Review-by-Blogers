@@ -1,0 +1,82 @@
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: var(--m);
+}
+
+.input-block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: var(--xs);
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    gap: var(--m);
+    border-radius: var(--m);
+    background-color: var(--primary-dark-2);
+    overflow: hidden;
+}
+
+label {
+    font-size: var(--m);
+}
+
+input, textarea {
+    width: 100%;
+    position: relative;
+    font-size: var(--l);
+    color: var(--text-color);
+    background-color: transparent;
+    padding: var(--xs) var(--m);
+}
+
+input {
+    height: var(--xxxl);
+}
+
+textarea {
+    border-radius: var(--m);
+}
+
+.input-wrapper .input-fade {
+    width: calc(var(--xxxl) * 2);
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    background: linear-gradient(90deg, rgba(var(--primary-dark-2-rgb), 0) 0%, rgba(var(--primary-dark-2-rgb), 1) 50%);
+    pointer-events: none;
+}
+
+.input-wrapper .icon-wrapper {
+    width: var(--xxl);
+    height: auto;
+    aspect-ratio: 1;
+    position: absolute;
+    top: 50%;
+    right: var(--m);
+    z-index: 10;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-wrapper .icon-wrapper.clickable {
+    cursor: pointer;
+}
+
+.input-wrapper .icon-wrapper.clickable .icon {
+    pointer-events: none;
+}

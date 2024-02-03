@@ -1,46 +1,63 @@
 import React from 'react'
 import './Header.css'
 import { Link, useLocation } from 'react-router-dom';
-import { useTelegram } from '../../hooks/useTelegram'
-import { getProfile } from '../../hooks/getProfile'
+import { useUserProfile } from '../../UserProfileContext';
 import Button from '../../components/Button/Button'
 import Icon from '../Icon/Icon'
 
 const Header = (props) => {
-    const { user } = useTelegram();
-    const { userType } = getProfile();
+    const { profile, loading } = useUserProfile();
+    if (loading) {
+        return (
+            <div className={'header'}>
+                <div className="nav-buttons-wrapper">
+                    <Button className={`nav-button light ${isActive('/store') ? 'active' : ''}`}>
+                        <Icon icon='list' />
+                        <span>{profile.role === 'bloger' ? 'Категории' : 'Товары'}</span>
+                    </Button>
+                    <Button className={`nav-button light ${isActive('/barter') ? 'active' : ''}`}>
+                        <Icon icon='groups' />
+                        <span>Бартеры</span>
+                    </Button>
+                    <Button className={`nav-button light ${isActive(profile.role) ? 'active' : ''}`}>
+                        <Icon icon='person' />
+                        <span>Профиль</span>
+                    </Button>
+                </div>
+            </div>
+        )
+    }
 
     const location = useLocation();
 
     const isActive = (path) => {
-        return location.pathname === `/${userType}${path}`;
+        const paths = location.pathname.split('/');
+        const result = paths[paths.length - 1] === path ? 'active' : '';
+        return result;
     };
 
     return (
         <div className={'header'}>
             <div className="nav-buttons-wrapper">
-                <Link to={userType + '/store'}>
-                    <Button className={`nav-button light ${isActive('/store') ? 'active' : ''}`}>
+                <Link to={ `../${profile.role}/store` }>
+                    <Button className={`nav-button light ${isActive('store')}`}>
                         <Icon icon='list' />
-                        <span>{userType === 'bloger' ? 'Категории' : 'Товары'}</span>
+                        <span>{profile.role === 'bloger' ? 'Категории' : 'Товары'}</span>
                     </Button>
                 </Link>
-                <Link to={userType + '/barter'}>
-                    <Button className={`nav-button light ${isActive('/barter') ? 'active' : ''}`}>
+                <Link to={ `../${profile.role}/barter` }>
+                    <Button className={`nav-button light ${isActive('barter')}`}>
                         <Icon icon='groups' />
                         <span>Бартеры</span>
                     </Button>
                 </Link>
-                <Link to={userType + '/profile'}>
-                    <Button className={`nav-button light ${isActive('/profile') ? 'active' : ''}`}>
+                <Link to={ `../${profile.role}` }>
+                    <Button className={`nav-button light ${isActive(profile.role)}`}>
                         <Icon icon='person' />
                         <span>Профиль</span>
                     </Button>
                 </Link>
             </div>
-            <span className={'username'}>
-                {user?.username}
-            </span>
         </div>
     )
 }

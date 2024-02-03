@@ -7,12 +7,12 @@
     margin-top: 96px;
 }
 
-h1 {
+.startscreen-wrapper h1 {
     font-size: 36px;
     font-weight: 700;
 }
 
-.buttons-wrapper {
+.startscreen-wrapper .buttons-wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

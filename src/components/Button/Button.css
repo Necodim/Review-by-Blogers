@@ -56,4 +56,5 @@
   border-radius: unset !important;
   padding: unset !important;
   cursor: pointer;
+  text-decoration: underline;
 }
