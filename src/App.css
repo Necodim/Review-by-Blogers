@@ -120,6 +120,12 @@ h2 {
   margin: 0 auto;
 }
 
+.popup {
+  max-height: calc(100vh - var(--xl) * 3);
+  max-height: calc(100dvh - var(--xl) * 3);
+  overflow-y: auto;
+}
+
 .container  > *,
 .popup > *,
 .toast > * {

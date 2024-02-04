@@ -1,7 +1,10 @@
+import dotenv from 'dotenv';
 import axios from 'axios';
 
+dotenv.config();
+
 const getUser = async (userId) => {
-    const response = await axios.get(`http://localhost:3001/user/${userId}`);
+    const response = await axios.get(`${process.env.APP_BACKEND_URL}/user/${userId}`);
     return response.data;
 }
 
@@ -19,8 +22,12 @@ const updateRole = async (userId, role) => {
     return response.data;
 }
 
+const setApi = async (userId) => {
+    const response = await axios.post(`${process.env.APP_BACKEND_URL}/user/api/${userId}`)
+}
+
 const getCardsList = async (userId) => {
-    const response = await axios.get(`http://localhost:3001/products/${userId}`);
+    const response = await axios.get(`${process.env.APP_BACKEND_URL}/products/${userId}`);
     return response.data;
 }
 
@@ -30,7 +37,7 @@ export default {
     getCardsList
 }
 
-// const API_WB_BASE_URL = 'https://suppliers-api.wildberries.ru/content/v2/';
+// const API_WB_APP_BACKEND_URL} = 'https://suppliers-api.wildberries.ru/content/v2/';
 
 // const getCardsList = async (apiToken) => {
 //     const PATH_METHOD = 'get/cards/list';
@@ -60,7 +67,7 @@ export default {
 //     };
 
 //     try {
-//         const url = API_WB_BASE_URL + PATH_METHOD + PATH_LOCALE;
+//         const url = API_WB_APP_BACKEND_URL} + PATH_METHOD + PATH_LOCALE;
 //         const response = await fetch(url, requestOptions);
 //         if (!response.ok) {
 //             throw new Error('Не удалось загрузить бренды');

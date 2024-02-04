@@ -51,15 +51,15 @@ const Profile = (props) => {
             <div className='container' id='subscription' >
                 <div className='list'>
                     <div className='list-item'>
-                        <h2>{subscription ? 'Подписка' : 'Нет подписки'}</h2>
-                        <Button onClick={cancelSubscription} className='link'>Отменить</Button>
+                        <h2>{subscription ? 'Подписка' : trial ? 'Пробная версия' : 'Нет подписки'}</h2>
+                        { subscription ? <Button onClick={cancelSubscription} className='link'>Отменить</Button> : trial ? <span>Еще N бартер(-ов)</span> : '' }
                     </div>
-                    {subscriptionExpiration > new Date() && <div className='list-item'>{'до ' + moment(subscriptionExpiration).format('DD.MM.YYYY')}</div>}
+                    { subscription && subscriptionExpiration > new Date() && <div className='list-item'>{'до ' + moment(subscriptionExpiration).format('DD.MM.YYYY')}</div> }
                 </div>
                 <div className='list'>
                     {subscription && <Button className='list-item' onClick={openPopupApi}>{`${profile.api ? 'Изменить' : 'Добавить'} API-ключ`}</Button>}
                     {!subscription && <Button className='list-item' onClick={goToSubscribe}>Оформить</Button>}
-                    {!subscription && !trialUsed && <Button className='list-item'>Попробовать бесплатно</Button>}
+                    {!subscription && !trial && !trialUsed && <Button className='list-item'>Попробовать бесплатно</Button>}
                 </div>
             </div>
             {subscription &&

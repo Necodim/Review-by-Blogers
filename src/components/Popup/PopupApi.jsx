@@ -14,7 +14,7 @@ const PopupApi = (props) => {
 
     useLayoutEffect(() => {
         if (ref.current) {
-          setContentHeight(ref.current.clientHeight); // clientHeight включает padding
+          setContentHeight(ref.current.clientHeight);
         }
       }, [toggle]);
 
@@ -51,7 +51,7 @@ const PopupApi = (props) => {
                     <Button className='link' onClick={toggleVisibility}>Где взять?</Button>
                 </div>
                 <animated.div className='list-item' style={{ ...animation, display }}>
-                    <div ref={ref} className='hint-wrapper'>Ищите на Wildberries</div>
+                    <div ref={ref} className='hint-wrapper'>Ищите на Wildberries<br />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar elementum integer enim neque volutpat ac tincidunt vitae. Enim ut sem viverra aliquet eget sit amet. Eget gravida cum sociis natoque penatibus et magnis dis parturient. Egestas congue quisque egestas diam in arcu cursus. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt.<br />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar elementum integer enim neque volutpat ac tincidunt vitae. Enim ut sem viverra aliquet eget sit amet. Eget gravida cum sociis natoque penatibus et magnis dis parturient. Egestas congue quisque egestas diam in arcu cursus. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt.</div>
                 </animated.div>
             </div>
         )
