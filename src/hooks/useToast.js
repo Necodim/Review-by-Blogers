@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { toast, Slide } from 'react-toastify';
-import '../components/Toast/Toast.css'
 
 export const useToastManager = () => {
   const loadingToastIdRef = useRef(null);

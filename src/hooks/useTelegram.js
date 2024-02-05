@@ -4,8 +4,14 @@ import { useNavigate } from 'react-router-dom';
 export function useTelegram() {
     let navigate = useNavigate();
 
-    const onClose = () => {
-        tg.close()
+    const isAvailable = () => !!window.Telegram && !!tg;
+
+    const close = () => {
+        if (isAvailable()) {
+            tg.close();
+        } else {
+            console.log('Telegram WebApp API не доступно');
+        }
     }
 
     const onToggleButton = () => {
@@ -68,7 +74,8 @@ export function useTelegram() {
     }
 
     return {
-        onClose,
+        isAvailable,
+        close,
         onToggleButton,
         showBackButton,
         showPopup,

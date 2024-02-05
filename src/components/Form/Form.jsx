@@ -2,19 +2,27 @@ import React from 'react';
 import './Form.css';
 import Button from '../Button/Button';
 
-const Form = (props) => {
+const Form = ({ onSubmit, className, children, btnicon, btntext, ...rest }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (props.onSubmit) props.onSubmit(e);
+        // Создание объекта formData и сбор данных формы
+        const formData = new FormData(e.target);
+        const formValues = {};
+        for (let [key, value] of formData.entries()) {
+            formValues[key] = value;
+        }
+        if (onSubmit) {
+            onSubmit(formValues);
+        }
     };
 
     let formClass = 'form-wrapper';
-    formClass = props.className ? [formClass, props.className].join(' ') : '';
+    formClass = className ? `${formClass} ${className}` : formClass;
 
     return (
-        <form {...props} className={ formClass } onSubmit={ handleSubmit }>
-            { props.children }
-            <Button type='submit' icon={ props.btnicon }>{ props.btntext }</Button>
+        <form className={formClass} onSubmit={handleSubmit} {...rest}>
+            {children}
+            <Button type="submit" icon={btnicon}>{btntext}</Button>
         </form>
     );
 }

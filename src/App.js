@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom'
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useTelegram } from './hooks/useTelegram';
 import { useUserProfile } from './UserProfileContext';
 import Preloader from './components/Preloader/Preloader';
@@ -35,6 +37,7 @@ function App() {
         <Route path='settings' element={<Settings />} />
         <Route path='/:role' element={<Profile />} />
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

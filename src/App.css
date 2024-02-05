@@ -17,6 +17,7 @@
   --text-size-m: var(--m);
   --text-size-l: var(--l);
   --text-color: #ffffff;
+  --font-family: 'Inter', sans-serif;
   --primary: #47A7FF;
   --primary-light-1: #6CB9FF;
   --primary-light-2: #91CAFF;
@@ -31,22 +32,28 @@
   --primary-dark-4-rgb: 57, 134, 204;
   --secondary: #FF47A7;
   --secondary-dark-1: #992B64;
+  --tertiary: #a7ff47;
   --light: #ffffff;
   --dark: var(--primary-dark-1);
   --grey: #4A5965;
   --bg-gradient: linear-gradient(108deg, var(--primary-dark-2) 0%, var(--primary-dark-3) 100%);
   --active-gradient: linear-gradient(108deg, var(--primary-light-1) 0%, var(--primary-light-2) 100%);
+  --success: var(--tertiary);
+  --error: var(--secondary-dark-1);
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-family);
   font-size: var(--text-size-m);
   font-weight: 400;
   font-style: normal;
   line-height: normal;
   background: var(--dark);
   color: var(--text-color);
-  padding: var(--xs);
   position: relative;
 }
 
@@ -73,21 +80,16 @@ h2 {
   line-height: normal;
 }
 
-.app {
-  /* width: 100vw;
-  height: 100dvh; */
+#root {
+  /* min-height: 100vh;
+  min-height: 100dvh; */
+  padding: var(--xs);
+  /* position: relative; */
+  /* overflow: hidden; */
 }
 
-.bg-circle {
-  position: absolute;
-  bottom: -1000px;
-  left: 50%;
-  z-index: -1;
-  transform: translateX(-50%);
-  width: 1500px;
-  height: 1500px;
-  border-radius: 1500px;
-  background: radial-gradient(50% 50% at 50% 50%, rgba(var(--primary-dark-2-rgb), 1) 22%, rgba(var(--primary-dark-2-rgb), 0) 100%);
+.app {
+  /* overflow-y: scroll; */
 }
 
 .content-wrapper {
@@ -104,8 +106,7 @@ h2 {
 }
 
 .container,
-.popup,
-.toast {
+.popup {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -127,8 +128,7 @@ h2 {
 }
 
 .container  > *,
-.popup > *,
-.toast > * {
+.popup > * {
   width: 100%;
 }
 

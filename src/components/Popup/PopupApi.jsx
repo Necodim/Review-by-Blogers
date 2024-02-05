@@ -41,7 +41,7 @@ const PopupApi = (props) => {
         setToggle(!toggle);
     }
 
-    const { submitApiCallback, iconClearCallback } = callback();
+    const { iconClearCallback } = callback();
 
     const apiPopupHeader = () => {
         return (
@@ -61,6 +61,7 @@ const PopupApi = (props) => {
         return (
             <Input
                 id='input-api'
+                name='api'
                 title='Введите API-ключ'
                 icon='backspace'
                 iconcallback={iconClearCallback}
@@ -72,7 +73,7 @@ const PopupApi = (props) => {
 
     const apiPopupForm = () => {
         return (
-            <Form className='form-wrapper' btnicon='save' btntext='Сохранить' onSubmit={submitApiCallback}>
+            <Form className='form-wrapper' btnicon='save' btntext='Сохранить' onSubmit={props.onSubmit}>
                 {apiPopupInput()}
             </Form>
         )
@@ -83,7 +84,7 @@ const PopupApi = (props) => {
     }
 
     return (
-        <Popup id='popup-api' isOpen={props.isOpen} onClose={props.onClose}>
+        <Popup id='popup-api' isOpen={props.isOpen} onClose={props.onClose} {...props}>
             {apiPopupHeader()}
             {apiPopupForm()}
             {apiPopupHint()}

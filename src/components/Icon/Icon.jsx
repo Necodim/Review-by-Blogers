@@ -5,10 +5,13 @@ import './Icon.css'
 const Icon = (props) => {
     const iconType = !!props.className && props.className.indexOf('outline') !== -1 ? 'material-icons-outlined' : 'material-icons-round';
 
-    let iconClass = props.size ? ['icon', iconType, props.size].join(' ') : ['icon', iconType].join(' ');
+    let iconClass = ['icon', iconType];
+    props.size ? iconClass.push(props.size) : false;
+    props.className ? iconClass.push(props.className) : false;
+    iconClass = iconClass.join(' ');
 
     return (
-        <span className={iconClass }>
+        <span {...props} className={iconClass}>
             {props.icon}
         </span>
     )

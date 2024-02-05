@@ -1,18 +1,15 @@
-// src/components/BrandList.js
 import React, { useEffect, useState } from 'react';
 import api from '../../api/api';
 import { useTelegram } from '../../hooks/useTelegram';
+import { useHelpers } from '../../hooks/useHelpers';
 import { useUserProfile } from '../../UserProfileContext';
 
-function BrandList() {
+function BrandList({ setTotalProducts }) {
     const { user } = useTelegram();
+    const { getPlural } = useHelpers();
     const { profile, loading } = useUserProfile();
     const [cards, setCards] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
-
-    if (loading) {
-        return <Preloader>Загружаюсь...</Preloader>;
-    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,6 +17,8 @@ function BrandList() {
                 const cardsData = await api.getCardsList(user?.id || profile.id);
                 if (Array.isArray(cardsData)) {
                     setCards(cardsData);
+                    const total = cardsData.length;
+                    setTotalProducts(total);
                 } else {
                     throw new Error('Произошла ошибка при получении списка брендов');
                 }
@@ -28,7 +27,11 @@ function BrandList() {
             }
         };
         fetchData();
-    }, [user?.id, profile.id]);
+    }, [user?.id, profile.id, setTotalProducts]);
+
+    if (loading) {
+        return <Preloader>Загружаюсь...</Preloader>;
+    }
 
     if (errorMessage) {
         return <div className='error-message'>{errorMessage}</div>;
@@ -50,7 +53,7 @@ function BrandList() {
             {Object.entries(brandsCount).map(([brandName, { count }]) => (
                 <div className='list-item' key={brandName}>
                     <span>{brandName}</span>
-                    <small>{count + ' товаров'}</small>
+                    <small>{`${count} ${getPlural(count, 'товар', 'товара', 'товаров')}`}</small>
                 </div>
             ))}
         </div>
