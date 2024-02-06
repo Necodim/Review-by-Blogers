@@ -1,7 +1,7 @@
 import React from 'react'
 import './Header.css'
 import { Link, useLocation } from 'react-router-dom';
-import { useUserProfile } from '../../UserProfileContext';
+import { useUserProfile } from '../../hooks/UserProfileContext';
 import Button from '../../components/Button/Button'
 import Icon from '../Icon/Icon'
 

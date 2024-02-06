@@ -4,15 +4,16 @@ import './Profile.css';
 import moment from 'moment';
 import { useTelegram } from '../../hooks/useTelegram'
 import { useHelpers } from '../../hooks/useHelpers';
-import { useUserProfile } from '../../UserProfileContext';
+import { useToastManager } from '../../hooks/useToast';
+import { useUserProfile } from '../../hooks/UserProfileContext.js';
 import { getProfile } from '../../hooks/getProfile';
 import { callback } from '../../hooks/callback.js';
-import { useToastManager } from "../../hooks/useToast";
 import Preloader from '../Preloader/Preloader';
 import Header from '../Header/Header';
 import Button from '../Button/Button';
 import BrandsList from '../BrandList/BrandList';
 import PopupApi from '../Popup/PopupApi';
+import PopupCancelSubscription from '../Popup/PopupCancelSubscription';
 
 
 const Profile = (props) => {
@@ -28,9 +29,13 @@ const Profile = (props) => {
     const { showToast, resetLoadingToast } = useToastManager();
     
     const [totalProducts, setTotalProducts] = useState(0);
-    const [isPopupOpen, setIsModalOpen] = useState(false);
-    const openPopupApi = () => setIsModalOpen(true);
-    const closePopupApi = () => setIsModalOpen(false);
+    
+    const [isPopupApiOpen, setIsPopupApiOpen] = useState(false);
+    const [isPopupCancelSubscriptionOpen, setIsPopupCancelSubscriptionOpen] = useState(false);
+    const openPopupApi = () => setIsPopupApiOpen(true);
+    const closePopupApi = () => setIsPopupApiOpen(false);
+    const openPopupCancelSubscription = () => setIsPopupCancelSubscriptionOpen(true);
+    const closePopupCancelSubscription = () => setIsPopupCancelSubscriptionOpen(false);
 
     const navigate = useNavigate();
 
@@ -45,6 +50,10 @@ const Profile = (props) => {
             if (trialUsed) showToast(`Бесплатная версия предоставляется лишь 1 раз на 2 ${getPlural(2, 'бартер', 'бартера', 'бартеров')}. Чтобы дальше пользоваться сервисом, оформите подписку.`, 'error');
         }
     }
+
+    const handlePopupApiSubmit = (formValues) => {
+        submitApiCallback(formValues, closePopupApi);
+    };
 
     const cancelSubscription = () => {
         if (isAvailable()) {
@@ -66,10 +75,6 @@ const Profile = (props) => {
         }
     }
 
-    const handleSubmit = (formValues) => {
-        submitApiCallback(formValues, closePopupApi);
-    };
-
     return (
         <div className='content-wrapper'>
             <Header />
@@ -77,7 +82,7 @@ const Profile = (props) => {
                 <div className='list'>
                     <div className='list-item'>
                         <h2>{subscription ? 'Подписка' : trial ? 'Пробная версия' : 'Нет подписки'}</h2>
-                        {subscription ? <Button onClick={cancelSubscription} className='link'>Отменить</Button> : trial ? <small>Еще 2 {getPlural(2, 'бартер', 'бартера', 'бартеров')}</small> : ''}
+                        {subscription ? <Button onClick={openPopupCancelSubscription} className='link'>Отменить</Button> : trial ? <small>Еще 2 {getPlural(2, 'бартер', 'бартера', 'бартеров')}</small> : ''}
                     </div>
                     {subscription && subscriptionExpiration > new Date() && <div className='list-item'>{'до ' + moment(subscriptionExpiration).format('DD.MM.YYYY')}</div>}
                 </div>
@@ -98,7 +103,8 @@ const Profile = (props) => {
                     <BrandsList setTotalProducts={setTotalProducts} />
                 </div>
             }
-            {subscription && <PopupApi isOpen={isPopupOpen} onClose={closePopupApi} onSubmit={handleSubmit} />}
+            {subscription && <PopupCancelSubscription id='popup-cancel-subscription' isOpen={isPopupCancelSubscriptionOpen} onClose={closePopupCancelSubscription} onClick={cancelSubscription} />}
+            {subscription && <PopupApi id='popup-api' isOpen={isPopupApiOpen} onClose={closePopupApi} onSubmit={handlePopupApiSubmit} />}
         </div>
     )
 }

@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { UserProfileProvider } from './UserProfileContext';
-import Icon from './components/Icon/Icon';
+import { UserProfileProvider } from './hooks/UserProfileContext';
 import Background from './components/Background/Background';
 
 if (location.pathname.endsWith('/')) {
@@ -17,8 +16,8 @@ root.render(
     <BrowserRouter>
       <UserProfileProvider>
         <App />
-        <Background />
       </UserProfileProvider>
     </BrowserRouter>
+    <Background />
   </React.StrictMode>
 );

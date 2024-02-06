@@ -2,42 +2,49 @@ import React, { useEffect, useState } from 'react';
 import api from '../../api/api';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useHelpers } from '../../hooks/useHelpers';
-import { useUserProfile } from '../../UserProfileContext';
+import { useUserProfile } from '../../hooks/UserProfileContext';
+import { useToastManager } from '../../hooks/useToast';
 
 function BrandList({ setTotalProducts }) {
     const { user } = useTelegram();
+    const { showToast, resetLoadingToast } = useToastManager();
     const { getPlural } = useHelpers();
     const { profile, loading } = useUserProfile();
-    const [cards, setCards] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [productsIsLoading, setProductsIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const cardsData = await api.getCardsList(user?.id || profile.id);
-                if (Array.isArray(cardsData)) {
-                    setCards(cardsData);
-                    const total = cardsData.length;
+                const productsData = await api.getCardsList(profile.id);
+                if (productsIsLoading && Array.isArray(productsData) && !!productsData.length) {
+                    setProducts(productsData);
+                    const total = productsData.length;
                     setTotalProducts(total);
                 } else {
                     throw new Error('Произошла ошибка при получении списка брендов');
                 }
             } catch (error) {
                 setErrorMessage(error.message);
+            } finally {
+                setProductsIsLoading(false);
             }
         };
-        fetchData();
-    }, [user?.id, profile.id, setTotalProducts]);
-
-    if (loading) {
-        return <Preloader>Загружаюсь...</Preloader>;
-    }
+        if (!loading) {
+            fetchData();
+        } else {
+            return <Preloader>Загружаюсь...</Preloader>;
+        }
+    }, [loading, profile, setTotalProducts]);
 
     if (errorMessage) {
-        return <div className='error-message'>{errorMessage}</div>;
+        return showToast(errorMessage, 'error');
+        // return <div className='error-message'>{errorMessage}</div>;
     }
 
-    const brandsCount = Array.isArray(cards) ? cards.reduce((acc, card) => {
+    const brandsCount = Array.isArray(products) ? products.reduce((acc, card) => {
         const { brand } = card;
         if (acc[brand]) {
             acc[brand].count += 1;
@@ -50,12 +57,16 @@ function BrandList({ setTotalProducts }) {
 
     return (
         <div className='list'>
-            {Object.entries(brandsCount).map(([brandName, { count }]) => (
-                <div className='list-item' key={brandName}>
-                    <span>{brandName}</span>
-                    <small>{`${count} ${getPlural(count, 'товар', 'товара', 'товаров')}`}</small>
-                </div>
-            ))}
+            {productsIsLoading ? (
+                <div className='list-item'><p>Загрузка...</p></div>
+            ) : (
+                Object.entries(brandsCount).map(([brandName, { count }]) => (
+                    <div className='list-item' key={brandName}>
+                        <span>{brandName}</span>
+                        <small>{`${count} ${getPlural(count, 'товар', 'товара', 'товаров')}`}</small>
+                    </div>
+                ))
+            )}
         </div>
     );
 }

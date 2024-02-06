@@ -1,6 +1,6 @@
 import React from 'react'
 import './Barter.css'
-import { useUserProfile } from '../../UserProfileContext';
+import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useTelegram } from '../../hooks/useTelegram'
 import Header from '../Header/Header';
 import Preloader from '../Preloader/Preloader';

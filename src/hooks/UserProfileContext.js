@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import api from './api/api';
-import { useTelegram } from './hooks/useTelegram';
+import api from '../api/api';
+import { useTelegram } from './useTelegram';
 
 const UserProfileContext = createContext();
 
@@ -14,10 +14,12 @@ export const UserProfileProvider = ({ children }) => {
     const userId = user?.id || 82431798;
 
     useEffect(() => {
-        getUser(userId).then(data => {
-            setProfile(data);
-            setLoading(false);
-        });
+        setProfile({id: user?.id, role: 'seller'})
+        setLoading(false);
+        // getUser(userId).then(data => {
+        //     setProfile(data);
+        //     setLoading(false);
+        // });
     }, [userId]);
 
     return (

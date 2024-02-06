@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { useTelegram } from "./useTelegram";
-import { useUserProfile } from "../UserProfileContext"
+import { useUserProfile } from "./UserProfileContext"
 import { useToastManager } from "./useToast";
 
 export function callback() {

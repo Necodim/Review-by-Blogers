@@ -20,6 +20,11 @@
   background-color: var(--light);
 }
 
+.button.error {
+  color: var(--light);
+  background-color: var(--error);
+}
+
 .button.size-l {
   font-size: var(--l);
 }

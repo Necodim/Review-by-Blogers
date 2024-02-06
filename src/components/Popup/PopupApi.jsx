@@ -5,6 +5,11 @@ import Popup from "./Popup"
 import Button from '../Button/Button';
 import Form from '../Form/Form';
 import Input from '../Form/Input';
+import imgInstruction1 from '../../images/instruction-1.png';
+import imgInstruction2 from '../../images/instruction-2.png';
+import imgInstruction3 from '../../images/instruction-3.png';
+import imgInstruction4 from '../../images/instruction-4.png';
+
 
 const PopupApi = (props) => {
     const [toggle, setToggle] = useState(false);
@@ -51,7 +56,24 @@ const PopupApi = (props) => {
                     <Button className='link' onClick={toggleVisibility}>Где взять?</Button>
                 </div>
                 <animated.div className='list-item' style={{ ...animation, display }}>
-                    <div ref={ref} className='hint-wrapper'>Ищите на Wildberries<br />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar elementum integer enim neque volutpat ac tincidunt vitae. Enim ut sem viverra aliquet eget sit amet. Eget gravida cum sociis natoque penatibus et magnis dis parturient. Egestas congue quisque egestas diam in arcu cursus. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt.<br />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar elementum integer enim neque volutpat ac tincidunt vitae. Enim ut sem viverra aliquet eget sit amet. Eget gravida cum sociis natoque penatibus et magnis dis parturient. Egestas congue quisque egestas diam in arcu cursus. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt.</div>
+                    <div ref={ref} className='hint-wrapper list'>
+                        <div className='list-item vertical'>
+                            <p>Войдите в настройки профиля.</p>
+                            <img style={{ width: '100%', borderRadius: 'var(--xs)' }} src={imgInstruction1} />
+                        </div>
+                        <div className='list-item vertical'>
+                            <p>Откройте вкладку «Доступ к API» и нажмите кнопку «Создать новый токен».</p>
+                            <img style={{ width: '100%', borderRadius: 'var(--xs)' }} src={imgInstruction2} />
+                        </div>
+                        <div className='list-item vertical'>
+                            <p>Задайте имя токена, поставьте галочку «Только на чтение...», выберите «Контент» и нажмите кнопку «Создать токен». Чтобы не запутаться в будущем, рекомендуем дать имя «review-by-blogers», так вы будете понимать, для какого сервиса создали токен.</p>
+                            <img style={{ width: '100%', borderRadius: 'var(--xs)' }} src={imgInstruction3} />
+                        </div>
+                        <div className='list-item vertical'>
+                            <p>Скопируйте токен, вставьте в поле ниже и нажмите «Сохранить».</p>
+                            <img style={{ width: '100%', borderRadius: 'var(--xs)' }} src={imgInstruction4} />
+                        </div>
+                    </div>
                 </animated.div>
             </div>
         )
@@ -84,7 +106,7 @@ const PopupApi = (props) => {
     }
 
     return (
-        <Popup id='popup-api' isOpen={props.isOpen} onClose={props.onClose} {...props}>
+        <Popup id={props.id} isOpen={props.isOpen} onClose={props.onClose} {...props}>
             {apiPopupHeader()}
             {apiPopupForm()}
             {apiPopupHint()}

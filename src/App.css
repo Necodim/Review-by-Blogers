@@ -149,6 +149,13 @@ h2 {
   gap: var(--m);
 }
 
+.list-item.vertical {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: var(--xs);
+}
+
 .hint-wrapper {
   width: 100%;
   color: var(--text-color);

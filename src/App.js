@@ -4,7 +4,7 @@ import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTelegram } from './hooks/useTelegram';
-import { useUserProfile } from './UserProfileContext';
+import { useUserProfile } from './hooks/UserProfileContext';
 import Preloader from './components/Preloader/Preloader';
 import StartScreen from './components/StartScreen/StartScreen'
 // import Onboarding from './components/Onboarding/Onboarding'
@@ -22,11 +22,11 @@ function App() {
     tg.ready();
     defaultSettings();
   }, [tg, defaultSettings]);
-
+  
   if (loading) {
     return <Preloader>Загружаюсь...</Preloader>;
   }
-
+  
   return (
     <div className="app">
       <Routes>
