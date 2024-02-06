@@ -14,7 +14,7 @@ export const UserProfileProvider = ({ children }) => {
     const userId = user?.id || 82431798;
 
     useEffect(() => {
-        setProfile({id: user?.id, role: 'seller'})
+        setProfile({id: userId, role: 'seller'})
         setLoading(false);
         // getUser(userId).then(data => {
         //     setProfile(data);
