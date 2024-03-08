@@ -6,17 +6,17 @@ import { useToastManager } from '../../hooks/useToast';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import Header from '../Header/Header';
 import Popup from '../Popup/Popup';
+import Categories from './Categories';
 import CategoryCard from './CategoryCard';
 
 const StoreBloger = (props) => {
     const { profile } = useUserProfile();
     const navigate = useNavigate();
     const location = useLocation();
+    const { showToast, resetLoadingToast } = useToastManager();
 
     const [errorMessage, setErrorMessage] = useState('');
     const [showPopupAfterBlogerOnboarding, setShowPopupAfterBlogerOnboarding] = useState(false);
-
-    const { showToast, resetLoadingToast } = useToastManager();
 
     useEffect(() => {
         if (location.state?.showPopupAfterBlogerOnboarding) {
@@ -30,6 +30,10 @@ const StoreBloger = (props) => {
         return showToast(errorMessage, 'error');
         // return <div className='error-message'>{errorMessage}</div>;
     }
+
+    const handleCategorySelect = (categoryId) => {
+        navigate(`/categories/${categoryId}`);
+    };
 
     const openCategory = (e) => {
         if (e.target.hasAttribute('data-category') && e.target.hasAttribute('data-parent-category')) {
@@ -56,7 +60,8 @@ const StoreBloger = (props) => {
     return (
         <div className='content-wrapper'>
             <Header />
-            <div className='categories-wrapper' id='categories'>
+            <Categories onCategorySelect={handleCategorySelect} />
+            {/* <div className='categories-wrapper' id='categories'>
                 <div className='list'>
                     <CategoryCard onClick={openCategory} className='list-item' title='Категория 1' count='5' data-category='100' />
                     <CategoryCard onClick={openCategory} className='list-item' title='Категория 2' count='14' data-category='200' />
@@ -65,7 +70,7 @@ const StoreBloger = (props) => {
                     <CategoryCard onClick={openCategory} className='sub list-item closed' title='Подкатегория 3' count='3' data-category='203' data-parent-category='200' />
                     <CategoryCard onClick={openCategory} className='list-item' title='Категория 3' count='25' data-category='300' />
                 </div>
-            </div>
+            </div> */}
             <Popup id='popup-after-bloger-onboarding' isOpen={showPopupAfterBlogerOnboarding} onClose={() => setShowPopupAfterBlogerOnboarding(false)}>
                 Теперь вы&nbsp;можете выбрать товар в&nbsp;одной из&nbsp;этих категорий и&nbsp;отправить селлеру заявку на&nbsp;рекламу по&nbsp;бартеру.
             </Popup>
