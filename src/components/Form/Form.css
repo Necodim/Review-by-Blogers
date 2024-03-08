@@ -1,4 +1,5 @@
 .form-wrapper {
+    width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -7,7 +8,8 @@
     gap: var(--m);
 }
 
-.input-block {
+.input-block,
+.checkbox-wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -24,29 +26,116 @@
     align-items: center;
     align-self: stretch;
     gap: var(--m);
-    border-radius: var(--m);
     background-color: var(--primary-dark-2);
+    border-radius: var(--m);
     overflow: hidden;
 }
 
+.input-wrapper.checkbox {
+    justify-content: flex-start;
+    border-radius: 0;
+    background-color: transparent;
+}
+
 label {
+    font-weight: 500;
     font-size: var(--m);
 }
 
-input, textarea {
+input,
+textarea {
     width: 100%;
     position: relative;
-    font-size: var(--l);
+    font-size: var(--m);
     color: var(--text-color);
-    background-color: transparent;
-    padding: var(--xs) var(--m);
+    border: none;
+    box-shadow: none;
+    outline: 0;
+    padding: var(--xs) var(--s);
 }
 
 input {
     height: var(--xxxl);
+    background-color: transparent;
+}
+
+input[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* для элемента input c type="checkbox" */
+.checkbox>input[type="checkbox"] {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+/* для элемента label, связанного с .custom-checkbox */
+.checkbox>span {
+    display: inline-flex;
+    align-items: flex-start;
+    user-select: none;
+    font-weight: 400;
+}
+
+/* создание в label псевдоэлемента before со следующими стилями */
+.checkbox>span::before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: none;
+    border-radius: 0.25em;
+    margin-top: 0.15em;
+    margin-right: 0.5em;
+    background-color: var(--primary-dark-2);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+    transition: all .2s ease-in-out;
+}
+
+/* стили при наведении курсора на checkbox */
+.checkbox>input:not(:disabled):not(:checked)+span:hover::before {
+    border-color: var(--primary-dark-3);
+}
+
+/* стили для активного чекбокса (при нажатии на него) */
+.checkbox>input:not(:disabled):active+span::before {
+    background-color: var(--primary-dark-2);
+}
+
+/* стили для чекбокса, находящегося в фокусе */
+.checkbox>input:focus+span::before {
+    box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), .25);
+}
+
+/* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
+.checkbox>input:focus:not(:checked)+span::before {
+    background-color: var(--primary-dark-3);
+}
+
+/* стили для чекбокса, находящегося в состоянии checked */
+.checkbox>input:checked+span::before {
+    background-color: var(--primary-dark-2);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+/* стили для чекбокса, находящегося в состоянии disabled */
+.checkbox>input:disabled+span::before {
+    background-color: rgba(var(--primary-dark-2-rgb), .5);
 }
 
 textarea {
+    background-color: var(--primary-dark-2);
     border-radius: var(--m);
 }
 

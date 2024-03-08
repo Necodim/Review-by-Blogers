@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api/api';
-import { useTelegram } from '../../hooks/useTelegram';
 import { useHelpers } from '../../hooks/useHelpers';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
 
 function BrandList({ setTotalProducts }) {
-    const { user } = useTelegram();
     const { showToast, resetLoadingToast } = useToastManager();
     const { getPlural } = useHelpers();
     const { profile, loading } = useUserProfile();
@@ -18,16 +16,28 @@ function BrandList({ setTotalProducts }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const productsData = await api.getCardsList(profile.id);
+                const productsData = await api.getProductsByUserId(profile.id);
+                console.log(productsData)
                 if (productsIsLoading && Array.isArray(productsData) && !!productsData.length) {
                     setProducts(productsData);
-                    const total = productsData.length;
-                    setTotalProducts(total);
+                    setTotalProducts(productsData.length);
+                } else if (productsIsLoading && Array.isArray(productsData) && productsData.length === 0) {
+                    setTotalProducts(productsData.length);
+                    setErrorMessage('Товары не найдены');
                 } else {
                     throw new Error('Произошла ошибка при получении списка брендов');
                 }
             } catch (error) {
-                setErrorMessage(error.message);
+                setTotalProducts(0);
+                console.log('error: ', error)
+                if (error && error.response && error.response.data && error.response.data.code && error.response.data.code === 'API_KEY_MISSING') {
+                    setErrorMessage('Вы не добавили API-ключ');
+                } else {
+                    setErrorMessage(error.message);
+                }
+                if (!!errorMessage) {
+                    showToast(errorMessage, 'error');
+                }
             } finally {
                 setProductsIsLoading(false);
             }
@@ -37,11 +47,10 @@ function BrandList({ setTotalProducts }) {
         } else {
             return <Preloader>Загружаюсь...</Preloader>;
         }
-    }, [loading, profile, setTotalProducts]);
+    }, [loading, profile, setTotalProducts, errorMessage]);
 
     if (errorMessage) {
-        return showToast(errorMessage, 'error');
-        // return <div className='error-message'>{errorMessage}</div>;
+        return <div className='error-message'>{errorMessage}</div>;
     }
 
     const brandsCount = Array.isArray(products) ? products.reduce((acc, card) => {

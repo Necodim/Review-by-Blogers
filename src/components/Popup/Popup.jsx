@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './Popup.css';
-import Button from '../Button/Button';
+import Link from '../Button/Link';
+import Icon from '../Icon/Icon';
 
 const Popup = ({ id, className, isOpen, onClose, children }) => {
   const popupRoot = document.getElementById('popup-root');
@@ -26,16 +27,13 @@ const Popup = ({ id, className, isOpen, onClose, children }) => {
     }
   }, [id, isOpen]);
 
-
-  let popupClass = ['popup'];
-  if (className) popupClass.push(className);
-  popupClass = popupClass.join(' ');
-
   return ReactDOM.createPortal(
     <div className='popup-background closed' onClick={handleBackdropClick}>
       <div className='popup-wrapper'>
-        <Button onClick={onClose} className='link' icon='highlight_off' size='big'></Button>
-        <div id={id} className={popupClass} onClick={handleModalClick}>
+        <Link onClick={onClose}>
+          <Icon icon='highlight_off' size='big' />
+        </Link>
+        <div id={id} className={'popup' + (className ? ' ' + className : '')} onClick={handleModalClick}>
           {children}
         </div>
       </div>

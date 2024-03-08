@@ -2,11 +2,11 @@ import React from 'react';
 import moment from 'moment';
 import Popup from "./Popup"
 import Button from '../Button/Button';
-import { getProfile } from '../../hooks/getProfile';
+import { useUserProfile } from '../../hooks/UserProfileContext';
 
 const PopupCancelSubscription = (props) => {
 
-    const { subscriptionExpiration } = getProfile();
+    const { profile } = useUserProfile();
 
     const popupHeader = () => {
         return (
@@ -22,7 +22,7 @@ const PopupCancelSubscription = (props) => {
         return (
             <div className='list'>
                 <p className='list-item'>Вы уверены, что хотите отменить подписку? Это действие невозможно отменить.</p>
-                <p className='list-item'>Вы не сможете пользоваться сервисом после истечения оплаченного срока действия ({moment(subscriptionExpiration).format('DD.MM.YYYY')}).</p>
+                <p className='list-item'>Вы не сможете пользоваться сервисом после истечения оплаченного срока действия ({moment(profile.subscription.expired_at).format('DD.MM.YYYY')}).</p>
                 <p className='list-item'>После окончания срока действия все товары исчезнут и вы не будете получать предложения о бартере!</p>
             </div>
         )

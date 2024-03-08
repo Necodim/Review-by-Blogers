@@ -18,6 +18,26 @@
     align-items: flex-start;
     gap: var(--xs);
     cursor: pointer;
+    animation: none;
+}
+
+.product-card.select, .product-card.unselect {
+    transition: transform linear;
+    animation: product-card-shake .2s infinite;
+}
+
+.product-card.select:nth-child(5n + 1), .product-card.unselect:nth-child(5n + 1) {animation-delay: 0s;}
+.product-card.select:nth-child(5n + 2), .product-card.unselect:nth-child(5n + 2) {animation-delay: .025s;}
+.product-card.select:nth-child(5n + 3), .product-card.unselect:nth-child(5n + 3) {animation-delay: .050s;}
+.product-card.select:nth-child(5n + 4), .product-card.unselect:nth-child(5n + 4) {animation-delay: .075s;}
+.product-card.select:nth-child(5n + 5), .product-card.unselect:nth-child(5n + 5) {animation-delay: .1s;}
+
+@keyframes product-card-shake {
+    0%   {transform: rotateZ(0deg);}
+    25%  {transform: rotateZ(.5deg);}
+    50%  {transform: rotateZ(0deg);}
+    75%  {transform: rotateZ(-.5deg);}
+    100% {transform: rotateZ(0deg);}
 }
 
 .product-card .selection-point {
@@ -28,6 +48,7 @@
     right: var(--xs);
     border: 2px solid var(--light);
     border-radius: 50%;
+    border-radius: 100px;
     pointer-events: none;
     transition: background-color .2s ease-in-out;
 }
@@ -44,6 +65,27 @@
 .product-card.select .selection-point {
     display: block;
     background-color: var(--primary);
+}
+
+.product-card .status {
+    width: var(--s);
+    height: var(--s);
+    position: absolute;
+    top: calc(var(--l) / 2);
+    right: calc(var(--l) / 2);
+    background-color: var(--grey);
+    border: none;
+    border-radius: 50%;
+    pointer-events: none;
+    transition: background-color .2s ease-in-out;
+}
+
+.product-card .status.active {
+    background-color: var(--primary)
+}
+
+.product-card .status.error {
+    background-color: var(--error)
 }
 
 .product-image {
@@ -72,10 +114,11 @@
     animation: product-card-loading 2s infinite;
 }
 
-.product-card:nth-child(4n + 1) .product-image.loading {animation-delay: 0s;}
-.product-card:nth-child(4n + 2) .product-image.loading {animation-delay: .1s;}
-.product-card:nth-child(4n + 3) .product-image.loading {animation-delay: .2s;}
-.product-card:nth-child(4n + 4) .product-image.loading {animation-delay: .3s;}
+.product-card:nth-child(5n + 1) .product-image.loading {animation-delay: 0s;}
+.product-card:nth-child(5n + 2) .product-image.loading {animation-delay: .1s;}
+.product-card:nth-child(5n + 3) .product-image.loading {animation-delay: .2s;}
+.product-card:nth-child(5n + 4) .product-image.loading {animation-delay: .3s;}
+.product-card:nth-child(5n + 5) .product-image.loading {animation-delay: .4s;}
 
 @keyframes product-card-loading {
     to {
@@ -102,10 +145,53 @@
 }
 
 .edit-products-wrapper {
-    width: 100%;
+    /* width: 100%;
     position: absolute;
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
-    padding: var(--m);
+    padding: var(--m); */
+}
+
+.categories-wrapper {
+    
+}
+
+.category-card {
+    width: 100%;
+    height: 52px;
+    max-height: 52px;
+    background: var(--bg-gradient);
+    border: none;
+    border-radius: var(--m);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--m) var(--m);
+    cursor: pointer;
+    transition: height .3s ease-in-out;
+}
+
+.category-card.sub {
+    width: calc(100% - var(--l));
+    background: linear-gradient(90.00deg, rgb(23, 52, 79),rgb(29, 65, 99) 100%);
+    margin-left: var(--l);
+}
+
+.category-card.closed {
+    display: none;
+    height: 0;
+    max-height: 0;
+    padding: 0 var(--m);
+    overflow: hidden;
+}
+
+.category-card-title {
+    color: var(--text-color);
+}
+
+.category-card-count {
+    color: var(--text-color);
+    opacity: .5;
 }

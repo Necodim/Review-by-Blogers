@@ -1,5 +1,6 @@
-const tg = window.Telegram.WebApp;
 import { useNavigate } from 'react-router-dom';
+
+const tg = window.Telegram.WebApp;
 
 export function useTelegram() {
     let navigate = useNavigate();

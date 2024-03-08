@@ -6,12 +6,11 @@ const Icon = (props) => {
     const iconType = !!props.className && props.className.indexOf('outline') !== -1 ? 'material-icons-outlined' : 'material-icons-round';
 
     let iconClass = ['icon', iconType];
-    props.size ? iconClass.push(props.size) : false;
-    props.className ? iconClass.push(props.className) : false;
+    if (!!props.size) iconClass.push(props.size);
     iconClass = iconClass.join(' ');
 
     return (
-        <span {...props} className={iconClass}>
+        <span {...props} className={iconClass + (props.className ? ' ' + props.className : '')}>
             {props.icon}
         </span>
     )

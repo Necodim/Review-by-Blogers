@@ -1,8 +1,8 @@
 .button {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center !important;
+  align-items: center !important;
   gap: var(--xs);
   font-size: var(--text-size-m);
   text-decoration: none;
@@ -13,6 +13,7 @@
   outline: 0;
   padding: var(--m);
   cursor: pointer;
+  transition: all .3s ease-in-out;
 }
 
 .button.light {
@@ -23,6 +24,12 @@
 .button.error {
   color: var(--light);
   background-color: var(--error);
+}
+
+.button.disabled {
+  color: var(--primary-light-2) !important;
+  background-color: var(--primary-dark-3) !important;
+  pointer-events: none !important;
 }
 
 .button.size-l {
@@ -53,13 +60,12 @@
 
 .button.link {
   width: auto !important;
-  display: block !important;
+  display: inline-block !important;
   justify-content: unset !important;
   align-items: unset !important;
   gap: unset !important;
   background: unset !important;
   border-radius: unset !important;
   padding: unset !important;
-  cursor: pointer;
   text-decoration: underline;
 }

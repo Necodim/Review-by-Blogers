@@ -2,7 +2,7 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { callback } from '../../hooks/callback';
 import Popup from "./Popup"
-import Button from '../Button/Button';
+import Link from '../Button/Link';
 import Form from '../Form/Form';
 import Input from '../Form/Input';
 import imgInstruction1 from '../../images/instruction-1.png';
@@ -53,7 +53,7 @@ const PopupApi = (props) => {
             <div className='list'>
                 <div className='list-item'>
                     <h2>API-ключ</h2>
-                    <Button className='link' onClick={toggleVisibility}>Где взять?</Button>
+                    <Link onClick={toggleVisibility}>Где взять?</Link>
                 </div>
                 <animated.div className='list-item' style={{ ...animation, display }}>
                     <div ref={ref} className='hint-wrapper list'>

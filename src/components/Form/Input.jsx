@@ -2,18 +2,19 @@ import React from 'react';
 import './Form.css';
 import Icon from '../Icon/Icon';
 
-const Input = ({ id, title, type, placeholder, fade, value, onChange, name, icon, iconcallback }) => {
-    const handleChange = onChange || (() => {});
-    const inputName = name || id || 'defaultName';
+// const Input = ({ id, title, type, min, max, step, placeholder, fade, value, onChange, name, icon, iconcallback }) => {
+    const Input = (props) => {
+    const handleChange = props.onChange || (() => {});
+    const inputName = props.name || props.id || 'defaultName';
 
     const inputIcon = () => {
         let iconWrapperClassname = 'icon-wrapper';
-        iconWrapperClassname = iconcallback ? [iconWrapperClassname, 'clickable'].join(' ') : '';
+        iconWrapperClassname = props.iconcallback ? [iconWrapperClassname, 'clickable'].join(' ') : '';
         
-        if (icon) {
+        if (props.icon) {
             return (
-                <div className={iconWrapperClassname} onClick={iconcallback}>
-                    <Icon icon={icon} />
+                <div className={iconWrapperClassname} onClick={props.iconcallback}>
+                    <Icon icon={props.icon} />
                 </div>
             );
         } else {
@@ -21,22 +22,43 @@ const Input = ({ id, title, type, placeholder, fade, value, onChange, name, icon
         }
     }
 
-    return (
-        <div id={'input-block-' + id} className='input-block'>
-            {title && <label htmlFor={id}>{title}</label>}
-            <div className='input-wrapper'>
-                <input
-                    type={type}
-                    id={id}
-                    name={inputName}
-                    placeholder={placeholder}
-                    value={value}
-                    onChange={handleChange}
-                />
-                {fade && <div className='input-fade' />}
-                {inputIcon()}
+    const notCheckbox = () => {
+        return (
+            <div id={'input-block-' + props.id} className='input-block'>
+                {props.id && props.title && <label htmlFor={props.id}>{props.title}</label>}
+                <div className='input-wrapper'>
+                    <input {...props}
+                        name={inputName} 
+                        onChange={handleChange} 
+                    />
+                    {props.fade && <div className='input-fade' />}
+                    {inputIcon()}
+                </div>
             </div>
-        </div>
+        )
+    }
+
+    const checkbox = () => {
+        return (
+            <div id={'input-block-' + props.id} className='input-block'>
+                {props.id && props.title && <label htmlFor={props.id} className='checkbox-wrapper'>
+                    <span>{props.title}</span>
+                    <div className='input-wrapper checkbox'>
+                        <input {...props}
+                            name={inputName}  
+                            onChange={handleChange} 
+                        />
+                        <span>{props.placeholder}</span>
+                    </div>
+                </label>}
+            </div>
+        )
+    }
+
+    const inputToReturn = props.type && props.type === 'checkbox' ? checkbox() : notCheckbox();
+
+    return (
+        inputToReturn
     );
 }
 
