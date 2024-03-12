@@ -7,8 +7,8 @@ import { useTelegram } from './hooks/useTelegram';
 import { useUserProfile } from './hooks/UserProfileContext';
 import Preloader from './components/Preloader/Preloader';
 import StartScreen from './components/StartScreen/StartScreen'
-// import Onboarding from './components/Onboarding/Onboarding'
 import Store from './components/Store/Store'
+import CategoryPage from './components/Store/CategoryPage';
 import Barter from './components/Barter/Barter'
 import Profile from './components/Profile/Profile'
 import Subscribe from './components/Profile/Subscribe';
@@ -31,11 +31,12 @@ function App() {
     <div className="app">
       <Routes>
         <Route index element={profile && profile.role ? <Navigate to={`/${profile.role}`} replace /> : <StartScreen />} />
+        <Route path={`/:role`} element={<Profile />} />
         <Route path={`/:role/store`} element={<Store />} />
+        <Route path={`/:role/store/:id`} element={<CategoryPage />} />
         <Route path={`/:role/barter`} element={<Barter />} />
         <Route path={`/:role/subscribe`} element={<Subscribe />} />
-        <Route path='settings' element={<Settings />} />
-        <Route path='/:role' element={<Profile />} />
+        <Route path='/settings' element={<Settings />} />
       </Routes>
       <ToastContainer />
     </div>

@@ -179,14 +179,6 @@
     margin-left: var(--l);
 }
 
-.category-card.closed {
-    display: none;
-    height: 0;
-    max-height: 0;
-    padding: 0 var(--m);
-    overflow: hidden;
-}
-
 .category-card-title {
     color: var(--text-color);
 }

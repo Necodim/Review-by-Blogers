@@ -61,22 +61,70 @@ const cancelSellerSubscription = async (userId) => {
 }
 
 const getProductsByUserId = async (userId) => {
-    const response = await apiClient.get(`/products/${userId}`);
+    const response = await apiClient.get(`/user/products/${userId}`);
     return response.data;
 }
 
 const deletProductsByUserId = async (userId) => {
-    const response = await apiClient.delete(`/products/${userId}`);
+    const response = await apiClient.delete(`/user/products/${userId}`);
     return response.data;
 }
 
 const getBartersNewByUserId = async (userId) => {
-    const response = await apiClient.get(`/barters/new/${userId}`);
+    const response = await apiClient.get(`/user/barters/new/${userId}`);
     return response.data;
 }
 
 const getBartersCurrentByUserId = async (userId) => {
-    const response = await apiClient.get(`/barters/current/${userId}`);
+    const response = await apiClient.get(`/user/barters/current/${userId}`);
+    return response.data;
+}
+
+const getBartersByProductIds = async (productIdsArray) => {
+    const data = {'data': productIdsArray};
+    const response = await apiClient.post(`/barters/products`, data);
+    return response.data;
+}
+
+const getCategory = async (categoryID) => {
+    const response = await apiClient.get(`/categories/${categoryID}`);
+    return response.data;
+}
+
+const getCategories = async () => {
+    const response = await apiClient.get('/categories');
+    return response.data;
+}
+
+const getCategoriesByIds = async (categoryIdsArray) => {
+    const data = {'data': categoryIdsArray};
+    const response = await apiClient.post('/categories', data);
+    return response.data;
+}
+
+const getSubCategory = async (subCategoryID) => {
+    const response = await apiClient.get(`/categories/subcategories/${subCategoryID}`);
+    return response.data;
+}
+
+const getSubCategories = async () => {
+    const response = await apiClient.get('/categories/subcategories');
+    return response.data;
+}
+
+const getSubCategoriesByIds = async (subCategoryIdsArray) => {
+    const data = {'data': subCategoryIdsArray};
+    const response = await apiClient.post('/categories/subcategories', data);
+    return response.data;
+}
+
+const setStore = async () => {
+    const response = await apiClient.get('/store');
+    return response.data;
+}
+
+const setCategoryPage = async (subCategoryID) => {
+    const response = await apiClient.get(`/store/barters/${subCategoryID}`);
     return response.data;
 }
 
@@ -91,4 +139,13 @@ export default {
     deletProductsByUserId,
     getBartersNewByUserId,
     getBartersCurrentByUserId,
+    getBartersByProductIds,
+    getCategory,
+    getCategories,
+    getCategoriesByIds,
+    getSubCategory,
+    getSubCategories,
+    getSubCategoriesByIds,
+    setStore,
+    setCategoryPage,
 }
