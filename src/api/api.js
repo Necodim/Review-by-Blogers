@@ -26,26 +26,7 @@ const getUser = async (userId) => {
 }
 
 const updateUser = async (userId, data) => {
-    const response = await apiClient.post(`/user/${userId}`, data, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        redirect: 'follow'
-    });
-    return response.data;
-}
-
-const updateRole = async (userId, role) => {
-    const data = {
-        'id': userId,
-        'role': role
-    }
-    const response = await apiClient.post(`/user`, data, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        redirect: 'follow'
-    });
+    const response = await apiClient.post(`/user/${userId}`, data);
     return response.data;
 }
 
@@ -62,6 +43,11 @@ const cancelSellerSubscription = async (userId) => {
 
 const getProductsByUserId = async (userId) => {
     const response = await apiClient.get(`/user/products/${userId}`);
+    return response.data;
+}
+
+const getProductsWithBartersByUserId = async (userId) => {
+    const response = await apiClient.get(`/user/products/${userId}?barters=true`);
     return response.data;
 }
 
@@ -132,10 +118,10 @@ export default {
     generateAuthToken,
     getUser,
     updateUser,
-    updateRole,
     setApi,
     cancelSellerSubscription,
     getProductsByUserId,
+    getProductsWithBartersByUserId,
     deletProductsByUserId,
     getBartersNewByUserId,
     getBartersCurrentByUserId,

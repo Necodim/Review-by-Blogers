@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
-import { useTelegram } from '../../hooks/useTelegram'
-import { useToastManager } from '../../hooks/useToast';
+import { useTelegram } from '../../hooks/useTelegram.js'
+import { useToastManager } from '../../hooks/useToast.js';
 import { useUserProfile } from '../../hooks/UserProfileContext.js';
-import Header from '../Header/Header';
+import Header from '../Header/Header.jsx';
 import Form from '../Form/Form.jsx';
 import Input from '../Form/Input.jsx';
 import Link from '../Button/Link.jsx';
 
-const ProfileBloger = () => {
+const ProfileBlogger = () => {
     const { profile, updateProfile } = useUserProfile();
     const { isAvailable } = useTelegram();
     const { showToast, resetLoadingToast } = useToastManager();
@@ -23,7 +23,7 @@ const ProfileBloger = () => {
         setIsEditing(!isEditing);
     }
 
-    const profileBlogerSave = async (e) => {
+    const profileBloggerSave = async (e) => {
         // if (isAvailable()) {
             e.preventDefault();
             const onboarding = profile.onboarding;
@@ -39,7 +39,7 @@ const ProfileBloger = () => {
             };
             await updateProfile(data);
             if (onboarding) {
-                navigate('/blogger/store', { state: { showPopupAfterBlogerOnboarding: true } });
+                navigate('/blogger/store', { state: { showPopupAfterBloggerOnboarding: true } });
             } else {
                 navigate('/blogger/store');
             }
@@ -55,8 +55,8 @@ const ProfileBloger = () => {
         setCardNumberValue(newValue);
     }
 
-    const profileBlogerForm = () => {
-        return <Form onSubmit={profileBlogerSave} btntext='Сохранить' btnicon='save'>
+    const profileBloggerForm = () => {
+        return <Form onSubmit={profileBloggerSave} btntext='Сохранить' btnicon='save'>
             <Input
                 id='card-number'
                 name='card-number'
@@ -100,12 +100,12 @@ const ProfileBloger = () => {
                     </div>
                     {isEditing && (
                         <div className='list-item'>
-                            {profileBlogerForm()}
+                            {profileBloggerForm()}
                         </div>
                     )}
                     {profile.onboarding &&
                         <div className='list-item'>
-                            <span>После регистрации напишите в Instagram <a href='https://instagram.com/reviewbyblogers'>@reviewbyblogers</a> кодовое слово RB для подтверждения профиля</span>
+                            <span>После регистрации напишите в Instagram <a href='https://instagram.com/reviewbybloggers'>@reviewbybloggers</a> кодовое слово RB для подтверждения профиля</span>
                         </div>}
                 </div>
             </div>
@@ -113,4 +113,4 @@ const ProfileBloger = () => {
     );
 };
 
-export default ProfileBloger;
+export default ProfileBlogger;

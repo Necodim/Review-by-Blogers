@@ -7,8 +7,6 @@ import { useTelegram } from '../../hooks/useTelegram.js'
 import { useHelpers } from '../../hooks/useHelpers.js';
 import { useToastManager } from '../../hooks/useToast.js';
 import { useUserProfile } from '../../hooks/UserProfileContext.js';
-import { callback } from '../../hooks/callback.js';
-import Preloader from '../Preloader/Preloader.jsx';
 import Header from '../Header/Header.jsx';
 import Button from '../Button/Button.jsx';
 import Link from '../Button/Link.jsx';
@@ -20,13 +18,10 @@ import Input from '../Form/Input.jsx';
 
 
 const Profile = (props) => {
-    const { profile, loading, updateProfile, cancelSubscription } = useUserProfile();
-    if (loading) {
-        return <Preloader>Загружаюсь...</Preloader>;
-    }
+    const { profile, updateProfile, cancelSubscription } = useUserProfile();
+    const { setApi } = api;
     const { isAvailable } = useTelegram();
     const { getPlural } = useHelpers();
-    const { submitApiCallback } = callback();
     const { showToast, resetLoadingToast } = useToastManager();
     
     const [totalProducts, setTotalProducts] = useState(0);
@@ -59,6 +54,18 @@ const Profile = (props) => {
         const formValues = {};
         for (let [key, value] of formData.entries()) formValues[key] = value;
         submitApiCallback(formValues, closePopupApi);
+        showToast('Отправка данных...', 'loading');
+
+        setApi(userId, formValues.api)
+            .then(res => {
+                showToast(res.message, 'success');
+                closePopupApi();
+            })
+            .catch(error => {
+                showToast(error.message, 'error');
+                console.error(`${error.message}:`, error);
+                tg ? tg.showAlert(error.message + '. Попробуйте ещё раз.') : alert(errorText);
+            });
     };
 
     const cancellingSubscription = async () => {
@@ -98,7 +105,7 @@ const Profile = (props) => {
         }
     }
 
-    const profileBlogerSave = async (e) => {
+    const profileBloggerSave = async (e) => {
         // if (isAvailable()) {
             e.preventDefault(); // Предотвращаем стандартную отправку формы
             const onboarding = profile.onboarding;
@@ -115,7 +122,7 @@ const Profile = (props) => {
             };
             await updateProfile(data);
             if (onboarding) {
-                navigate('/blogger/store', { state: { showPopupAfterBlogerOnboarding: true } });
+                navigate('/blogger/store', { state: { showPopupAfterBloggerOnboarding: true } });
             } else {
                 navigate('/blogger/store');
             }
@@ -127,7 +134,7 @@ const Profile = (props) => {
             //             const success = !!result.message ? result.message : 'Данные успешно сохранены';
             //             showToast(success, 'success');
             //             if (onboarding) {
-            //                 navigate('/blogger/store', { state: { showPopupAfterBlogerOnboarding: true } });
+            //                 navigate('/blogger/store', { state: { showPopupAfterBloggerOnboarding: true } });
             //             } else {
             //                 navigate('/blogger/store');
             //             }
@@ -147,8 +154,8 @@ const Profile = (props) => {
         // }
     }
 
-    const profileBlogerForm = () => {
-        return <Form onSubmit={profileBlogerSave} btntext='Сохранить' btnicon='save'>
+    const profileBloggerForm = () => {
+        return <Form onSubmit={profileBloggerSave} btntext='Сохранить' btnicon='save'>
             <Input 
                 id='card-number' 
                 name='card-number' 
@@ -181,7 +188,7 @@ const Profile = (props) => {
         </Form>
     }
 
-    const editBlogerProfile = (e) => {
+    const editBloggerProfile = (e) => {
         const list = e.target.closest('list');
         const hidden = list.querySelector('.form-wrapper.hidden');
     }
@@ -221,7 +228,7 @@ const Profile = (props) => {
         )
     }
     
-    const profileBloger = () => {
+    const profileBlogger = () => {
         return (
             <div className='content-wrapper'>
                 <Header />
@@ -229,14 +236,14 @@ const Profile = (props) => {
                     <div className='list gap-l'>
                         <div className='list-item'>
                             <h2>{(profile.instagram.username && profile.instagram.coverage && profile.card_number) || !profile.onboarding ? 'Профиль' : 'Заполните профиль'}</h2>
-                            {!profile.onboarding && <Link onClick={editBlogerProfile}>Редактировать</Link>}
+                            {!profile.onboarding && <Link onClick={editBloggerProfile}>Редактировать</Link>}
                         </div>
                         <div className='list-item hidden form-wrapper'>
-                            {profileBlogerForm()}
+                            {profileBloggerForm()}
                         </div>
                         {profile.onboarding && 
                         <div className='list-item'>
-                            <span>После регистрации напишите в Instagram <Link url='https://instagram.com/reviewbyblogers'>@reviewbyblogers</Link> кодовое слово RB для подтверждения профиля</span>
+                            <span>После регистрации напишите в Instagram <Link url='https://instagram.com/reviewbybloggers'>@reviewbybloggers</Link> кодовое слово RB для подтверждения профиля</span>
                         </div>}
                     </div>
                 </div>
@@ -246,8 +253,8 @@ const Profile = (props) => {
 
     if (profile.role === 'seller') {
         return profileSeller();
-    } else if (profile.role === 'bloger') {
-        return profileBloger();
+    } else if (profile.role === 'blogger') {
+        return profileBlogger();
     }
 }
 

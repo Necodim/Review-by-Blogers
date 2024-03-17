@@ -28,7 +28,7 @@ const Barter = (props) => {
         placeholder: true,
         id: `id-${index}`,
         date: '11.02.2024',
-        bloger: {
+        blogger: {
             'instagram-username': '@snezone'
         },
         product: {
@@ -89,6 +89,7 @@ const Barter = (props) => {
     }, [loading, profile]);
 
     if (errorMessage) {
+        resetLoadingToast();
         return showToast(errorMessage, 'error');
         // return <div className='error-message'>{errorMessage}</div>;
     }
@@ -175,7 +176,7 @@ const Barter = (props) => {
                                     <div className='list-item barter-title'>{barter.product?.title}</div>
                                     <div className='list list-item barter-content'>
                                         <small>{barter.date}</small>
-                                        <small>{barter.bloger?.['instagram-username']}</small>
+                                        <small>{barter.blogger?.['instagram-username']}</small>
                                     </div>
                                 </div>
                                 <Icon icon='sync' className='self-start' />
@@ -187,7 +188,7 @@ const Barter = (props) => {
         )
     }
 
-    const barterBloger = () => {
+    const barterBlogger = () => {
         return (
             <div className='content-wrapper'>
                 <Header />
@@ -236,7 +237,7 @@ const Barter = (props) => {
                                     <div className='list-item barter-title'>{barter.product?.title}</div>
                                     <div className='list list-item barter-content'>
                                         <small>{barter.date}</small>
-                                        <small>{barter.bloger?.['instagram-username']}</small>
+                                        <small>{barter.blogger?.['instagram-username']}</small>
                                     </div>
                                 </div>
                                 <Icon icon='sync' className='self-start' />
@@ -250,8 +251,8 @@ const Barter = (props) => {
 
     if (profile.role === 'seller') {
         return barterSeller();
-    } else if (profile.role === 'bloger') {
-        return barterBloger();
+    } else if (profile.role === 'blogger') {
+        return barterBlogger();
     }
 }
 

@@ -13,7 +13,9 @@ export const UserProfileProvider = ({ children }) => {
     const { showToast, resetLoadingToast } = useToastManager();
 
     // Для тестов
-    const userId = user?.id || 82431798;
+    // const userId = user?.id;
+    const userId = 82431798;
+    // const userId = 404;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,13 +43,13 @@ export const UserProfileProvider = ({ children }) => {
         try {
             const result = await api.updateUser(profile.id, data);
             if (result && result.success) {
-                // После успешного обновления, перезагрузите данные профиля
                 const updatedProfile = await getUser(profile.id);
                 setProfile(updatedProfile);
                 showToast(result.message || 'Данные успешно сохранены', 'success');
             } else {
                 showToast(result.error || 'Произошла неизвестная ошибка', 'error');
             }
+            return result;
         } catch (error) {
             showToast(error.toString(), 'error');
         } finally {

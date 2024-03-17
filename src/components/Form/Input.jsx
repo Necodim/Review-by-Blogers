@@ -34,6 +34,7 @@ import Icon from '../Icon/Icon';
                     {props.fade && <div className='input-fade' />}
                     {inputIcon()}
                 </div>
+                {props.comment && <small>{props.comment}</small>}
             </div>
         )
     }
@@ -51,6 +52,7 @@ import Icon from '../Icon/Icon';
                         <span>{props.placeholder}</span>
                     </div>
                 </label>}
+                {props.comment && <small>{props.comment}</small>}
             </div>
         )
     }

@@ -1,46 +1,56 @@
-import React, { useEffect } from 'react'
-import './StartScreen.css'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './StartScreen.css';
 import { useUserProfile } from '../../hooks/UserProfileContext';
-import { callback } from '../../hooks/callback'
-import Preloader from '../Preloader/Preloader';
-import Button from '../Button/Button'
-import Icon from '../Icon/Icon'
+import { useToastManager } from '../../hooks/useToast';
+import { useTelegram } from "../../hooks/useTelegram";
+import Button from '../Button/Button';
+import Icon from '../Icon/Icon';
 
-const StartScreen = (props) => {
-    const { profile, loading } = useUserProfile();
+const StartScreen = () => {
+    const navigate = useNavigate();
+    const { updateProfile } = useUserProfile();
+    const { tg, isAvailable } = useTelegram();
+    const { showToast, resetLoadingToast } = useToastManager();
 
-    if (loading) {
-        return <Preloader>Загружаюсь...</Preloader>;
-    }
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const { roleCallback } = callback();
+    useEffect(() => {
+        if (errorMessage) {
+            resetLoadingToast();
+            showToast(errorMessage, 'error');
+        }
+    }, [errorMessage, showToast]);
 
-    const renderButtons = () => {
-        return (
-            <div className='buttons-wrapper'>
-                <Button className='light size-xl' onClick={roleCallback} data-role='bloger'>
-                    <Icon icon={'face_retouching_natural'} />
-                    Блогер
-                </Button>
-                <Button className='light size-xl' onClick={roleCallback} data-role='seller'>
-                    <Icon icon='store' />
-                    Селлер
-                </Button>
-            </div>
-        );
+    const handleRoleSelect = async (role) => {
+        try {
+            await updateProfile({ role: role });
+            navigate('/profile');
+        } catch (error) {
+            const errorText = 'Произошла ошибка при выборе роли пользователя';
+            setErrorMessage(errorText);
+            console.error(`${errorText}:`, error);
+            isAvailable() ? tg.showAlert(errorText + '. Попробуйте ещё раз.') : alert(errorText);
+        }
     };
 
-    const screen = (
+    return (
         <div className='startscreen-wrapper'>
             <h1 className='h1'>
                 Привет.<br />Выбери роль!
             </h1>
-            {renderButtons()}
+            <div className='buttons-wrapper'>
+                <Button className='light size-xl' onClick={() => handleRoleSelect('blogger')}>
+                    <Icon icon={'face_retouching_natural'} />
+                    Блогер
+                </Button>
+                <Button className='light size-xl' onClick={() => handleRoleSelect('seller')}>
+                    <Icon icon='store' />
+                    Селлер
+                </Button>
+            </div>
         </div>
     );
+};
 
-    return screen;
-}
-
-
-export default StartScreen
+export default StartScreen;

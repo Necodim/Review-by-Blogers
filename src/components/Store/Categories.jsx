@@ -1,22 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api/api';
+import { useToastManager } from '../../hooks/useToast';
 import CategoryCard from './CategoryCard';
 
 const Categories = ({ onCategorySelect }) => {
   const [categories, setCategories] = useState([]);
   const [openedCategories, setOpenedCategories] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { showToast, resetLoadingToast } = useToastManager();
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    if (errorMessage) {
+      resetLoadingToast();
+      showToast(errorMessage, 'error');
+    }
+  }, [errorMessage, showToast]);
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
         const response = await api.setStore();
-        setCategories(response);
+        if (Array.isArray(response)) {
+          setCategories(response);
+        } else {
+          throw new Error('Неверный формат данных');
+        }
       } catch (error) {
-        console.error('Ошибка при получении категорий:', error);
+        setCategories([]);
+        setErrorMessage('Произошла ошибка при получении списка категорий');
+        console.error(error.message);
       }
-    };
-
-    fetchCategories();
+    }
+    fetchData();
   }, []);
 
   const handleCategoryClick = (categoryId) => {

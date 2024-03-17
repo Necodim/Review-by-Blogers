@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 
-const tg = window.Telegram.WebApp;
-
 export function useTelegram() {
     let navigate = useNavigate();
+    
+    const tg = window.Telegram.WebApp;
 
-    const isAvailable = () => !!window.Telegram && !!tg;
+    const isAvailable = () => !!tg;
 
     const close = () => {
         if (isAvailable()) {

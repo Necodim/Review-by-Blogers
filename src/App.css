@@ -37,6 +37,7 @@
   --light: #ffffff;
   --dark: var(--primary-dark-1);
   --grey: #4A5965;
+  --grey-rgb: 74, 89, 101;
   --bg-gradient: linear-gradient(108deg, var(--primary-dark-2) 0%, var(--primary-dark-3) 100%);
   --active-gradient: linear-gradient(108deg, var(--primary-light-1) 0%, var(--primary-light-2) 100%);
   --success: var(--tertiary);
@@ -118,6 +119,7 @@ h2 {
 .container,
 .popup {
   width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -167,6 +169,10 @@ h2 {
   gap: var(--xs);
 }
 
+.justify-content-start {
+  justify-content: flex-start;
+}
+
 .self-start {
   align-self: flex-start;
 }
@@ -179,6 +185,25 @@ h2 {
   border-radius: var(--s);
   padding: var(--m);
   overflow: hidden;
+}
+
+.relative {
+  position: relative;
+  transition: top .2s ease-in-out, left .2s ease-in-out, right .2s ease-in-out, bottom .2s ease-in-out;
+}
+
+.absolute {
+  position: absolute;
+  transition: top .2s ease-in-out, left .2s ease-in-out, right .2s ease-in-out, bottom .2s ease-in-out;
+}
+
+.sticky {
+  position: sticky;
+  transition: top .2s ease-in-out, left .2s ease-in-out, right .2s ease-in-out, bottom .2s ease-in-out;
+}
+
+.shadow {
+  box-shadow: 0 0 var(--xs) 0 rgba(var(--primary-dark-1-rgb), .25);
 }
 
 .gap-xs {
@@ -199,4 +224,16 @@ h2 {
 
 .gap-xl {
   gap: var(--xl);
+}
+
+.b-0 {
+  bottom: 0;
+}
+
+.b-s {
+  bottom: var(--s);
+}
+
+.m-l-xxxs {
+  margin-left: calc(var(--xxs) / 2);
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Profile.css';
-import ProfileBloger from './ProfileBloger.jsx';
+import ProfileBlogger from './ProfileBlogger.jsx';
 import ProfileSeller from './ProfileSeller.jsx';
 import { useTelegram } from '../../hooks/useTelegram'
 import { useUserProfile } from '../../hooks/UserProfileContext.js';
@@ -17,8 +17,8 @@ const Profile = (props) => {
         return <Preloader>Загружаюсь...</Preloader>;
     } else if (profile.role === 'seller') {
         return <ProfileSeller />
-    } else if (profile.role === 'bloger') {
-        return (<ProfileBloger />)
+    } else if (profile.role === 'blogger') {
+        return (<ProfileBlogger />)
     }
 }
 

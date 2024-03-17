@@ -7,13 +7,22 @@ import Icon from '../Icon/Icon'
 
 const Header = (props) => {
     const { profile, loading } = useUserProfile();
+    const location = useLocation();
+
+    const isActive = (path) => {
+        // const paths = location.pathname.split('/');
+        // const result = paths[paths.length - 1] === path ? 'active' : '';
+        const result = location.pathname.indexOf(path) !== -1 ? 'active' : '';
+        return result;
+    };
+
     if (loading) {
         return (
             <div className={'header'}>
                 <div className="nav-buttons-wrapper">
                     <Button className={`nav-button light ${isActive('/store') ? 'active' : ''}`}>
                         <Icon icon='list' />
-                        <span>{profile.role === 'bloger' ? 'Категории' : 'Товары'}</span>
+                        <span>{profile.role === 'blogger' ? 'Категории' : 'Товары'}</span>
                     </Button>
                     <Button className={`nav-button light ${isActive('/barter') ? 'active' : ''}`}>
                         <Icon icon='groups' />
@@ -28,30 +37,22 @@ const Header = (props) => {
         )
     }
 
-    const location = useLocation();
-
-    const isActive = (path) => {
-        const paths = location.pathname.split('/');
-        const result = paths[paths.length - 1] === path ? 'active' : '';
-        return result;
-    };
-
     return (
         <div className={'header'}>
             <div className="nav-buttons-wrapper">
-                <Link to={ `../${profile.role}/store` }>
+                <Link to={ `../store` }>
                     <Button className={`nav-button light ${isActive('store')}`}>
                         <Icon icon='list' />
-                        <span>{profile.role === 'bloger' ? 'Категории' : 'Товары'}</span>
+                        <span>{profile.role === 'blogger' ? 'Категории' : 'Товары'}</span>
                     </Button>
                 </Link>
-                <Link to={ `../${profile.role}/barter` }>
+                <Link to={ `../barter` }>
                     <Button className={`nav-button light ${isActive('barter')}`}>
                         <Icon icon='groups' />
                         <span>Бартеры</span>
                     </Button>
                 </Link>
-                <Link to={ `../${profile.role}` }>
+                <Link to={ `../profile` }>
                     <Button className={`nav-button light ${isActive(profile.role)}`}>
                         <Icon icon='person' />
                         <span>Профиль</span>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import moment from 'moment';
@@ -7,7 +7,6 @@ import { useTelegram } from '../../hooks/useTelegram'
 import { useHelpers } from '../../hooks/useHelpers';
 import { useToastManager } from '../../hooks/useToast';
 import { useUserProfile } from '../../hooks/UserProfileContext.js';
-import { callback } from '../../hooks/callback.js';
 import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Link from '../Button/Link';
@@ -19,12 +18,19 @@ const ProfileSeller = () => {
     const { profile, cancelSubscription } = useUserProfile();
     const { isAvailable } = useTelegram();
     const { getPlural } = useHelpers();
-    const { submitApiCallback } = callback();
     const { showToast, resetLoadingToast } = useToastManager();
     
+    const [errorMessage, setErrorMessage] = useState('');
     const [totalProducts, setTotalProducts] = useState(0);
     const [isPopupApiOpen, setIsPopupApiOpen] = useState(false);
     const [isPopupCancelSubscriptionOpen, setIsPopupCancelSubscriptionOpen] = useState(false);
+
+    useEffect(() => {
+        if (errorMessage) {
+            resetLoadingToast();
+            showToast(errorMessage, 'error');
+        }
+    }, [errorMessage, showToast]);
     
     const openPopupApi = () => setIsPopupApiOpen(true);
     const closePopupApi = () => setIsPopupApiOpen(false);
@@ -45,12 +51,24 @@ const ProfileSeller = () => {
         }
     }
 
-    const handlePopupApiSubmit = (e) => {
+    const handlePopupApiSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const formValues = {};
         for (let [key, value] of formData.entries()) formValues[key] = value;
-        submitApiCallback(formValues, closePopupApi);
+        showToast('Отправка данных...', 'loading');
+        try {
+            const result = await api.setApi(profile.id, formValues.api);
+            if (result?.message) {
+                showToast(result.message, 'success');
+                closePopupApi();
+            }
+        } catch (error) {
+            setErrorMessage('Произошла ошибка при получении списка товаров');
+            console.error(`${error.message}:`, error);
+             // для тестов
+            tg ? tg.showAlert(error.message + '. Попробуйте ещё раз.') : alert(errorText);
+        }
     };
 
     const cancellingSubscription = async () => {
