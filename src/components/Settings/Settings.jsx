@@ -1,19 +1,26 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 
-
 const Settings = (props) => {
-    const { showBackButton, user } = useTelegram();
-    showBackButton();
+    const navigate = useNavigate();
+    const { tg, showBackButton, user } = useTelegram();
 
-    window.Telegram.WebApp.SettingsButton.onClick(() => {
-        let navigate = useNavigate();
-        navigate('settings');
-    });
-    window.Telegram.WebApp.onEvent('settingsButtonClicked', () => {
-        let navigate = useNavigate();
-        navigate('settings');
-    });
+    useEffect(() => {
+        if (tg) {
+            showBackButton();
+        }
+    }, [tg, showBackButton]);
+
+    if (window.Telegram.WebApp.SettingsButton) {
+        window.Telegram.WebApp.SettingsButton.onClick(() => {
+            navigate('/settings');
+        });
+    } else {
+        window.Telegram.WebApp.onEvent('settingsButtonClicked', () => {
+            navigate('/settings');
+        });
+    }
 
     return (
         <div className='settings'>
