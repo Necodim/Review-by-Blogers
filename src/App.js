@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     if (loading) return;
-    if (location.pathname !== '/' && (!profile || (profile.role !== 'seller' && profile.role !== 'blogger'))) {
+    if ((location.pathname !== '/' && location.pathname !== '/settings') && (!profile || (profile.role !== 'seller' && profile.role !== 'blogger'))) {
       navigate('/');
     }
   }, [profile, navigate, location.pathname, loading]);
