@@ -41,7 +41,7 @@ export function useTelegram() {
 
     const settingsButton = (boolean) => {
         const settingsButtonCallback = () => {
-            navigate('settings');
+            navigate('/settings');
         }
 
         if (boolean) {
@@ -70,6 +70,7 @@ export function useTelegram() {
         // theme.destructive_text_color = '#992B64';
         tg.setHeaderColor('#0E2133');
         BackButton();
+        tg.BackButton.hide();
         settingsButton(false);
         settingsButton(true);
     }
