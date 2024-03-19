@@ -13,8 +13,8 @@ export const UserProfileProvider = ({ children }) => {
     const { showToast, resetLoadingToast } = useToastManager();
 
     // Для тестов
-    // const userId = user?.id;
-    const userId = 82431798;
+    const userId = user?.id;
+    // const userId = 82431798;
     // const userId = 404;
 
     useEffect(() => {
