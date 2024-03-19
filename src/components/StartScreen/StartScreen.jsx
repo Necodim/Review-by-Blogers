@@ -24,7 +24,8 @@ const StartScreen = () => {
 
     const handleRoleSelect = async (role) => {
         try {
-            await updateProfile({ role: role });
+            const result = await updateProfile({ role: role });
+            tg.showAlter(String(result))
         } catch (error) {
             const errorText = 'Произошла ошибка при выборе роли пользователя';
             setErrorMessage(errorText);

@@ -5,25 +5,20 @@ import Link from '../Button/Link';
 
 const Settings = (props) => {
     const navigate = useNavigate();
-    const { tg, showBackButton, user } = useTelegram();
+    const { isAvailable, showBackButton, user } = useTelegram();
 
     useEffect(() => {
-        if (tg) {
+        if (isAvailable) {
             showBackButton();
         }
-    }, [tg, showBackButton]);
+    }, [isAvailable, showBackButton]);
 
-    // if (window.Telegram.WebApp.SettingsButton) {
-    //     tg.showAlert('window.Telegram.WebApp.SettingsButton')
-    //     window.Telegram.WebApp.SettingsButton.onClick(() => {
-    //         navigate('/settings');
-    //     });
-    // } else {
-    //     tg.showAlert('window.Telegram.WebApp.onEvent("settingsButtonClicked")')
-    //     window.Telegram.WebApp.onEvent('settingsButtonClicked', () => {
-    //         navigate('/settings');
-    //     });
-    // }
+    window.Telegram.WebApp.SettingsButton.onClick(() => {
+        navigate('/settings');
+    });
+    window.Telegram.WebApp.onEvent('settingsButtonClicked', () => {
+        navigate('/settings');
+    });
 
     const goToStartScreen = () => {
         navigate('/');
