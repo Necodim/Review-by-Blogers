@@ -13,10 +13,12 @@ const Settings = (props) => {
     }, [tg, showBackButton]);
 
     if (window.Telegram.WebApp.SettingsButton) {
+        tg.showAlert('window.Telegram.WebApp.SettingsButton')
         window.Telegram.WebApp.SettingsButton.onClick(() => {
             navigate('/settings');
         });
     } else {
+        tg.showAlert('window.Telegram.WebApp.onEvent("settingsButtonClicked")')
         window.Telegram.WebApp.onEvent('settingsButtonClicked', () => {
             navigate('/settings');
         });

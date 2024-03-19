@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 export function useTelegram() {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     
     const tg = window.Telegram.WebApp;
 
@@ -43,11 +43,11 @@ export function useTelegram() {
         tg.showPopup(params);
     }
 
-    const settingsButton = (boolean) => {
-        const settingsButtonCallback = () => {
-            navigate('/settings');
-        }
+    const settingsButtonCallback = () => {
+        navigate('/settings');
+    }
 
+    const settingsButton = (boolean) => {
         if (boolean) {
             tg.SettingsButton.show();
             tg.SettingsButton.onClick(settingsButtonCallback);
