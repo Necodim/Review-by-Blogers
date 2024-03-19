@@ -35,6 +35,10 @@ export function useTelegram() {
         tg.BackButton.show();
     }
 
+    const hideBackButton = () => {
+        tg.BackButton.hide();
+    }
+
     const showPopup = (params) => {
         tg.showPopup(params);
     }
@@ -70,7 +74,6 @@ export function useTelegram() {
         // theme.destructive_text_color = '#992B64';
         tg.setHeaderColor('#0E2133');
         BackButton();
-        tg.BackButton.hide();
         settingsButton(false);
         settingsButton(true);
     }
@@ -80,6 +83,7 @@ export function useTelegram() {
         close,
         onToggleButton,
         showBackButton,
+        hideBackButton,
         showPopup,
         settingsButton,
         defaultSettings,
