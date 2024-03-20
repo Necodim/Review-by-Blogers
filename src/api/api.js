@@ -36,6 +36,11 @@ const setApi = async (userId, api) => {
     return response.data;
 }
 
+const addSellerSubscription = async (userId) => {
+    const response = await apiClient.get(`/user/subscription/add/${userId}`);
+    return response.data;
+}
+
 const cancelSellerSubscription = async (userId) => {
     const response = await apiClient.get(`/user/subscription/cancel/${userId}`);
     return response.data;
@@ -119,6 +124,7 @@ export default {
     getUser,
     updateUser,
     setApi,
+    addSellerSubscription,
     cancelSellerSubscription,
     getProductsByUserId,
     getProductsWithBartersByUserId,

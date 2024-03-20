@@ -1,7 +1,8 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export function useTelegram() {
     const navigate = useNavigate();
+    const location = useLocation();
     
     const tg = window.Telegram.WebApp;
 
@@ -25,7 +26,11 @@ export function useTelegram() {
 
     const BackButton = () => {
         const backButtonCallback = () => {
-            navigate(-1);
+            if (location.pathname.startsWith('/settings')) {
+                navigate('/profile');
+            } else {
+                navigate(-1);
+            }
         }
         tg.BackButton.offClick(backButtonCallback);
         tg.BackButton.onClick(backButtonCallback);

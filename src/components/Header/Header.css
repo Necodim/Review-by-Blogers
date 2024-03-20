@@ -17,7 +17,3 @@
     align-items: center;
     gap: var(--xs);
 }
-
-.username {
-    margin-left: auto;
-}
