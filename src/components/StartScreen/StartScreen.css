@@ -1,18 +1,14 @@
-.startscreen-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+.startscreen {
     gap: var(--xxxl);
     margin-top: 96px;
 }
 
-.startscreen-wrapper h1 {
+.startscreen h1 {
     font-size: 36px;
     font-weight: 700;
 }
 
-.startscreen-wrapper .buttons-wrapper {
+.startscreen .buttons-wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

@@ -226,6 +226,14 @@ h2 {
   gap: var(--xl);
 }
 
+.gap-xxl {
+  gap: var(--xxl);
+}
+
+.gap-xxxl {
+  gap: var(--xxxl);
+}
+
 .b-0 {
   bottom: 0;
 }
@@ -234,6 +242,18 @@ h2 {
   bottom: var(--s);
 }
 
+.m-t-xxxxl {
+  margin-top: calc(var(--xxxl) * 2);
+}
+
 .m-l-xxxs {
   margin-left: calc(var(--xxs) / 2);
+}
+
+.w-auto {
+  width: auto;
+}
+
+.w-100 {
+  width: 100%;
 }

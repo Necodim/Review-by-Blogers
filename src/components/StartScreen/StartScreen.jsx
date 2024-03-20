@@ -9,7 +9,7 @@ import Icon from '../Icon/Icon';
 
 const StartScreen = () => {
     const navigate = useNavigate();
-    const { updateProfile } = useUserProfile();
+    const { profile, updateProfile } = useUserProfile();
     const { tg, isAvailable } = useTelegram();
     const { showToast, resetLoadingToast } = useToastManager();
 
@@ -25,7 +25,7 @@ const StartScreen = () => {
     const handleRoleSelect = async (role) => {
         try {
             const result = await updateProfile({ role: role });
-            tg.showAlter(String(result))
+            console.log(result)
         } catch (error) {
             const errorText = 'Произошла ошибка при выборе роли пользователя';
             setErrorMessage(errorText);
@@ -34,10 +34,14 @@ const StartScreen = () => {
         } finally {
             navigate('/profile');
         }
-    };
+    }
+
+    const showProfile = () => {
+        alert(JSON.stringify(profile));
+    }
 
     return (
-        <div className='startscreen-wrapper'>
+        <div className='content-wrapper startscreen w-auto'>
             <h1 className='h1'>
                 Привет.<br />Выбери роль!
             </h1>
@@ -49,6 +53,10 @@ const StartScreen = () => {
                 <Button className='light size-xl' onClick={() => handleRoleSelect('seller')}>
                     <Icon icon='store' />
                     Селлер
+                </Button>
+                <Button className='light size-xl' onClick={() => showProfile()}>
+                    <Icon icon='assignment_ind' />
+                    Profile
                 </Button>
             </div>
         </div>
