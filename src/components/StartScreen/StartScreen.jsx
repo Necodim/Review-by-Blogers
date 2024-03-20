@@ -10,7 +10,7 @@ import Icon from '../Icon/Icon';
 const StartScreen = () => {
     const navigate = useNavigate();
     const { profile, updateProfile } = useUserProfile();
-    const { tg, isAvailable } = useTelegram();
+    const { tg, isAvailable, hideBackButton } = useTelegram();
     const { showToast, resetLoadingToast } = useToastManager();
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -21,6 +21,8 @@ const StartScreen = () => {
             showToast(errorMessage, 'error');
         }
     }, [errorMessage, showToast]);
+
+    hideBackButton();
 
     const handleRoleSelect = async (role) => {
         try {

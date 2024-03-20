@@ -8,8 +8,8 @@ import Preloader from '../Preloader/Preloader';
 
 
 const Profile = (props) => {
-    const { showBackButton } = useTelegram();
-    showBackButton();
+    const { hideBackButton } = useTelegram();
+    hideBackButton();
 
     const { profile, loading } = useUserProfile();
 

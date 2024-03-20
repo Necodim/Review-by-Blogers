@@ -8,8 +8,8 @@ import { useUserProfile } from '../../hooks/UserProfileContext';
 const Store = (props) => {
     const { profile } = useUserProfile();
 
-    const { showBackButton } = useTelegram();
-    showBackButton();
+    const { hideBackButton } = useTelegram();
+    hideBackButton();
 
     if (profile.role === 'seller') {
         return (<StoreSeller />)

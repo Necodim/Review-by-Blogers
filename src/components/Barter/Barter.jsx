@@ -46,8 +46,8 @@ const Barter = (props) => {
 
     const { showToast, resetLoadingToast } = useToastManager();
 
-    const {showBackButton, user} = useTelegram();
-    showBackButton();
+    const { hideBackButton, user } = useTelegram();
+    hideBackButton();
     
     useEffect(() => {
         const fetchBartersNew = async () => {
