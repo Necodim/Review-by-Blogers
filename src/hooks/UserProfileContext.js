@@ -33,11 +33,10 @@ export const UserProfileProvider = ({ children }) => {
                 await generateAuthToken(userId);
                 const userProfile = await getUser(userId);
                 if (isAvailable()) tg.showAlert(JSON.stringify(userProfile))
-                console.log(userProfile)
                 setProfile(userProfile);
             } catch (error) {
-                console.error('Ошибка при получении данных пользователя:', error);
-                // Обработка ошибок, например, установка состояния ошибки
+                setErrorMessage('Ошибка при получении данных пользователя');
+                console.error(error);
             } finally {
                 setLoading(false);
             }
