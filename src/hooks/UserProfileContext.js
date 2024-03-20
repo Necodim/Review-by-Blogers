@@ -36,7 +36,6 @@ export const UserProfileProvider = ({ children }) => {
                 setProfile(userProfile);
             } catch (error) {
                 setErrorMessage('Ошибка при получении данных пользователя');
-                console.error(error);
             } finally {
                 setLoading(false);
             }
