@@ -40,6 +40,10 @@ const StartScreen = () => {
         alert(JSON.stringify(profile));
     }
 
+    const showSettings = () => {
+        navigate('/settings');
+    }
+
     return (
         <div className='content-wrapper startscreen w-auto'>
             <h1 className='h1'>
@@ -54,9 +58,15 @@ const StartScreen = () => {
                     <Icon icon='store' />
                     Селлер
                 </Button>
+            </div>
+            <div className='buttons-wrapper'>
                 <Button className='light size-xl' onClick={() => showProfile()}>
                     <Icon icon='assignment_ind' />
                     Profile
+                </Button>
+                <Button className='light size-xl' onClick={() => showSettings()}>
+                    <Icon icon='settings' />
+                    Настройки
                 </Button>
             </div>
         </div>

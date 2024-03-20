@@ -55,6 +55,12 @@ export function useTelegram() {
             tg.SettingsButton.hide();
             tg.SettingsButton.offClick(settingsButtonCallback);
         }
+        // window.Telegram.WebApp.SettingsButton.onClick(() => {
+        //     navigate('/settings');
+        // });
+        // window.Telegram.WebApp.onEvent('settingsButtonClicked', () => {
+        //     navigate('/settings');
+        // });
     }
 
     const defaultSettings = () => {

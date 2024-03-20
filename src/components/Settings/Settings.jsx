@@ -13,20 +13,12 @@ const Settings = (props) => {
         }
     }, [isAvailable, showBackButton]);
 
-    window.Telegram.WebApp.SettingsButton.onClick(() => {
-        navigate('/settings');
-    });
-    window.Telegram.WebApp.onEvent('settingsButtonClicked', () => {
-        navigate('/settings');
-    });
-
     const goToStartScreen = () => {
         navigate('/');
     }
 
     return (
         <div className='content-wrapper'>
-            <Header />
             <div className='container' id='settings' >
                 <div className='list'>
                     <div className='list-item'>

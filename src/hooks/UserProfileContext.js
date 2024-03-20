@@ -8,14 +8,23 @@ const UserProfileContext = createContext();
 export const UserProfileProvider = ({ children }) => {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { getUser, generateAuthToken } = api;
+    const [errorMessage, setErrorMessage] = useState('');
+
     const { user } = useTelegram();
+    const { getUser, updateUser, generateAuthToken, cancelSellerSubscription } = api;
     const { showToast, resetLoadingToast } = useToastManager();
 
     // Для тестов
     const userId = user?.id;
     // const userId = 82431798;
     // const userId = 404;
+
+    useEffect(() => {
+        if (errorMessage) {
+            resetLoadingToast();
+            showToast(errorMessage, 'error');
+        }
+    }, [errorMessage, showToast]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,17 +50,17 @@ export const UserProfileProvider = ({ children }) => {
     const updateProfile = async (data) => {
         setLoading(true);
         try {
-            const result = await api.updateUser(profile.id, data);
+            const result = await updateUser(profile.id, data);
             if (result && result.success) {
                 const updatedProfile = await getUser(profile.id);
                 setProfile(updatedProfile);
                 showToast(result.message || 'Данные успешно сохранены', 'success');
             } else {
-                showToast(result.error || 'Произошла неизвестная ошибка', 'error');
+                setErrorMessage(result.error || 'Произошла неизвестная ошибка');
             }
             return result;
         } catch (error) {
-            showToast(error.toString(), 'error');
+            setErrorMessage(error.toString());
         } finally {
             setLoading(false);
         }
@@ -60,16 +69,16 @@ export const UserProfileProvider = ({ children }) => {
     const cancelSubscription = async () => {
         setLoading(true);
         try {
-            const result = await api.cancelSellerSubscription(profile.id);
+            const result = await cancelSellerSubscription(profile.id);
             if (!!result && result.success && result.subscription) {
                 showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.subscription.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
             } else if (!!result && !result.success && result.error) {
-                showToast(result.error, 'error');
+                setErrorMessage(result.error);
             } else {
-                showToast('Произошла неизвестная ошибка', 'error');
+                setErrorMessage('Произошла неизвестная ошибка');
             }
         } catch (error) {
-            showToast(error, 'error');
+            setErrorMessage(error);
         } finally {
             setLoading(false);
         }
