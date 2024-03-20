@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: 'https://reviewbybloggers.ru/api'
-    // baseURL: process.env.REACT_APP_BACKEND_URL
+    baseURL: process.env.REACT_APP_BACKEND_URL
 });
 
 apiClient.interceptors.request.use(config => {
