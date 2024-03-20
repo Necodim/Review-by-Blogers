@@ -10,7 +10,7 @@ export const UserProfileProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const { user, isAvailable } = useTelegram();
+    const { tg, user, isAvailable } = useTelegram();
     const { getUser, updateUser, generateAuthToken, cancelSellerSubscription } = api;
     const { showToast, resetLoadingToast } = useToastManager();
 
@@ -32,7 +32,7 @@ export const UserProfileProvider = ({ children }) => {
             try {
                 await generateAuthToken(userId);
                 const userProfile = await getUser(userId);
-                // if (isAvailable()) tg.showAlert(JSON.stringify(userProfile))
+                if (isAvailable()) tg.showAlert(JSON.stringify(userProfile))
                 console.log(userProfile)
                 setProfile(userProfile);
             } catch (error) {
