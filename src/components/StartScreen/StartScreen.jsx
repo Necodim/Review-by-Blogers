@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StartScreen.css';
+import api from '../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
 import { useTelegram } from "../../hooks/useTelegram";
@@ -10,8 +11,9 @@ import Icon from '../Icon/Icon';
 const StartScreen = () => {
     const navigate = useNavigate();
     const { profile, updateProfile } = useUserProfile();
-    const { tg, isAvailable, hideBackButton } = useTelegram();
+    const { tg, user, isAvailable, hideBackButton } = useTelegram();
     const { showToast, resetLoadingToast } = useToastManager();
+    const { getUser } = api;
 
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -42,6 +44,11 @@ const StartScreen = () => {
         alert(JSON.stringify(profile));
     }
 
+    const getProfile = async () => {
+        const userProfile = await getUser(user?.id);
+        alert(JSON.stringify(userProfile));
+    }
+
     const showSettings = () => {
         navigate('/settings');
     }
@@ -65,6 +72,9 @@ const StartScreen = () => {
                 <Button className='light size-xl' onClick={() => showProfile()}>
                     <Icon icon='assignment_ind' />
                     Profile
+                <Button className='light size-xl' onClick={() => getProfile()}>
+                    <Icon icon='assignment_ind' />
+                    Get Profile
                 </Button>
                 <Button className='light size-xl' onClick={() => showSettings()}>
                     <Icon icon='settings' />
