@@ -7,7 +7,7 @@ import Link from '../Button/Link';
 
 const Settings = (props) => {
     const navigate = useNavigate();
-    const { profile } = useUserProfile();
+    const { profile, updateProfile } = useUserProfile();
     const { isAvailable, showBackButton, user } = useTelegram();
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const Settings = (props) => {
 
     const removeRole = async () => {
         if (user && user.id) {
-            await api.updateUser(user.id, {role: ''});
+            await updateProfile({role: ''});
             navigate('/');
         } else {
             alert('Пользователь не найден');
