@@ -38,7 +38,7 @@ const PopupWriteTask = ({ isOpen, onClose }) => {
                     id='feedback' 
                     name='feedback' 
                     title='Сбор отзывов' 
-                    placeholder='Отметьте, если хотите, чтобы блогер обязательно оставил отзыв' 
+                    label='Отметьте, если хотите, чтобы блогер обязательно оставил отзыв' 
                     checked={feedback} 
                     onChange={handleFeedbackChange} 
                 />

@@ -3,8 +3,8 @@ import './Form.css';
 
 const CheckboxField = ({ id, label, comment, onChange, checked, ...checkboxProps }) => {
     return (
-        <div id={'checkbox-block-' + id} className='checkbox-block'>
-            <label htmlFor={id} className='checkbox-label'>
+        <div id={'input-block-' + id} className='input-block'>
+            <label htmlFor={id} className='checkbox'>
                 <input
                     id={id}
                     type="checkbox"
