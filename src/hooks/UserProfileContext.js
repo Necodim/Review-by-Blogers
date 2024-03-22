@@ -63,11 +63,11 @@ export const UserProfileProvider = ({ children }) => {
                 setProfile(updatedProfile);
                 showToast(result.message || 'Данные успешно сохранены', 'success');
             } else {
-                setErrorMessage(result.error || 'Произошла неизвестная ошибка');
+                setErrorMessage(result.message || 'Произошла неизвестная ошибка');
             }
             return result;
         } catch (error) {
-            setErrorMessage(error.toString());
+            setErrorMessage(error.message.toString());
         } finally {
             setLoading(false);
         }
@@ -94,12 +94,12 @@ export const UserProfileProvider = ({ children }) => {
                 console.log(result.subscription)
                 showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.subscription.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
             } else if (!!result && !result.success && result.error) {
-                setErrorMessage(result.error);
+                setErrorMessage(result.message);
             } else {
                 setErrorMessage('Произошла неизвестная ошибка');
             }
         } catch (error) {
-            setErrorMessage(error);
+            setErrorMessage(error.message);
         } finally {
             setLoading(false);
         }
