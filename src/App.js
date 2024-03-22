@@ -23,6 +23,8 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
   useEffect(() => {
     if (loading) return;
     if ((location.pathname !== '/' && location.pathname !== '/settings') && (!profile || (profile.role !== 'seller' && profile.role !== 'blogger'))) {
@@ -39,12 +41,32 @@ function App() {
     }
   }, [tg, defaultSettings]);
 
+  useEffect(() => {
+    const initialHeight = window.innerHeight;
+
+    function handleResize() {
+      const newHeight = window.innerHeight;
+      const difference = initialHeight - newHeight;
+      if (difference > 0) {
+        setKeyboardHeight(difference);
+      } else {
+        setKeyboardHeight(0);
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   if (loading) {
     return <Preloader>Загружаюсь...</Preloader>;
   }
 
   return (
-    <div className="app">
+    <div className="app" style={{ marginBottom: keyboardHeight }}>
       <Routes>
         <Route index element={!profile || !profile.role ? <StartScreen /> : <Navigate to="/profile" replace />} />
         <Route path="/profile" element={<Profile />} />
