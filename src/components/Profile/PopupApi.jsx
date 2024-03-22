@@ -1,6 +1,6 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { callback } from '../../hooks/callback';
+import { useTelegram } from '../../hooks/useTelegram';
 import Popup from "../Popup/Popup"
 import Link from '../Button/Link';
 import Form from '../Form/Form';
@@ -10,14 +10,30 @@ import imgInstruction2 from '../../images/instruction-2.png';
 import imgInstruction3 from '../../images/instruction-3.png';
 import imgInstruction4 from '../../images/instruction-4.png';
 
-
 const PopupApi = (props) => {
-    const { iconClearCallback } = callback();
+    const { tg, isAvailable } = useTelegram();
 
+    const [formData, setFormData] = useState({
+        'api': ''
+    });
+    const [isFormValid, setIsFormValid] = useState(false);
     const [toggle, setToggle] = useState(false);
     const [display, setDisplay] = useState('none');
     const [contentHeight, setContentHeight] = useState(0);
     const ref = useRef(null);
+
+    useEffect(() => {
+        const isValid = formData.api.trim() !== '';
+        setIsFormValid(isValid);
+    }, [formData]);
+
+    // useEffect(() => {
+    //     if (isAvailable) {
+    //         tg.readTextFromClipboard((data) => {
+    //             console.log(data);
+    //         });
+    //     }
+    // }, [tg, isAvailable])
 
     useLayoutEffect(() => {
         if (ref.current) {
@@ -79,6 +95,17 @@ const PopupApi = (props) => {
         )
     }
 
+    const handleApiChange = (event) => {
+        const { name, value } = event.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    }
+
+    const iconClearCallback = (event) => {
+        const input = event.target.closest('.input-wrapper').querySelector('input');
+        input.value = '';
+        setFormData(prev => ({ ...prev, [input.name]: input.value }));
+    }
+
     const apiPopupInput = () => {
         return (
             <Input
@@ -88,14 +115,16 @@ const PopupApi = (props) => {
                 icon='backspace'
                 iconCallback={iconClearCallback}
                 fade='true'
-                placeholder='eyJhbGciOiJFUzI1NiIsImtpZCI6IjIwM'
+                placeholder='eyJhbGciOiJ...'
+                value={formData.api}
+                onChange={handleApiChange}
             />
         )
     }
 
     const apiPopupForm = () => {
         return (
-            <Form className='form-wrapper' btnicon='save' btntext='Сохранить' onSubmit={props.onSubmit}>
+            <Form className='form-wrapper' btnicon='save' btntext='Сохранить' isDisabled={!isFormValid} onSubmit={props.onSubmit}>
                 {apiPopupInput()}
             </Form>
         )

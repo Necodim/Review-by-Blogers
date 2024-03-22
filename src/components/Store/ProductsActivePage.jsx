@@ -13,7 +13,7 @@ import PopupWriteTask from './PopupWriteTask';
 const ProductsActivePage = () => {
     const { isAvailable, showBackButton } = useTelegram();
     const location = useLocation();
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
     
     const [errorMessage, setErrorMessage] = useState('');
     const [isEditing, setIsEditing] = useState(false);
@@ -27,8 +27,8 @@ const ProductsActivePage = () => {
 
     useEffect(() => {
         if (errorMessage) {
-            resetLoadingToast();
             showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
         }
     }, [errorMessage, showToast]);
 

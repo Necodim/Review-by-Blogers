@@ -13,7 +13,7 @@ export const UserProfileProvider = ({ children }) => {
 
     const { tg, user, isAvailable } = useTelegram();
     const { getUser, updateUser, generateAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
 
     // Для тестов
     // const userId = user?.id;
@@ -22,8 +22,8 @@ export const UserProfileProvider = ({ children }) => {
 
     useEffect(() => {
         if (errorMessage) {
-            resetLoadingToast();
             showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
         }
     }, [errorMessage, showToast]);
 

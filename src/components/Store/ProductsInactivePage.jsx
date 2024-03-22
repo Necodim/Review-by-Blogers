@@ -14,7 +14,7 @@ import PopupWriteTask from './PopupWriteTask';
 const ProductsInactivePage = () => {
     const { isAvailable, showBackButton } = useTelegram();
     const location = useLocation();
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
 
     const [errorMessage, setErrorMessage] = useState('');
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
@@ -29,8 +29,8 @@ const ProductsInactivePage = () => {
 
     useEffect(() => {
         if (errorMessage) {
-            resetLoadingToast();
             showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
         }
     }, [errorMessage, showToast]);
 

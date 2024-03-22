@@ -8,11 +8,10 @@ const Categories = ({ onCategorySelect }) => {
   const [openedCategories, setOpenedCategories] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { showToast, resetLoadingToast } = useToastManager();
+  const { showToast } = useToastManager();
 
   useEffect(() => {
     if (errorMessage) {
-      resetLoadingToast();
       showToast(errorMessage, 'error');
     }
   }, [errorMessage, showToast]);

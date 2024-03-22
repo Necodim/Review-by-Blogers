@@ -27,7 +27,7 @@
 //     const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
 //     const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
 
-//     const { showToast, resetLoadingToast } = useToastManager();
+//     const { showToast } = useToastManager();
 
 //     useEffect(() => {
 //         if (errorMessage) {
@@ -148,7 +148,7 @@ const StoreSeller = () => {
     const { profile, loading } = useUserProfile();
     const location = useLocation();
     const navigate = useNavigate();
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
     const { getPlural } = useHelpers();
 
     const initialProductsPlaceholder = new Array(4).fill({}).map((_, index) => ({
@@ -165,8 +165,8 @@ const StoreSeller = () => {
 
     useEffect(() => {
         if (errorMessage) {
-            resetLoadingToast();
             showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
         }
     }, [errorMessage, showToast]);
 

@@ -11,7 +11,7 @@ const Settings = (props) => {
     const navigate = useNavigate();
     const { profile, updateProfile, updateUserData, addSubscription } = useUserProfile();
     const { isAvailable, showBackButton, user } = useTelegram();
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
 
     const [isPopupChangeRoleVisible, setIsPopupChangeRoleVisible] = useState(false);
     const [currentRole, setCurrentRole] = useState(profile.role);

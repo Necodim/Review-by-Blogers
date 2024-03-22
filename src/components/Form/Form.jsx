@@ -2,14 +2,14 @@ import React from 'react';
 import './Form.css';
 import Button from '../Button/Button';
 
-const Form = (props) => {
+const Form = ({ className, btnicon, btntext, isDisabled, ...props }) => {
     return (
-        <form {...props} className={'form-wrapper' + (props.className ? ' ' + props.className : '')}>
+        <form {...props} className={`form-wrapper ${className || ''}`}>
             {props.children}
-            <Button type="submit" icon={props.btnicon}>{props.btntext}</Button>
+            <Button type="submit" icon={btnicon} className={isDisabled ? 'disabled' : ''}>{btntext}</Button>
         </form>
     );
-}
+};
 
 Form.defaultProps = {
     btntext: 'Отправить',

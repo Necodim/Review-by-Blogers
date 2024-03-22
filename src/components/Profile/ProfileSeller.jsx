@@ -16,7 +16,7 @@ import PopupApi from './PopupApi.jsx';
 const ProfileSeller = () => {
     const { profile, updateProfile, cancelSubscription } = useUserProfile();
     const { getPlural } = useHelpers();
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
     
     const [errorMessage, setErrorMessage] = useState('');
     const [totalProducts, setTotalProducts] = useState(0);
@@ -25,8 +25,8 @@ const ProfileSeller = () => {
 
     useEffect(() => {
         if (errorMessage) {
-            resetLoadingToast();
             showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
         }
     }, [errorMessage, showToast]);
     
@@ -69,7 +69,7 @@ const ProfileSeller = () => {
              // для тестов
             tg ? tg.showAlert(error.message + '. Попробуйте ещё раз.') : alert(errorText);
         }
-    };
+    }
 
     const cancellingSubscription = async () => {
         const cancelledSubscription = await cancelSubscription();
@@ -93,7 +93,7 @@ const ProfileSeller = () => {
                     {!profile.subscription?.active && !profile.subscription?.avaliable && !profile.trial.active && profile.trial['barters-left'] > 0 && <Button className='list-item' onClick={startTrial}>Попробовать бесплатно</Button>}
                 </div>
             </div>
-            {(profile.subscription?.active || profile.subscription?.avaliable) &&
+            {(profile.subscription?.active || profile.subscription?.avaliable) && profile.api.wildberries.token &&
                 <div className='container' id='brands' >
                     <div className='list'>
                         <div className='list-item'>

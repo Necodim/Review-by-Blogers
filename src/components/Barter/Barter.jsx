@@ -44,10 +44,17 @@ const Barter = (props) => {
     const [bartersHistoryIsLoading, setBartersHistoryIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
 
     const { hideBackButton, user } = useTelegram();
     hideBackButton();
+
+    useEffect(() => {
+        if (errorMessage) {
+            showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
+        }
+    }, [errorMessage, showToast]);
     
     useEffect(() => {
         const fetchBartersNew = async () => {
@@ -87,12 +94,6 @@ const Barter = (props) => {
             return <Preloader>Загружаюсь...</Preloader>;
         }
     }, [loading, profile]);
-
-    if (errorMessage) {
-        resetLoadingToast();
-        return showToast(errorMessage, 'error');
-        // return <div className='error-message'>{errorMessage}</div>;
-    }
 
     const navigate = useNavigate();
 

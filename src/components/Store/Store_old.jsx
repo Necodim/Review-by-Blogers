@@ -30,7 +30,14 @@ const StoreSeller = (props) => {
     const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
     const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
 
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
+
+    useEffect(() => {
+        if (errorMessage) {
+            showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
+        }
+    }, [errorMessage, showToast]);
 
     useEffect(() => {
         if (location.state?.showPopupAfterBloggerOnboarding) {
@@ -65,12 +72,6 @@ const StoreSeller = (props) => {
             return <Preloader>Загружаюсь...</Preloader>;
         }
     }, [loading, profile]);
-
-    if (errorMessage) {
-        resetLoadingToast();
-        return showToast(errorMessage, 'error');
-        // return <div className='error-message'>{errorMessage}</div>;
-    }
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);

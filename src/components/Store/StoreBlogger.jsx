@@ -11,7 +11,7 @@ const StoreBlogger = (props) => {
     const { profile } = useUserProfile();
     const navigate = useNavigate();
     const location = useLocation();
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
 
     const [errorMessage, setErrorMessage] = useState('');
     const [showPopupAfterBloggerOnboarding, setShowPopupAfterBloggerOnboarding] = useState(false);
@@ -24,10 +24,12 @@ const StoreBlogger = (props) => {
         }
     }, [location.state]);
 
-    if (errorMessage) {
-        resetLoadingToast();
-        return showToast(errorMessage, 'error');
-    }
+    useEffect(() => {
+        if (errorMessage) {
+            showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
+        }
+    }, [errorMessage, showToast]);
 
     const handleCategorySelect = (categoryId) => {
         navigate(`/${profile.role}/store/categories/category-${categoryId}`);

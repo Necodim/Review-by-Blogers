@@ -11,14 +11,14 @@ const StartScreen = () => {
     const navigate = useNavigate();
     const { updateUserData } = useUserProfile();
     const { tg, isAvailable, hideBackButton } = useTelegram();
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
 
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         if (errorMessage) {
-            resetLoadingToast();
             showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
         }
     }, [errorMessage, showToast]);
 

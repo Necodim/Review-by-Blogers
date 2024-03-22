@@ -5,7 +5,7 @@ import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
 
 function BrandList({ setTotalProducts }) {
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
     const { getPlural } = useHelpers();
     const { profile, loading } = useUserProfile();
     const [products, setProducts] = useState([]);

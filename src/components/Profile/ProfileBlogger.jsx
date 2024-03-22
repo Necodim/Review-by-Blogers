@@ -12,7 +12,7 @@ import Link from '../Button/Link.jsx';
 const ProfileBlogger = () => {
     const { profile, updateUserData } = useUserProfile();
     const { isAvailable } = useTelegram();
-    const { showToast, resetLoadingToast } = useToastManager();
+    const { showToast } = useToastManager();
 
     const [isEditing, setIsEditing] = useState(false);
     const [cardNumberValue, setCardNumberValue] = useState('');
@@ -50,7 +50,7 @@ const ProfileBlogger = () => {
 
     const handleCardNumberChange = (event) => {
         let { value } = event.target;
-        value = value.replace(/\s+/g, '');
+        value = value.replace(/\D+/g, '');
         const newValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
         setCardNumberValue(newValue);
     }
