@@ -1,7 +1,7 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { callback } from '../../hooks/callback';
-import Popup from "./Popup"
+import Popup from "../Popup/Popup"
 import Link from '../Button/Link';
 import Form from '../Form/Form';
 import Input from '../Form/Input';
@@ -12,6 +12,8 @@ import imgInstruction4 from '../../images/instruction-4.png';
 
 
 const PopupApi = (props) => {
+    const { iconClearCallback } = callback();
+
     const [toggle, setToggle] = useState(false);
     const [display, setDisplay] = useState('none');
     const [contentHeight, setContentHeight] = useState(0);
@@ -45,8 +47,6 @@ const PopupApi = (props) => {
         }
         setToggle(!toggle);
     }
-
-    const { iconClearCallback } = callback();
 
     const apiPopupHeader = () => {
         return (
@@ -86,7 +86,7 @@ const PopupApi = (props) => {
                 name='api'
                 title='Введите API-ключ'
                 icon='backspace'
-                iconcallback={iconClearCallback}
+                iconCallback={iconClearCallback}
                 fade='true'
                 placeholder='eyJhbGciOiJFUzI1NiIsImtpZCI6IjIwM'
             />

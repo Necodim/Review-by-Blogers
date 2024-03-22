@@ -4,7 +4,7 @@ import Form from '../Form/Form';
 import Textarea from '../Form/Textarea';
 import Input from '../Form/Input';
 
-const WriteTaskPopup = ({ isOpen, onClose }) => {
+const PopupWriteTask = ({ isOpen, onClose }) => {
     const [task, setTask] = useState('');
     const [brandInstagram, setBrandInstagram] = useState('');
     const [feedback, setFeedback] = useState(false);
@@ -49,4 +49,4 @@ const WriteTaskPopup = ({ isOpen, onClose }) => {
     );
 };
 
-export default WriteTaskPopup;
+export default PopupWriteTask;

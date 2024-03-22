@@ -31,7 +31,7 @@ function BrandList({ setTotalProducts }) {
                 setTotalProducts(0);
                 console.log('error: ', error)
                 if (error && error.response && error.response.data && error.response.data.code && error.response.data.code === 'API_KEY_MISSING') {
-                    setErrorMessage('Вы не добавили API-ключ');
+                    showToast('Вы не добавили API-ключ', 'warning');
                 } else {
                     setErrorMessage(error.message);
                 }

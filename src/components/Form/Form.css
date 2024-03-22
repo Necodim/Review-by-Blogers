@@ -64,7 +64,8 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
@@ -168,4 +169,37 @@ textarea {
 
 .input-wrapper .icon-wrapper.clickable .icon {
     pointer-events: none;
+}
+
+.radio-tabs {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--xs);
+    color: var(--text-color);
+    background-color: var(--primary-dark-2);
+    border: none;
+    border-radius: var(--m);
+    overflow: hidden;
+}
+
+.radio-tab {
+    flex-grow: 1;
+    text-align: center;
+    padding: var(--s) var(--m);
+    cursor: pointer;
+    border-radius: var(--m);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.radio-tab.active {
+    background-color: var(--primary);
+}
+
+.radio-tab label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--xxs);
 }

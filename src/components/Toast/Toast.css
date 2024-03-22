@@ -3,7 +3,7 @@
     --toastify-color-dark: var(--bg-gradient);
     --toastify-color-info: var(--primary);
     --toastify-color-success: var(--success);
-    --toastify-color-warning: #f1c40f;
+    --toastify-color-warning: var(--warning);
     --toastify-color-error: var(--error);
     --toastify-color-transparent: rgba(255, 255, 255, 0.7);
 

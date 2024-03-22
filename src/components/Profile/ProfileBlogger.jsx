@@ -10,7 +10,7 @@ import Input from '../Form/Input.jsx';
 import Link from '../Button/Link.jsx';
 
 const ProfileBlogger = () => {
-    const { profile, updateProfile } = useUserProfile();
+    const { profile, updateUserData } = useUserProfile();
     const { isAvailable } = useTelegram();
     const { showToast, resetLoadingToast } = useToastManager();
 
@@ -37,7 +37,7 @@ const ProfileBlogger = () => {
                 'instagram-coverage': parseInt(formData.get('instagram-coverage'), 10),
                 'onboarding': false,
             };
-            await updateProfile(data);
+            await updateUserData(data);
             if (onboarding) {
                 navigate('/blogger/store', { state: { showPopupAfterBloggerOnboarding: true } });
             } else {

@@ -2,7 +2,7 @@ import React from 'react';
 import Popup from '../Popup/Popup';
 import Button from '../Button/Button';
 
-const EditProductsPopup = ({ isOpen, onClose, onWriteTask }) => (
+const PopupEditProducts = ({ isOpen, onClose, onWriteTask }) => (
     <Popup id='popup-edit-products' isOpen={isOpen} onClose={onClose}>
         <div className='list'>
             <Button className='list-item vertical' onClick={onWriteTask}>Включить бартер</Button>
@@ -11,4 +11,4 @@ const EditProductsPopup = ({ isOpen, onClose, onWriteTask }) => (
     </Popup>
 );
 
-export default EditProductsPopup;
+export default PopupEditProducts;

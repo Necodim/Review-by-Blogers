@@ -36,8 +36,8 @@ const setApi = async (userId, api) => {
     return response.data;
 }
 
-const addSellerSubscription = async (userId) => {
-    const response = await apiClient.post(`/user/subscription/add/${userId}`);
+const addSellerSubscription = async (userId, data) => {
+    const response = await apiClient.post(`/user/subscription/add/${userId}`, data);
     return response.data;
 }
 

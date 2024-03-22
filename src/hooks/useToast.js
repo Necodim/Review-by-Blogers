@@ -31,7 +31,7 @@ export const useToastManager = () => {
         loadingToastIdRef.current = null; // Сброс ID тоста загрузки
       }
       // Показываем тост успеха или ошибки
-      type === 'success' ? toast.success(message, options) : toast.error(message, options);
+      type === 'success' ? toast.success(message, options) : type === 'error' ? toast.error(message, options) : type === 'warning' ? toast.warning(message, options) : toast.info(message, options);
     }
   };
 

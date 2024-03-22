@@ -7,8 +7,8 @@ import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Link from '../Button/Link';
 import ProductsGrid from './ProductsGrid';
-import EditProductsPopup from './EditProductsPopup';
-import WriteTaskPopup from './WriteTaskPopup';
+import PopupEditProducts from './PopupEditProducts';
+import PopupWriteTask from './PopupWriteTask';
 
 const ProductsActivePage = () => {
     const { showBackButton } = useTelegram();
@@ -74,12 +74,12 @@ const ProductsActivePage = () => {
                 />
                 {isEditing && <Button onClick={openPopupEditProducts} className={selectedProducts.length > 0 ? 'sticky b-s shadow' : 'relative b-0 disabled'} icon='edit'>Редактировать</Button>}
             </div>
-            <EditProductsPopup
+            <PopupEditProducts
                 isOpen={isPopupEditProductsVisible}
                 onClose={() => setIsPopupEditProductsVisible(false)}
                 onWriteTask={openPopupWriteTask}
             />
-            <WriteTaskPopup
+            <PopupWriteTask
                 isOpen={isPopupWriteTaskVisible}
                 onClose={() => setIsPopupWriteTaskVisible(false)}
             />

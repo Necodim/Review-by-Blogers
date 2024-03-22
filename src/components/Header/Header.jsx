@@ -28,7 +28,7 @@ const Header = (props) => {
                         <Icon icon='groups' />
                         <span>Бартеры</span>
                     </Button>
-                    <Button className={`nav-button light ${isActive(profile.role) ? 'active' : ''}`}>
+                    <Button className={`nav-button light ${isActive('/profile') ? 'active' : ''}`}>
                         <Icon icon='person' />
                         <span>Профиль</span>
                     </Button>
@@ -53,7 +53,7 @@ const Header = (props) => {
                     </Button>
                 </Link>
                 <Link to={ `../profile` }>
-                    <Button className={`nav-button light ${isActive(profile.role)}`}>
+                    <Button className={`nav-button light ${isActive('/profile')}`}>
                         <Icon icon='person' />
                         <span>Профиль</span>
                     </Button>
