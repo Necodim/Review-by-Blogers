@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 export function useHelpers() {
     const getPlural = (n, form1, form2, form5) => {
         let nAbs = Math.abs(n) % 100;
@@ -11,6 +9,6 @@ export function useHelpers() {
     }
 
     return {
-        getPlural
+        getPlural,
     }
 }

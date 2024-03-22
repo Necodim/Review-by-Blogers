@@ -14,7 +14,7 @@ import ProductsInactivePage from './components/Store/ProductsInactivePage';
 import ProductsActivePage from './components/Store/ProductsActivePage';
 import Barter from './components/Barter/Barter';
 import Profile from './components/Profile/Profile';
-import Subscribe from './components/Profile/Subscribe';
+import Subscribe from './components/Profile/Subscription/Subscribe';
 import Settings from './components/Settings/Settings';
 
 function App() {
@@ -48,13 +48,13 @@ function App() {
       <Routes>
         <Route index element={!profile || !profile.role ? <StartScreen /> : <Navigate to="/profile" replace />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/subscribe" element={<Subscribe />} />
         <Route path="/store" element={<Store />} />
         <Route path="/store/categories/category-:id" element={<CategoryPage />} />
         <Route path="/store/products/product-:id" element={<ProductPage />} />
         <Route path="/store/products/active" element={<ProductsActivePage />} />
         <Route path="/store/products/inactive" element={<ProductsInactivePage />} />
         <Route path="/barter" element={<Barter />} />
-        <Route path="/subscribe" element={<Subscribe />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>
       <ToastContainer />

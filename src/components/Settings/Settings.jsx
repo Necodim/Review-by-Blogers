@@ -18,9 +18,7 @@ const Settings = (props) => {
     const [newRole, setNewRole] = useState(profile.role);
 
     useEffect(() => {
-        if (isAvailable) {
-            showBackButton();
-        }
+        if (isAvailable) showBackButton();
     }, [isAvailable, showBackButton]);
 
     useEffect(() => {

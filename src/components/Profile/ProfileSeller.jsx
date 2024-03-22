@@ -37,7 +37,7 @@ const ProfileSeller = () => {
 
     const goToSubscribe = () => {
         if (profile.subscription?.active) showToast('У вас уже есть подписка', 'error');
-        navigate('subscribe')
+        navigate('/profile/subscribe')
     }
 
     const startTrial = () => {

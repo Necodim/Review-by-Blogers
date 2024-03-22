@@ -11,7 +11,7 @@ import PopupEditProducts from './PopupEditProducts';
 import PopupWriteTask from './PopupWriteTask';
 
 const ProductsActivePage = () => {
-    const { showBackButton } = useTelegram();
+    const { isAvailable, showBackButton } = useTelegram();
     const location = useLocation();
     const { showToast, resetLoadingToast } = useToastManager();
     
@@ -21,7 +21,9 @@ const ProductsActivePage = () => {
     const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
     const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
 
-    showBackButton();
+    useEffect(() => {
+        if (isAvailable) showBackButton();
+    }, [isAvailable, showBackButton]);
 
     useEffect(() => {
         if (errorMessage) {

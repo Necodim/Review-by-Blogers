@@ -46,8 +46,8 @@
   --error: #ff474b;
 }
 
-html, body {
-  /* height: 100%; */
+html {
+  height: 100%;
 }
 
 body {
@@ -56,10 +56,12 @@ body {
   font-weight: 400;
   font-style: normal;
   line-height: normal;
+  text-rendering: optimizeSpeed;
   background: var(--dark);
   color: var(--text-color);
   position: relative;
-  overflow: auto;
+  /* overflow: auto; */
+  overflow: hidden;
 }
 
 a, a:visited {
@@ -93,16 +95,15 @@ h3 {
 }
 
 #root {
-  /* min-height: 100vh;
-  min-height: 100dvh; */
   padding: var(--xs);
   position: relative;
-  /* margin-bottom: var(--xl); */
-  /* overflow: hidden; */
 }
 
 .app {
-  /* overflow-y: scroll; */
+  height: 100vh;
+  height: 100dvh;
+  padding-bottom: var(--xl);
+  overflow-y: auto;
 }
 
 .hidden {
