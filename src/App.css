@@ -64,7 +64,7 @@ body {
   color: var(--text-color);
   position: relative;
   overflow: hidden;
-  margin-bottom: var(--keyboard-height, 0px);
+  /* margin-bottom: var(--keyboard-height, 0px); */
 }
 
 a,
