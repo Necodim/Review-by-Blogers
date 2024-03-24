@@ -50,7 +50,7 @@
 }
 
 html {
-  overflow: hidden;
+  overflow: visible;
 }
 
 body {
@@ -105,14 +105,13 @@ h3 {
   padding: var(--xs);
   padding-bottom: 0;
   position: relative;
-  overflow: visible;
 }
 
 .app {
   /* height: 100vh;
   height: 100dvh; */
   height: var(--tg-viewport-height);
-  padding-bottom: var(--xl);
+  /* padding-bottom: var(--xl); */
   overflow-y: auto;
 }
 
@@ -132,6 +131,7 @@ h3 {
   justify-content: flex-start;
   align-items: flex-start;
   gap: var(--xs);
+  margin-bottom: var(--xl);
 }
 
 .content-wrapper>* {
