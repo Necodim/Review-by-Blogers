@@ -63,10 +63,8 @@ body {
   background: var(--dark);
   color: var(--text-color);
   position: relative;
-  /* overflow: auto; */
   overflow: hidden;
-  /* margin-bottom: var(--keyboard-height, 0px); */
-  height: var(--tg-viewport-height);
+  margin-bottom: var(--keyboard-height, 0px);
 }
 
 a,
@@ -111,7 +109,7 @@ h3 {
 .app {
   /* height: 100vh;
   height: 100dvh; */
-  height: 100%;
+  height: var(--tg-viewport-height);
   padding-bottom: var(--xl);
   overflow-y: auto;
 }
