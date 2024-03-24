@@ -70,7 +70,7 @@ export function useTelegram() {
 
     const listenViewportChanged = () => {
         tg.onEvent('viewportChanged', () => {
-            tg.showAlert('width: ' + window.innerWidth + ' x ' + 'height: ' + window.innerHeight + ' (viewportHeight' + tg.viewportStableHeight + ')');
+            window.dispatchEvent(new Event('resize'));
         })
     }
 
