@@ -108,9 +108,9 @@ h3 {
   /* height: 100vh; */
   /* height: 100dvh; */
   
-  height: var(--tg-viewport-height);
   min-height: 100vh;
   min-height: 100dvh;
+  height: var(--tg-viewport-height);
   padding-top: var(--xs);
   overflow-y: auto;
 }
