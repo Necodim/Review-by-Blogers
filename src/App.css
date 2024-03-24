@@ -62,7 +62,7 @@ body {
   position: relative;
   /* overflow: auto; */
   overflow: hidden;
-  min-height: calc(100vh - var(--keyboard-height, 0px));
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 a, a:visited {
