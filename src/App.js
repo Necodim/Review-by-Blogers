@@ -27,13 +27,13 @@ function App() {
 
   useEffect(() => {
     let resizeTimer;
-    const initialHeight = window.innerHeight;
+    const initialHeight = tg.viewportStableHeight;
   
     function handleResize() {
-      clearTimeout(resizeTimer); // Очищаем предыдущий таймер, если он был
+      clearTimeout(resizeTimer);
   
       resizeTimer = setTimeout(() => {
-        const newHeight = window.innerHeight;
+        const newHeight = tg.viewportHeight;
         const difference = initialHeight - newHeight;
         if (difference > 0) {
           // Клавиатура, вероятно, открыта
@@ -44,15 +44,15 @@ function App() {
           setKeyboardHeight(0);
           document.documentElement.style.setProperty('--keyboard-height', `0px`);
         }
-        tg.showAlert(difference); // Выполняем alert только после окончания изменения размера
-      }, 500); // Задержка в 500 мс
+        tg.showAlert(difference);
+      }, 500);
     }
   
     window.addEventListener('resize', handleResize);
   
     return () => {
       window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimer); // Очищаем таймер при размонтировании компонента
+      clearTimeout(resizeTimer);
     };
   }, [tg]);
 
