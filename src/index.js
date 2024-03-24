@@ -19,5 +19,6 @@ root.render(
       </UserProfileProvider>
     </BrowserRouter>
     <Background />
+    <div id='popup-root' />
   </React.StrictMode>
 );
