@@ -58,7 +58,7 @@ body {
   position: relative;
   /* overflow: auto; */
   overflow: hidden;
-  padding-bottom: var(--keyboard-height, 0px);
+  margin-bottom: var(--keyboard-height, 0px);
 }
 
 a,
@@ -192,6 +192,10 @@ h3 {
   border: none;
   border-radius: var(--s);
   padding: var(--m);
+  overflow: hidden;
+}
+
+.overflow-hidden {
   overflow: hidden;
 }
 

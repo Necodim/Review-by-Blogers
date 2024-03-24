@@ -7,13 +7,16 @@ import Icon from '../Icon/Icon';
 const Popup = ({ id, className, isOpen, onClose, children }) => {
 
   useEffect(() => {
+    const app = document.querySelector('.app');
     const popup = document.getElementById(id);
     if (popup) {
       const popupWrapper = popup.closest('.popup-background');
       if (isOpen && popupWrapper) {
         popupWrapper.classList.remove('closed');
+        app.classList.add('overflow-hidden');
       } else if (popupWrapper) {
         popupWrapper.classList.add('closed');
+        app.classList.remove('overflow-hidden');
       }
     }
   }, [id, isOpen]);
