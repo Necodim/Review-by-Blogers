@@ -49,6 +49,10 @@
   --error: #ff474b;
 }
 
+html {
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-family);
   font-size: var(--text-size-m);
