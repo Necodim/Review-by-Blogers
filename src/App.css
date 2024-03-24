@@ -16,6 +16,9 @@
   --text-size-s: 14px;
   --text-size-m: var(--m);
   --text-size-l: var(--l);
+  --text-size-xl: var(--xl);
+  --text-size-xxl: var(--xxl);
+  --text-size-xxxl: var(--xxxl);
   --text-color: #ffffff;
   --font-family: 'Inter', sans-serif;
   --primary: #47A7FF;
@@ -44,6 +47,10 @@
   --warning: #fffb47;
   /* --error: var(--secondary-dark-1); */
   --error: #ff474b;
+}
+
+html {
+  overflow: hidden;
 }
 
 body {
@@ -75,7 +82,7 @@ small {
 }
 
 h1 {
-  font-size: var(--text-size-xl);
+  font-size: var(--text-size-xxl);
   font-style: normal;
   font-weight: 700;
   line-height: normal;
