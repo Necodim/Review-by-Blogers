@@ -7,6 +7,7 @@
     top: 0;
     left: 0;
     z-index: -1;
+    background: linear-gradient(180deg, rgba(var(--primary-dark-2-rgb), 0) 50%, rgba(var(--primary-dark-2-rgb), 1) 100%);
     overflow: hidden;
     pointer-events: none;
 }
@@ -20,9 +21,9 @@
     width: 1500px;
     height: 1500px;
     border-radius: 1500px;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(var(--primary-dark-2-rgb), 1) 22%, rgba(var(--primary-dark-2-rgb), 0) 100%);
-    filter: blur(5px);
-    -webkit-filter: blur(5px);
+    /* background: radial-gradient(50% 50% at 50% 50%, rgba(var(--primary-dark-2-rgb), 1) 22%, rgba(var(--primary-dark-2-rgb), 0) 100%); */
+    /* filter: blur(5px);
+    -webkit-filter: blur(5px); */
 }
 
 .bg-star-wrapper {

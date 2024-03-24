@@ -91,11 +91,11 @@ export function useTelegram() {
         // theme.destructive_text_color = '#992B64';
         tg.setHeaderColor('#0E2133');
         // tg.setBackgroundColor('#0E2133');
-        tg.setBackgroundColor('#ffcc00');
+        tg.setBackgroundColor('#1C4366');
         tg.enableClosingConfirmation();
         tg.expand();
         BackButton();
-        settingsButton(false);
+        // settingsButton(false);
         settingsButton(true);
         listenViewportChanged();
     }
