@@ -105,6 +105,7 @@ h3 {
 #root {
   padding: var(--xs);
   position: relative;
+  height: var(--tg-viewport-height);
 }
 
 .app {

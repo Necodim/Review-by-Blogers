@@ -26,33 +26,25 @@ function App() {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useEffect(() => {
-    let resizeTimer;
     const initialHeight = tg.viewportStableHeight;
   
     function handleResize() {
-      clearTimeout(resizeTimer);
-  
-      resizeTimer = setTimeout(() => {
-        const newHeight = tg.viewportHeight;
-        const difference = initialHeight - newHeight;
-        if (difference > 0) {
-          // Клавиатура, вероятно, открыта
-          setKeyboardHeight(difference);
-          document.documentElement.style.setProperty('--keyboard-height', `${difference}px`);
-        } else {
-          // Клавиатура закрыта
-          setKeyboardHeight(0);
-          document.documentElement.style.setProperty('--keyboard-height', `0px`);
-        }
-        tg.showAlert(difference);
-      }, 500);
+      const newHeight = tg.viewportHeight;
+      const difference = initialHeight - newHeight;
+      if (difference > 0) {
+        setKeyboardHeight(difference);
+        document.documentElement.style.setProperty('--keyboard-height', `${difference}px`);
+      } else {
+        setKeyboardHeight(0);
+        document.documentElement.style.setProperty('--keyboard-height', `0px`);
+      }
+      tg.showAlert(difference);
     }
   
     window.addEventListener('resize', handleResize);
   
     return () => {
       window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimer);
     };
   }, [tg]);
 
