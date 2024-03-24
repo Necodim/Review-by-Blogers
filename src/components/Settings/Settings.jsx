@@ -28,7 +28,6 @@ const Settings = (props) => {
 
     // Тестовый функционал
     const goToStartScreen = () => {
-        updateProfile({ ...profile });
         navigate('/');
     }
 
@@ -41,15 +40,15 @@ const Settings = (props) => {
         }
         const addedSubscription = await addSubscription(data);
         console.log(addedSubscription)
-        updateProfile({ ...profile, subscription: addedSubscription });
+        updateProfile({ subscription: addedSubscription });
         goToStartScreen();
     }
 
     // Тестовый функционал
     const removeRole = async () => {
-        const profileWithoutRole = await updateUserData({role: ''});
+        await updateUserData({role: ''});
         setCurrentRole(newRole);
-        updateProfile({ ...profile, role: profileWithoutRole.role });
+        updateProfile({ role: newRole });
         goToStartScreen();
     }
 
