@@ -4,8 +4,8 @@
 
 .popup-background {
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  /* min-height: 100vh;
+  min-height: 100dvh; */
   height: var(--tg-viewport-height);
   position: fixed;
   top: 0;
