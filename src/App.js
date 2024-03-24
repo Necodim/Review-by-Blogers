@@ -64,7 +64,7 @@ function App() {
   }, [tg, defaultSettings]);
 
   if (loading) {
-    return <Preloader className="app">Загружаюсь...</Preloader>;
+    return <Preloader>Загружаюсь...</Preloader>;
   }
 
   return (

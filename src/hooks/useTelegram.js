@@ -83,13 +83,13 @@ export function useTelegram() {
         // theme.button_color = '#47A7FF';
         // theme.button_text_color = '#FFFFFF';
         // theme.secondary_bg_color = '#1C4366';
-        // theme.header_bg_color = '#0E2133';
+        theme.header_bg_color = 'var(--dark)';
         // theme.accent_text_color = '#91CAFF';
         // theme.section_bg_color = '#0E2133';
         // theme.section_header_text_color = '#0E2133';
         // theme.subtitle_text_color = '#93ADC5';
-        // theme.destructive_text_color = '#992B64';
-        tg.setHeaderColor('#0E2133');
+        theme.destructive_text_color = 'var(--error)';
+        // tg.setHeaderColor('#0E2133');
         // tg.setBackgroundColor('#0E2133');
         tg.setBackgroundColor('#1C4366');
         tg.enableClosingConfirmation();
