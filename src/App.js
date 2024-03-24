@@ -44,7 +44,7 @@ function App() {
           setKeyboardHeight(0);
           document.documentElement.style.setProperty('--keyboard-height', `0px`);
         }
-        alert(difference); // Выполняем alert только после окончания изменения размера
+        tg.showAlert(difference); // Выполняем alert только после окончания изменения размера
       }, 500); // Задержка в 500 мс
     }
   
@@ -54,7 +54,7 @@ function App() {
       window.removeEventListener('resize', handleResize);
       clearTimeout(resizeTimer); // Очищаем таймер при размонтировании компонента
     };
-  }, []);
+  }, [tg]);
 
   useEffect(() => {
     if (loading) return;

@@ -72,11 +72,15 @@ const Settings = (props) => {
     }
 
     const changeRole = async () => {
-        const profileWithNewRole = await updateUserData({role: newRole});
-        setCurrentRole(newRole);
-        updateProfile({ ...profile, role: profileWithNewRole.role });
-        goToStartScreen();
-    }
+        try {
+            const profileWithNewRole = await updateUserData({ role: newRole });
+            setCurrentRole(profileWithNewRole.role);
+            updateProfile({ role: profileWithNewRole.role });
+            goToStartScreen();
+        } catch (error) {
+            showToast('Ошибка при обновлении роли', 'error');
+        }
+    } 
 
     return (
         <div className='content-wrapper'>
