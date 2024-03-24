@@ -105,13 +105,14 @@ h3 {
   padding-left: var(--xs);
   padding-right: var(--xs);
   position: relative;
+  height: var(--tg-viewport-height);
   overflow-y: auto;
 }
 
 .app {
   /* height: 100vh;
   height: 100dvh; */
-  /* height: var(--tg-viewport-height); */
+  
   height: 100%;
   min-height: 100vh;
   min-height: 100dvh;
