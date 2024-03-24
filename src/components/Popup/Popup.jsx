@@ -1,32 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './Popup.css';
 import Link from '../Button/Link';
 import Icon from '../Icon/Icon';
 
 const Popup = ({ id, className, isOpen, onClose, children }) => {
-
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
-
-  useEffect(() => {
-    const initialHeight = window.innerHeight;
-
-    function handleResize() {
-      const newHeight = window.innerHeight;
-      const difference = initialHeight - newHeight;
-      if (difference > 0) {
-        setKeyboardHeight(difference);
-      } else {
-        setKeyboardHeight(0);
-      }
-    }
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     const popup = document.getElementById(id);
@@ -51,7 +29,7 @@ const Popup = ({ id, className, isOpen, onClose, children }) => {
   const popupRoot = document.getElementById('popup-root');
 
   return ReactDOM.createPortal(
-    <div className='popup-background closed' onClick={handleBackdropClick} style={{ marginBottom: keyboardHeight }}>
+    <div className='popup-background closed' onClick={handleBackdropClick}>
       <div className='popup-wrapper'>
         <Link onClick={onClose}>
           <Icon icon='highlight_off' size='big' />
