@@ -38,7 +38,6 @@ function App() {
         setKeyboardHeight(0);
         document.documentElement.style.setProperty('--keyboard-height', `0px`);
       }
-      tg.showAlert(difference);
     }
   
     window.addEventListener('resize', handleResize);
@@ -46,7 +45,7 @@ function App() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [tg]);
+  }, []);
 
   useEffect(() => {
     if (loading) return;
