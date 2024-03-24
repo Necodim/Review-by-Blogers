@@ -15,10 +15,11 @@ const PopupApi = (props) => {
     const { handleFocus } = useEvents();
     const { showToast } = useToastManager();
 
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
         'api': ''
     });
-    const [isFormValid, setIsFormValid] = useState(false);
+    const [attemptedSubmit, setAttemptedSubmit] = useState(false);
     const [isValid, setIsValid] = useState(null);
     const [toggle, setToggle] = useState(false);
     const [display, setDisplay] = useState('none');
@@ -26,8 +27,15 @@ const PopupApi = (props) => {
     const ref = useRef(null);
 
     useEffect(() => {
+        if (errorMessage && attemptedSubmit) {
+            showToast(errorMessage, 'error');
+            setTimeout(() => setErrorMessage(''), 500);
+        }
+    }, [errorMessage, attemptedSubmit, showToast]);
+
+    useEffect(() => {
         const isValid = formData.api.trim() !== '';
-        setIsFormValid(isValid);
+        setIsValid(isValid);
     }, [formData]);
 
     useEffect(() => {
@@ -97,28 +105,6 @@ const PopupApi = (props) => {
         )
     }
 
-    function validateJWT(token) {
-        const parts = token.split('.');
-        if (parts.length !== 3) {
-            showToast('Неверный формат JWT', 'error');
-            return false;
-        }
-
-        try {
-            const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-            const now = Date.now() / 1000;
-            if (payload.exp && payload.exp < now) {
-                showToast('Этот токен истек, создайте новый', 'error');
-                return false;
-            }
-        } catch (error) {
-            showToast('Ошибка при декодировании или чтении payload', 'error');
-            return false;
-        }
-
-        return true;
-    }
-
     const handleApiChange = (event) => {
         const { name, value } = event.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -147,8 +133,32 @@ const PopupApi = (props) => {
         )
     }
 
+    const validateJWT = (token) => {
+        setAttemptedSubmit(false);
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+            setErrorMessage('Неверный формат JWT');
+            return false;
+        }
+
+        try {
+            const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+            const now = Date.now() / 1000;
+            if (payload.exp && payload.exp < now) {
+                setErrorMessage('Этот токен истек, создайте новый');
+                return false;
+            }
+        } catch (error) {
+            setErrorMessage('Ошибка при декодировании или чтении payload');
+            return false;
+        }
+
+        return true;
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        setAttemptedSubmit(true);
         if (isValid) {
             if (validateJWT(formData.api)) {
                 props.onSubmit(event);
@@ -156,14 +166,12 @@ const PopupApi = (props) => {
                     props.onSuccess();
                 }
             }
-        } else {
-            showToast('Заполните поле', 'error');
         }
     }
 
     const apiPopupForm = () => {
         return (
-            <Form className='form-wrapper' btnicon='save' btntext='Сохранить' isDisabled={!isFormValid} onSubmit={handleSubmit}>
+            <Form className='form-wrapper' btnicon='save' btntext='Сохранить' isDisabled={!isValid} onSubmit={handleSubmit}>
                 {apiPopupInput()}
             </Form>
         )

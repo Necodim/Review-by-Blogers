@@ -103,6 +103,7 @@ h3 {
 
 #root {
   padding: var(--xs);
+  padding-bottom: 0;
   position: relative;
 }
 
