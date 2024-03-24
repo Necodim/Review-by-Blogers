@@ -263,7 +263,7 @@ const StoreSeller = () => {
                 </div>
             }
             {inactiveBarters.length > 0 && 
-                <div className='container' id='products-inactive'>
+                <div className='container' id='products-inactive' style={{ paddingBottom: 700 + 'px' }}>
                     <div className='list'>
                         <div className='list-item'>
                             <h2>Бартеры выключены</h2>
