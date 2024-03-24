@@ -90,7 +90,8 @@ export function useTelegram() {
         // theme.subtitle_text_color = '#93ADC5';
         // theme.destructive_text_color = '#992B64';
         tg.setHeaderColor('#0E2133');
-        tg.setBackgroundColor('#0E2133');
+        // tg.setBackgroundColor('#0E2133');
+        tg.setBackgroundColor('#ffcc00');
         tg.enableClosingConfirmation();
         tg.expand();
         BackButton();

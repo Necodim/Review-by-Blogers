@@ -106,6 +106,7 @@ const PopupApi = (props) => {
     }
 
     const handleApiChange = (event) => {
+        setAttemptedSubmit(false);
         const { name, value } = event.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     }
@@ -134,7 +135,6 @@ const PopupApi = (props) => {
     }
 
     const validateJWT = (token) => {
-        setAttemptedSubmit(false);
         const parts = token.split('.');
         if (parts.length !== 3) {
             setErrorMessage('Неверный формат JWT');
