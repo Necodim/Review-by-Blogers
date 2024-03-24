@@ -49,10 +49,6 @@
   --error: #ff474b;
 }
 
-html {
-  margin-bottom: var(--keyboard-height, 0px);
-}
-
 body {
   font-family: var(--font-family);
   font-size: var(--text-size-m);
@@ -64,6 +60,7 @@ body {
   color: var(--text-color);
   position: relative;
   overflow: hidden;
+  margin-bottom: var(--keyboard-height, 0px);
 }
 
 a,
