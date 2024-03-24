@@ -74,6 +74,7 @@ const Settings = (props) => {
     const changeRole = async () => {
         try {
             const profileWithNewRole = await updateUserData({ role: newRole });
+            console.log(profileWithNewRole)
             setCurrentRole(profileWithNewRole.role);
             updateProfile({ role: profileWithNewRole.role });
             goToStartScreen();

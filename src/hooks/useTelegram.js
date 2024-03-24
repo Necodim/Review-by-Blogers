@@ -68,6 +68,12 @@ export function useTelegram() {
         // });
     }
 
+    const listenViewportChanged = () => {
+        tg.onEvent('viewportChanged', () => {
+            tg.showAlert('width: ' + window.innerWidth + ' x ' + 'height: ' + window.innerHeight + ' (viewportHeight' + tg.viewportStableHeight + ')');
+        })
+    }
+
     const defaultSettings = () => {
         // const theme = tg.themeParams;
         // theme.bg_color = '#0E2133';
@@ -90,6 +96,7 @@ export function useTelegram() {
         BackButton();
         settingsButton(false);
         settingsButton(true);
+        listenViewportChanged();
     }
 
     return {
