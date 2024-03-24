@@ -16,8 +16,8 @@ export const UserProfileProvider = ({ children }) => {
     const { showToast } = useToastManager();
 
     // Для тестов
-    // const userId = user?.id;
-    const userId = 82431798;
+    const userId = user?.id;
+    // const userId = 82431798;
     // const userId = 404;
 
     useEffect(() => {
@@ -89,7 +89,6 @@ export const UserProfileProvider = ({ children }) => {
         try {
             const result = await cancelSellerSubscription(profile.id);
             if (!!result && result.success && result.subscription) {
-                console.log(result.subscription)
                 showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.subscription.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
             } else if (!!result && !result.success && result.error) {
                 setErrorMessage(result.message);

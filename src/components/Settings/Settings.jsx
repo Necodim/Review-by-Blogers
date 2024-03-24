@@ -39,7 +39,6 @@ const Settings = (props) => {
             amount_currency: 'RUB'
         }
         const addedSubscription = await addSubscription(data);
-        console.log(addedSubscription)
         updateProfile({ subscription: addedSubscription });
         goToStartScreen();
     }
@@ -71,7 +70,6 @@ const Settings = (props) => {
     }
 
     const changeRole = async () => {
-        console.log(newRole)
         try {
             await updateUserData({ role: newRole });
             updateProfile({ role: newRole });

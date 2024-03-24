@@ -6,7 +6,7 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: var(--keyboard-height, 0px);
   z-index: -1;
   visibility: hidden;
   opacity: 0;
@@ -31,7 +31,7 @@
   width: 100%;
   position: absolute;
   left: 50%;
-  bottom: var(--keyboard-height, 0px);
+  bottom: 0;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;

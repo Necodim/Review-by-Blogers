@@ -74,7 +74,12 @@ small {
   opacity: .5;
 }
 
-h1 {}
+h1 {
+  font-size: var(--text-size-xl);
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
 
 h2 {
   font-size: var(--text-size-l);

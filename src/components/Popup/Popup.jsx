@@ -8,16 +8,13 @@ const Popup = ({ id, className, isOpen, onClose, children }) => {
 
   useEffect(() => {
     const app = document.querySelector('.app');
-    const popup = document.getElementById(id);
-    if (popup) {
-      const popupWrapper = popup.closest('.popup-background');
-      if (isOpen && popupWrapper) {
-        popupWrapper.classList.remove('closed');
-        app.classList.add('overflow-hidden');
-      } else if (popupWrapper) {
-        popupWrapper.classList.add('closed');
-        app.classList.remove('overflow-hidden');
-      }
+    const popupBackground = document.getElementById(id);
+    if (isOpen && popupBackground) {
+      popupBackground.classList.remove('closed');
+      app.classList.add('overflow-hidden');
+    } else if (popupBackground) {
+      popupBackground.classList.add('closed');
+      app.classList.remove('overflow-hidden');
     }
   }, [id, isOpen]);
 
@@ -32,12 +29,12 @@ const Popup = ({ id, className, isOpen, onClose, children }) => {
   const popupRoot = document.getElementById('popup-root');
 
   return ReactDOM.createPortal(
-    <div className='popup-background closed' onClick={handleBackdropClick}>
+    <div id={id} className='popup-background closed' onClick={handleBackdropClick}>
       <div className='popup-wrapper'>
         <Link onClick={onClose}>
           <Icon icon='highlight_off' size='big' />
         </Link>
-        <div id={id} className={'popup' + (className ? ' ' + className : '')} onClick={handleModalClick}>
+        <div className={'popup' + (className ? ' ' + className : '')} onClick={handleModalClick}>
           {children}
         </div>
       </div>
