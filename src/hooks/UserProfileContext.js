@@ -49,9 +49,7 @@ export const UserProfileProvider = ({ children }) => {
     }, [userId, getUser, generateAuthToken]);
 
     const updateProfile = (updates) => {
-        setLoading(true);
         setProfile(currentProfile => ({ ...currentProfile, ...updates }));
-        setLoading(false);
     }
 
     const updateUserData = async (data) => {

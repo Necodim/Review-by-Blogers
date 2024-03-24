@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { useTelegram } from '../../hooks/useTelegram';
+import { useEvents } from '../../hooks/useEvents';
 import Popup from "../Popup/Popup"
 import Link from '../Button/Link';
 import Form from '../Form/Form';
@@ -11,7 +11,7 @@ import imgInstruction3 from '../../images/instruction-3.png';
 import imgInstruction4 from '../../images/instruction-4.png';
 
 const PopupApi = (props) => {
-    const { tg, isAvailable } = useTelegram();
+    const { handleFocus } = useEvents();
 
     const [formData, setFormData] = useState({
         'api': ''
@@ -26,14 +26,6 @@ const PopupApi = (props) => {
         const isValid = formData.api.trim() !== '';
         setIsFormValid(isValid);
     }, [formData]);
-
-    // useEffect(() => {
-    //     if (isAvailable) {
-    //         tg.readTextFromClipboard((data) => {
-    //             console.log(data);
-    //         });
-    //     }
-    // }, [tg, isAvailable])
 
     useLayoutEffect(() => {
         if (ref.current) {
@@ -118,6 +110,7 @@ const PopupApi = (props) => {
                 placeholder='eyJhbGciOiJ...'
                 value={formData.api}
                 onChange={handleApiChange}
+                onFocus={handleFocus}
             />
         )
     }
