@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './Popup.css';
 import Link from '../Button/Link';
 import Icon from '../Icon/Icon';
 
 const Popup = ({ id, className, isOpen, onClose, children }) => {
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useEffect(() => {
     const initialHeight = window.innerHeight;
