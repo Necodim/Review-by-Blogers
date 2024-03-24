@@ -105,6 +105,7 @@ h3 {
   padding-left: var(--xs);
   padding-right: var(--xs);
   position: relative;
+  overflow-y: auto;
 }
 
 .app {
@@ -115,7 +116,6 @@ h3 {
   min-height: 100vh;
   min-height: 100dvh;
   padding-top: var(--xs);
-  overflow-y: auto;
 }
 
 .hidden {
