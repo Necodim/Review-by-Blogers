@@ -1,12 +1,10 @@
 #popup-root {
   position: relative;
-  width: 100%;
-  height: var(--tg-viewport-height);
 }
 
 .popup-background {
   width: 100%;
-  height: auto;
+  height: var(--tg-viewport-height);
   position: fixed;
   top: 0;
   left: 0;
