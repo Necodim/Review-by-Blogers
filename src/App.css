@@ -44,6 +44,7 @@
   --warning: #fffb47;
   /* --error: var(--secondary-dark-1); */
   --error: #ff474b;
+  --keyboard-height: 0px;
 }
 
 html {
@@ -100,8 +101,10 @@ h3 {
 }
 
 .app {
-  height: 100vh;
-  height: 100dvh;
+  /* height: 100vh;
+  height: 100dvh; */
+  min-height: calc(100vh - var(--keyboard-height, 0px));
+  min-height: calc(100dvh - var(--keyboard-height, 0px));
   padding-bottom: var(--xl);
   overflow-y: auto;
   padding-bottom: env(safe-area-inset-bottom);
