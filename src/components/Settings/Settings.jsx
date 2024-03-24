@@ -42,7 +42,7 @@ const Settings = (props) => {
         const addedSubscription = await addSubscription(data);
         console.log(addedSubscription)
         updateProfile({ ...profile, subscription: addedSubscription });
-        navigate('/');
+        goToStartScreen();
     }
 
     // Тестовый функционал
@@ -50,7 +50,7 @@ const Settings = (props) => {
         const profileWithoutRole = await updateUserData({role: ''});
         setCurrentRole(newRole);
         updateProfile({ ...profile, role: profileWithoutRole.role });
-        navigate('/');
+        goToStartScreen();
     }
 
     const radioOptions = [
@@ -75,7 +75,7 @@ const Settings = (props) => {
         const profileWithNewRole = await updateUserData({role: newRole});
         setCurrentRole(newRole);
         updateProfile({ ...profile, role: profileWithNewRole.role });
-        navigate('/');
+        goToStartScreen();
     }
 
     return (
