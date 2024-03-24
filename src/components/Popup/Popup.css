@@ -45,3 +45,7 @@
 .popup-background.closed .popup-wrapper {
   bottom: -100%;
 }
+
+.popup {
+  overflow-x: hidden;
+}

@@ -196,7 +196,7 @@ h3 {
 }
 
 .overflow-hidden {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 .relative {

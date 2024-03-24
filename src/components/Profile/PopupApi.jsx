@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useEvents } from '../../hooks/useEvents';
+import { useToastManager } from '../../hooks/useToast';
 import Popup from "../Popup/Popup"
 import Link from '../Button/Link';
 import Form from '../Form/Form';
@@ -12,11 +13,13 @@ import imgInstruction4 from '../../images/instruction-4.png';
 
 const PopupApi = (props) => {
     const { handleFocus } = useEvents();
+    const { showToast } = useToastManager();
 
     const [formData, setFormData] = useState({
         'api': ''
     });
     const [isFormValid, setIsFormValid] = useState(false);
+    const [isValid, setIsValid] = useState(null);
     const [toggle, setToggle] = useState(false);
     const [display, setDisplay] = useState('none');
     const [contentHeight, setContentHeight] = useState(0);
@@ -27,11 +30,18 @@ const PopupApi = (props) => {
         setIsFormValid(isValid);
     }, [formData]);
 
+    useEffect(() => {
+        if (!props.isOpen) {
+            setToggle(false);
+        }
+    }, [props.isOpen]);
+    
+
     useLayoutEffect(() => {
         if (ref.current) {
-          setContentHeight(ref.current.clientHeight);
+            setContentHeight(ref.current.clientHeight);
         }
-      }, [toggle]);
+    }, [toggle]);
 
     const animation = useSpring({
         from: { height: 0, opacity: 0, marginTop: '0px', width: '100%' },
@@ -39,7 +49,7 @@ const PopupApi = (props) => {
             height: toggle ? contentHeight : 0,
             opacity: toggle ? 1 : 0,
             marginTop: toggle ? '8px' : '0px',
-          },
+        },
         onStart: () => {
             if (toggle) setDisplay('block');
         },
@@ -87,6 +97,28 @@ const PopupApi = (props) => {
         )
     }
 
+    function validateJWT(token) {
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+            showToast('Неверный формат JWT', 'error');
+            return false;
+        }
+
+        try {
+            const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+            const now = Date.now() / 1000;
+            if (payload.exp && payload.exp < now) {
+                showToast('Этот токен истек, создайте новый', 'error');
+                return false;
+            }
+        } catch (error) {
+            showToast('Ошибка при декодировании или чтении payload', 'error');
+            return false;
+        }
+
+        return true;
+    }
+
     const handleApiChange = (event) => {
         const { name, value } = event.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -115,9 +147,23 @@ const PopupApi = (props) => {
         )
     }
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (isValid) {
+            if (validateJWT(formData.api)) {
+                props.onSubmit(event);
+                if (props.onSuccess) {
+                    props.onSuccess();
+                }
+            }
+        } else {
+            showToast('Заполните поле', 'error');
+        }
+    }
+
     const apiPopupForm = () => {
         return (
-            <Form className='form-wrapper' btnicon='save' btntext='Сохранить' isDisabled={!isFormValid} onSubmit={props.onSubmit}>
+            <Form className='form-wrapper' btnicon='save' btntext='Сохранить' isDisabled={!isFormValid} onSubmit={handleSubmit}>
                 {apiPopupInput()}
             </Form>
         )
