@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
@@ -22,6 +22,39 @@ function App() {
   const { profile, loading } = useUserProfile();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    let resizeTimer;
+    const initialHeight = window.innerHeight;
+  
+    function handleResize() {
+      clearTimeout(resizeTimer); // Очищаем предыдущий таймер, если он был
+  
+      resizeTimer = setTimeout(() => {
+        const newHeight = window.innerHeight;
+        const difference = initialHeight - newHeight;
+        if (difference > 0) {
+          // Клавиатура, вероятно, открыта
+          setKeyboardHeight(difference);
+          document.documentElement.style.setProperty('--keyboard-height', `${difference}px`);
+        } else {
+          // Клавиатура закрыта
+          setKeyboardHeight(0);
+          document.documentElement.style.setProperty('--keyboard-height', `0px`);
+        }
+        alert(difference); // Выполняем alert только после окончания изменения размера
+      }, 500); // Задержка в 500 мс
+    }
+  
+    window.addEventListener('resize', handleResize);
+  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer); // Очищаем таймер при размонтировании компонента
+    };
+  }, []);
 
   useEffect(() => {
     if (loading) return;
