@@ -11,11 +11,11 @@ const Popup = ({ id, className, isOpen, onClose, children }) => {
     const popupBackground = document.getElementById(id);
     if (isOpen && popupBackground) {
       popupBackground.classList.remove('closed');
-      app.classList.add('overflow-hidden');
+      // app.classList.add('overflow-hidden');
     } else if (popupBackground) {
       popupBackground.classList.add('closed');
-      app.classList.remove('overflow-hidden');
-      app.scrollIntoView();
+      // app.classList.remove('overflow-hidden');
+      app.scrollIntoView({ behavior: 'smooth', block: 'top' });
     }
   }, [id, isOpen]);
 
