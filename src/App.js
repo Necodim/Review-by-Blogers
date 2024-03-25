@@ -15,7 +15,8 @@ import ProductsActivePage from './components/Store/ProductsActivePage';
 import Barter from './components/Barter/Barter';
 import Profile from './components/Profile/Profile';
 import Subscribe from './components/Profile/Subscription/Subscribe';
-import Settings from './components/Settings/Settings';
+import SettingsPage from './pages/Settings/SettingsPage';
+import SupportPage from './pages/Settings/SupportPage';
 
 function App() {
   const { tg, defaultSettings } = useTelegram();
@@ -79,7 +80,8 @@ function App() {
         <Route path="/store/products/active" element={<ProductsActivePage />} />
         <Route path="/store/products/inactive" element={<ProductsInactivePage />} />
         <Route path="/barter" element={<Barter />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/settings/support" element={<SupportPage />} />
       </Routes>
       <ToastContainer />
     </div>

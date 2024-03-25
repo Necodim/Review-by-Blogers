@@ -6,8 +6,9 @@ import { useToastManager } from '../../hooks/useToast';
 import Link from '../Button/Link';
 import Input from '../Form/Input';
 import PopupConfirmation from '../Popup/PopupConfirmation';
+import Button from '../../components/Button/Button';
 
-const Settings = (props) => {
+const SettingsPage = (props) => {
     const navigate = useNavigate();
     const { profile, updateProfile, updateUserData, addSubscription } = useUserProfile();
     const { isAvailable, showBackButton, user } = useTelegram();
@@ -93,6 +94,7 @@ const Settings = (props) => {
                     selectedValue={newRole}
                 />
                 }
+                <Button onClick={() => {navigate('/settings/support')}} icon='support_agent'>Поддержка</Button>
             </div>
             <div className='container' id='tests'>
                 <h2>Тестовый функционал</h2>
@@ -116,4 +118,4 @@ const Settings = (props) => {
     )
 }
 
-export default Settings;
+export default SettingsPage;

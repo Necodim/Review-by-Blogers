@@ -111,11 +111,11 @@ const StoreSeller = () => {
             {activeBarters.length > 0 && 
                 <div className='container' id='products-active'>
                     <div className='list'>
-                        <div className='list-item '>
+                        <div className='list-item'>
                             <h2>Бартеры включены</h2>
                             <Link onClick={openActiveProductsPage}>Ещё</Link>
                         </div>
-                        <div>
+                        <div className='list-item'>
                             <small>Всего {activeBarters.length + ' ' + getPlural(activeBarters.length, 'товар', 'товара', 'товаров')} </small>
                         </div>
                     </div>
