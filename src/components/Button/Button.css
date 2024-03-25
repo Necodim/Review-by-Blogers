@@ -1,0 +1,72 @@
+.button {
+  width: 100%;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: var(--xs);
+  font-size: var(--text-size-m);
+  text-decoration: none;
+  color: var(--text-color);
+  background: var(--primary);
+  border: 0;
+  border-radius: var(--m);
+  outline: 0;
+  padding: var(--m);
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+
+.button.light {
+  color: var(--dark);
+  background-color: var(--light);
+}
+
+.button.error {
+  color: var(--light);
+  background-color: var(--error);
+}
+
+.button.disabled {
+  /* color: var(--primary-light-2) !important;
+  background-color: var(--primary-dark-3) !important; */
+  opacity: .5;
+  pointer-events: none !important;
+}
+
+.button.size-l {
+  font-size: var(--l);
+}
+
+.button.size-xl {
+  font-size: var(--xl);
+}
+
+.button.nav-button {
+  width: 100%;
+  font-size: var(--text-size-s);
+  flex-direction: column;
+  gap: var(--xxs);
+  padding: var(--xs) var(--m);
+}
+
+.button.nav-button.active {
+  background: var(--active-gradient) !important;
+}
+
+.button.nav-button.disabled {
+  background: inherit !important;
+  opacity: .5 !important;
+  pointer-events: none !important;
+}
+
+.button.link {
+  width: auto !important;
+  display: inline-block !important;
+  justify-content: unset !important;
+  align-items: unset !important;
+  gap: unset !important;
+  background: unset !important;
+  border-radius: unset !important;
+  padding: unset !important;
+  text-decoration: underline;
+}

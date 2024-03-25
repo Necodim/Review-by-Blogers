@@ -1,0 +1,80 @@
+:root {
+    --toastify-color-light: var(--light);
+    --toastify-color-dark: var(--bg-gradient);
+    --toastify-color-info: var(--primary);
+    --toastify-color-success: var(--success);
+    --toastify-color-warning: var(--warning);
+    --toastify-color-error: var(--error);
+    --toastify-color-transparent: rgba(255, 255, 255, 0.7);
+
+    --toastify-icon-color-info: var(--toastify-color-info);
+    --toastify-icon-color-success: var(--toastify-color-success);
+    --toastify-icon-color-warning: var(--toastify-color-warning);
+    --toastify-icon-color-error: var(--toastify-color-light);
+
+    --toastify-toast-width: 320px;
+    --toastify-toast-background: #fff;
+    --toastify-toast-min-height: 64px;
+    --toastify-toast-max-height: 800px;
+    --toastify-toast-bd-radius: var(--m);
+    --toastify-font-family: var(--font-family);
+    --toastify-z-index: 9999;
+
+    --toastify-text-color-light: #757575;
+    --toastify-text-color-dark: var(--text-color);
+
+    /* Used only for colored theme */
+    --toastify-text-color-info: #fff;
+    --toastify-text-color-success: #fff;
+    --toastify-text-color-warning: #fff;
+    --toastify-text-color-error: #fff;
+
+    --toastify-spinner-color: #616161;
+    --toastify-spinner-color-empty-area: #e0e0e0;
+
+    /* Used when no type is provided */
+    /* toast("**hello**") */
+    --toastify-color-progress-light: linear-gradient(to right,
+            #4cd964,
+            #5ac8fa,
+            #007aff,
+            #34aadc,
+            #5856d6,
+            #ff2d55);
+    /* Used when no type is provided */
+    --toastify-color-progress-dark: #bb86fc;
+    --toastify-color-progress-info: var(--toastify-color-info);
+    --toastify-color-progress-success: var(--toastify-color-success);
+    --toastify-color-progress-warning: var(--toastify-color-warning);
+    --toastify-color-progress-error: var(--toastify-color-light);
+
+    /* used to control the opacity of the progress trail */
+    --toastify-color-progress-bgo: .2;
+}
+
+@media only screen and (max-width : 480px) {
+    .Toastify__toast {
+        margin-bottom: var(--xs);
+    }
+    .Toastify__toast-container {
+        width: calc(100vw - var(--xs) * 2);
+        left: var(--xs);
+    }
+    .Toastify__toast-container--bottom-left, .Toastify__toast-container--bottom-center, .Toastify__toast-container--bottom-right {
+        bottom: var(--xs);
+        bottom: calc(env(safe-area-inset-bottom) + var(--xs));
+    }
+}
+
+.Toastify__toast {
+    border-radius: var(--toastify-toast-bd-radius) !important;
+}
+
+.Toastify__toast--error {
+    background: var(--toastify-color-error);
+    color: var(--toastify-color-light);
+}
+
+.Toastify__toast-body {
+    align-items: flex-start;
+}
