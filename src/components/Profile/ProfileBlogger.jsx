@@ -58,7 +58,7 @@ const ProfileBlogger = () => {
     const formData = new FormData(event.target);
 
     const cardNumber = parseInt(formData.get('card-number').replace(/\s/g, ''), 10);
-    if (String(cardNumber).length !== 16) {
+    if (String(cardNumber).length < 16 && String(cardNumber).length > 19) {
       setErrorMessage('Введите корректный номер карты');
       return;
     }
@@ -126,6 +126,7 @@ const ProfileBlogger = () => {
         title='Номер карты для переводов'
         placeholder={profile.card_number ? profile.card_number.replace(/(\d{4})(?=\d)/g, '$1 ') : '2202 2020 1234 5678'}
         required='required'
+        autocomplete='cc-number'
         value={cardNumberValue}
         onChange={handleCardNumberChange}
         maxLength='19'

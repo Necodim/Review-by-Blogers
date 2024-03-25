@@ -140,6 +140,7 @@ const SubscribeHasNoSubscription = () => {
             title='Номер карты'
             placeholder='2202 2020 1234 5678'
             required='required'
+            autocomplete='cc-number'
             value={cardNumberValue}
             onChange={handleCardNumberChange}
             maxLength='19'
