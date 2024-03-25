@@ -30,9 +30,9 @@ const updateUser = async (userId, data) => {
     return response.data;
 }
 
-const setApi = async (userId, api) => {
+const setWildberriesApi = async (userId, api) => {
     const data = {'api': api}
-    const response = await apiClient.post(`/user/api/${userId}`, data);
+    const response = await apiClient.post(`/user/wildberries/api/${userId}`, data);
     return response.data;
 }
 
@@ -128,7 +128,7 @@ export default {
     generateAuthToken,
     getUser,
     updateUser,
-    setApi,
+    setWildberriesApi,
     addSellerSubscription,
     cancelSellerSubscription,
     getProductsByUserId,
