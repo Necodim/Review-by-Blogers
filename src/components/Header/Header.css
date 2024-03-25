@@ -1,0 +1,19 @@
+.header {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--xs);
+    margin-bottom: var(--m);
+}
+
+.header .nav-buttons-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--xs);
+}

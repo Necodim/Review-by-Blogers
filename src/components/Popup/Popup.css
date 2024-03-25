@@ -1,0 +1,57 @@
+#popup-root {
+  position: relative;
+}
+
+.popup-background {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transition: opacity .2s ease-in-out, visibility 0s linear .3s, z-index 0s linear .3s;
+}
+
+.popup-background.closed {
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.popup-background:not(.closed) {
+  z-index: 1000;
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+.popup-background .popup-wrapper {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: var(--xs);
+  padding: var(--m);
+  transition: bottom .3s ease-in-out;
+}
+
+.popup-background.closed .popup-wrapper {
+  bottom: -100%;
+}
+
+.popup {
+  margin-bottom: var(--keyboard-height, 0px);
+  overflow-x: hidden;
+}
