@@ -30,6 +30,7 @@ const ProfileBlogger = () => {
   useEffect(() => {
     if (errorMessage && attemptedSubmit) {
       showToast(errorMessage, 'error');
+      setAttemptedSubmit(false);
       setTimeout(() => setErrorMessage(''), 500);
     }
   }, [errorMessage, attemptedSubmit, showToast]);
@@ -50,18 +51,35 @@ const ProfileBlogger = () => {
     setIsEditing(!isEditing);
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setAttemptedSubmit(true);
     const onboarding = profile.onboarding;
-    const formData = new FormData(e.target);
+    const formData = new FormData(event.target);
+
+    const cardNumber = parseInt(formData.get('card-number').replace(/\s/g, ''), 10);
+    if (String(cardNumber).length !== 16) {
+      setErrorMessage('Введите корректный номер карты');
+      return;
+    }
     let instagram = formData.get('instagram-username');
     if (instagram.includes('instagram.com/')) instagram = instagram.split('instagram.com/')[1].split('/')[0];
     if (instagram.includes('@')) instagram = instagram.split('@')[1];
+    if (instagram.length < 3) {
+      setErrorMessage('Введите корректный аккаунт Instagram');
+      return;
+    }
+
+    const coverage = parseInt(formData.get('instagram-coverage'), 10);
+    if (coverage < 1000) {
+      setErrorMessage('Мы берём блогеров с охватом от 1000');
+      return;
+    }
+
     const data = {
-      'card-number': parseInt(formData.get('card-number').replace(/\s/g, ''), 10),
+      'card-number': cardNumber,
       'instagram-username': instagram,
-      'instagram-coverage': parseInt(formData.get('instagram-coverage'), 10),
+      'instagram-coverage': coverage,
       'onboarding': false,
     };
     await updateUserData(data);
