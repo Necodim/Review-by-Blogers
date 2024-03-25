@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
-import Link from '../Button/Link';
-import Input from '../Form/Input';
-import PopupConfirmation from '../Popup/PopupConfirmation';
+import Link from '../../components/Button/Link';
+import Input from '../../components/Form/Input';
+import PopupConfirmation from '../../components/Popup/PopupConfirmation';
 import Button from '../../components/Button/Button';
 
 const SettingsPage = (props) => {
