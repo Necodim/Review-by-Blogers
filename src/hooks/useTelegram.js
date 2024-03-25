@@ -68,6 +68,26 @@ export function useTelegram() {
         // });
     }
 
+    const hapticFeedback = (object) => {
+        // object = {
+        //     type: ['impact', 'notification', 'selection'],
+        //     style: ['light', 'medium', 'heavy', 'rigid', 'soft', 'error', 'success', 'warning'],
+        // }
+        switch (object.type) {
+            case 'impact':
+              tg.HapticFeedback.impactOccurred(object.style);
+              break;
+            case 'notification':
+              tg.HapticFeedback.notificationOccurred(object.style);
+              break;
+            case 'selection':
+              tg.HapticFeedback.selectionChanged();
+              break;
+            default:
+              break;
+          }
+    }
+
     const listenViewportChanged = () => {
         tg.onEvent('viewportChanged', () => {
             window.dispatchEvent(new Event('resize'));
@@ -107,6 +127,7 @@ export function useTelegram() {
         hideBackButton,
         showPopup,
         settingsButton,
+        hapticFeedback,
         defaultSettings,
         tg,
         user: tg.initDataUnsafe?.user

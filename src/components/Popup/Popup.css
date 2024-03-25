@@ -52,5 +52,6 @@
 }
 
 .popup {
+  margin-bottom: var(--keyboard-height, 0px);
   overflow-x: hidden;
 }
