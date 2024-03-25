@@ -7,7 +7,7 @@ const Link = (props) => {
 
     const handleClick = () => {
         hapticFeedback({ type: 'impact', style: 'light' });
-        props.onClick;
+        props.onClick();
     }
 
     return (

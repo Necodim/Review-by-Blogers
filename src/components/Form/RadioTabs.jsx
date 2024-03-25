@@ -1,9 +1,13 @@
 import React from 'react';
 import './Form.css';
 import Icon from '../Icon/Icon';
+import { useTelegram } from '../../hooks/useTelegram';
 
 const RadioTabs = ({ id, title, options, onChange, selectedValue }) => {
+    const { hapticFeedback } = useTelegram();
+
     const handleChange = (value) => {
+        hapticFeedback({ type: 'selection'});
         onChange(value);
     };
 

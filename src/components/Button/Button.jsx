@@ -14,7 +14,7 @@ const Button = (props) => {
 
     const handleClick = () => {
         hapticFeedback({ type: 'impact', style: 'medium' });
-        props.onClick;
+        props.onClick();
     }
 
     return (
