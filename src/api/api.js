@@ -16,7 +16,7 @@ apiClient.interceptors.request.use(config => {
 
 const generateAuthToken = async (userId) => {
     const data = {'id': userId}
-    const response = await apiClient.post('/login', data);
+    const response = await apiClient.post('/user/login', data);
     sessionStorage.setItem('accessToken', response.data.accessToken);
 }
 
