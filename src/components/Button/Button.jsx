@@ -3,26 +3,31 @@ import './Button.css'
 import { useTelegram } from "../../hooks/useTelegram";
 import Icon from '../Icon/Icon';
 
-const Button = (props) => {
+const Button = ({ onClick, className, icon, size, children, ...buttonProps }) => {
     const [isDisabled, setIsDisabled] = useState(false);
     const { hapticFeedback } = useTelegram();
 
     useEffect(() => {
-      const disabled = props.className?.includes('disabled');
+      const disabled = className?.includes('disabled');
       setIsDisabled(disabled);
-    }, [props.className]);
+    }, [className]);
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        if (isDisabled) {
+            e.preventDefault();
+            return;
+        }
         hapticFeedback({ type: 'impact', style: 'medium' });
-        if (props.onClick) props.onClick();
+        if (onClick) onClick(e);
     }
 
     return (
-        <button {...props} className={'button' + (props.className ? ' ' + props.className : '')} onClick={handleClick} disabled={isDisabled}>
-            { props.icon && <Icon icon={ props.icon } size={ props.size }></Icon> }
-            { props.children }
+        <button {...buttonProps} className={`button ${className || ''}`} onClick={handleClick} disabled={isDisabled}>
+            { icon && <Icon icon={icon} size={size}></Icon> }
+            { children }
         </button>
     )
 }
+
 
 export default Button
