@@ -1,20 +1,27 @@
 import React from "react";
-import './Button.css'
+import './Button.css';
 import { useTelegram } from "../../hooks/useTelegram";
 
-const Link = (props) => {
+const Link = ({ className, onClick, url, children, ...buttonProps }) => {
     const { hapticFeedback } = useTelegram();
 
     const handleClick = (event) => {
-        hapticFeedback({ type: 'impact', style: 'light' });
-        if (props.onClick) props.onClick(event);
+        // Вызываем haptic feedback только если это не переход по ссылке
+        if (!url) {
+            hapticFeedback({ type: 'impact', style: 'light' });
+        }
+        if (onClick) onClick(event);
     }
 
     return (
-        <button {...props} className={'button link' + (props.className ? ' ' + props.className : '')} onClick={props.url ? () => window.open(props.url, '_blank') : handleClick}>
-            { props.children }
+        <button
+            {...buttonProps}
+            className={`button link ${className || ''}`}
+            onClick={url ? () => window.open(url, '_blank') : handleClick}
+        >
+            {children}
         </button>
-    )
+    );
 }
 
-export default Link
+export default Link;
