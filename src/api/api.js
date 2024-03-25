@@ -119,6 +119,11 @@ const setCategoryPage = async (subCategoryID) => {
     return response.data;
 }
 
+const sendSupportMessage = async (data) => {
+    const response = await apiClient.post(`/support`, data);
+    return response.data;
+}
+
 export default {
     generateAuthToken,
     getUser,
@@ -140,4 +145,5 @@ export default {
     getSubCategoriesByIds,
     setStore,
     setCategoryPage,
+    sendSupportMessage,
 }
