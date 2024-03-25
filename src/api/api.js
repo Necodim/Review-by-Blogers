@@ -120,7 +120,7 @@ const setCategoryPage = async (subCategoryID) => {
 }
 
 const sendSupportMessage = async (data) => {
-    const response = await apiClient.post(`/support`, data);
+    const response = await apiClient.post(`/other/support`, data);
     return response.data;
 }
 
