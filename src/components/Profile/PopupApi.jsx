@@ -30,7 +30,7 @@ const PopupApi = (props) => {
         if (errorMessage && attemptedSubmit) {
             showToast(errorMessage, 'error');
             setAttemptedSubmit(false);
-            setTimeout(() => setErrorMessage(''), 500);
+            setErrorMessage('');
         }
     }, [errorMessage, attemptedSubmit, showToast]);
 

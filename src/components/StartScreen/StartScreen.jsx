@@ -18,7 +18,7 @@ const StartScreen = () => {
     useEffect(() => {
         if (errorMessage) {
             showToast(errorMessage, 'error');
-            setTimeout(() => setErrorMessage(''), 500);
+            setErrorMessage('');
         }
     }, [errorMessage, showToast]);
 
