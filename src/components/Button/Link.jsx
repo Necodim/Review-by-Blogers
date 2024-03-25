@@ -5,9 +5,9 @@ import { useTelegram } from "../../hooks/useTelegram";
 const Link = (props) => {
     const { hapticFeedback } = useTelegram();
 
-    const handleClick = () => {
+    const handleClick = (event) => {
         hapticFeedback({ type: 'impact', style: 'light' });
-        if (props.onClick) props.onClick();
+        if (props.onClick) props.onClick(event);
     }
 
     return (

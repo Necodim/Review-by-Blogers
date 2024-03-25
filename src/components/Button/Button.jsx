@@ -12,13 +12,13 @@ const Button = ({ onClick, className, icon, size, children, ...buttonProps }) =>
       setIsDisabled(disabled);
     }, [className]);
 
-    const handleClick = (e) => {
+    const handleClick = (event) => {
         if (isDisabled) {
-            e.preventDefault();
+            event.preventDefault();
             return;
         }
         hapticFeedback({ type: 'impact', style: 'medium' });
-        if (onClick) onClick(e);
+        if (onClick) onClick(event);
     }
 
     return (
@@ -28,6 +28,5 @@ const Button = ({ onClick, className, icon, size, children, ...buttonProps }) =>
         </button>
     )
 }
-
 
 export default Button
