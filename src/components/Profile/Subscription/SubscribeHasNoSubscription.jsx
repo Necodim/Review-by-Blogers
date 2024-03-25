@@ -24,9 +24,9 @@ const SubscribeHasNoSubscription = () => {
 
   useEffect(() => {
     if (errorMessage && attemptedSubmit) {
-      showToast(errorMessage, 'error');
       setAttemptedSubmit(false);
-      setTimeout(() => setErrorMessage(''), 500);
+      showToast(errorMessage, 'error');
+      setErrorMessage('');
     }
   }, [errorMessage, attemptedSubmit, showToast]);
 

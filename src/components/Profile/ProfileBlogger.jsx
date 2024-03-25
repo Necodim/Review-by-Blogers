@@ -29,9 +29,9 @@ const ProfileBlogger = () => {
 
   useEffect(() => {
     if (errorMessage && attemptedSubmit) {
-      showToast(errorMessage, 'error');
       setAttemptedSubmit(false);
-      setTimeout(() => setErrorMessage(''), 500);
+      showToast(errorMessage, 'error');
+      setErrorMessage('');
     }
   }, [errorMessage, attemptedSubmit, showToast]);
 
@@ -58,22 +58,22 @@ const ProfileBlogger = () => {
     const formData = new FormData(event.target);
 
     const cardNumber = parseInt(formData.get('card-number').replace(/\s/g, ''), 10);
-    if (String(cardNumber).length < 16 && String(cardNumber).length > 19) {
+    if (String(cardNumber).length < 16 || String(cardNumber).length > 19) {
       setErrorMessage('Введите корректный номер карты');
-      return;
+      return false;
     }
     let instagram = formData.get('instagram-username');
     if (instagram.includes('instagram.com/')) instagram = instagram.split('instagram.com/')[1].split('/')[0];
     if (instagram.includes('@')) instagram = instagram.split('@')[1];
     if (instagram.length < 3) {
       setErrorMessage('Введите корректный аккаунт Instagram');
-      return;
+      return false;
     }
 
     const coverage = parseInt(formData.get('instagram-coverage'), 10);
     if (coverage < 1000) {
       setErrorMessage('Мы берём блогеров с охватом от 1000');
-      return;
+      return false;
     }
 
     const data = {
@@ -84,9 +84,9 @@ const ProfileBlogger = () => {
     };
     await updateUserData(data);
     if (onboarding) {
-      navigate('/blogger/store', { state: { showPopupAfterBloggerOnboarding: true } });
+      navigate('/store', { state: { showPopupAfterBloggerOnboarding: true } });
     } else {
-      navigate('/blogger/store');
+      navigate('/store');
     }
   }
 
