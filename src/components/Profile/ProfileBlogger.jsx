@@ -29,8 +29,8 @@ const ProfileBlogger = () => {
 
   useEffect(() => {
     if (errorMessage && attemptedSubmit) {
-      setAttemptedSubmit(false);
       showToast(errorMessage, 'error');
+      setAttemptedSubmit(false);
       setErrorMessage('');
     }
   }, [errorMessage, attemptedSubmit, showToast]);
