@@ -12,12 +12,12 @@ export const UserProfileProvider = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const { tg, user, isAvailable } = useTelegram();
-    const { getUser, updateUser, generateAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
+    const { getUser, upsertUser, generateAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
     const { showToast } = useToastManager();
 
     // Для тестов
-    const userId = user?.id;
-    // const userId = 82431798;
+    // const userId = user?.id;
+    const userId = 82431798;
     // const userId = 404;
 
     useEffect(() => {
@@ -55,7 +55,7 @@ export const UserProfileProvider = ({ children }) => {
     const updateUserData = async (data) => {
         setLoading(true);
         try {
-            const result = await updateUser(profile.id, data);
+            const result = await upsertUser(profile.id, data);
             if (result && result.success) {
                 const updatedProfile = await getUser(profile.id);
                 setProfile(updatedProfile);
