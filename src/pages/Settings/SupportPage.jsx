@@ -67,7 +67,6 @@ const SupportPage = () => {
                         name='question'
                         placeholder='Задайте вопрос или напишите о неработающем функционале...'
                         value={message}
-                        defaultValue=''
                         onChange={handleChange}
                     />
                 </Form>
