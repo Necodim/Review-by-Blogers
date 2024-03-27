@@ -34,7 +34,7 @@ const SupportPage = () => {
 
         try {
             const response = await sendSupportMessage({ userId: user?.id, message: message });
-            if (response.status === 200) {
+            if (response.ok) {
                 showToast('Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.');
                 setMessage('');
             } else {
@@ -60,7 +60,7 @@ const SupportPage = () => {
                         <small>Напишите нам, мы постараемся ответить в ближайшее время</small>
                     </div>
                 </div>
-                <Form onSubmit={handleSubmit} isDisabled={isDisabled} btntexxt='Отправить'>
+                <Form onSubmit={handleSubmit} isDisabled={isDisabled} btntext='Отправить'>
                     <Textarea
                         id='question'
                         name='question'
