@@ -46,6 +46,7 @@ const SupportPage = () => {
     }
 
     const handleChange = (event) => {
+        console.log(event)
         setMessage(event.target.value)
     }
 
@@ -66,6 +67,7 @@ const SupportPage = () => {
                         name='question'
                         placeholder='Задайте вопрос или напишите о неработающем функционале...'
                         value={message}
+                        defaultValue=''
                         onChange={handleChange}
                     />
                 </Form>
