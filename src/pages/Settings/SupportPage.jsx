@@ -46,8 +46,9 @@ const SupportPage = () => {
     }
 
     const handleChange = (event) => {
-        console.log(event)
-        setMessage(event.target.value)
+        console.log(event.target.value);
+        console.log(event);
+        setMessage(event.target.value);
     }
 
     return (

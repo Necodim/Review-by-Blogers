@@ -9,8 +9,8 @@ const Textarea = ({ id, title, name, rows, placeholder, value, onChange }) => {
                 id={id}
                 name={name}
                 rows={rows}
-                value={value}
                 placeholder={placeholder}
+                value={value}
                 onChange={onChange}
             ></textarea>
         </div>
