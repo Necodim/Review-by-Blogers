@@ -34,7 +34,7 @@ const SupportPage = () => {
 
         try {
             const response = await sendSupportMessage({ userId: user?.id, message: message });
-            if (response.ok) {
+            if (response.status === 200) {
                 showToast('Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.');
                 setMessage('');
             } else {
