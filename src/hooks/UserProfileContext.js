@@ -36,12 +36,11 @@ export const UserProfileProvider = ({ children }) => {
                     const existingUser = await getUser(userId);
                     if (!existingUser) {
                         const data = {
-                            id: userId,
                             username: user?.username,
                             firstname: user?.first_name,
                             lastname: user?.last_name
                         }
-                        const newUser = await createUser(data);
+                        const newUser = await createUser(userId, data);
                         console.log(newUser);
                         setProfile(newUser);
                     } else {
