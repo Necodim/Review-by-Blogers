@@ -64,7 +64,7 @@ const ProductsActivePage = () => {
             <div className='container' id='products'>
                 <div className='list'>
                     <div className='list-item'>
-                        <h2>Бартеры включены</h2>
+                        <h2>В&nbsp;работе</h2>
                         {products.length > 0 && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
                     </div>
                 </div>

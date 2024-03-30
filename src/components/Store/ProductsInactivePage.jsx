@@ -112,7 +112,7 @@ const ProductsInactivePage = () => {
             <div className='container' id='products'>
                 <div className='list'>
                     <div className='list-item'>
-                        <h2>Бартеры выключены</h2>
+                        <h2>На&nbsp;паузе</h2>
                         {products.length > 0 && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
                     </div>
                     {isEditing && 

@@ -90,7 +90,7 @@ const ProfileSeller = () => {
                 <div className='list'>
                     {profile.subscription?.avaliable && <Button className='list-item' onClick={openPopupApi}>{`${profile.api?.wildberries?.token ? 'Изменить' : 'Добавить'} API-ключ`}</Button>}
                     {!profile.subscription?.active && <Button className='list-item' onClick={goToSubscribe}>Оформить</Button>}
-                    {!profile.subscription?.active && !profile.subscription?.avaliable && !profile.trial.active && profile.trial['barters-left'] > 0 && <Button className='list-item' onClick={startTrial}>Попробовать бесплатно</Button>}
+                    {!profile.subscription?.active && !profile.subscription?.avaliable && !profile.trial.active && profile.trial['barters-left'] > 0 && <Button className='list-item disabled' onClick={startTrial}>Попробовать бесплатно</Button>}
                 </div>
             </div>
             {(profile.subscription?.active || profile.subscription?.avaliable) && profile.api.wildberries.token &&
