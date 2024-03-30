@@ -25,6 +25,11 @@ const getUser = async (userId) => {
     return response.data;
 }
 
+const createUser = async (userId, data) => {
+    const response = await apiClient.post(`/user/${userId}`, data);
+    return response.data;
+}
+
 const upsertUser = async (userId, data) => {
     const response = await apiClient.post(`/user/${userId}`, data);
     return response.data;
@@ -127,6 +132,7 @@ const sendSupportMessage = async (data) => {
 export default {
     generateAuthToken,
     getUser,
+    createUser,
     upsertUser,
     setWildberriesApi,
     addSellerSubscription,

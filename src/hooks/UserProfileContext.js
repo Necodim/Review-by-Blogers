@@ -12,7 +12,7 @@ export const UserProfileProvider = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const { tg, user, isAvailable } = useTelegram();
-    const { getUser, upsertUser, generateAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
+    const { getUser, createUser, upsertUser, generateAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
     const { showToast } = useToastManager();
 
     // Для тестов
@@ -30,16 +30,32 @@ export const UserProfileProvider = ({ children }) => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            try {
-                await generateAuthToken(userId);
-                const userProfile = await getUser(userId);
-                console.log(userProfile)
-                setProfile(userProfile);
-            } catch (error) {
-                setErrorMessage('Ошибка при получении данных пользователя');
-                if (isAvailable()) tg.showAlert('Ошибка при получении данных пользователя');
-            } finally {
-                setLoading(false);
+            if (userId) {
+                try {
+                    await generateAuthToken(userId);
+                    const existingUser = await getUser(userId);
+                    if (!existingUser) {
+                        const data = {
+                            id: userId,
+                            username: user?.username,
+                            firstname: user?.first_name,
+                            lastname: user?.last_name
+                        }
+                        const newUser = await createUser(data);
+                        console.log(newUser);
+                        setProfile(newUser);
+                    } else {
+                        console.log(existingUser);
+                        setProfile(existingUser);
+                    }
+                } catch (error) {
+                    setErrorMessage('Ошибка при получении данных пользователя');
+                    if (isAvailable()) tg.showAlert('Ошибка при получении данных пользователя');
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                setErrorMessage('Воспользоваться приложением можно только в Telegram. Если приложение не запускается, напишите в бот @unpacksbot команду /help.')
             }
         };
 
