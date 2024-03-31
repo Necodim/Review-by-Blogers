@@ -54,7 +54,7 @@ const ProfileSeller = () => {
         for (let [key, value] of formData.entries()) formValues[key] = value;
         showToast('Отправка данных...', 'loading');
         try {
-            const result = await api.setWildberriesApi(profile.id, formValues.api);
+            const result = await api.setApiWildberries(profile.id, formValues.api);
             if (result?.message) {
                 updateProfile({
                     ...profile,

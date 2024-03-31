@@ -35,9 +35,9 @@ const upsertUser = async (userId, data) => {
     return response.data;
 }
 
-const setWildberriesApi = async (userId, api) => {
+const setApiWildberries = async (userId, api) => {
     const data = {'api': api}
-    const response = await apiClient.post(`/user/wildberries/api/${userId}`, data);
+    const response = await apiClient.post(`/user/api/wildberries/${userId}`, data);
     return response.data;
 }
 
@@ -52,33 +52,33 @@ const cancelSellerSubscription = async (userId) => {
 }
 
 const getProductsByUserId = async (userId) => {
-    const response = await apiClient.get(`/user/products/${userId}`);
+    const response = await apiClient.get(`/products/user/${userId}`);
     return response.data;
 }
 
 const getProductsWithBartersByUserId = async (userId) => {
-    const response = await apiClient.get(`/user/products/${userId}?barters=true`);
+    const response = await apiClient.get(`/products/user/${userId}?barters=true`);
     return response.data;
 }
 
 const deletProductsByUserId = async (userId) => {
-    const response = await apiClient.delete(`/user/products/${userId}`);
-    return response.data;
-}
-
-const getBartersNewByUserId = async (userId) => {
-    const response = await apiClient.get(`/user/barters/new/${userId}`);
-    return response.data;
-}
-
-const getBartersCurrentByUserId = async (userId) => {
-    const response = await apiClient.get(`/user/barters/current/${userId}`);
+    const response = await apiClient.delete(`/products/user/${userId}`);
     return response.data;
 }
 
 const getBartersByProductIds = async (productIdsArray) => {
     const data = {'data': productIdsArray};
     const response = await apiClient.post(`/barters/products`, data);
+    return response.data;
+}
+
+const getBartersNewByUserId = async (userId) => {
+    const response = await apiClient.get(`/barters/new/user/${userId}`);
+    return response.data;
+}
+
+const getBartersCurrentByUserId = async (userId) => {
+    const response = await apiClient.get(`/barters/current/user/${userId}`);
     return response.data;
 }
 
@@ -134,7 +134,7 @@ export default {
     getUser,
     createUser,
     upsertUser,
-    setWildberriesApi,
+    setApiWildberries,
     addSellerSubscription,
     cancelSellerSubscription,
     getProductsByUserId,
