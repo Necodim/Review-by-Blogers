@@ -51,6 +51,11 @@ const cancelSellerSubscription = async (userId) => {
     return response.data;
 }
 
+const getProduct = async (productId) => {
+    const response = await apiClient.get(`/products/${productId}`);
+    return response.data;
+}
+
 const getProductsByUserId = async (userId) => {
     const response = await apiClient.get(`/products/user/${userId}`);
     return response.data;
@@ -137,19 +142,25 @@ export default {
     setApiWildberries,
     addSellerSubscription,
     cancelSellerSubscription,
+
+    getProduct,
     getProductsByUserId,
     getProductsWithBartersByUserId,
     deletProductsByUserId,
+
     getBartersNewByUserId,
     getBartersCurrentByUserId,
     getBartersByProductIds,
+
     getCategory,
     getCategories,
     getCategoriesByIds,
     getSubCategory,
     getSubCategories,
     getSubCategoriesByIds,
+
     setStore,
     setCategoryPage,
+
     sendSupportMessage,
 }

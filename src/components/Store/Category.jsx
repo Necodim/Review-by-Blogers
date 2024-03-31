@@ -4,11 +4,6 @@ import { useUserProfile } from '../../hooks/UserProfileContext';
 import Preloader from '../Preloader/Preloader';
 
 const Category = (props) => {
-    const { profile, loading } = useUserProfile();
-
-    if (loading) {
-        return <Preloader>Загружаюсь...</Preloader>;
-    }
 
     const screen = (
         <div className='content-wrapper'>

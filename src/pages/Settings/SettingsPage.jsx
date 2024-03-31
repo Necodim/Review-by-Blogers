@@ -8,7 +8,7 @@ import Input from '../../components/Form/Input';
 import PopupConfirmation from '../../components/Popup/PopupConfirmation';
 import Button from '../../components/Button/Button';
 
-const SettingsPage = (props) => {
+const SettingsPage = () => {
     const navigate = useNavigate();
     const { profile, updateProfile, updateUserData, addSubscription } = useUserProfile();
     const { isAvailable, showBackButton, user } = useTelegram();
@@ -96,6 +96,9 @@ const SettingsPage = (props) => {
                 }
                 <Button onClick={() => {navigate('/settings/support')}} icon='support_agent'>Поддержка</Button>
             </div>
+
+
+            
             <div className='container' id='tests'>
                 <h2>Тестовый функционал</h2>
                 <span>Telergam username: {user?.username}</span>

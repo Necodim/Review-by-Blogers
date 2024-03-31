@@ -1,22 +1,34 @@
 import React from 'react';
 import './Form.css';
+import { useTelegram } from '../../hooks/useTelegram';
+import InputIcon from './InputIcon';
 
-const Select = ({ id, title, name, placeholder, options, defaultValue, comment, onChange }) => {
+const SelectField = ({ id, title, name, placeholder, options, defaultValue, comment, onChange }) => {
+  const { hapticFeedback } = useTelegram();
+
+  const handleChange = (event) => {
+    hapticFeedback({ type: 'selection' });
+    onChange(event);
+  };
+
   return (
     <div id={'input-block-' + id} className='input-block'>
       {id && title && <label htmlFor={id}>{title}</label>}
       <div className='input-wrapper'>
-        <select name={name} onChange={onChange} defaultValue={defaultValue}>
+        <select name={name} onChange={handleChange} defaultValue={defaultValue}>
           {placeholder && <option value="" disabled>{placeholder}</option>}
           {options.map((option, index) => (
             <option key={index} value={option.value}>
               {option.label}
             </option>
           ))}
-        </select></div>
+        </select>
+        <div className='input-fade' />
+        <InputIcon icon='arrow_drop_down' disabled={true} />
+      </div>
       {comment && <small>{comment}</small>}
     </div>
   );
 };
 
-export default Select;
+export default SelectField;

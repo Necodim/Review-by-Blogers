@@ -26,6 +26,7 @@
     align-items: center;
     align-self: stretch;
     gap: var(--m);
+    color: var(--text-color);
     background-color: var(--primary-dark-2);
     border-radius: var(--m);
     overflow: hidden;
@@ -43,6 +44,7 @@ label {
 }
 
 input,
+select,
 textarea {
     width: 100%;
     position: relative;
@@ -68,6 +70,14 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+select {
+    height: var(--xxxl);
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 /* для элемента input c type="checkbox" */
