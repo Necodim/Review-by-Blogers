@@ -47,6 +47,7 @@ export const UserProfileProvider = ({ children }) => {
                         console.log(existingUser);
                         setProfile(existingUser);
                     }
+                    // setProfile({id:82431798, trial:{active:false}, role:'seller'})
                 } catch (error) {
                     setErrorMessage('Ошибка при получении данных пользователя');
                     if (isAvailable()) tg.showAlert('Ошибка при получении данных пользователя');

@@ -13,7 +13,6 @@ const SupportPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
-  const [isTextareaDisabled, setIsTextareaDisabled] = useState(true);
   const [isFormDisabled, setIsFormDisabled] = useState(true);
 
   useEffect(() => {
@@ -28,8 +27,8 @@ const SupportPage = () => {
   }, [errorMessage, showToast]);
 
   useEffect(() => {
-    setIsFormDisabled(!message.trim());
-  }, [message]);
+    setIsFormDisabled(!(subject !== '' && message.trim()));
+  }, [subject, message]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,15 +44,6 @@ const SupportPage = () => {
       }
     } catch (error) {
       setErrorMessage('Ошибка при отправке сообщения, попробуйте снова');
-    }
-  }
-
-  const handleSelectChange = (event) => {
-    setSubject(event.target.value);
-    if (subject != '') {
-      setIsTextareaDisabled(false);
-    } else {
-      setIsTextareaDisabled(true);
     }
   }
 
@@ -80,6 +70,10 @@ const SupportPage = () => {
     }
   ];
 
+  const handleSelectChange = (event) => {
+    setSubject(event.target.value);
+  }
+
   const handleTextareaChange = (event) => {
     setMessage(event.target.value);
   }
@@ -92,10 +86,10 @@ const SupportPage = () => {
             <h2>Поддержка</h2>
           </div>
           <div className='list-item'>
-            <small>Напишите нам, мы постараемся ответить в ближайшее время</small>
+            <small>Напишите свой вопрос или предложение, мы&nbsp;ответим в&nbsp;ближайшее время</small>
           </div>
         </div>
-        <Form onSubmit={handleSubmit} isFormDisabled={isFormDisabled} btntext='Отправить'>
+        <Form onSubmit={handleSubmit} isDisabled={isFormDisabled} btntext='Отправить'>
           <Select
             id="subject"
             name="subject"
@@ -110,7 +104,6 @@ const SupportPage = () => {
             placeholder='Задайте вопрос или напишите о неработающем функционале...'
             value={message}
             onChange={handleTextareaChange}
-            disabled={isTextareaDisabled}
           />
         </Form>
       </div>

@@ -169,10 +169,10 @@ const ProfileBlogger = () => {
             </div>
           )}
           {profile.onboarding && profileBloggerForm()}
-          {profile.onboarding &&
+          {/* {profile.onboarding &&
             <div className='list-item'>
               <span>После регистрации напишите в Instagram <a href='https://instagram.com/reviewbybloggers'>@reviewbybloggers</a> кодовое слово RB для подтверждения профиля</span>
-            </div>}
+            </div>} */}
         </div>
       </div>
     </div>

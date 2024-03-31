@@ -114,7 +114,6 @@ export function useTelegram() {
         tg.enableClosingConfirmation();
         tg.expand();
         BackButton();
-        // settingsButton(false);
         settingsButton(true);
         listenViewportChanged();
     }

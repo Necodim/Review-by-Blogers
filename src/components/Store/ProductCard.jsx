@@ -1,4 +1,5 @@
 import React from 'react';
+import './Store.css';
 
 const ProductCard = ({ product, isEditing, isSelected, onClick }) => (
     <div
