@@ -1,7 +1,7 @@
 import React from 'react';
 import './Form.css';
 
-const Textarea = ({ id, title, name, rows, placeholder, value, onChange }) => {
+const Textarea = ({ id, title, name, rows, placeholder, value, onChange, disabled }) => {
     return (
         <div id={'input-block-' + id} className='input-block'>
             {id && title && <label htmlFor={id}>{title}</label>}
@@ -12,6 +12,7 @@ const Textarea = ({ id, title, name, rows, placeholder, value, onChange }) => {
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                disabled={disabled}
             ></textarea>
         </div>
     );
