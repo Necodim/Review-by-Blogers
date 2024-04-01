@@ -75,8 +75,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/subscribe" element={<Subscribe />} />
         <Route path="/store" element={<Store />} />
-        <Route path="/store/categories/category-:id" element={<CategoryPage />} />
-        <Route path="/store/products/product-:id" element={<ProductPage />} />
+        <Route path="/store/categories/:id" element={<CategoryPage />} />
+        <Route path="/store/products/:id" element={<ProductPage />} />
         <Route path="/store/products/active" element={<ProductsActivePage />} />
         <Route path="/store/products/inactive" element={<ProductsInactivePage />} />
         <Route path="/barter" element={<Barter />} />

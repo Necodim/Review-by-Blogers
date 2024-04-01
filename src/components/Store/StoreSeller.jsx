@@ -105,7 +105,7 @@ const StoreSeller = () => {
           : [...prevSelected, productId]
       );
     } else {
-      navigate(`/store/products/product-${productId}`);
+      navigate(`/store/products/${productId}`);
     }
   }
 
