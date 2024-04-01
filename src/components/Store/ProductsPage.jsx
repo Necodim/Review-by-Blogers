@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Store.css';
+import { useSelectedProducts } from '../../hooks/useSelectProductsContext';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useToastManager } from '../../hooks/useToast';
 import Header from '../Header/Header';
@@ -10,18 +11,27 @@ import ProductsGrid from './ProductsGrid';
 import PopupEditProducts from './PopupEditProducts';
 import PopupWriteTask from './PopupWriteTask';
 
-const ProductsInactivePage = () => {
+const ProductsPage = () => {
+  const navigate = useNavigate();
   const location = useLocation();
 
+  const { products, title } = location.state || { products: [], title: 'Товары' };
+
+  const { selectedProducts, setSelectedProducts } = useSelectedProducts();
   const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedProducts, setSelectedProducts] = useState([]);
   const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
   const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
+
+  useEffect(() => {
+    if (products.length === 0) {
+      navigate('/store');
+    }
+  }, [products]);
 
   useEffect(() => {
     if (isAvailable) showBackButton();
@@ -33,8 +43,6 @@ const ProductsInactivePage = () => {
       setErrorMessage('');
     }
   }, [errorMessage, showToast]);
-
-  const { products } = location.state || { products: [] };
 
   const sortedProducts = useMemo(() => {
     let sortableProducts = [...products];
@@ -97,14 +105,15 @@ const ProductsInactivePage = () => {
     setIsPopupEditProductsVisible(false);
     setIsPopupWriteTaskVisible(true);
   }
-
+  
   return (
+
     <div className='content-wrapper'>
       <Header />
       <div className='container' id='products'>
         <div className='list'>
           <div className='list-item'>
-            <h2>На&nbsp;паузе</h2>
+            <h2>{title}</h2>
             {products.length > 0 && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
           </div>
           {isEditing &&
@@ -137,8 +146,6 @@ const ProductsInactivePage = () => {
         <ProductsGrid
           products={sortedProducts}
           isEditing={isEditing}
-          selectedProducts={selectedProducts}
-          setSelectedProducts={setSelectedProducts}
         />
         {isEditing && <Button onClick={openPopupEditProducts} className={selectedProducts.length > 0 ? 'sticky b-s shadow' : 'relative b-0 disabled'} icon='edit'>Редактировать</Button>}
       </div>
@@ -155,4 +162,4 @@ const ProductsInactivePage = () => {
   );
 };
 
-export default ProductsInactivePage;
+export default ProductsPage;

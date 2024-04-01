@@ -71,6 +71,12 @@ const deletProductsByUserId = async (userId) => {
     return response.data;
 }
 
+const getBartersByProductId = async (productId, marketplace) => {
+    const query = marketplace ? `?marketplace=${marketplace}` : '';
+    const response = await apiClient.get(`/barters/products/${productId}${query}`);
+    return response.data;
+}
+
 const getBartersByProductIds = async (productIdsArray) => {
     const data = {'data': productIdsArray};
     const response = await apiClient.post(`/barters/products`, data);
@@ -148,9 +154,10 @@ export default {
     getProductsWithBartersByUserId,
     deletProductsByUserId,
 
+    getBartersByProductId,
+    getBartersByProductIds,
     getBartersNewByUserId,
     getBartersCurrentByUserId,
-    getBartersByProductIds,
 
     getCategory,
     getCategories,

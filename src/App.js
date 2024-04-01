@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
+import { SelectedProductsProvider } from './hooks/useSelectProductsContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTelegram } from './hooks/useTelegram';
@@ -10,9 +11,9 @@ import StartScreen from './components/StartScreen/StartScreen';
 import Store from './components/Store/Store';
 import CategoryPage from './components/Store/CategoryPage';
 import ProductPage from './components/Store/ProductPage';
-import ProductsInactivePage from './components/Store/ProductsInactivePage';
-import ProductsActivePage from './components/Store/ProductsActivePage';
-import Barter from './components/Barter/Barter';
+import ProductsPage from './components/Store/ProductsPage';
+import BartersPage from './components/Barters/BartersPage';
+import NewBarterPage from './components/Barters/BartersPage';
 import Profile from './components/Profile/Profile';
 import Subscribe from './components/Profile/Subscription/Subscribe';
 import SettingsPage from './pages/Settings/SettingsPage';
@@ -74,12 +75,12 @@ function App() {
         <Route index element={!profile || !profile.role ? <StartScreen /> : <Navigate to="/profile" replace />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/subscribe" element={<Subscribe />} />
-        <Route path="/store" element={<Store />} />
+        <Route path="/store" element={<SelectedProductsProvider><Store /></SelectedProductsProvider>} />
         <Route path="/store/categories/:id" element={<CategoryPage />} />
-        <Route path="/store/products/:id" element={<ProductPage />} />
-        <Route path="/store/products/active" element={<ProductsActivePage />} />
-        <Route path="/store/products/inactive" element={<ProductsInactivePage />} />
-        <Route path="/barter" element={<Barter />} />
+        <Route path="/store/products/:productId" element={<ProductPage />} />
+        <Route path="/store/products" element={<SelectedProductsProvider><ProductsPage /></SelectedProductsProvider>} />
+        <Route path="/barters" element={<BartersPage />} />
+        <Route path="/barters/new/:productId" element={<NewBarterPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/settings/support" element={<SupportPage />} />
       </Routes>

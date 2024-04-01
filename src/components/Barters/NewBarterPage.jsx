@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import './Barter.css'
+import './Barters.css'
 import api from '../../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useTelegram } from '../../hooks/useTelegram'
@@ -10,7 +10,7 @@ import Preloader from '../Preloader/Preloader';
 import Link from '../Button/Link';
 import Icon from '../Icon/Icon';
 
-const Barter = (props) => {
+const NewBarterPage = () => {
     const { profile, loading } = useUserProfile();
     if (loading) {
         return <Preloader>Загружаюсь...</Preloader>;
@@ -257,4 +257,4 @@ const Barter = (props) => {
     }
 }
 
-export default Barter
+export default NewBarterPage

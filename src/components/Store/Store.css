@@ -151,7 +151,7 @@
     gap: var(--xs);
 }
 
-.product-title {
+.product-content .product-title {
     color: var(--text-color);
     font-size: var(--text-size-s);
     display: -webkit-box;
@@ -203,4 +203,13 @@
 .category-card-count {
     color: var(--text-color);
     opacity: .5;
+}
+
+.product-page .product-title {
+    color: var(--text-color);
+    font-size: var(--text-size-xl);
+}
+
+.product-page .product-image {
+    border-radius: var(--m);
 }

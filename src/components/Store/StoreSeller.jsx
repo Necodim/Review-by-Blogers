@@ -76,12 +76,17 @@ const StoreSeller = () => {
     }
   }, [loading, profile.id]);
 
+  const titles = {
+    active: 'В работе',
+    inactive: 'На паузе'
+  }
+
   const openActiveProductsPage = () => {
-    navigate('/store/products/active', { state: { products: activeBarters } });
-  };
+    navigate('/store/products', { state: { products: activeBarters, title: titles.active } });
+  }
 
   const openInactiveProductsPage = () => {
-    navigate('/store/products/inactive', { state: { products: inactiveBarters } });
+    navigate('/store/products', { state: { products: inactiveBarters, title: titles.inactive } });
   }
 
   return (
@@ -91,7 +96,7 @@ const StoreSeller = () => {
         <div className='container' id='products-active'>
           <div className='list'>
             <div className='list-item'>
-              <h2>В&nbsp;работе</h2>
+              <h2>{titles.active}</h2>
               <Link onClick={openActiveProductsPage}>Ещё</Link>
             </div>
             <div className='list-item'>
@@ -107,7 +112,7 @@ const StoreSeller = () => {
         <div className='container' id='products-inactive'>
           <div className='list'>
             <div className='list-item'>
-              <h2>На&nbsp;паузе</h2>
+              <h2>{titles.inactive}</h2>
               <Link onClick={openInactiveProductsPage}>Ещё</Link>
             </div>
             <div className='list-item'>
