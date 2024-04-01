@@ -10,7 +10,7 @@ const ProductsGrid = ({ products, isEditing, selectedProducts, handleSelectProdu
           product={product}
           isEditing={isEditing}
           isSelected={selectedProducts.includes(product.nmid)}
-          onClick={() => handleSelectProduct(product.nmid)}
+          onClick={() => handleSelectProduct(product)}
         />
       ))}
     </div>

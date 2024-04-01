@@ -97,15 +97,15 @@ const StoreSeller = () => {
     }
   }
 
-  const handleSelectProduct = (productId) => {
+  const handleSelectProduct = (product) => {
     if (isEditing) {
       setSelectedProducts((prevSelected) =>
-        prevSelected.includes(productId)
-          ? prevSelected.filter((id) => id !== productId)
-          : [...prevSelected, productId]
+        prevSelected.includes(product.nmid)
+          ? prevSelected.filter((id) => id !== product.nmid)
+          : [...prevSelected, product.nmid]
       );
     } else {
-      navigate(`/store/products/${productId}`);
+      navigate(`/store/products/${product.nmid}`, { state: { product } });
     }
   }
 

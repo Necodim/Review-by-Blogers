@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import './Store.css';
 import api from '../../api/api';
 import { useToastManager } from '../../hooks/useToast'
 
-const ProductPage = ({ product }) => {
+const ProductPage = () => {
+  const location = useLocation();
+  const { product } = location.state || {};
   const { productId } = useParams();
 
   const { showToast } = useToastManager();
@@ -23,6 +25,7 @@ const ProductPage = ({ product }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       if (!productData) {
+        console.log(productId)
         setLoadingProduct(true);
         try {
           const fetchedProduct = await api.getProduct(productId);
