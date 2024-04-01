@@ -21,10 +21,10 @@ const Header = (props) => {
             <div className={'header'}>
                 <div className="nav-buttons-wrapper">
                     <Button className={`nav-button light ${isActive('/store') ? 'active' : ''}`}>
-                        <Icon icon='list' />
+                        <Icon icon='grid_view' />
                         <span>{profile.role === 'blogger' ? 'Категории' : 'Товары'}</span>
                     </Button>
-                    <Button className={`nav-button light ${isActive('/barter') ? 'active' : ''}`}>
+                    <Button className={`nav-button light ${isActive('/barters') ? 'active' : ''}`}>
                         <Icon icon='groups' />
                         <span>Бартеры</span>
                     </Button>
@@ -41,19 +41,19 @@ const Header = (props) => {
         <div className={'header'}>
             <div className="nav-buttons-wrapper">
                 <Link to={ `../store` }>
-                    <Button className={`nav-button light ${isActive('store')}`}>
-                        <Icon icon='list' />
+                    <Button className={`nav-button light ${isActive('/store') ? 'active' : ''}`}>
+                        <Icon icon='grid_view' />
                         <span>{profile.role === 'blogger' ? 'Категории' : 'Товары'}</span>
                     </Button>
                 </Link>
-                <Link to={ `../barter` }>
-                    <Button className={`nav-button light ${isActive('barter')}`}>
+                <Link to={ `../barters` }>
+                    <Button className={`nav-button light ${isActive('/barters') ? 'active' : ''}`}>
                         <Icon icon='groups' />
                         <span>Бартеры</span>
                     </Button>
                 </Link>
                 <Link to={ `../profile` }>
-                    <Button className={`nav-button light ${isActive('/profile')}`}>
+                    <Button className={`nav-button light ${isActive('/profile') ? 'active' : ''}`}>
                         <Icon icon='person' />
                         <span>Профиль</span>
                     </Button>

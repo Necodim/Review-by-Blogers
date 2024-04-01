@@ -16,6 +16,10 @@
   transition: all .3s ease-in-out;
 }
 
+.button.secondary {
+  background: var(--secondary);
+}
+
 .button.light {
   color: var(--dark);
   background-color: var(--light);
@@ -44,6 +48,7 @@
 .button.nav-button {
   width: 100%;
   font-size: var(--text-size-s);
+  border-radius: var(--l);
   flex-direction: column;
   gap: var(--xxs);
   padding: var(--xs) var(--m);

@@ -9,7 +9,7 @@ const InputField = ({ id, title, icon, iconCallback, fade, comment, onChange, ..
         <div id={'input-block-' + id} className='input-block'>
             {id && title && <label htmlFor={id}>{title}</label>}
             <div className='input-wrapper'>
-                <input {...inputProps} name={inputProps.name || id || 'defaultName'} onChange={handleChange} />
+                <input {...inputProps} name={inputProps.name || id || 'input-name'} onChange={handleChange} />
                 {fade && <div className='input-fade' />}
                 <InputIcon icon={icon} onClick={iconCallback} />
             </div>
