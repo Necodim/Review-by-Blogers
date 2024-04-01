@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Store.css';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useToastManager } from '../../hooks/useToast';
@@ -11,82 +11,87 @@ import PopupEditProducts from './PopupEditProducts';
 import PopupWriteTask from './PopupWriteTask';
 
 const ProductsActivePage = () => {
-    const { isAvailable, showBackButton } = useTelegram();
-    const location = useLocation();
-    const { showToast } = useToastManager();
-    
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isEditing, setIsEditing] = useState(false);
-    const [selectedProducts, setSelectedProducts] = useState([]);
-    const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
-    const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
+  const { isAvailable, showBackButton } = useTelegram();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { showToast } = useToastManager();
 
-    useEffect(() => {
-        if (isAvailable) showBackButton();
-    }, [isAvailable, showBackButton]);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
+  const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
 
-    useEffect(() => {
-        if (errorMessage) {
-            showToast(errorMessage, 'error');
-            setErrorMessage('');
-        }
-    }, [errorMessage, showToast]);
+  useEffect(() => {
+    if (isAvailable) showBackButton();
+  }, [isAvailable, showBackButton]);
 
-    const toggleEdit = () => {
-        setIsEditing(!isEditing);
-        if (isEditing) {
-            setSelectedProducts([]);
-        }
+  useEffect(() => {
+    if (errorMessage) {
+      showToast(errorMessage, 'error');
+      setErrorMessage('');
     }
+  }, [errorMessage, showToast]);
 
-    const handleSelectProduct = (productId) => {
-        setSelectedProducts((prevSelected) =>
-            prevSelected.includes(productId)
-                ? prevSelected.filter((id) => id !== productId)
-                : [...prevSelected, productId]
-        );
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
+    if (isEditing) {
+      setSelectedProducts([]);
     }
+  }
 
-    const openPopupEditProducts = () => {
-        if (selectedProducts.length > 0) setIsPopupEditProductsVisible(true);
+  const handleSelectProduct = (productId) => {
+    if (isEditing) {
+      setSelectedProducts((prevSelected) =>
+        prevSelected.includes(productId)
+          ? prevSelected.filter((id) => id !== productId)
+          : [...prevSelected, productId]
+      );
+    } else {
+      navigate(`/store/products/product-${productId}`);
     }
+  }
 
-    const openPopupWriteTask = () => {
-        setIsPopupEditProductsVisible(false);
-        setIsPopupWriteTaskVisible(true);
-    }
+  const openPopupEditProducts = () => {
+    if (selectedProducts.length > 0) setIsPopupEditProductsVisible(true);
+  }
 
-    const { products } = location.state || { products: [] };
+  const openPopupWriteTask = () => {
+    setIsPopupEditProductsVisible(false);
+    setIsPopupWriteTaskVisible(true);
+  }
 
-    return (
-        <div className='content-wrapper'>
-            <Header />
-            <div className='container' id='products'>
-                <div className='list'>
-                    <div className='list-item'>
-                        <h2>В&nbsp;работе</h2>
-                        {products.length > 0 && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
-                    </div>
-                </div>
-                <ProductsGrid
-                    products={products}
-                    isEditing={isEditing}
-                    selectedProducts={selectedProducts}
-                    handleSelectProduct={handleSelectProduct}
-                />
-                {isEditing && <Button onClick={openPopupEditProducts} className={selectedProducts.length > 0 ? 'sticky b-s shadow' : 'relative b-0 disabled'} icon='edit'>Редактировать</Button>}
-            </div>
-            <PopupEditProducts
-                isOpen={isPopupEditProductsVisible}
-                onClose={() => setIsPopupEditProductsVisible(false)}
-                onWriteTask={openPopupWriteTask}
-            />
-            <PopupWriteTask
-                isOpen={isPopupWriteTaskVisible}
-                onClose={() => setIsPopupWriteTaskVisible(false)}
-            />
+  const { products } = location.state || { products: [] };
+
+  return (
+    <div className='content-wrapper'>
+      <Header />
+      <div className='container' id='products'>
+        <div className='list'>
+          <div className='list-item'>
+            <h2>В&nbsp;работе</h2>
+            {products.length > 0 && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
+          </div>
         </div>
-    );
+        <ProductsGrid
+          products={products}
+          isEditing={isEditing}
+          selectedProducts={selectedProducts}
+          handleSelectProduct={handleSelectProduct}
+        />
+        {isEditing && <Button onClick={openPopupEditProducts} className={selectedProducts.length > 0 ? 'sticky b-s shadow' : 'relative b-0 disabled'} icon='edit'>Редактировать</Button>}
+      </div>
+      <PopupEditProducts
+        isOpen={isPopupEditProductsVisible}
+        onClose={() => setIsPopupEditProductsVisible(false)}
+        onWriteTask={openPopupWriteTask}
+      />
+      <PopupWriteTask
+        isOpen={isPopupWriteTaskVisible}
+        onClose={() => setIsPopupWriteTaskVisible(false)}
+      />
+    </div>
+  );
 };
 
 export default ProductsActivePage;
