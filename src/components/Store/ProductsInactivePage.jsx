@@ -99,7 +99,7 @@ const ProductsInactivePage = () => {
           : [...prevSelected, productId]
       );
     } else {
-      navigate(`/store/products/${productId}`);
+      navigate(`/store/products/product-${productId}`);
     }
   }
 
