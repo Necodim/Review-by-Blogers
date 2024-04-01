@@ -48,7 +48,7 @@ const ProductsActivePage = () => {
           : [...prevSelected, productId]
       );
     } else {
-      navigate(`/store/products/product-${productId}`);
+      navigate(`/store/products/${productId}`);
     }
   }
 

@@ -32,7 +32,7 @@ const StoreBlogger = (props) => {
     }, [errorMessage, showToast]);
 
     const handleCategorySelect = (categoryId) => {
-        navigate(`/${profile.role}/store/categories/category-${categoryId}`);
+        navigate(`/${profile.role}/store/categories/${categoryId}`);
     };
 
     return (
