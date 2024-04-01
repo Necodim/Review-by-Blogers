@@ -5,7 +5,6 @@ import api from '../../api/api';
 import { useToastManager } from '../../hooks/useToast';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useHelpers } from '../../hooks/useHelpers';
-import { selectProduct } from '../../utils/productUtils';
 import Header from '../Header/Header';
 import Link from '../Button/Link';
 import ProductsGrid from './ProductsGrid';
