@@ -1,19 +1,17 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './Store.css';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useToastManager } from '../../hooks/useToast';
 import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Link from '../Button/Link';
-import Icon from '../Icon/Icon';
 import ProductsGrid from './ProductsGrid';
 import PopupEditProducts from './PopupEditProducts';
 import PopupWriteTask from './PopupWriteTask';
 
 const ProductsInactivePage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
@@ -91,18 +89,6 @@ const ProductsInactivePage = () => {
     }
   }
 
-  const handleSelectProduct = (productId) => {
-    if (isEditing) {
-      setSelectedProducts((prevSelected) =>
-        prevSelected.includes(productId)
-          ? prevSelected.filter((id) => id !== productId)
-          : [...prevSelected, productId]
-      );
-    } else {
-      navigate(`/store/products/${productId}`);
-    }
-  }
-
   const openPopupEditProducts = () => {
     if (selectedProducts.length > 0) setIsPopupEditProductsVisible(true);
   }
@@ -145,9 +131,6 @@ const ProductsInactivePage = () => {
                   direction={sortConfig.key === 'updatedat' ? sortConfig.direction : null}
                 />
               </small>
-
-              {/* <Link onClick={() => handleSort('title')}><small>названию</small></Link>
-                        <Link onClick={() => handleSort('updatedat')}><small>дате изменения</small></Link> */}
             </div>
           }
         </div>
@@ -155,7 +138,7 @@ const ProductsInactivePage = () => {
           products={sortedProducts}
           isEditing={isEditing}
           selectedProducts={selectedProducts}
-          handleSelectProduct={handleSelectProduct}
+          setSelectedProducts={setSelectedProducts}
         />
         {isEditing && <Button onClick={openPopupEditProducts} className={selectedProducts.length > 0 ? 'sticky b-s shadow' : 'relative b-0 disabled'} icon='edit'>Редактировать</Button>}
       </div>

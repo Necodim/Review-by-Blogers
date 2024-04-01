@@ -16,15 +16,9 @@ const StoreSeller = () => {
   const { showToast } = useToastManager();
   const { getPlural } = useHelpers();
 
-  const initialProductsPlaceholder = new Array(4).fill({}).map((_, index) => ({
-    placeholder: true,
-    nmid: `id-${index}`,
-  }));
-  const [products, setProducts] = useState(initialProductsPlaceholder);
+  const [products, setProducts] = useState([]);
   const [productsIsLoading, setProductsIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
-  const [selectedProducts, setSelectedProducts] = useState([]);
   const [activeBarters, setActiveBarters] = useState([]);
   const [inactiveBarters, setInactiveBarters] = useState([]);
 
@@ -88,25 +82,6 @@ const StoreSeller = () => {
 
   const openInactiveProductsPage = () => {
     navigate('/store/products/inactive', { state: { products: inactiveBarters } });
-  };
-
-  const toggleEdit = () => {
-    setIsEditing(!isEditing);
-    if (isEditing) {
-      setSelectedProducts([]);
-    }
-  }
-
-  const handleSelectProduct = (product) => {
-    if (isEditing) {
-      setSelectedProducts((prevSelected) =>
-        prevSelected.includes(product.nmid)
-          ? prevSelected.filter((id) => id !== product.nmid)
-          : [...prevSelected, product.nmid]
-      );
-    } else {
-      navigate(`/store/products/${product.nmid}`, { state: { product } });
-    }
   }
 
   return (
@@ -125,9 +100,6 @@ const StoreSeller = () => {
           </div>
           <ProductsGrid
             products={activeBarters.slice(0, 2)}
-            isEditing={isEditing}
-            selectedProducts={selectedProducts}
-            handleSelectProduct={handleSelectProduct}
           />
         </div>
       }
@@ -144,9 +116,6 @@ const StoreSeller = () => {
           </div>
           <ProductsGrid
             products={inactiveBarters.slice(0, 2)}
-            isEditing={isEditing}
-            selectedProducts={selectedProducts}
-            handleSelectProduct={handleSelectProduct}
           />
         </div>
       }
