@@ -135,6 +135,16 @@ const setCategoryPage = async (subCategoryID) => {
     return response.data;
 }
 
+const createPaymentPayload = async (data) => {
+    const response = await apiClient.post('/payment/create-payload', data);
+    return response.data;
+}
+
+const getPaymentStatus = async (paymentId) => {
+    const response = await apiClient.get(`/payment/status/${paymentId}`);
+    return response.data;
+}
+
 const sendSupportMessage = async (data) => {
     const response = await apiClient.post(`/other/support`, data);
     return response.data;
@@ -169,5 +179,7 @@ export default {
     setStore,
     setCategoryPage,
 
+    createPaymentPayload,
+    getPaymentStatus,
     sendSupportMessage,
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../Profile.css';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useToastManager } from '../../../hooks/useToast';
+import { useYooKassa } from '../../../hooks/useYooKassa';
 import Form from '../../Form/Form';
 import Input from '../../Form/Input';
 import Header from '../../Header/Header';
@@ -9,6 +10,7 @@ import Header from '../../Header/Header';
 const SubscribeHasNoSubscription = () => {
   const { profile } = useUserProfile();
   const { showToast } = useToastManager();
+  const { createPaymentPayload } = useYooKassa();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
@@ -70,16 +72,16 @@ const SubscribeHasNoSubscription = () => {
     addFormData(name, value);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setAttemptedSubmit(true);
+    setIsFormValid(false);
 
     if (!cardNumberValue || !cardPeriodValue || !cardCodeValue) {
       setErrorMessage('Все поля должны быть заполнены.');
       return;
     }
 
-    // Проверяем формат и валидность даты срока действия карты
     const periodParts = cardPeriodValue.split('/');
     if (periodParts.length !== 2) {
       setErrorMessage('Неверный формат срока действия карты');
@@ -102,23 +104,20 @@ const SubscribeHasNoSubscription = () => {
       return;
     }
 
-    // submitSubscribeCallback();
+    const cardData = {
+      number: cardNumberValue,
+      month: periodParts[0],
+      year: periodParts[1],
+      cvc: cardCodeValue
+    }
+
+    try {
+      await createPaymentPayload(cardData);
+    } catch (error) {
+      setIsFormValid(true);
+      console.log(error);
+    }
   }
-
-  // const submitSubscribeCallback = async () => {
-  //     const cardNumber = cardNumberValue.replace('/\D/g', '');
-  //     const data = {
-  //         number: cardNumber,
-  //         period: cardPeriodValue,
-  //         code: cardCodeValue
-  //     }
-  //     await sendCardData(profile.id, data);
-  //     showToast('Формируем платежный терминал', 'info');
-  // }
-
-  // const sendCardData = async (data) => {
-  //     await console.log(data);
-  // }
 
   return (
     <div className='content-wrapper'>
@@ -140,7 +139,7 @@ const SubscribeHasNoSubscription = () => {
             title='Номер карты'
             placeholder='2202 2020 1234 5678'
             required='required'
-            autocomplete='cc-number'
+            autoComplete='cc-number'
             value={cardNumberValue}
             onChange={handleCardNumberChange}
             maxLength='19'
@@ -150,6 +149,8 @@ const SubscribeHasNoSubscription = () => {
             name='card-period'
             title='Действительна до'
             placeholder='09/32'
+            required='required'
+            autoComplete='cc-exp'
             value={cardPeriodValue}
             onChange={handleCardPeriodChange}
             maxLength='5'
@@ -159,6 +160,8 @@ const SubscribeHasNoSubscription = () => {
             name='card-code'
             title='CVC/CVV код'
             placeholder='123'
+            required='required'
+            autoComplete='cc-csc'
             value={cardCodeValue}
             onChange={handleCardCodeChange}
             maxLength='3'
