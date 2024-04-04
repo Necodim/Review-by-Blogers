@@ -54,6 +54,7 @@ export const useYooKassa = () => {
       try {
         const payload = await api.createPaymentPayload(data);
         console.log(payload);
+        sessionStorage.setItem('paymentId', payload.id);
         if (payload.status === 'pending') {
           window.location.href = payload.confirmation.confirmation_url;
         } else if (payload.status === 'waiting_for_capture') {

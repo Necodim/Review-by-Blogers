@@ -112,7 +112,7 @@ const SubscribeHasNoSubscription = () => {
     }
 
     try {
-      await createPaymentPayload(cardData);
+      const payment = await createPaymentPayload(cardData);
     } catch (error) {
       setIsFormValid(true);
       console.log(error);

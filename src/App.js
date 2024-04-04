@@ -4,6 +4,7 @@ import './App.css';
 import { SelectedProductsProvider } from './hooks/useSelectProductsContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useReferral } from './hooks/useReferral';
 import { useTelegram } from './hooks/useTelegram';
 import { useUserProfile } from './hooks/UserProfileContext';
 import Preloader from './components/Preloader/Preloader';
@@ -16,16 +17,36 @@ import BartersPage from './components/Barters/BartersPage';
 import NewBarterPage from './components/Barters/BartersPage';
 import Profile from './components/Profile/Profile';
 import Subscribe from './components/Profile/Subscription/Subscribe';
+import WaitingForCapturePage from './pages/Subscription/WaitingForCapturePage';
 import SettingsPage from './pages/Settings/SettingsPage';
-import SupportPage from './pages/Settings/SupportPage';
+import SupportPage from './pages/Info/SupportPage';
+import UserAgreementPage from './pages/Info/UserAgreementPage';
 
 function App() {
+  const { setReferral } = useReferral();
   const { tg, defaultSettings } = useTelegram();
   const { profile, loading } = useUserProfile();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const params = {};
+    for (let param of searchParams) {
+      const [key, value] = param;
+      params[key] = value;
+    }
+    
+    if (params.ref) {
+      setReferral(params.ref);
+    }
+
+    if (params.page) {
+      navigate(decodeURIComponent(params.page));
+    }
+  }, []);
 
   useEffect(() => {
     const initialHeight = tg.viewportStableHeight;
@@ -51,7 +72,7 @@ function App() {
 
   useEffect(() => {
     if (loading) return;
-    if ((location.pathname !== '/' && location.pathname !== '/settings') && (!profile || (profile.role !== 'seller' && profile.role !== 'blogger'))) {
+    if ((location.pathname !== '/' && location.pathname !== '/settings' && !location.pathname.startsWith('/info')) && (!profile || (profile.role !== 'seller' && profile.role !== 'blogger'))) {
       navigate('/');
     }
   }, [profile, navigate, location.pathname, loading]);
@@ -61,7 +82,7 @@ function App() {
       tg.ready();
       defaultSettings();
     } else {
-      console.log("Telegram Web App API не доступен.");
+      console.log('Telegram Web App API не доступен.');
     }
   }, [tg, defaultSettings]);
 
@@ -75,6 +96,7 @@ function App() {
         <Route index element={!profile || !profile.role ? <StartScreen /> : <Navigate to="/profile" replace />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/subscribe" element={<Subscribe />} />
+        <Route path="/profile/subscribe/waiting-for-capture" element={<WaitingForCapturePage />} />
         <Route path="/store" element={<SelectedProductsProvider><Store /></SelectedProductsProvider>} />
         <Route path="/store/categories/:id" element={<CategoryPage />} />
         <Route path="/store/products/:productId" element={<ProductPage />} />
@@ -82,7 +104,8 @@ function App() {
         <Route path="/barters" element={<BartersPage />} />
         <Route path="/barters/new/:productId" element={<NewBarterPage />} />
         <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/settings/support" element={<SupportPage />} />
+        <Route path="/info/support" element={<SupportPage />} />
+        <Route path="/info/user-agreement" element={<UserAgreementPage />} />
       </Routes>
       <ToastContainer />
     </div>
