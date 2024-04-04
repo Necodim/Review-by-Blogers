@@ -19,7 +19,7 @@ const Link = ({ className, onClick, url, children, ...buttonProps }) => {
             className={`button link ${className || ''}`}
             onClick={url ? () => window.open(url, '_blank') : handleClick}
         >
-            {children}
+            {!!children ? children : url ? url : 'Ссылка'}
         </button>
     );
 }

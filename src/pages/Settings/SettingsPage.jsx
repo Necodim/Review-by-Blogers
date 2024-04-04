@@ -94,7 +94,7 @@ const SettingsPage = () => {
                     selectedValue={newRole}
                 />
                 }
-                <Button onClick={() => {navigate('/settings/support')}} icon='support_agent'>Поддержка</Button>
+                <Button onClick={() => {navigate('/info/support')}} icon='support_agent'>Поддержка</Button>
             </div>
 
 

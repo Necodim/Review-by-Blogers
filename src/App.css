@@ -186,14 +186,6 @@ h3 {
   gap: var(--xs);
 }
 
-.justify-content-start {
-  justify-content: flex-start;
-}
-
-.self-start {
-  align-self: flex-start;
-}
-
 .hint-wrapper {
   width: 100%;
   color: var(--text-color);
@@ -203,6 +195,37 @@ h3 {
   padding: var(--m);
   overflow: hidden;
 }
+
+.doc-counter {
+  line-height: 1.4;
+}
+
+.doc-counter ol {
+  counter-reset: item;
+  list-style-type: none;
+}
+
+.doc-counter ol > li {
+  margin-bottom: var(--xs);
+}
+
+.doc-counter ol > li:before {
+  counter-increment: item;
+  content: counters(item, ".") ". ";
+}
+
+.doc-counter ol > li > ol {
+  margin-top: var(--s);
+  margin-bottom: var(--l);
+}
+
+.doc-counter ol[start="0"] { counter-reset: item 0; }
+.doc-counter ol[start="1"] { counter-reset: item 0; }
+.doc-counter ol[start="2"] { counter-reset: item 1; }
+.doc-counter ol[start="3"] { counter-reset: item 2; }
+.doc-counter ol[start="4"] { counter-reset: item 3; }
+.doc-counter ol[start="5"] { counter-reset: item 4; }
+.doc-counter ol[start="6"] { counter-reset: item 5; }
 
 .overflow-hidden {
   overflow: hidden !important;
@@ -225,6 +248,14 @@ h3 {
 
 .shadow {
   box-shadow: 0 0 var(--xs) 0 rgba(var(--primary-dark-1-rgb), .25);
+}
+
+.justify-content-start {
+  justify-content: flex-start;
+}
+
+.self-start {
+  align-self: flex-start;
 }
 
 .gap-xs {
