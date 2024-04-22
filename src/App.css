@@ -67,7 +67,7 @@ a:visited {
   width: inherit;
   color: inherit;
   font-size: inherit;
-  /* text-decoration: none; */
+  text-decoration: none;
 }
 
 small {
