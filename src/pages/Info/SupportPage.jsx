@@ -49,24 +49,28 @@ const SupportPage = () => {
 
   const selectOptions = [
     {
+      label: 'Профиль',
       value: 'profile',
-      label: 'Профиль'
     },
     {
+      label: 'Товары',
       value: 'products',
-      label: 'Товары'
     },
     {
+      label: 'Доставка',
+      value: 'delivery',
+    },
+    {
+      label: 'Бартеры',
       value: 'barters',
-      label: 'Бартеры'
     },
     {
+      label: 'Подписка',
       value: 'subscription',
-      label: 'Подписка'
     },
     {
+      label: 'Другое',
       value: 'other',
-      label: 'Другое'
     }
   ];
 
