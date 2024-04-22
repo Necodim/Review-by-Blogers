@@ -29,7 +29,7 @@ export function useTelegram() {
             if (location.pathname.startsWith('/settings')) {
                 navigate('/profile');
             } else {
-                navigate(-1);
+                window.history.back();
             }
         }
         tg.BackButton.offClick(backButtonCallback);

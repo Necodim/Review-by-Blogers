@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
-import Link from '../../components/Button/Link';
 import Input from '../../components/Form/Input';
-import PopupConfirmation from '../../components/Popup/PopupConfirmation';
 import Button from '../../components/Button/Button';
+import Link from '../../components/Button/Link';
+import PopupConfirmation from '../../components/Popup/PopupConfirmation';
 
 const SettingsPage = () => {
     const navigate = useNavigate();
@@ -95,6 +95,7 @@ const SettingsPage = () => {
                 />
                 }
                 <Button onClick={() => {navigate('/info/support')}} icon='support_agent'>Поддержка</Button>
+                <Link onClick={() => {navigate('/info/user-agreement')}}>Пользовательское соглашение</Link>
             </div>
 
 
