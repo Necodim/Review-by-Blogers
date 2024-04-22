@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Profile.css';
 import ProfileBlogger from './ProfileBlogger.jsx';
 import ProfileSeller from './ProfileSeller.jsx';
