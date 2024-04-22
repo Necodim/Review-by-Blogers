@@ -17,18 +17,22 @@ const Header = (props) => {
     return result;
   };
 
+  const navigateTo = (path) => {
+    navigate(path);
+  }
+
   return (
     <div className={'header'}>
       <div className="nav-buttons-wrapper">
-        <Button className={`nav-button light ${isActive('/store') ? 'active' : ''}`} onClick={loading ? navigate('/store') : () => {}}>
+        <Button className={`nav-button light ${isActive('/store') ? 'active' : ''}`} onClick={() => navigateTo('/store')}>
           <Icon icon='grid_view' />
           <span>{profile.role === 'blogger' ? 'Категории' : 'Товары'}</span>
         </Button>
-        <Button className={`nav-button light ${isActive('/barters') ? 'active' : ''}`} onClick={loading ? navigate('/barters') : () => {}}>
+        <Button className={`nav-button light ${isActive('/barters') ? 'active' : ''}`} onClick={() => navigateTo('/barters')}>
           <Icon icon='groups' />
           <span>Бартеры</span>
         </Button>
-        <Button className={`nav-button light ${isActive('/profile') ? 'active' : ''}`} onClick={loading ? navigate('/profile') : () => {}}>
+        <Button className={`nav-button light ${isActive('/profile') ? 'active' : ''}`} onClick={() => navigateTo('/profile')}>
           <Icon icon='person' />
           <span>Профиль</span>
         </Button>
