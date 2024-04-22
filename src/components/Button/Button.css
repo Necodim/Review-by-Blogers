@@ -66,7 +66,6 @@
 
 .button.link {
   width: auto !important;
-  display: inline-block !important;
   justify-content: unset !important;
   align-items: unset !important;
   gap: unset !important;

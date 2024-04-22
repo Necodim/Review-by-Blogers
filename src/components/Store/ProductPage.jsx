@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import api from '../../api/api';
+import { useTelegram } from '../../hooks/useTelegram';
 import { useToastManager } from '../../hooks/useToast'
 import Header from '../Header/Header';
 import Input from '../Form/Input';
@@ -16,11 +17,16 @@ const ProductPage = () => {
   const { product } = location.state || {};
   const { productId } = useParams();
 
+  const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
 
   const [productData, setProductData] = useState(product);
   const [loadingProduct, setLoadingProduct] = useState(!product);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (isAvailable) showBackButton();
+  }, [isAvailable, showBackButton]);
 
   useEffect(() => {
     if (errorMessage) {

@@ -250,6 +250,18 @@ h3 {
   box-shadow: 0 0 var(--xs) 0 rgba(var(--primary-dark-1-rgb), .25);
 }
 
+.d-block {
+  display: block !important;
+}
+
+.d-inline-block {
+  display: inline-block !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
 .justify-content-start {
   justify-content: flex-start;
 }

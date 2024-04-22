@@ -24,23 +24,22 @@ export function useTelegram() {
         }
     }
 
-    const BackButton = () => {
-        const backButtonCallback = () => {
-            if (location.pathname.startsWith('/settings')) {
-                navigate('/profile');
-            } else {
-                window.history.back();
-            }
+    const backButtonCallback = () => {
+        if (location.pathname.startsWith('/settings')) {
+            navigate('/profile');
+        } else {
+            window.history.back();
         }
-        tg.BackButton.offClick(backButtonCallback);
-        tg.BackButton.onClick(backButtonCallback);
     }
 
     const showBackButton = () => {
+        tg.BackButton.offClick(backButtonCallback);
+        tg.BackButton.onClick(backButtonCallback);
         tg.BackButton.show();
     }
 
     const hideBackButton = () => {
+        tg.BackButton.offClick(backButtonCallback);
         tg.BackButton.hide();
     }
 
@@ -60,12 +59,6 @@ export function useTelegram() {
             tg.SettingsButton.hide();
             tg.SettingsButton.offClick(settingsButtonCallback);
         }
-        // window.Telegram.WebApp.SettingsButton.onClick(() => {
-        //     navigate('/settings');
-        // });
-        // window.Telegram.WebApp.onEvent('settingsButtonClicked', () => {
-        //     navigate('/settings');
-        // });
     }
 
     const hapticFeedback = (object) => {
@@ -113,7 +106,6 @@ export function useTelegram() {
         tg.setBackgroundColor('#1C4366');
         tg.enableClosingConfirmation();
         tg.expand();
-        BackButton();
         settingsButton(true);
         listenViewportChanged();
     }
