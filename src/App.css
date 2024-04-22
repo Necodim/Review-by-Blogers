@@ -250,6 +250,10 @@ h3 {
   box-shadow: 0 0 var(--xs) 0 rgba(var(--primary-dark-1-rgb), .25);
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .d-block {
   display: block !important;
 }
