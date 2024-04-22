@@ -8,8 +8,11 @@ import Preloader from '../Preloader/Preloader';
 
 
 const Profile = (props) => {
-    const { hideBackButton } = useTelegram();
-    hideBackButton();
+    const { isAvailable, hideBackButton } = useTelegram();
+    
+    useEffect(() => {
+        if (isAvailable) hideBackButton();
+    }, [isAvailable, hideBackButton]);
 
     const { profile, loading } = useUserProfile();
 

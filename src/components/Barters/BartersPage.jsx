@@ -13,6 +13,8 @@ import Icon from '../Icon/Icon';
 const BartersPage = (props) => {
     const { profile, loading } = useUserProfile();
 
+    const { isAvailable, hideBackButton } = useTelegram();
+
     const initialBarterNewPlaceholder = new Array(2).fill({}).map((_, index) => ({
         placeholder: true,
         id: `id-${index}`,
@@ -43,8 +45,9 @@ const BartersPage = (props) => {
 
     const { showToast } = useToastManager();
 
-    const { hideBackButton, user } = useTelegram();
-    hideBackButton();
+    useEffect(() => {
+        if (isAvailable) hideBackButton();
+    }, [isAvailable, hideBackButton]);
 
     useEffect(() => {
         if (errorMessage) {

@@ -14,6 +14,10 @@ const StartScreen = () => {
     const { showToast } = useToastManager();
 
     const [errorMessage, setErrorMessage] = useState('');
+    
+    useEffect(() => {
+        if (isAvailable) hideBackButton();
+    }, [isAvailable, hideBackButton]);
 
     useEffect(() => {
         if (errorMessage) {
@@ -21,8 +25,6 @@ const StartScreen = () => {
             setErrorMessage('');
         }
     }, [errorMessage, showToast]);
-
-    hideBackButton();
 
     const handleRoleSelect = async (role) => {
         try {

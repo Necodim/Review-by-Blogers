@@ -25,11 +25,12 @@ export function useTelegram() {
     }
 
     const backButtonCallback = () => {
-        if (location.pathname.startsWith('/settings')) {
-            navigate('/profile');
-        } else {
-            window.history.back();
-        }
+        // if (location.pathname.startsWith('/settings')) {
+        //     navigate('/profile');
+        // } else {
+        //     navigate(-1);
+        // }
+        window.history.back();
     }
 
     const showBackButton = () => {
@@ -106,6 +107,7 @@ export function useTelegram() {
         tg.setBackgroundColor('#1C4366');
         tg.enableClosingConfirmation();
         tg.expand();
+        showBackButton();
         settingsButton(true);
         listenViewportChanged();
     }

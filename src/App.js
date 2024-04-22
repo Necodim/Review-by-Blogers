@@ -24,12 +24,16 @@ import UserAgreementPage from './pages/Info/UserAgreementPage';
 
 function App() {
   const { setReferral } = useReferral();
-  const { tg, defaultSettings } = useTelegram();
+  const { tg, defaultSettings, isAvailable, showBackButton } = useTelegram();
   const { profile, loading } = useUserProfile();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    if (isAvailable) showBackButton();
+  }, [isAvailable, showBackButton]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
