@@ -67,7 +67,7 @@ a:visited {
   width: inherit;
   color: inherit;
   font-size: inherit;
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 
 small {
@@ -248,18 +248,6 @@ h3 {
 
 .shadow {
   box-shadow: 0 0 var(--xs) 0 rgba(var(--primary-dark-1-rgb), .25);
-}
-
-.d-block {
-  display: block !important;
-}
-
-.d-inline-block {
-  display: inline-block !important;
-}
-
-.d-flex {
-  display: flex !important;
 }
 
 .justify-content-start {
