@@ -19,7 +19,6 @@ import Profile from './components/Profile/Profile';
 import Subscribe from './components/Profile/Subscription/Subscribe';
 import WaitingForCapturePage from './pages/Subscription/WaitingForCapturePage';
 import SettingsPage from './pages/Settings/SettingsPage';
-import ContactsPage from './pages/Info/ContactsPage';
 import SupportPage from './pages/Info/SupportPage';
 import UserAgreementPage from './pages/Info/UserAgreementPage';
 
