@@ -5,6 +5,7 @@ import CategoryCard from './CategoryCard';
 
 const Categories = ({ onCategorySelect }) => {
   const [categories, setCategories] = useState([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [openedCategories, setOpenedCategories] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -18,6 +19,7 @@ const Categories = ({ onCategorySelect }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setCategoriesLoading(true);
       try {
         const response = await api.setStore();
         if (Array.isArray(response)) {
@@ -27,8 +29,12 @@ const Categories = ({ onCategorySelect }) => {
         }
       } catch (error) {
         setCategories([]);
-        setErrorMessage('Произошла ошибка при получении списка категорий');
+        if (error !== 'Открытых бартеров нет') {
+          setErrorMessage('Произошла ошибка при получении списка категорий');
+        }
         console.error(error.message);
+      } finally {
+        setCategoriesLoading(false);
       }
     }
     fetchData();
@@ -44,27 +50,31 @@ const Categories = ({ onCategorySelect }) => {
   return (
     <div className='categories-wrapper' id='categories'>
       <div className='list'>
-        {categories.map(category => (
-          <React.Fragment key={category.id}>
-            <CategoryCard
-              onClick={() => handleCategoryClick(category.id)}
-              className={`list-item ${openedCategories[category.id] ? 'opened' : 'closed'}`}
-              title={category.name}
-              count={category.barters}
-              data-category={category.id}
-            />
-            {openedCategories[category.id] && category.subcategories && category.subcategories.map(subCategory => (
+        {categoriesLoading && <p>Категории загружаются...</p>}
+        {!categoriesLoading && categories.length ? 
+          categories.map(category => (
+            <React.Fragment key={category.id}>
               <CategoryCard
-                key={subCategory.id}
-                onClick={() => onCategorySelect(subCategory.id)}
-                className='sub list-item'
-                title={subCategory.name}
-                count={subCategory.barters}
-                data-category={subCategory.id}
+                onClick={() => handleCategoryClick(category.id)}
+                className={`list-item ${openedCategories[category.id] ? 'opened' : 'closed'}`}
+                title={category.name}
+                count={category.barters}
+                data-category={category.id}
               />
-            ))}
-          </React.Fragment>
-        ))}
+              {openedCategories[category.id] && category.subcategories && category.subcategories.map(subCategory => (
+                <CategoryCard
+                  key={subCategory.id}
+                  onClick={() => onCategorySelect(subCategory.id)}
+                  className='sub list-item'
+                  title={subCategory.name}
+                  count={subCategory.barters}
+                  data-category={subCategory.id}
+                />
+              ))}
+            </React.Fragment>
+          ))
+          : <p>На данный момент открытых бартеров нет</p>
+        }
       </div>
     </div>
   );
