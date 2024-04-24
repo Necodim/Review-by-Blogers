@@ -36,7 +36,7 @@ const Popup = ({ id, className, isOpen, onClose, children }) => {
   return ReactDOM.createPortal(
     <div id={id} className='popup-background closed' onClick={handleBackdropClick}>
       <div className='popup-wrapper'>
-        <Link onClick={onClose}>
+        <Link onClick={onClose} classname='popup-close'>
           <Icon icon='highlight_off' size='big' />
         </Link>
         <div className={'popup' + (className ? ' ' + className : '')} onClick={handleModalClick}>
