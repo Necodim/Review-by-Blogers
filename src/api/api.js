@@ -94,7 +94,7 @@ const getBartersCurrentByUserId = async (userId) => {
 }
 
 const createBarter = async (data) => {
-  const response = await apiClient.post(`/barters/new/`, data);
+  const response = await apiClient.post(`/barters/new`, data);
   return response.data;
 }
 
