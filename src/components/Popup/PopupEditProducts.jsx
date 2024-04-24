@@ -1,5 +1,5 @@
 import React from 'react';
-import Popup from '../Popup/Popup';
+import Popup from './Popup';
 import Button from '../Button/Button';
 
 const PopupEditProducts = ({ isOpen, onClose, onWriteTask }) => (

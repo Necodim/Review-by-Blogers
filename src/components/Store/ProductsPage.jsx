@@ -8,8 +8,8 @@ import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Link from '../Button/Link';
 import ProductsGrid from './ProductsGrid';
-import PopupEditProducts from './PopupEditProducts';
-import PopupWriteTask from './PopupWriteTask';
+import PopupEditProducts from '../Popup/PopupEditProducts';
+import PopupWriteTask from '../Popup/PopupWriteTask';
 
 const ProductsPage = () => {
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ const ProductsPage = () => {
   const toggleSelectAllProducts = () => {
     if (selectedProducts.length < products.length) {
       // Если не все товары выделены, выделяем все
-      setSelectedProducts(products.map(product => product.nmid));
+      setSelectedProducts(products);
     } else {
       // Если все товары выделены, снимаем выделение
       setSelectedProducts([]);
@@ -157,6 +157,7 @@ const ProductsPage = () => {
       <PopupWriteTask
         isOpen={isPopupWriteTaskVisible}
         onClose={() => setIsPopupWriteTaskVisible(false)}
+        selectedProducts={selectedProducts}
       />
     </div>
   );

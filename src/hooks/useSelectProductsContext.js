@@ -8,12 +8,13 @@ export const SelectedProductsProvider = ({ children }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
 
   const handleSelectProduct = (productId) => {
-    setSelectedProducts((prevSelected) =>
-      prevSelected.includes(productId)
-        ? prevSelected.filter((id) => id !== productId)
-        : [...prevSelected, productId]
-    );
-  };
+    setSelectedProducts((prevSelected) => {
+        const prevSelectedNmids = prevSelected.map(product => product.nmid);
+        prevSelectedNmids.includes(productId)
+            ? prevSelectedNmids.filter((id) => id !== productId)
+            : [...prevSelectedNmids, productId]
+    });
+  }
 
   return (
     <SelectedProductsContext.Provider value={{ selectedProducts, setSelectedProducts, handleSelectProduct }}>

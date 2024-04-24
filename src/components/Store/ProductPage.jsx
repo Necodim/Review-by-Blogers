@@ -10,6 +10,7 @@ import { useToastManager } from '../../hooks/useToast'
 import Header from '../Header/Header';
 import Input from '../Form/Input';
 import Button from '../Button/Button';
+import PopupWriteTask from '../Popup/PopupWriteTask';
 
 const ProductPage = () => {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ const ProductPage = () => {
   const [productData, setProductData] = useState(product);
   const [loadingProduct, setLoadingProduct] = useState(!product);
   const [errorMessage, setErrorMessage] = useState('');
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
 
   useEffect(() => {
     if (isAvailable) showBackButton();
@@ -45,6 +48,7 @@ const ProductPage = () => {
           fetchedProduct.barter = fetchedBarter;
           console.log(fetchedProduct)
           setProductData(fetchedProduct);
+          setSelectedProducts([fetchedProduct]);
         } catch (error) {
           setErrorMessage('Ошибка при получении данных о продукте');
         } finally {
@@ -72,6 +76,10 @@ const ProductPage = () => {
       .catch((error) => {
         setErrorMessage('Не удалось скопировать артикул товара');
       });
+  }
+
+  const openPopupWriteTask = () => {
+    setIsPopupWriteTaskVisible(true);
   }
 
   const addBarter = () => {
@@ -121,10 +129,15 @@ const ProductPage = () => {
         <div className='w-100'>
           {productData?.barter ?
             <Button icon='format_list_bulleted'>Смотреть ТЗ</Button> :
-            <Button icon='add' onClick={addBarter}>Добавить бартер</Button>
+            <Button icon='add' onClick={openPopupWriteTask}>Добавить бартер</Button>
           }
         </div>
       </div>
+      <PopupWriteTask
+        isOpen={isPopupWriteTaskVisible}
+        onClose={() => setIsPopupWriteTaskVisible(false)}
+        selectedProducts={selectedProducts}
+      />
     </div>
   );
 };

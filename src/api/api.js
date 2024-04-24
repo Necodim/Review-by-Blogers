@@ -93,6 +93,22 @@ const getBartersCurrentByUserId = async (userId) => {
   return response.data;
 }
 
+const createBarter = async (data) => {
+  const response = await apiClient.post(`/barters/new/`, data);
+  return response.data;
+}
+
+const updateBarterById = async (data) => {
+  const response = await apiClient.post(`/barters/update/${data.id}`, data);
+  return response.data;
+}
+
+const deleteBarterById = async (barterId, userId) => {
+  const data = {userId: userId}
+  const response = await apiClient.post(`/barters/delete/${barterId}`, data);
+  return response.data;
+}
+
 const getCategory = async (categoryID) => {
   const response = await apiClient.get(`/categories/${categoryID}`);
   return response.data;
@@ -168,6 +184,9 @@ export default {
   getBartersByProductIds,
   getBartersNewByUserId,
   getBartersCurrentByUserId,
+  createBarter,
+  updateBarterById,
+  deleteBarterById,
 
   getCategory,
   getCategories,

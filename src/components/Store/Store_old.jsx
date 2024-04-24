@@ -81,11 +81,12 @@ const StoreSeller = (props) => {
       }
 
     const handleSelectProduct = (productId) => {
-        setSelectedProducts((prevSelected) =>
-            prevSelected.includes(productId)
-                ? prevSelected.filter((id) => id !== productId)
-                : [...prevSelected, productId]
-        );
+        setSelectedProducts((prevSelected) => {
+            const prevSelectedNmids = prevSelected.map(product => product.nmid);
+            prevSelectedNmids.includes(productId)
+                ? prevSelectedNmids.filter((id) => id !== productId)
+                : [...prevSelectedNmids, productId]
+        });
     }
     const openPopupEditProducts = () => {
         if (selectedProducts.length > 0) setIsPopupEditProductsVisible(true);
@@ -111,7 +112,7 @@ const StoreSeller = (props) => {
                         <div
                             key={product.nmid}
                             className={`card product-card ${
-                            isEditing ? (selectedProducts.includes(product.nmid) ? 'select' : 'unselect') : ''
+                            isEditing ? (selectedProducts.map(product => product.nmid).includes(product.nmid) ? 'select' : 'unselect') : ''
                             }`}
                             onClick={() => isEditing && handleSelectProduct(product.nmid)}
                             data-product-id={product.nmid}
