@@ -7,12 +7,14 @@ export const useSelectedProducts = () => useContext(SelectedProductsContext);
 export const SelectedProductsProvider = ({ children }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
 
-  const handleSelectProduct = (productId) => {
+  const handleSelectProduct = (product) => {
     setSelectedProducts((prevSelected) => {
-        const prevSelectedNmids = prevSelected.map(product => product.nmid);
-        prevSelectedNmids.includes(productId)
-            ? prevSelectedNmids.filter((id) => id !== productId)
-            : [...prevSelectedNmids, productId]
+      const index = prevSelected.findIndex(p => p.id === product.id);
+      if (index > -1) {
+        return prevSelected.filter(p => p.id !== product.id);
+      } else {
+        return [...prevSelected, product];
+      }
     });
   }
 

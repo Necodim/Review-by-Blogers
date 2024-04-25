@@ -31,6 +31,12 @@ const PopupWriteTask = ({ isOpen, onClose, selectedProducts }) => {
 	};
 	const handleFeedbackChange = (e) => setFeedback(e.target.checked);
 
+	const resetForm = () => {
+		setTask('');
+		setBrandInstagram('');
+		setFeedback(false);
+	}
+
 	const submitForm = async (e) => {
 		e.preventDefault();
 		if (selectedProducts.length > 0) {
@@ -46,7 +52,8 @@ const PopupWriteTask = ({ isOpen, onClose, selectedProducts }) => {
 				const barters = await api.createBarters(data);
 				const message = barters.length > 1 ? 'Вы успешно создали бартеры для товаров' : 'Вы успешно создали бартер для товара';
 				showToast(message, 'success');
-				onClose;
+				onClose();
+				setTimeout(() => resetForm(), 500);
 			} catch (error) {
 				const message = selectedProducts.length > 1 ? 'Не удалось создать бартеры для товаров' : 'Не удалось создать бартер для товара';
 				setErrorMessage(message)

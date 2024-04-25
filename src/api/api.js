@@ -94,12 +94,12 @@ const getBartersCurrentByUserId = async (userId) => {
 }
 
 const createBarter = async (data) => {
-  const response = await apiClient.post(`/barters/one`, data);
+  const response = await apiClient.post(`/barters/create/one`, data);
   return response.data;
 }
 
 const createBarters = async (data) => {
-  const response = await apiClient.post(`/barters/many`, data);
+  const response = await apiClient.post(`/barters/create/many`, data);
   return response.data;
 }
 

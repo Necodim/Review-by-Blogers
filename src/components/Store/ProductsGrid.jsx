@@ -23,7 +23,7 @@ const ProductsGrid = ({ products, isEditing }) => {
 
   const handleProductClick = (product) => {
     if (isEditing) {
-      handleSelectProduct(product.nmid);
+      handleSelectProduct(product);
     } else {
       navigate(`/store/products/${product.id}`, { state: { product } });
     }
@@ -36,7 +36,7 @@ const ProductsGrid = ({ products, isEditing }) => {
           key={product.nmid}
           product={product}
           isEditing={isEditing}
-          isSelected={selectedProducts.includes(product.nmid)}
+          isSelected={selectedProducts.includes(product)}
           onClick={() => handleProductClick(product)}
         />
       ))}
