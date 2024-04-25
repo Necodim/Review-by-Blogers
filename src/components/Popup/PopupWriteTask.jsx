@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext.js';
 import { useToastManager } from '../../hooks/useToast'
@@ -8,6 +9,7 @@ import Textarea from '../Form/Textarea';
 import Input from '../Form/Input';
 
 const PopupWriteTask = ({ isOpen, onClose, selectedProducts }) => {
+	const navigate = useNavigate();
 	const { profile } = useUserProfile();
 	const { showToast } = useToastManager();
 
@@ -54,6 +56,7 @@ const PopupWriteTask = ({ isOpen, onClose, selectedProducts }) => {
 				showToast(message, 'success');
 				onClose();
 				setTimeout(() => resetForm(), 500);
+				navigate('/store');
 			} catch (error) {
 				const message = selectedProducts.length > 1 ? 'Не удалось создать бартеры для товаров' : 'Не удалось создать бартер для товара';
 				setErrorMessage(message)

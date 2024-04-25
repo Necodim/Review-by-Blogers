@@ -26,13 +26,17 @@ const ProductsPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
   const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
-
+  
   useEffect(() => {
     if (products.length === 0) {
       navigate('/store');
     }
   }, [products]);
-
+  
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+  
   useEffect(() => {
     if (isAvailable) showBackButton();
   }, [isAvailable, showBackButton]);

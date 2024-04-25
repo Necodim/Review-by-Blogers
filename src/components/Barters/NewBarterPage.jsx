@@ -12,9 +12,6 @@ import Icon from '../Icon/Icon';
 
 const NewBarterPage = () => {
     const { profile, loading } = useUserProfile();
-    if (loading) {
-        return <Preloader>Загружаюсь...</Preloader>;
-    }
 
     const initialBarterNewPlaceholder = new Array(2).fill({}).map((_, index) => ({
         placeholder: true,
