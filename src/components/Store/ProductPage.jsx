@@ -48,15 +48,15 @@ const ProductPage = () => {
           fetchedProduct.barter = fetchedBarter;
           console.log(fetchedProduct)
           setProductData(fetchedProduct);
-          setSelectedProducts([fetchedProduct]);
         } catch (error) {
           setErrorMessage('Ошибка при получении данных о продукте');
         } finally {
           setLoadingProduct(false);
         }
       }
+      setSelectedProducts([productData]);
     };
-
+    
     fetchProduct();
   }, [productId, productData]);
 
