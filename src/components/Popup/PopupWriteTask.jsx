@@ -43,8 +43,10 @@ const PopupWriteTask = ({ isOpen, onClose, selectedProducts }) => {
 				// maxResponses: null
 			}
 			try {
-				const barter = await api.createBarters(data);
-				console.log(barter);
+				const barters = await api.createBarters(data);
+				const message = barters.length > 1 ? 'Вы успешно создали бартеры для товаров' : 'Вы успешно создали бартер для товара';
+				showToast(message, 'success');
+				onClose;
 			} catch (error) {
 				const message = selectedProducts.length > 1 ? 'Не удалось создать бартеры для товаров' : 'Не удалось создать бартер для товара';
 				setErrorMessage(message)
@@ -64,8 +66,10 @@ const PopupWriteTask = ({ isOpen, onClose, selectedProducts }) => {
 					id='task'
 					name='task'
 					title='Описание'
+					value={task}
+    			onChange={handleTaskChange}
 					placeholder='Необходимо распаковать товар на камеру и...'
-				>{task}</Textarea>
+				/>
 				<Input
 					id='brand-instagram'
 					name='brand-instagram'
