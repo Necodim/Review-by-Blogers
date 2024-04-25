@@ -71,7 +71,7 @@ const deletProductsByUserId = async (userId) => {
   return response.data;
 }
 
-const getBartersByProductId = async (productId, marketplace) => {
+const getBartersByProductId = async (productId, marketplace = '') => {
   const query = marketplace ? `?marketplace=${marketplace}` : '';
   const response = await apiClient.get(`/barters/products/${productId}${query}`);
   return response.data;
@@ -94,7 +94,12 @@ const getBartersCurrentByUserId = async (userId) => {
 }
 
 const createBarter = async (data) => {
-  const response = await apiClient.post(`/barters/new`, data);
+  const response = await apiClient.post(`/barters/one`, data);
+  return response.data;
+}
+
+const createBarters = async (data) => {
+  const response = await apiClient.post(`/barters/many`, data);
   return response.data;
 }
 
@@ -185,6 +190,7 @@ export default {
   getBartersNewByUserId,
   getBartersCurrentByUserId,
   createBarter,
+  createBarters,
   updateBarterById,
   deleteBarterById,
 
