@@ -3,6 +3,7 @@ import '../Barters.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../api/api';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
+import { useTelegram } from '../../../hooks/useTelegram';
 import { useToastManager } from '../../../hooks/useToast';
 import Header from '../../Header/Header';
 import Link from '../../Button/Link';
@@ -12,8 +13,12 @@ import BartersGrid from '../BartersGrid';
 const BloggerBartersPage = () => {
   const navigate = useNavigate();
   const { profile } = useUserProfile();
-  
+  const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
+
+	useEffect(() => {
+		if (isAvailable) showBackButton();
+	}, [isAvailable, showBackButton]);
 
   const [errorMessage, setErrorMessage] = useState('');
   const [barters, setBarterOffers] = useState([]);
@@ -30,7 +35,7 @@ const BloggerBartersPage = () => {
     const fetchBartersCurrent = async () => {
       setBarterOffersIsLoading(true);
       try {
-        const fetchedBarters = await api.getBarterOffersByCurrentUser(10, 0);
+        const fetchedBarters = await api.getBarterOffersByCurrentBlogger(10, 0);
         console.log('fetchedBarters', fetchedBarters)
         if (bartersIsLoading && Array.isArray(fetchedBarters) && !!fetchedBarters.length) {
           setBarterOffers(fetchedBarters);

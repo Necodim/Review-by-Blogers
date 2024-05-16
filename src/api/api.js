@@ -100,6 +100,11 @@ const deletProductsByUserId = async (userId) => {
   return response.data;
 }
 
+const getBartersByUserId = async () => {
+  const response = await apiClient.get(`/barters`);
+  return response.data;
+}
+
 const getBarterById = async (barterId) => {
   const response = await apiClient.get(`/barters/${barterId}`);
   return response.data;
@@ -183,13 +188,23 @@ const countOffersActive = async () => {
   return response.data;
 }
 
-const getBarterOffersByCurrentUser = async (limit, offset) => {
-  const response = await apiClient.get(`/offers/user?limit=${limit}&offset=${offset}`);
+const getBarterOffersByCurrentBlogger = async (limit, offset) => {
+  const response = await apiClient.get(`/offers/blogger?limit=${limit}&offset=${offset}`);
   return response.data;
 }
 
-const getBarterOffersByUserId = async (userId) => {
-  const response = await apiClient.get(`/offers/user/${userId}`);
+const getBarterOffersByBloggerId = async (userId) => {
+  const response = await apiClient.get(`/offers/blogger/${userId}`);
+  return response.data;
+}
+
+const getBarterOffersByCurrentSeller = async (type, limit, offset) => {
+  const queryParams = [];
+  if (type) queryParams.push(`type=${type}`);
+  if (limit) queryParams.push(`limit=${limit}`);
+  if (offset) queryParams.push(`offset=${offset}`);
+  const query = queryParams.join('&');
+  const response = await apiClient.get(`/offers/seller?${query}`);
   return response.data;
 }
 
@@ -302,6 +317,7 @@ export default {
   getProductsWithBartersByUserId,
   deletProductsByUserId,
 
+  getBartersByUserId,
   getBarterById,
   getBartersByProductId,
   getBartersByProductIds,
@@ -319,8 +335,9 @@ export default {
   getBarterOfferById,
   countOffersInStatus,
   countOffersActive,
-  getBarterOffersByCurrentUser,
-  getBarterOffersByUserId,
+  getBarterOffersByCurrentBlogger,
+  getBarterOffersByBloggerId,
+  getBarterOffersByCurrentSeller,
   getOffersByBarterId,
   createBarterOffer,
   refuseBarterOffer,

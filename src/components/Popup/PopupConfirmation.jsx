@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Popup from './Popup';
 import Button from '../Button/Button';
 
-const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirmation, isSuccess }) => {
+const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirmation, timer }) => {
   const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-    if (isSuccess) {
-      const timeout = 4;
+    if (!!timer) {
+      const timeout = timer;
       if (isOpen) {
         setSeconds(timeout);
         const interval = setInterval(() => {
@@ -30,7 +30,7 @@ const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirma
       setIsConfirmButtonEnabled(false);
       setSeconds(0);
     }
-  }, [isOpen, isSuccess]);
+  }, [isOpen, timer]);
 
   return (
     <Popup id={id} isOpen={isOpen} onClose={onClose}>
@@ -44,7 +44,7 @@ const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirma
       <div className='list'>
         <div className='list-item'>
           <Button className='list-item' onClick={onClose}>Нет</Button>
-          <Button className={'list-item ' + isSuccess ? 'success' : 'error' + (!isConfirmButtonEnabled ? ' disabled' : '')} onClick={onConfirmation}>{'Да' + (!isConfirmButtonEnabled && seconds > 0 ? ` (${seconds})` : '')}</Button>
+          <Button className={'list-item ' + (!timer ? 'success' : 'error' + (!isConfirmButtonEnabled ? ' disabled' : ''))} onClick={onConfirmation}>{'Да' + (!isConfirmButtonEnabled && seconds > 0 ? ` (${seconds})` : '')}</Button>
         </div>
       </div>
     </Popup>

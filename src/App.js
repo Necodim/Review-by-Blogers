@@ -14,6 +14,7 @@ import CategoryPage from './components/Store/Blogger/CategoryPage';
 import ProductPage from './components/Store/ProductPage';
 import ProductsPage from './components/Store/ProductsPage';
 import BartersPage from './components/Barters/BartersPage';
+import BartersTypePage from './components/Barters/BartersTypePage';
 import BarterPage from './components/Barters/BarterPage';
 import NewBarterPage from './components/Barters/BartersPage';
 import Profile from './components/Profile/Profile';
@@ -103,6 +104,7 @@ function App() {
         <Route path="/store/products/:productId" element={<ProductPage />} />
         <Route path="/store/products" element={<SelectedProductsProvider><ProductsPage /></SelectedProductsProvider>} />
         <Route path="/barters" element={<BartersPage />} />
+        <Route path="/barters/type/:type" element={<BartersTypePage />} />
         <Route path="/barters/:barterId" element={<BarterPage />} />
         <Route path="/barters/new/:productId" element={<NewBarterPage />} />
         <Route path="/settings" element={<SettingsPage />} />

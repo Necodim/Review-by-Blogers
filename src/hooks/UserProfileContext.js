@@ -126,6 +126,7 @@ export const UserProfileProvider = ({ children }) => {
 
 	const updateProfile = (updates) => {
 		setProfile(currentProfile => ({ ...currentProfile, ...updates }));
+		sessionStorage.setItem('userData', JSON.stringify(profile));
 	}
 
 	const updateUserData = async (data) => {
@@ -134,6 +135,7 @@ export const UserProfileProvider = ({ children }) => {
 			const result = await upsertUser(data);
 			if (!!result) {
 				setProfile(result);
+				sessionStorage.setItem('userData', JSON.stringify(result));
 				showToast(result.message || 'Данные успешно сохранены', 'success');
 				return result;
 			} else {
@@ -151,6 +153,7 @@ export const UserProfileProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			const result = await addSellerSubscription(profile.id, data);
+			sessionStorage.setItem('userData', JSON.stringify(result));
 			showToast(`Вы подключили подписку. Сервис будет доступен до ${moment(result.subscription.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
 			return result;
 		} catch (error) {
@@ -165,6 +168,7 @@ export const UserProfileProvider = ({ children }) => {
 		try {
 			const result = await cancelSellerSubscription(profile.id);
 			if (!!result && result.success && result.subscription) {
+				sessionStorage.setItem('userData', JSON.stringify(result));
 				showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.subscription.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
 			} else if (!!result && !result.success && result.error) {
 				setErrorMessage(result.message);

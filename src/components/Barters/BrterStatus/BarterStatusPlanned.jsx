@@ -61,7 +61,7 @@ const BarterStatusPlanned = ({ barter, updateBarter }) => {
           ...prevBarter.offer,
           status: updatedOffer.status,
           reels: updatedOffer.reels,
-          feedback: updatedOffer.feedback
+          feedback_blogger: updatedOffer.feedback
         }
       }));
       showToast('Второй отчёт по бартеру отправлен', 'success');

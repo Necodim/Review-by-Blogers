@@ -54,7 +54,7 @@ const PopupOfferRefuseReason = ({ isOpen, onClose }) => {
 		<Popup id='popup-reason' isOpen={isOpen} onClose={onClose}>
 			<h2>Причина отказа</h2>
 			<div>Пожалуйста, расскажите, почему вы решили отказаться от предложения о бартере? Это поможет нам лучше понять потребности селлеров, а блоггер сможет исправить недочёты, если они касаются его самого.</div>
-			<Form onSubmit={submitForm} btntext={btnSubmit} btnicon='save'>
+			<Form onSubmit={submitForm} btntext={btnSubmit}>
 				<Textarea
 					id='reason'
 					name='reason'

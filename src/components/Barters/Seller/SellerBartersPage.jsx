@@ -2,19 +2,27 @@ import React, { useEffect, useState } from 'react';
 import '../Barters.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../api/api';
-import { useUserProfile } from '../../../hooks/UserProfileContext';
+import { useTelegram } from '../../../hooks/useTelegram';
 import { useToastManager } from '../../../hooks/useToast';
 import Header from '../../Header/Header';
 import Link from '../../Button/Link';
 import BartersHistoryTable from '../BartersHistoryTable';
+import BartersGrid from '../BartersGrid';
 
 const SellerBartersPage = () => {
-  const { profile, loading } = useUserProfile();
+  const navigate = useNavigate();
+  const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [barters, setBarters] = useState([]);
   const [bartersIsLoading, setBartersIsLoading] = useState(true);
+  const [newBarters, setNewBarters] = useState([]);
+  const [inProgressBarters, setInProgressBarters] = useState([]);
+  const [completedBarters, setCompletedBarters] = useState([]);
+
+  useEffect(() => {
+    if (isAvailable) showBackButton();
+  }, [isAvailable, showBackButton]);
 
   useEffect(() => {
     if (errorMessage) {
@@ -23,67 +31,63 @@ const SellerBartersPage = () => {
     }
   }, [errorMessage, showToast]);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchBarters = async () => {
+      setBartersIsLoading(true);
+      try {
+        const response = await api.getBarterOffersByCurrentSeller();
+        const { newBarters, inProgressBarters, completedBarters } = response;
+        setNewBarters(transformBarters(newBarters));
+        setInProgressBarters(transformBarters(inProgressBarters));
+        setCompletedBarters(transformBarters(completedBarters));
+        setBartersIsLoading(false);
+      } catch (error) {
+        console.error('Ошибка при получении бартеров:', error);
+      }
+    };
+    fetchBarters();
+  }, []);
 
-  const openBarter = (id) => {
-    navigate(`${id}`);
+  const transformBarters = (barters) => {
+    return barters
+      .flatMap(barter => 
+        barter.offers.map(offer => ({ ...barter, offer }))
+      )
+      .sort((a, b) => new Date(b.offer.updatedAt) - new Date(a.offer.updatedAt));
+  };
+
+  const openBarter = (barter) => {
+    navigate(`${barter.id}`, {state: { barter: barter }});
+  }
+
+  const goToBartersType = (type, barters) => {
+    navigate(`/barters/type/${type}`, {state: { barters: barters }});
+  }
+
+  const createCards = (barters, type, title) => {
+    if (barters.length > 0) {
+      return (
+        <div className='container' id={`barters-${type}`} >
+          <div className='list'>
+            <div className='list-item'>
+              <h2>{title}</h2>
+              <Link onClick={() => goToBartersType(type, barters)}>Ещё</Link>
+            </div>
+          </div>
+          <BartersGrid barters={barters.slice(0, 2)} />
+        </div>
+      );
+    } else {
+      return;
+    }
   }
 
   return (
     <div className='content-wrapper'>
       <Header />
-      <div className='container' id='barter-new' >
-        <div className='list'>
-          <div className='list-item'>
-            <h2>Новые заявки</h2>
-            <Link onClick={() => { }}>Ещё</Link>
-          </div>
-        </div>
-        <div className='cards'>
-          {bartersNew.map((barter, index) => (
-            <div
-              key={barter.id}
-              className='card product-card'
-              onClick={() => { openBarter(barter.id) }}
-              data-barter-id={barter.id}
-            >
-              <div
-                className={`product-image ${barter.product?.photos && barter.product?.photos.length > 0 ? '' : bartersNewIsLoading || barter.placeholder ? 'loading' : 'default'}`}
-                style={{ backgroundImage: barter.product?.photos && barter.product?.photos.length > 0 ? `url(${barter.product?.photos[0]})` : '' }}
-              ></div>
-              <div className='product-content'>
-                {barter.placeholder ? (<span className='product-title'>Загрузка...</span>) : (<span className='product-title'>{barter.product?.title}</span>)}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className='container' id='barter-current' >
-        <div className='list'>
-          <div className='list-item'>
-            <h2>В работе</h2>
-            <Link onClick={() => { }}>Ещё</Link>
-          </div>
-        </div>
-        <div className='cards'>
-          {bartersCurrent.map((barter, index) => (
-            <div
-              key={barter.id}
-              className='card product-card'
-              onClick={() => { openBarter(barter.id) }}
-              data-barter-id={barter.id}
-            >
-              <div
-                className={`product-image ${barter.product?.photos && barter.product?.photos.length > 0 ? '' : bartersCurrentIsLoading || barter.placeholder ? 'loading' : 'default'}`}
-                style={{ backgroundImage: barter.product?.photos && barter.product?.photos.length > 0 ? `url(${barter.product?.photos[0]})` : '' }}
-              ></div>
-              <div className='product-content'>
-                {barter.placeholder ? (<span className='product-title'>Загрузка...</span>) : (<span className='product-title'>{barter.product?.title}</span>)}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {createCards(newBarters, 'new', 'Новые предложения')}
+      {createCards(inProgressBarters, 'progress', 'В работе')}
+      {createCards(completedBarters, 'completed', 'Завершённые')}
       {/* <BartersHistoryTable /> */}
     </div>
   );

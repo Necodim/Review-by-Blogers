@@ -116,7 +116,8 @@ const ProfileSeller = () => {
                 } 
                 isOpen={isPopupConfirmationOpen} 
                 onClose={() => setIsPopupConfirmationOpen(false)} 
-                onConfirmation={cancellingSubscription} 
+                onConfirmation={cancellingSubscription}
+                timer={4}
             />}
             {(profile.subscription?.active || profile.subscription?.avaliable) && <PopupApi id='popup-api' isOpen={isPopupApiOpen} onClose={closePopupApi} onSubmit={handlePopupApiSubmit} />}
         </div>

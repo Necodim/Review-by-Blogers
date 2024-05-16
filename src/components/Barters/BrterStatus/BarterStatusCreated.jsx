@@ -35,7 +35,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
         setText('Вы отправили предложение о бартере, но селлер ещё не принял его.');
         break;
       case 'seller':
-        setText(`Блоггер отправил предложение о бартере. Ознакомьтесь с его профилем и, если вас всё устроит, отправьте средства для покупки товаров на карту, после чего отправьте подтверждение перевода через форму ниже.`);
+        setText(`Блоггер отправил предложение о бартере. Ознакомьтесь с его профилем и, если вас всё устроит, отправьте средства для покупки товаров на карту.`);
         const fetchBlogger = async () => {
           try {
             const userId = barter.offer.user_id;
@@ -130,36 +130,44 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
       <h2>Предложение создано</h2>
       <p>{text}</p>
       {(role === 'seller' && blogger) &&
-        <>
-          <Button className='w-100' target='_blank' icon='center_focus_strong'>Смотреть профиль</Button>
-          <Input
-            id='card-number'
-            name='card-number'
-            value={cardnumber}
-            icon='content_copy'
-            readOnly={true}
-          />
-          <Form
-            onSubmit={handleSubmit}
-            isDisabled={fileLoading}
-          >
+        <div className='list gap-xl'>
+          <div className='list-item vertical'>
+            <Button className='w-100' target='_blank' icon='center_focus_strong'>Смотреть профиль</Button>
             <Input
-              type='file'
-              id='receipt'
-              name='receipt'
-              title='Скриншот перевода *'
-              value={formScreenshot}
-              onChange={handleChangeScreenshot}
-              required={true}
-              error={fileError}
+              id='card-number'
+              name='card-number'
+              value={cardnumber}
+              icon='content_copy'
+              readOnly={true}
             />
-          </Form>
-          <Button className='error w-100' onClick={openPopupRefuse} disabled={btnRefuseDisabled}>Отклонить предложение</Button>
+          </div>
+          <div className='list-item vertical'>
+            <p>После чего подтвердите перевод средств.</p>
+            <Form
+              onSubmit={handleSubmit}
+              isDisabled={fileLoading}
+            >
+              <Input
+                type='file'
+                id='receipt'
+                name='receipt'
+                title='Скриншот перевода *'
+                value={formScreenshot}
+                onChange={handleChangeScreenshot}
+                required={true}
+                error={fileError}
+              />
+            </Form>
+          </div>
+          <div className='list-item vertical'>
+            <p>Или отклоните предложение</p>
+            <Button className='error w-100' onClick={openPopupRefuse} disabled={btnRefuseDisabled}>Отклонить предложение</Button>
+          </div>
           <PopupOfferRefuseReason
             isOpen={isPopupRefuseOpen}
             onClose={closePopupRefuse}
           />
-        </>
+        </div>
       }
     </div>
   );

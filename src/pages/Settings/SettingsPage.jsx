@@ -117,6 +117,7 @@ const SettingsPage = () => {
                 isOpen={isPopupChangeRoleVisible}
                 onClose={closePopupWithoutChangeRole}
                 onConfirmation={changeRole}
+                timer={4}
             />
         </div>
     )

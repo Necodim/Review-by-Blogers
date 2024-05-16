@@ -198,6 +198,7 @@ const ProductsPage = () => {
         isOpen={isPopupConfirmationBarterCloseVisible}
         onClose={() => setIsPopupConfirmationBarterCloseVisible(false)}
         onConfirmation={closeBarters}
+        timer={4}
       />
     </div>
   );

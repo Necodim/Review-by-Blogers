@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import './Barters.css';
-import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../api/api';
 import { useToastManager } from '../../hooks/useToast';
 import { useHelpers } from '../../hooks/useHelpers';
@@ -10,10 +10,11 @@ import Button from '../Button/Button';
 import BarterStatus from './BrterStatus/BarterStatus';
 
 const BarterPage = () => {
-  const { barter } = location.state || {};
   const { barterId } = useParams();
-  const { showToast } = useToastManager();
+  const location = useLocation();
+  const { barter } = location.state || {};
   const navigate = useNavigate();
+  const { showToast } = useToastManager();
   const { copyToClipboard, getMarketplaceShortName, getMarketplaceProductLink } = useHelpers();
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -34,7 +35,7 @@ const BarterPage = () => {
       setBarterIsLoading(true);
       try {
         const fetchedBarter = await api.getBarterById(barterId);
-        console.log('fetchedBarter', fetchedBarter)
+        console.log('fetchedBarter', fetchedBarter);
         if (fetchedBarter) {
           setCurrentBarter(fetchedBarter);
           const short = await getMarketplaceShortName(fetchedBarter?.product?.marketplace_id);
@@ -49,14 +50,27 @@ const BarterPage = () => {
       } finally {
         setBarterIsLoading(false);
       }
+    };
+
+    if (!barter) {
+      fetchBarter();
+    } else {
+      setCurrentBarter(barter);
     }
     console.log('barter', barter)
-    if (barter) {
-      setCurrentBarter(barter);
-    } else {
-      fetchBarter();
-    }
-  }, [barter])
+    console.log('current', currentBarter)
+  }, [barterId, barter, getMarketplaceShortName, getMarketplaceProductLink]);
+
+  const handleCopy = () => {
+    const result = copyToClipboard(currentBarter?.product?.nmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
+    showToast(result.message, result.status);
+  };
+
+  const openBarter = () => {
+    const product = { ...currentBarter.product, barter: currentBarter };
+    delete product.barter.product;
+    navigate(`/store/products/${product.id}`, { state: { product: product } });
+  };
 
   if (barterIsLoading) {
     return <div>Загрузка данных о бартере...</div>;
@@ -64,17 +78,6 @@ const BarterPage = () => {
 
   if (!currentBarter) {
     return <div>Бартер не найден</div>;
-  }
-
-  const handleCopy = () => {
-    const result = copyToClipboard(currentBarter?.product?.nmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
-    showToast(result.message, result.status);
-  }
-
-  const openBarter = () => {
-    const product = {...currentBarter.product, barter: currentBarter};
-    delete product.barter.product;
-    navigate(`/store/products/${product.id}`, { state: { product: product } });
   }
 
   return (
@@ -97,10 +100,12 @@ const BarterPage = () => {
           </div>
           <Button className='light w-100' icon='info' onClick={openBarter}>Информация о бартере</Button>
         </div>
+      </div>
+      <div className='container barter-status' id='status'>
         <BarterStatus barter={currentBarter} updateBarter={setCurrentBarter} />
       </div>
     </div>
   );
-}
+};
 
 export default BarterPage;
