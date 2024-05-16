@@ -25,6 +25,11 @@
   background-color: var(--light);
 }
 
+.button.success {
+  color: var(--light);
+  background-color: var(--tertiary-dark-4);
+}
+
 .button.error {
   color: var(--light);
   background-color: var(--error);
@@ -43,6 +48,12 @@
 
 .button.size-xl {
   font-size: var(--xl);
+}
+
+.button.size-input {
+  font-size: var(--text-size-m);
+  line-height: 2;
+  padding: var(--xs) var(--m);
 }
 
 .button.nav-button {

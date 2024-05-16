@@ -104,6 +104,10 @@
     -webkit-backdrop-filter: blur(5px);
 }
 
+.product-card .task.active {
+    background-color: rgba(var(--tertiary-rgb), .5);
+}
+
 .product-image {
     position: relative;
     width: 100%;
@@ -129,6 +133,10 @@
     background-size: 300px 300px;
     background-position: -300px 0, 0 0;
     animation: product-card-loading 2s infinite;
+}
+
+.product-image.small {
+    width: 33%;
 }
 
 .product-card:nth-child(5n + 1) .product-image.loading {animation-delay: 0s;}

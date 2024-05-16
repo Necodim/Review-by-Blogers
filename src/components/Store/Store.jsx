@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import './Store.css'
-import StoreSeller from './StoreSeller.jsx';
-import StoreBlogger from './StoreBlogger.jsx';
 import { useTelegram } from '../../hooks/useTelegram'
 import { useUserProfile } from '../../hooks/UserProfileContext';
+import StoreSeller from './Seller/StoreSeller.jsx';
+import StoreBlogger from './Blogger/StoreBlogger.jsx';
 
 const Store = (props) => {
     const { profile } = useUserProfile();

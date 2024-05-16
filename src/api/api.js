@@ -14,40 +14,69 @@ apiClient.interceptors.request.use(config => {
   return Promise.reject(error);
 });
 
+apiClient.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    if (error.response) {
+      if (error.response.error) {
+        error.message = error.response.error;
+      } else if (error.response.data && error.response.data.error) {
+        error.message = error.response.data.error;
+        if (error.response.data.error.message) {
+          error.message = error.response.data.error.message;
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 const generateAuthToken = async (userId) => {
   const data = { 'id': userId }
-  const response = await apiClient.post('/user/login', data);
-  sessionStorage.setItem('accessToken', response.data.accessToken);
+  const response = await apiClient.post('/user/token/generate', data);
+  return response;
 }
 
-const getUser = async (userId) => {
+const verifyAuthToken = async () => {
+  const response = await apiClient.get('/user/token/verify');
+  return response;
+}
+
+const getUser = async () => {
+  const response = await apiClient.get(`/user`);
+  return response.data;
+}
+
+const getUserById = async (userId) => {
   const response = await apiClient.get(`/user/${userId}`);
   return response.data;
 }
 
-const createUser = async (userId, data) => {
-  const response = await apiClient.post(`/user/${userId}`, data);
+const createUser = async (data) => {
+  const response = await apiClient.post(`/user/create`, data);
   return response.data;
 }
 
-const upsertUser = async (userId, data) => {
-  const response = await apiClient.post(`/user/${userId}`, data);
+const upsertUser = async (data) => {
+  const response = await apiClient.post(`/user/upsert`, data);
   return response.data;
 }
 
-const setApiWildberries = async (userId, api) => {
+const setApiWildberries = async (api) => {
   const data = { 'api': api }
-  const response = await apiClient.post(`/user/api/wildberries/${userId}`, data);
+  const response = await apiClient.post(`/user/api/wildberries/`, data);
   return response.data;
 }
 
-const addSellerSubscription = async (userId, data) => {
-  const response = await apiClient.post(`/user/subscription/add/${userId}`, data);
+const addSellerSubscription = async (data) => {
+  const response = await apiClient.post(`/user/subscription/add`, data);
   return response.data;
 }
 
-const cancelSellerSubscription = async (userId) => {
-  const response = await apiClient.get(`/user/subscription/cancel/${userId}`);
+const cancelSellerSubscription = async () => {
+  const response = await apiClient.get(`/user/subscription/cancel`);
   return response.data;
 }
 
@@ -68,6 +97,11 @@ const getProductsWithBartersByUserId = async (userId) => {
 
 const deletProductsByUserId = async (userId) => {
   const response = await apiClient.delete(`/products/user/${userId}`);
+  return response.data;
+}
+
+const getBarterById = async (barterId) => {
+  const response = await apiClient.get(`/barters/${barterId}`);
   return response.data;
 }
 
@@ -103,14 +137,85 @@ const createBarters = async (data) => {
   return response.data;
 }
 
-const updateBarterById = async (data) => {
-  const response = await apiClient.post(`/barters/update/${data.id}`, data);
+const updateBarter = async (data) => {
+  const response = await apiClient.post(`/barters/update/one/${data.id}`, data);
   return response.data;
 }
 
-const deleteBarterById = async (barterId, userId) => {
-  const data = {userId: userId}
-  const response = await apiClient.post(`/barters/delete/${barterId}`, data);
+const updateBarters = async (data) => {
+  const response = await apiClient.post(`/barters/update/many`, data);
+  return response.data;
+}
+
+const closeBarterById = async (barterId) => {
+  const response = await apiClient.post(`/barters/close/one/${barterId}`, data);
+  return response.data;
+}
+
+const closeBarters = async (data) => {
+  const response = await apiClient.post(`/barters/close/many`, data);
+  return response.data;
+}
+
+const deleteBarterById = async (barterId) => {
+  const response = await apiClient.post(`/barters/delete/one/${barterId}`, data);
+  return response.data;
+}
+
+const deleteBarters = async (data) => {
+  const response = await apiClient.post(`/barters/delete/many`, data);
+  return response.data;
+}
+
+const getBarterOfferById = async (offerId) => {
+  const response = await apiClient.get(`/offers/${offerId}`);
+  return response.data;
+}
+
+const countOffersInStatus = async (status) => {
+  const query = !!status ? `?status=${status}` : '';
+  const response = await apiClient.get(`/offers/count${query}`);
+  return response.data;
+}
+
+const countOffersActive = async () => {
+  const response = await apiClient.get(`/offers/count/active`);
+  return response.data;
+}
+
+const getBarterOffersByCurrentUser = async (limit, offset) => {
+  const response = await apiClient.get(`/offers/user?limit=${limit}&offset=${offset}`);
+  return response.data;
+}
+
+const getBarterOffersByUserId = async (userId) => {
+  const response = await apiClient.get(`/offers/user/${userId}`);
+  return response.data;
+}
+
+const getOffersByBarterId = async (barterId) => {
+  const response = await apiClient.get(`/offers/barters/${barterId}`);
+  return response.data;
+}
+
+const createBarterOffer = async (data) => {
+  const response = await apiClient.post(`/offers/create/one`, data);
+  return response.data;
+}
+
+const refuseBarterOffer = async (offerId, reason) => {
+  const data = {reason: reason};
+  const response = await apiClient.post(`/offers/refuse/${offerId}`, data);
+  return response.data;
+}
+
+const updateBarterOffer = async (data) => {
+  const response = await apiClient.post(`/offers/report`, data);
+  return response.data;
+}
+
+const getMarketplace = async (marketplaceId) => {
+  const response = await apiClient.get(`/categories/marketplace/${marketplaceId}`);
   return response.data;
 }
 
@@ -171,9 +276,21 @@ const sendSupportMessage = async (data) => {
   return response.data;
 }
 
+const uploadReceipt = async (barterId, data) => {
+  const response = await apiClient.post(`/storage/barters/${barterId}/receipt`, data, {headers: {'Content-Type': 'multipart/form-data'}});
+  return response.data;
+}
+
+const uploadBarterScreenshot = async (barterId, data) => {
+  const response = await apiClient.post(`/storage/barters/${barterId}/screenshot`, data, {headers: {'Content-Type': 'multipart/form-data'}});
+  return response.data;
+}
+
 export default {
   generateAuthToken,
+  verifyAuthToken,
   getUser,
+  getUserById,
   createUser,
   upsertUser,
   setApiWildberries,
@@ -185,14 +302,31 @@ export default {
   getProductsWithBartersByUserId,
   deletProductsByUserId,
 
+  getBarterById,
   getBartersByProductId,
   getBartersByProductIds,
   getBartersNewByUserId,
   getBartersCurrentByUserId,
   createBarter,
   createBarters,
-  updateBarterById,
+  updateBarter,
+  updateBarters,
+  closeBarterById,
+  closeBarters,
   deleteBarterById,
+  deleteBarters,
+  
+  getBarterOfferById,
+  countOffersInStatus,
+  countOffersActive,
+  getBarterOffersByCurrentUser,
+  getBarterOffersByUserId,
+  getOffersByBarterId,
+  createBarterOffer,
+  refuseBarterOffer,
+  updateBarterOffer,
+
+  getMarketplace,
 
   getCategory,
   getCategories,
@@ -207,4 +341,7 @@ export default {
   createPaymentPayload,
   getPaymentStatus,
   sendSupportMessage,
+
+  uploadReceipt,
+  uploadBarterScreenshot,
 }

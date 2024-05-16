@@ -3,7 +3,7 @@ import './Form.css';
 import { useTelegram } from '../../hooks/useTelegram';
 import InputIcon from './InputIcon';
 
-const SelectField = ({ id, title, name, placeholder, options, defaultValue, comment, onChange }) => {
+const SelectField = ({ id, title, name, placeholder, options, defaultValue, comment, onChange, error }) => {
   const { hapticFeedback } = useTelegram();
 
   const handleChange = (event) => {
@@ -13,6 +13,7 @@ const SelectField = ({ id, title, name, placeholder, options, defaultValue, comm
 
   return (
     <div id={'input-block-' + id} className='input-block'>
+      {error && <small className='error-wrapper'>{error}</small>}
       {id && title && <label htmlFor={id}>{title}</label>}
       <div className='input-wrapper'>
         <select name={name} onChange={handleChange} defaultValue={defaultValue}>

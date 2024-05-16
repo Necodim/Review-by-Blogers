@@ -1,28 +1,25 @@
 import React from 'react';
 import './Store.css';
+import { useUserProfile } from '../../hooks/UserProfileContext';
+import ProductCardSeller from './Seller/ProductCardSeller';
+import ProductCardBlogger from './Blogger/ProductCardBlogger';
 
-const ProductCard = ({ product, isEditing, isSelected, onClick }) => (
-    <div
-        className={`card product-card ${isEditing ? (isSelected ? 'select' : 'unselect') : ''}`}
-        onClick={onClick}
-        data-product-id={product.nmid}
-        data-product-brand={product.brand}
-    >
-        <div className='selection-point' />
-        <div
-            className={`product-image ${product.photos && product.photos.length > 0 ? '' : product.placeholder ? 'loading' : 'default'}`}
-            style={{ backgroundImage: product.photos && product.photos.length > 0 ? `url(${product.photos[0]})` : '' }}
-        >
-            <div className={'task' + (product.barter?.task ? 'active' : '')}>Нет ТЗ</div>
-        </div>
-        <div className='product-content'>
-            {product.placeholder ? (
-                <span className='product-title'>Загрузка...</span>
-            ) : (
-                <span className='product-title'>{product.title}</span>
-            )}
-        </div>
-    </div>
-);
+const ProductCard = ({ product, isEditing, isSelected, onClick }) => {
+	const { role } = useUserProfile();
+
+	if (role === 'seller') {
+		return <ProductCardSeller
+			product={product}
+			isEditing={isEditing}
+			isSelected={isSelected}
+			onClick={onClick}
+		/>
+	} else {
+		return <ProductCardBlogger
+			product={product}
+			onClick={onClick}
+		/>
+	}
+}
 
 export default ProductCard;

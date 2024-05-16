@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './Store.css';
-import api from '../../api/api';
-import { useToastManager } from '../../hooks/useToast';
-import { useUserProfile } from '../../hooks/UserProfileContext';
-import { useHelpers } from '../../hooks/useHelpers';
-import Header from '../Header/Header';
-import Link from '../Button/Link';
-import ProductsGrid from './ProductsGrid';
+import '../Store.css';
+import api from '../../../api/api';
+import { useToastManager } from '../../../hooks/useToast';
+import { useUserProfile } from '../../../hooks/UserProfileContext';
+import { useHelpers } from '../../../hooks/useHelpers';
+import Header from '../../Header/Header';
+import Link from '../../Button/Link';
+import ProductsGrid from '../ProductsGrid';
 
 const StoreSeller = () => {
   const { profile, loading } = useUserProfile();
@@ -48,8 +48,12 @@ const StoreSeller = () => {
           const active = [];
           const inactive = [];
           fetchedProducts.forEach(product => {
-            if (product.barter && !product.barter.closedat) {
-              active.push(product);
+            if (product.barter) {
+              if (!product.barter.closedat || new Date(product.barter.closedat) > new Date()) {
+                active.push(product);
+              } else {
+                inactive.push(product);
+              }
             } else {
               inactive.push(product);
             }

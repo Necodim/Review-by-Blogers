@@ -10,6 +10,7 @@
 
 .input-block,
 .checkbox-wrapper {
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -48,7 +49,7 @@ select,
 textarea {
     width: 100%;
     position: relative;
-    font-size: var(--m);
+    font-size: var(--text-size-m);
     color: var(--text-color);
     border: none;
     box-shadow: none;
@@ -80,6 +81,17 @@ select {
     appearance: none;
 }
 
+.file {
+    display: none;
+}
+
+.checkbox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--s);
+}
+
 /* для элемента input c type="checkbox" */
 .checkbox>input[type="checkbox"] {
     position: absolute;
@@ -88,7 +100,7 @@ select {
 }
 
 /* для элемента label, связанного с .custom-checkbox */
-.checkbox>span {
+.checkbox>.checkbox-custom {
     display: inline-flex;
     align-items: flex-start;
     user-select: none;
@@ -96,17 +108,16 @@ select {
 }
 
 /* создание в label псевдоэлемента before со следующими стилями */
-.checkbox>span::before {
+.checkbox>.checkbox-custom::before {
+    --size: var(--xl);
     content: '';
     display: inline-block;
-    width: 1em;
-    height: 1em;
+    width: var(--size);
+    height: var(--size);
     flex-shrink: 0;
     flex-grow: 0;
     border: none;
-    border-radius: 0.25em;
-    margin-top: 0.15em;
-    margin-right: 0.5em;
+    border-radius: var(--xs);
     background-color: var(--primary-dark-2);
     background-repeat: no-repeat;
     background-position: center center;
@@ -115,33 +126,33 @@ select {
 }
 
 /* стили при наведении курсора на checkbox */
-.checkbox>input:not(:disabled):not(:checked)+span:hover::before {
+.checkbox>input:not(:disabled):not(:checked)+.checkbox-custom:hover::before {
     border-color: var(--primary-dark-3);
 }
 
 /* стили для активного чекбокса (при нажатии на него) */
-.checkbox>input:not(:disabled):active+span::before {
+.checkbox>input:not(:disabled):active+.checkbox-custom::before {
     background-color: var(--primary-dark-2);
 }
 
 /* стили для чекбокса, находящегося в фокусе */
-.checkbox>input:focus+span::before {
+.checkbox>input:focus+.checkbox-custom::before {
     box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), .25);
 }
 
 /* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
-.checkbox>input:focus:not(:checked)+span::before {
+.checkbox>input:focus:not(:checked)+.checkbox-custom::before {
     background-color: var(--primary-dark-3);
 }
 
 /* стили для чекбокса, находящегося в состоянии checked */
-.checkbox>input:checked+span::before {
+.checkbox>input:checked+.checkbox-custom::before {
     background-color: var(--primary-dark-2);
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
 }
 
 /* стили для чекбокса, находящегося в состоянии disabled */
-.checkbox>input:disabled+span::before {
+.checkbox>input:disabled+.checkbox-custom::before {
     background-color: rgba(var(--primary-dark-2-rgb), .5);
 }
 
@@ -212,4 +223,34 @@ textarea {
     justify-content: center;
     align-items: center;
     gap: var(--xxs);
+}
+
+.error-wrapper {
+    position: absolute;
+    top: calc(var(--xxl) * 2);
+    left: var(--l);
+    z-index: 20;
+    width: auto;
+    max-width: calc(100% - var(--l) * 2);
+    color: var(--light);
+    background-color: var(--error);
+    border: none;
+    border-radius: var(--s);
+    padding: var(--xs) var(--s);
+    opacity: 1;
+}
+
+.error-wrapper::after {
+    --size: var(--xs);
+    content: '';
+    position: absolute;
+    top: calc(var(--size) / 2 * -1);
+    left: 50%;
+    z-index: -1;
+    transform: translateX(-50%) rotate(45deg);
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--error);
+    border: none;
+    border-top-left-radius: calc(var(--xxs) / 2);
 }

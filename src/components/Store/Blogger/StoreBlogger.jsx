@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
-import './Store.css'
-import { useToastManager } from '../../hooks/useToast';
-import { useUserProfile } from '../../hooks/UserProfileContext';
-import Header from '../Header/Header';
-import Popup from '../Popup/Popup';
+import '../Store.css'
+import { useToastManager } from '../../../hooks/useToast';
+import { useUserProfile } from '../../../hooks/UserProfileContext';
+import Header from '../../Header/Header';
+import Popup from '../../Popup/Popup';
 import Categories from './Categories';
 
 const StoreBlogger = (props) => {
@@ -31,8 +31,8 @@ const StoreBlogger = (props) => {
         }
     }, [errorMessage, showToast]);
 
-    const handleCategorySelect = (categoryId) => {
-        navigate(`/${profile.role}/store/categories/${categoryId}`);
+    const handleCategorySelect = (subCategoryId) => {
+        navigate(`/store/categories/${subCategoryId}`);
     };
 
     return (

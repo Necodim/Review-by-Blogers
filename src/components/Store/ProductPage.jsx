@@ -5,12 +5,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import api from '../../api/api';
+import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useToastManager } from '../../hooks/useToast'
+import { useHelpers } from '../../hooks/useHelpers';
 import Header from '../Header/Header';
 import Input from '../Form/Input';
 import Button from '../Button/Button';
-import PopupWriteTask from '../Popup/PopupWriteTask';
+import ProductPageSellerActions from './Seller/ProductPageSellerActions';
+import ProductPageBloggerActions from './Blogger/ProductPageBloggerActions';
 
 const ProductPage = () => {
   const navigate = useNavigate();
@@ -18,14 +21,18 @@ const ProductPage = () => {
   const { product } = location.state || {};
   const { productId } = useParams();
 
+  const { role } = useUserProfile();
   const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
+  const { getPlural, copyToClipboard, getMarketplaceShortName, getMarketplaceProductLink } = useHelpers();
 
+  const [userRole, setUserRole] = useState(null);
   const [productData, setProductData] = useState(product);
+  const [productLink, setProductLink] = useState('');
+  const [marketplaceShortName, setMarketplaceShortName] = useState('');
   const [loadingProduct, setLoadingProduct] = useState(!product);
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
 
   useEffect(() => {
     if (isAvailable) showBackButton();
@@ -39,6 +46,10 @@ const ProductPage = () => {
   }, [errorMessage, showToast]);
 
   useEffect(() => {
+    setUserRole(role);
+  }, [role]);
+
+  useEffect(() => {
     const fetchProduct = async () => {
       if (!productData) {
         setLoadingProduct(true);
@@ -46,7 +57,6 @@ const ProductPage = () => {
           const fetchedProduct = await api.getProduct(productId);
           const fetchedBarter = await api.getBartersByProductId(productId);
           fetchedProduct.barter = fetchedBarter;
-          console.log(fetchedProduct)
           setProductData(fetchedProduct);
         } catch (error) {
           setErrorMessage('Ошибка при получении данных о продукте');
@@ -55,7 +65,12 @@ const ProductPage = () => {
         }
       }
       setSelectedProducts([productData]);
+      const short = await getMarketplaceShortName(productData.marketplace_id);
+      const link = await getMarketplaceProductLink(productData.marketplace_id, productData.nmid);
+      setMarketplaceShortName(short);
+      setProductLink(link);
     };
+    console.log(productData);
     
     fetchProduct();
   }, [productId, productData]);
@@ -68,22 +83,32 @@ const ProductPage = () => {
     return <div>Товар не найден</div>;
   }
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(productData?.nmid)
-      .then(() => {
-        showToast('Вы скопировали артикул товара', 'success');
-      })
-      .catch((error) => {
-        setErrorMessage('Не удалось скопировать артикул товара');
-      });
-  }
+  const closeBarters = async () => {
+    const data = {ids: selectedProducts.map(product => product.id)}
 
-  const openPopupWriteTask = () => {
-    setIsPopupWriteTaskVisible(true);
+    try {
+      const closedBarters = await api.closeBarters(data);
+      const count = closedBarters.length;
+      if (count > 0) {
+        showToast(`${getPlural(count, 'Был закрыт', 'Было закрыто', 'Было закрыто')} ${count} ${getPlural(count, 'бартер', 'бартера', 'бартеров')}`, 'success');
+      } else {
+        showToast('Ни один бартер не был закрыт', 'info');
+      }
+			navigate('/store');
+    } catch (error) {
+      const message = 'Не удалось закрыть бартер(-ы)';
+      setErrorMessage(message);
+      console.error(message, error);
+    }
   }
 
   const addBarter = () => {
     navigate('/barters/new/:productId', {state: {productId: productId}});
+  }
+
+  const handleCopy = () => {
+    const result = copyToClipboard(productData?.nmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
+    showToast(result.message, result.status);
   }
 
   return (
@@ -122,22 +147,22 @@ const ProductPage = () => {
             ></div> */}
           </div>
           <div className='list-item'>
-            <Input id='product-nmid' name='product-nmid' value={productData?.nmid} readOnly fade='true' icon='content_copy' iconCallback={handleCopy} onClick={handleCopy} />
-            <Button className='secondary w-auto' icon='launch' onClick={() => window.open(`https://www.wildberries.ru/catalog/${productData?.nmid}/detail.aspx`, '_blank')}>WB</Button>
+            <Input id='product-nmid' name='product-nmid' value={productData?.nmid} readOnly fade={true} icon='content_copy' iconCallback={handleCopy} onClick={handleCopy} />
+            <Button className='secondary w-auto size-input' icon='launch' onClick={() => window.open(productLink, '_blank')}>{marketplaceShortName}</Button>
           </div>
         </div>
-        <div className='w-100'>
-          {productData?.barter ?
-            <Button icon='format_list_bulleted'>Смотреть ТЗ</Button> :
-            <Button icon='add' onClick={openPopupWriteTask}>Добавить бартер</Button>
-          }
-        </div>
+        {userRole === 'seller' ? (
+          <ProductPageSellerActions 
+            hasBarter={productData?.barter}
+            selectedProducts={selectedProducts}
+            closeBarters={closeBarters}
+          />
+        ) : userRole === 'blogger' ? (
+          <ProductPageBloggerActions
+            selectedProducts={selectedProducts}
+          />
+        ) : null}
       </div>
-      <PopupWriteTask
-        isOpen={isPopupWriteTaskVisible}
-        onClose={() => setIsPopupWriteTaskVisible(false)}
-        selectedProducts={selectedProducts}
-      />
     </div>
   );
 };

@@ -126,7 +126,7 @@ const PopupApi = (props) => {
                 title='Введите API-ключ'
                 icon='backspace'
                 iconCallback={iconClearCallback}
-                fade='true'
+                fade={true}
                 placeholder='eyJhbGciOiJ...'
                 value={formData.api}
                 onChange={handleApiChange}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../api/api';
-import { useToastManager } from '../../hooks/useToast';
+import api from '../../../api/api';
+import { useToastManager } from '../../../hooks/useToast';
 import CategoryCard from './CategoryCard';
 
 const Categories = ({ onCategorySelect }) => {
@@ -51,7 +51,7 @@ const Categories = ({ onCategorySelect }) => {
     <div className='categories-wrapper' id='categories'>
       <div className='list'>
         {categoriesLoading && <p>Категории загружаются...</p>}
-        {!categoriesLoading && categories.length ? 
+        {!categoriesLoading &&
           categories.map(category => (
             <React.Fragment key={category.id}>
               <CategoryCard
@@ -73,7 +73,6 @@ const Categories = ({ onCategorySelect }) => {
               ))}
             </React.Fragment>
           ))
-          : <p>На данный момент открытых бартеров нет</p>
         }
       </div>
     </div>

@@ -10,10 +10,11 @@ import { useUserProfile } from './hooks/UserProfileContext';
 import Preloader from './components/Preloader/Preloader';
 import StartScreen from './components/StartScreen/StartScreen';
 import Store from './components/Store/Store';
-import CategoryPage from './components/Store/CategoryPage';
+import CategoryPage from './components/Store/Blogger/CategoryPage';
 import ProductPage from './components/Store/ProductPage';
 import ProductsPage from './components/Store/ProductsPage';
 import BartersPage from './components/Barters/BartersPage';
+import BarterPage from './components/Barters/BarterPage';
 import NewBarterPage from './components/Barters/BartersPage';
 import Profile from './components/Profile/Profile';
 import Subscribe from './components/Profile/Subscription/Subscribe';
@@ -98,10 +99,11 @@ function App() {
         <Route path="/profile/subscribe" element={<Subscribe />} />
         <Route path="/profile/subscribe/waiting-for-capture" element={<WaitingForCapturePage />} />
         <Route path="/store" element={<SelectedProductsProvider><Store /></SelectedProductsProvider>} />
-        <Route path="/store/categories/:id" element={<CategoryPage />} />
+        <Route path="/store/categories/:subCategoryId" element={<SelectedProductsProvider><CategoryPage /></SelectedProductsProvider>} />
         <Route path="/store/products/:productId" element={<ProductPage />} />
         <Route path="/store/products" element={<SelectedProductsProvider><ProductsPage /></SelectedProductsProvider>} />
         <Route path="/barters" element={<BartersPage />} />
+        <Route path="/barters/:barterId" element={<BarterPage />} />
         <Route path="/barters/new/:productId" element={<NewBarterPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/info/support" element={<SupportPage />} />

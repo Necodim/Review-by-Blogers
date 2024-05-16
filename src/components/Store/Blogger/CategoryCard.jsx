@@ -1,5 +1,5 @@
 import React from 'react'
-import './Store.css'
+import '../Store.css'
 
 const CategoryCard = (props) => {
 
