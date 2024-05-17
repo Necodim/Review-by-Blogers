@@ -21,10 +21,10 @@ const WaitingForCapturePage = () => {
             try {
                 const response = await api.getPaymentStatus(paymentId);
                 if (response.status === 'succeeded') {
-                    showToast('Платеж успешно проведен', 'success');
                     showToast('Платёж прошёл успешно!', 'success');
+                    sessionStorage.removeItem('paymentId');
                     navigate('/profile');
-                    clearInterval(intervalPaymentStatus); // остановка опроса
+                    clearInterval(intervalPaymentStatus);
                 } else if (response.status === 'pending') {
                     // Платеж еще не обработан, ждем
                 } else {

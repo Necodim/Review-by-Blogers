@@ -28,7 +28,7 @@ export const UserProfileProvider = ({ children }) => {
 				try {
 					const userData = JSON.parse(sessionStorage.getItem('userData'));
 					const token = sessionStorage.getItem('accessToken');
-					const expiredAt = sessionStorage.getItem('accessTokenExpiredAt');
+					const expiredAt = parseInt(sessionStorage.getItem('accessTokenExpiredAt'), 10);
 
 					if (!userData || !token || !expiredAt || moment(expiredAt).isBefore(moment())) {
 						if (!userData) console.log('!userData', !userData)
