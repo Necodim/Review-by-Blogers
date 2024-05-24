@@ -100,7 +100,7 @@ const SettingsPage = () => {
 
 
             
-            <div className='container' id='tests'>
+            {/* <div className='container' id='tests'>
                 <h2>Тестовый функционал</h2>
                 <span>Telergam username: {user?.username}</span>
                 <Link onClick={goToStartScreen}>Стартовый экран</Link>
@@ -108,7 +108,7 @@ const SettingsPage = () => {
                 {profile && profile.role === 'seller' && 
                     <Link onClick={addSellerSubscription}>Включить подписку (бесплатно)</Link>
                 }
-            </div>
+            </div> */}
             <PopupConfirmation
                 id='popup-change-role-confirmation'
                 title='Изменение роли'
