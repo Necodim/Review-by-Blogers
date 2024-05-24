@@ -36,14 +36,14 @@ const SupportPage = () => {
 
     try {
       const response = await sendSupportMessage({ userId: user?.id, message: message });
-      if (response.status === 200) {
-        showToast('Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.');
+      if (response) {
+        showToast(response.message);
         setMessage('');
       } else {
         setErrorMessage('Ошибка при отправке сообщения, попробуйте снова');
       }
     } catch (error) {
-      setErrorMessage('Ошибка при отправке сообщения, попробуйте снова');
+      setErrorMessage(response.error);
     }
   }
 
