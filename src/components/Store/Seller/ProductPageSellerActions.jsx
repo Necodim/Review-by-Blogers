@@ -4,11 +4,13 @@ import Button from '../../Button/Button';
 import PopupTaskRead from '../../Popup/PopupTaskRead';
 import PopupTaskWrite from '../../Popup/PopupTaskWrite';
 import PopupConfirmation from '../../Popup/PopupConfirmation';
+import { useUserProfile } from '../../../hooks/UserProfileContext';
 
 const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
+  const { isActive } = useUserProfile();
   const [barter, setBarter] = useState({});
   const [isBarterOpen, setIsBarterOpen] = useState(false);
-  const [isPopupTaskReadVisible, setIsPopupTaskReadVisible ] = useState(false);
+  const [isPopupTaskReadVisible, setIsPopupTaskReadVisible] = useState(false);
   const [isPopupTaskWriteVisible, setIsPopupTaskWriteVisible] = useState(false);
   const [isPopupConfirmationBarterCloseVisible, setIsPopupConfirmationBarterCloseVisible] = useState(false);
 
@@ -38,25 +40,27 @@ const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
   return (
     <>
       <div className='w-100'>
-        {isBarterOpen ?
         <div className='list'>
-          {!!barter?.task && 
+          {!!barter?.task &&
             <div className='list-item'>
               <Button icon='format_list_bulleted' onClick={openPopupTaskRead}>Смотреть ТЗ</Button>
             </div>
           }
-          <div className='list-item'>
-            <Button icon='cancel' onClick={openPopupConfirmation}>Закрыть бартер</Button>
-          </div>
-        </div> :
-        <Button icon='add' onClick={openPopupTaskWrite}>Открыть бартер</Button>
-        }
+          {isBarterOpen ?
+            <div className='list-item'>
+              <Button icon='cancel' onClick={openPopupConfirmation}>Закрыть бартер</Button>
+            </div> :
+            <div className='list-item'>
+              <Button icon='add' onClick={openPopupTaskWrite} disabled={!isActive}>Открыть бартер</Button>
+            </div>
+          }
+        </div>
       </div>
       {!!barter?.task && <PopupTaskRead
-          isOpen={isPopupTaskReadVisible}
-          onClose={() => setIsPopupTaskReadVisible(false)}
-          task={barter.task}
-        />}
+        isOpen={isPopupTaskReadVisible}
+        onClose={() => setIsPopupTaskReadVisible(false)}
+        task={barter.task}
+      />}
       <PopupTaskWrite
         isOpen={isPopupTaskWriteVisible}
         onClose={() => setIsPopupTaskWriteVisible(false)}
@@ -65,8 +69,8 @@ const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
       <PopupConfirmation
         id='popup-barter-close'
         title='Вы уверены?'
-        text='Вы точно хотите закрыть бартеры?'
-        descr='В будущем их можно будет снова открыть'
+        text='Вы точно хотите закрыть бартер? Текущие сделки по данному товару закрыты не будут.'
+        descr='В будущем его можно будет снова открыть'
         isOpen={isPopupConfirmationBarterCloseVisible}
         onClose={() => setIsPopupConfirmationBarterCloseVisible(false)}
         onConfirmation={closeBarters}

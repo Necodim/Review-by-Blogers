@@ -9,6 +9,7 @@ const UserProfileContext = createContext();
 export const UserProfileProvider = ({ children }) => {
 	const [profile, setProfile] = useState(null);
 	const [role, setRole] = useState(null);
+	const [isActive, setIsActive] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState('');
 
@@ -16,8 +17,8 @@ export const UserProfileProvider = ({ children }) => {
 	const { getUser, createUser, upsertUser, generateAuthToken, verifyAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
 	const { showToast } = useToastManager();
 
-	// Для тестов
 	const userId = user?.id;
+	// Для тестов
 	// const userId = 82431798;
 	// const userId = 404;
 
@@ -40,6 +41,7 @@ export const UserProfileProvider = ({ children }) => {
 					} else {
 						setProfile(userData);
 						setRole(userData.role);
+						setIsActive(userData.subscription.active || userData.subscription.avaliable || userData.trial.active || userData.trial['barters-left'] > 0);
 						setLoading(false);
 					}
 				} catch (error) {
@@ -63,6 +65,7 @@ export const UserProfileProvider = ({ children }) => {
 					sessionStorage.setItem('userData', JSON.stringify(user));
 					setProfile(user);
 					setRole(user.role);
+					setIsActive(user.subscription.active || user.subscription.avaliable || user.trial.active || user.trial['barters-left'] > 0);
 				} else {
 					throw new Error('Невозможно сгенерировать токен для пользователя');
 				}
@@ -142,6 +145,7 @@ export const UserProfileProvider = ({ children }) => {
 				console.log('updateUserData', result)
 				setProfile(result);
 				setRole(result.role);
+				setIsActive(result.subscription.active || result.subscription.avaliable || result.trial.active || result.trial['barters-left'] > 0);
 				sessionStorage.setItem('userData', JSON.stringify(result));
 				showToast(result.message || 'Данные успешно сохранены', 'success');
 				return result;
@@ -190,7 +194,7 @@ export const UserProfileProvider = ({ children }) => {
 	}
 
 	return (
-		<UserProfileContext.Provider value={{ loading, profile, role, updateProfile, updateUserData, addSubscription, cancelSubscription }}>
+		<UserProfileContext.Provider value={{ loading, profile, role, isActive, updateProfile, updateUserData, addSubscription, cancelSubscription }}>
 			{children}
 		</UserProfileContext.Provider>
 	);

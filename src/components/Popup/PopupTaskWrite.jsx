@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../api/api.js';
 import { useUserProfile } from '../../hooks/UserProfileContext.js';
 import { useToastManager } from '../../hooks/useToast.js'
+import { useHelpers } from '../../hooks/useHelpers.js';
 import Popup from './Popup.jsx';
 import Form from '../Form/Form.jsx';
 import Textarea from '../Form/Textarea.jsx';
@@ -10,10 +11,12 @@ import Input from '../Form/Input.jsx';
 
 const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 	const navigate = useNavigate();
-	const { profile } = useUserProfile();
+	const { profile, isActive } = useUserProfile();
 	const { showToast } = useToastManager();
+	const { getPlural } = useHelpers();
 
 	const [errorMessage, setErrorMessage] = useState('');
+	const [textUderForm, setTextUnderForm] = useState('');
 	const [task, setTask] = useState('');
 	const [brandInstagram, setBrandInstagram] = useState('');
 	const [feedback, setFeedback] = useState(false);
@@ -24,6 +27,14 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 			setErrorMessage('');
 		}
 	}, [errorMessage, showToast]);
+
+	useEffect(() => {
+		if (!isActive) {
+			setTextUnderForm('У вас нет подписки и кончились бесплатные бартеры')
+		} else {
+			setTextUnderForm('');
+		}
+	}, [isActive]);
 
 	const handleTaskChange = (e) => setTask(e.target.value);
 	const handleBrandInstagramChange = (e) => {
@@ -57,7 +68,12 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 				setTimeout(() => resetForm(), 500);
 				navigate('/store');
 			} catch (error) {
-				const message = selectedProducts.length > 1 ? 'Не удалось создать бартеры для товаров' : 'Не удалось создать бартер для товара';
+				let message;
+				if (error.message === 'unavaliable') {
+					message = `Количество открытых бартеров в демо-режиме ограничено. ${profile.trial['barters-left'] > 0 ? `У вас осталось ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бесплатный бартер', 'бесплатных бартера', 'бесплатных бартеров')}. Уменьшите количество выбранных товаров или` : 'У вас не осталось бесплатных бартеров,'} оформите подписку.`;
+				} else {
+					message = selectedProducts.length > 1 ? 'Не удалось создать бартеры для товаров' : 'Не удалось создать бартер для товара';
+				}
 				setErrorMessage(message)
 				console.error(`${message}:`, error);
 			}
@@ -70,7 +86,13 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 		<Popup id='popup-write-task' isOpen={isOpen} onClose={onClose}>
 			<h2>Техническое задание</h2>
 			<div>Что блогер должен сказать о товаре?</div>
-			<Form onSubmit={submitForm} btntext='Сохранить' btnicon='save'>
+			<Form
+				onSubmit={submitForm}
+				btntext='Сохранить'
+				btnicon='save'
+				isDisabled={!isActive}
+				text={textUderForm}
+			>
 				<Textarea
 					id='task'
 					name='task'

@@ -3,13 +3,13 @@ import './Button.css'
 import { useTelegram } from "../../hooks/useTelegram";
 import Icon from '../Icon/Icon';
 
-const Button = ({ onClick, className, icon, size, children, ...buttonProps }) => {
+const Button = ({ onClick, className, icon, size, disabled, children, ...buttonProps }) => {
     const [isDisabled, setIsDisabled] = useState(false);
     const { hapticFeedback } = useTelegram();
 
     useEffect(() => {
-      const disabled = className?.includes('disabled');
-      setIsDisabled(disabled);
+      const disabledStatus = className?.includes('disabled') || disabled;
+      setIsDisabled(disabledStatus);
     }, [className]);
 
     const handleClick = (event) => {
@@ -22,7 +22,7 @@ const Button = ({ onClick, className, icon, size, children, ...buttonProps }) =>
     }
 
     return (
-        <button {...buttonProps} className={`button ${className || ''}`} onClick={handleClick} disabled={isDisabled}>
+        <button {...buttonProps} className={`button ${className || (disabled ? 'disabled' : '')}`} onClick={handleClick} disabled={isDisabled}>
             { icon && <Icon icon={icon} size={size}></Icon> }
             { children }
         </button>

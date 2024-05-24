@@ -193,8 +193,8 @@ const ProductsPage = () => {
       <PopupConfirmation
         id='popup-barter-close'
         title='Вы уверены?'
-        text='Вы точно хотите закрыть бартеры?'
-        descr='В будущем их можно будет снова открыть'
+        text={`Вы точно хотите закрыть бартер${selectedProducts.length > 1 ? 'ы' : ''}? Текущие сделки по ${selectedProducts.length > 1 ? 'данным товарам' : 'данному товару'} закрыты не будут.`}
+        descr={`В будущем ${selectedProducts.length > 1 ? 'их' : 'его'} можно будет снова открыть`}
         isOpen={isPopupConfirmationBarterCloseVisible}
         onClose={() => setIsPopupConfirmationBarterCloseVisible(false)}
         onConfirmation={closeBarters}
