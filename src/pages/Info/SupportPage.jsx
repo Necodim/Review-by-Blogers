@@ -10,6 +10,7 @@ const SupportPage = () => {
   const { sendSupportMessage } = api;
   const { isAvailable, showBackButton, user } = useTelegram();
   const { showToast } = useToastManager();
+
   const [errorMessage, setErrorMessage] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
@@ -36,7 +37,7 @@ const SupportPage = () => {
 
     try {
       const response = await sendSupportMessage({ userId: user?.id, message: message });
-      if (response) {
+      if (!!response.message) {
         showToast(response.message);
         setMessage('');
       } else {
