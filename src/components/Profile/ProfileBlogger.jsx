@@ -126,7 +126,7 @@ const ProfileBlogger = () => {
         title='Номер карты для переводов'
         placeholder={profile.card_number ? profile.card_number.replace(/(\d{4})(?=\d)/g, '$1 ') : '2202 2020 1234 5678'}
         required='required'
-        autocomplete='cc-number'
+        autoComplete='cc-number'
         value={cardNumberValue}
         onChange={handleCardNumberChange}
         maxLength='19'

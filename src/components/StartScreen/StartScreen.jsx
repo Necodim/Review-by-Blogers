@@ -9,11 +9,12 @@ import Icon from '../Icon/Icon';
 
 const StartScreen = () => {
     const navigate = useNavigate();
-    const { updateUserData } = useUserProfile();
+    const { role, updateUserData } = useUserProfile();
     const { tg, isAvailable, hideBackButton } = useTelegram();
     const { showToast } = useToastManager();
 
     const [errorMessage, setErrorMessage] = useState('');
+    const [isUpdated, setIsUpdated] = useState(false);
     
     useEffect(() => {
         if (isAvailable) hideBackButton();
@@ -26,17 +27,27 @@ const StartScreen = () => {
         }
     }, [errorMessage, showToast]);
 
+    useEffect(() => {
+        if (role && isUpdated) {
+            navigate('/profile');
+        }
+    }, [role, isUpdated]);
+
+    useEffect(() => {
+        if (role) {
+            navigate('/profile');
+        }
+    }, [role]);
+
     const handleRoleSelect = async (role) => {
         try {
             const result = await updateUserData({ role: role });
-            console.log(result)
+            setIsUpdated(true);
         } catch (error) {
             const errorText = 'Произошла ошибка при выборе роли пользователя';
             setErrorMessage(errorText);
             console.error(`${errorText}:`, error);
             isAvailable() ? tg.showAlert(errorText + '. Попробуйте ещё раз.') : alert(errorText);
-        } finally {
-            navigate('/profile');
         }
     }
 

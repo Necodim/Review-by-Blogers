@@ -59,3 +59,7 @@
 .popup-close {
   text-decoration: none !important;
 }
+
+.popup img {
+  border-radius: var(--s);
+}

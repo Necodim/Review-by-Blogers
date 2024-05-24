@@ -61,6 +61,12 @@ const BarterPage = () => {
     console.log('current', currentBarter)
   }, [barterId, barter, getMarketplaceShortName, getMarketplaceProductLink]);
 
+  useEffect(() => {
+    if (currentBarter !== barter) {
+      setCurrentBarter(currentBarter);
+    }
+  }, [barter, currentBarter]);
+
   const handleCopy = () => {
     const result = copyToClipboard(currentBarter?.product?.nmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
     showToast(result.message, result.status);
@@ -102,7 +108,8 @@ const BarterPage = () => {
         </div>
       </div>
       <div className='container barter-status' id='status'>
-        <BarterStatus barter={currentBarter} updateBarter={setCurrentBarter} />
+        <p>{currentBarter?.id + '-' + currentBarter?.offer.status}</p>
+        <BarterStatus key={currentBarter?.id + '-' + currentBarter?.offer.status} barter={currentBarter} updateBarter={setCurrentBarter} />
       </div>
     </div>
   );

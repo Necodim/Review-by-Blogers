@@ -1,7 +1,7 @@
 import React from 'react';
 import Popup from './Popup.jsx';
 
-const PopupTask = ({ isOpen, onClose, task }) => {
+const PopupTaskRead = ({ isOpen, onClose, task }) => {
 	return (
 		<Popup id='popup-task' isOpen={isOpen} onClose={onClose}>
 			<h2>Техническое задание</h2>
@@ -10,4 +10,4 @@ const PopupTask = ({ isOpen, onClose, task }) => {
 	);
 };
 
-export default PopupTask;
+export default PopupTaskRead;

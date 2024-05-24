@@ -64,8 +64,8 @@ const upsertUser = async (data) => {
   return response.data;
 }
 
-const setApiWildberries = async (api) => {
-  const data = { 'api': api }
+const setApiWildberries = async (token) => {
+  const data = { 'api': token }
   const response = await apiClient.post(`/user/api/wildberries/`, data);
   return response.data;
 }
@@ -188,8 +188,13 @@ const countOffersActive = async () => {
   return response.data;
 }
 
-const getBarterOffersByCurrentBlogger = async (limit, offset) => {
-  const response = await apiClient.get(`/offers/blogger?limit=${limit}&offset=${offset}`);
+const getBarterOffersByCurrentBlogger = async (type, limit, offset) => {
+  const queryParams = [];
+  if (type) queryParams.push(`type=${type}`);
+  if (limit) queryParams.push(`limit=${limit}`);
+  if (offset) queryParams.push(`offset=${offset}`);
+  const query = queryParams.join('&');
+  const response = await apiClient.get(`/offers/blogger?${query}`);
   return response.data;
 }
 

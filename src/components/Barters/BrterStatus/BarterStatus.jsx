@@ -17,15 +17,15 @@ const BarterStatus = ({ barter, updateBarter }) => {
     case 'sended': // Средства на покупку товаров отправлены
       return <BarterStatusSended barter={barter} updateBarter={updateBarter} />
     case 'progress': // Предложение обрабатывается (статус, если не sended и не reported)
-      return <BarterStatusProgress />
+      return <BarterStatusProgress barter={barter} updateBarter={updateBarter} />
     case 'planned': // Блоггер запланировал дату рекламной кампании
-      return <BarterStatusPlanned />
+      return <BarterStatusPlanned barter={barter} updateBarter={updateBarter} />
     case 'reported': // Предложение отмечено как выполненное
-      return <BarterStatusReported />
+      return <BarterStatusReported barter={barter} updateBarter={updateBarter} />
     case 'closed': // Предложение закрыто (все обяхательства выполнены)
-      return <BarterStatusClosed />
+      return <BarterStatusClosed barter={barter} />
     case 'refused': // Предложение отклонено
-      return <BarterStatusRefused reason={barter.offer?.reason} />
+      return <BarterStatusRefused barter={barter} />
     default:
       return <div>Произошла ошибка при загрузке статуса текущего бартера</div>;
   }

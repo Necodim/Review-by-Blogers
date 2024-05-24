@@ -17,9 +17,13 @@ export const UserProfileProvider = ({ children }) => {
 	const { showToast } = useToastManager();
 
 	// Для тестов
-	// const userId = user?.id;
-	const userId = 82431798;
+	const userId = user?.id;
+	// const userId = 82431798;
 	// const userId = 404;
+
+	useEffect(() => {
+		if (!!profile) console.log(profile)
+	}, [profile])
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -31,9 +35,6 @@ export const UserProfileProvider = ({ children }) => {
 					const expiredAt = parseInt(sessionStorage.getItem('accessTokenExpiredAt'), 10);
 
 					if (!userData || !token || !expiredAt || moment(expiredAt).isBefore(moment())) {
-						if (!userData) console.log('!userData', !userData)
-						if (!token) console.log('!token', !token)
-						if (!expiredAt) console.log('!expiredAt', !expiredAt)
 						if (moment(expiredAt).isBefore(moment())) console.log('expired', moment(expiredAt).isBefore(moment()))
 						await generateAndSetAuthToken();
 					} else {
@@ -125,16 +126,22 @@ export const UserProfileProvider = ({ children }) => {
 	// }, [userId, getUser, generateAuthToken]);
 
 	const updateProfile = (updates) => {
-		setProfile(currentProfile => ({ ...currentProfile, ...updates }));
-		sessionStorage.setItem('userData', JSON.stringify(profile));
-	}
+		setProfile(currentProfile => {
+			const updatedProfile = { ...currentProfile, ...updates };
+			console.log('Обновленный профиль:', updatedProfile);
+			localStorage.setItem('userData', JSON.stringify(updatedProfile));
+			return updatedProfile;
+		});
+	};	
 
 	const updateUserData = async (data) => {
 		setLoading(true);
 		try {
 			const result = await upsertUser(data);
 			if (!!result) {
+				console.log('updateUserData', result)
 				setProfile(result);
+				setRole(result.role);
 				sessionStorage.setItem('userData', JSON.stringify(result));
 				showToast(result.message || 'Данные успешно сохранены', 'success');
 				return result;

@@ -28,7 +28,7 @@ const StoreSeller = (props) => {
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [isProductsChoosen, setIsProductsChoosen] = useState(false);
     const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
-    const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
+    const [isPopupTaskWriteVisible, setIsPopupTaskWriteVisible] = useState(false);
 
     const { showToast } = useToastManager();
 
@@ -92,9 +92,9 @@ const StoreSeller = (props) => {
         if (selectedProducts.length > 0) setIsPopupEditProductsVisible(true);
     }
 
-    const openPopupWriteTask = () => {
+    const openPopupTaskWrite = () => {
         setIsPopupEditProductsVisible(false);
-        setIsPopupWriteTaskVisible(true);
+        setIsPopupTaskWriteVisible(true);
     }
 
     return (
@@ -141,10 +141,10 @@ const StoreSeller = (props) => {
                 <div className='list'>
                     <Button className='list-item vertical'>Включить бартер</Button>
                     <Button className='list-item vertical'>Выключить бартер</Button>
-                    <Button className='list-item vertical' onClick={openPopupWriteTask}>Написать ТЗ</Button>
+                    <Button className='list-item vertical' onClick={openPopupTaskWrite}>Написать ТЗ</Button>
                 </div>
             </Popup>}
-            {<Popup id='popup-write-task' isOpen={isPopupWriteTaskVisible} onClose={() => setIsPopupWriteTaskVisible(false)}>
+            {<Popup id='popup-write-task' isOpen={isPopupTaskWriteVisible} onClose={() => setIsPopupTaskWriteVisible(false)}>
                 <h2>Техническое задание</h2>
                 <Form onSubmit={() => {}} btntext='Сохранить' btnicon='save'>
                     <Textarea 

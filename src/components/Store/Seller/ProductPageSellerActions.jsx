@@ -1,14 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import Button from '../../Button/Button';
-import PopupWriteTask from '../../Popup/PopupWriteTask';
+import PopupTaskRead from '../../Popup/PopupTaskRead';
+import PopupTaskWrite from '../../Popup/PopupTaskWrite';
 import PopupConfirmation from '../../Popup/PopupConfirmation';
 
-const ProductPageSellerActions = ({ hasBarter, selectedProducts, closeBarters }) => {
-  const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
+const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
+  const [barter, setBarter] = useState({});
+  const [isBarterOpen, setIsBarterOpen] = useState(false);
+  const [isPopupTaskReadVisible, setIsPopupTaskReadVisible ] = useState(false);
+  const [isPopupTaskWriteVisible, setIsPopupTaskWriteVisible] = useState(false);
   const [isPopupConfirmationBarterCloseVisible, setIsPopupConfirmationBarterCloseVisible] = useState(false);
 
-  const openPopupWriteTask = () => {
-    setIsPopupWriteTaskVisible(true);
+  useEffect(() => {
+    if (selectedProducts && selectedProducts.length > 0) {
+      if (selectedProducts[0].barter) {
+        setBarter(selectedProducts[0].barter);
+        if (selectedProducts[0].barter.closedat == null || moment(selectedProducts[0].barter.closedat).isAfter(moment())) {
+          setIsBarterOpen(true);
+        }
+      }
+    }
+  }, [selectedProducts]);
+
+  const openPopupTaskRead = () => {
+    setIsPopupTaskReadVisible(true);
+  }
+
+  const openPopupTaskWrite = () => {
+    setIsPopupTaskWriteVisible(true);
   }
 
   const openPopupConfirmation = () => {
@@ -18,21 +38,28 @@ const ProductPageSellerActions = ({ hasBarter, selectedProducts, closeBarters })
   return (
     <>
       <div className='w-100'>
-        {hasBarter ?
+        {isBarterOpen ?
         <div className='list'>
-          <div className='list-item'>
-            <Button icon='format_list_bulleted'>Смотреть ТЗ</Button>
-          </div>
+          {!!barter?.task && 
+            <div className='list-item'>
+              <Button icon='format_list_bulleted' onClick={openPopupTaskRead}>Смотреть ТЗ</Button>
+            </div>
+          }
           <div className='list-item'>
             <Button icon='cancel' onClick={openPopupConfirmation}>Закрыть бартер</Button>
           </div>
         </div> :
-        <Button icon='add' onClick={openPopupWriteTask}>Открыть бартер</Button>
+        <Button icon='add' onClick={openPopupTaskWrite}>Открыть бартер</Button>
         }
       </div>
-      <PopupWriteTask
-        isOpen={isPopupWriteTaskVisible}
-        onClose={() => setIsPopupWriteTaskVisible(false)}
+      {!!barter?.task && <PopupTaskRead
+          isOpen={isPopupTaskReadVisible}
+          onClose={() => setIsPopupTaskReadVisible(false)}
+          task={barter.task}
+        />}
+      <PopupTaskWrite
+        isOpen={isPopupTaskWriteVisible}
+        onClose={() => setIsPopupTaskWriteVisible(false)}
         selectedProducts={selectedProducts}
       />
       <PopupConfirmation

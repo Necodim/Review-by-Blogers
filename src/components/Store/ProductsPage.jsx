@@ -10,7 +10,7 @@ import Button from '../Button/Button';
 import Link from '../Button/Link';
 import ProductsGrid from './ProductsGrid';
 import PopupEditProducts from '../Popup/PopupEditProducts';
-import PopupWriteTask from '../Popup/PopupWriteTask';
+import PopupTaskWrite from '../Popup/PopupTaskWrite';
 import PopupConfirmation from '../Popup/PopupConfirmation';
 
 const ProductsPage = () => {
@@ -28,7 +28,7 @@ const ProductsPage = () => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [isEditing, setIsEditing] = useState(false);
   const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
-  const [isPopupWriteTaskVisible, setIsPopupWriteTaskVisible] = useState(false);
+  const [isPopupTaskWriteVisible, setIsPopupTaskWriteVisible] = useState(false);
   const [isPopupConfirmationBarterCloseVisible, setIsPopupConfirmationBarterCloseVisible] = useState(false);
   
   useEffect(() => {
@@ -107,9 +107,9 @@ const ProductsPage = () => {
     if (selectedProducts.length > 0) setIsPopupEditProductsVisible(true);
   }
 
-  const openPopupWriteTask = () => {
+  const openPopupTaskWrite = () => {
     setIsPopupEditProductsVisible(false);
-    setIsPopupWriteTaskVisible(true);
+    setIsPopupTaskWriteVisible(true);
   }
 
   const openPopupConfirmation = () => {
@@ -182,12 +182,12 @@ const ProductsPage = () => {
       <PopupEditProducts
         isOpen={isPopupEditProductsVisible}
         onClose={() => setIsPopupEditProductsVisible(false)}
-        onBarterOpen={openPopupWriteTask}
+        onBarterOpen={openPopupTaskWrite}
         onBarterClose={openPopupConfirmation}
       />
-      <PopupWriteTask
-        isOpen={isPopupWriteTaskVisible}
-        onClose={() => setIsPopupWriteTaskVisible(false)}
+      <PopupTaskWrite
+        isOpen={isPopupTaskWriteVisible}
+        onClose={() => setIsPopupTaskWriteVisible(false)}
         selectedProducts={selectedProducts}
       />
       <PopupConfirmation

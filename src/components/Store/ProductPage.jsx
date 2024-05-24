@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './Store.css';
+import moment from 'moment';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
@@ -137,7 +138,7 @@ const ProductPage = () => {
             >
               {productData?.photos && productData?.photos.map((photo, index) => (
                 <SwiperSlide key={index}>
-                  <img className='product-image' src={photo} alt={`Product ${index}`} />
+                  <img className='product-image' src={photo} alt={`${productData.title} (фото ${index + 1})`} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -153,7 +154,6 @@ const ProductPage = () => {
         </div>
         {userRole === 'seller' ? (
           <ProductPageSellerActions 
-            hasBarter={productData?.barter}
             selectedProducts={selectedProducts}
             closeBarters={closeBarters}
           />

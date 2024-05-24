@@ -8,6 +8,7 @@ import Header from '../../Header/Header';
 import Link from '../../Button/Link';
 import BartersHistoryTable from '../BartersHistoryTable';
 import BartersGrid from '../BartersGrid';
+import Preloader from '../../Preloader/Preloader';
 
 const SellerBartersPage = () => {
   const navigate = useNavigate();
@@ -80,6 +81,10 @@ const SellerBartersPage = () => {
     } else {
       return;
     }
+  }
+
+  if (bartersIsLoading) {
+    return <Preloader>Загружаюсь...</Preloader>;
   }
 
   return (

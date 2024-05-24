@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../../Button/Button';
-import PopupTask from '../../Popup/PopupTask';
+import PopupTaskRead from '../../Popup/PopupTaskRead';
 import PopupConfirmation from '../../Popup/PopupConfirmation';
 import api from '../../../api/api';
 import { useToastManager } from '../../../hooks/useToast';
@@ -11,7 +11,7 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
   const [ errorMessage, setErrorMessage ] = useState('');
   const [ product, setProduct ] = useState({});
   const [ canMakeOffer, setCanMakeOffer ] = useState(true);
-  const [ isPopupTaskVisible, setIsPopupTaskVisible ] = useState(false);
+  const [ isPopupTaskReadVisible, setIsPopupTaskReadVisible ] = useState(false);
   const [ isPopupConfirmationBarterOfferVisible, setIsPopupConfirmationBarterOfferVisible ] = useState(false);
 
   useEffect(() => {
@@ -32,8 +32,8 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
     }
   }, [selectedProducts])
 
-  const openPopupTask = () => {
-    setIsPopupTaskVisible(true);
+  const openPopupTaskRead = () => {
+    setIsPopupTaskReadVisible(true);
   }
 
   const openPopupConfirmation = () => {
@@ -87,16 +87,16 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
       <div className='w-100'>
         <div className='list'>
           <div className='list-item'>
-            <Button icon='format_list_bulleted' onClick={openPopupTask}>Смотреть ТЗ</Button>
+            <Button icon='format_list_bulleted' onClick={openPopupTaskRead}>Смотреть ТЗ</Button>
           </div>
           <div className='list-item'>
             <Button className={canMakeOffer ? '' : 'disabled'} icon='handshake' onClick={openPopupConfirmation}>{canMakeOffer ? 'Предложить бартер' : 'Уже сделали предложение'}</Button>
           </div>
         </div>
       </div>
-      {!!product.barter?.task && <PopupTask
-          isOpen={isPopupTaskVisible}
-          onClose={() => setIsPopupTaskVisible(false)}
+      {!!product.barter?.task && <PopupTaskRead
+          isOpen={isPopupTaskReadVisible}
+          onClose={() => setIsPopupTaskReadVisible(false)}
           task={product.barter?.task}
         />}
       <PopupConfirmation

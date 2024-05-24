@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
+import { useToastManager } from '../../../hooks/useToast';
+import api from '../../../api/api';
 import Form from '../../Form/Form';
 import Input from '../../Form/Input';
 
 const BarterStatusProgress = ({ barter, updateBarter }) => {
   const { role } = useUserProfile();
+  const { showToast } = useToastManager();
 
-  const [title, setTitle] = useState('Работа по бартеру началась')
+  const [errorMessage, setErrorMessage] = useState('');
+  const [title, setTitle] = useState('Работа по бартеру началась');
   const [text, setText] = useState(null);
   const [formSending, setFormSending] = useState(false);
   const [file, setFile] = useState(null);
@@ -18,10 +22,17 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
   const [dateError, setDateError] = useState(null);
 
   useEffect(() => {
+    if (errorMessage) {
+      showToast(errorMessage, 'error');
+      setErrorMessage('');
+    }
+  }, [errorMessage, showToast]);
+
+  useEffect(() => {
     switch (role) {
       case 'blogger':
         setTitle('Отчёт по бартеру №1');
-        setText('Подтвердите получение средств от селлера для покупки товаров, чтобы продолжить работу над бартером.');
+        setText('Сделайте заказ товара на маркетплейсе, сделайте скриншот, подтверждающий факт заказа, а затем запланируйте рекламную кампанию с учётом времени доставки товара. После чего отправьте форму со скриншотом и датой.');
         break;
       case 'seller':
         setTitle('Работа по бартеру началась');
@@ -47,6 +58,7 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
   const uploadScreenshot = async (formData) => {
     try {
       setFileLoading(true);
+      console.log(barter)
       const response = await api.uploadBarterScreenshot(barter.id, formData);
       setFormScreenshot(response);
       return response;
@@ -87,11 +99,7 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
       const updatedOffer = await api.updateBarterOffer(data);
       updateBarter(prevBarter => ({
         ...prevBarter,
-        offer: {
-          ...prevBarter.offer,
-          status: updatedOffer.status,
-          receipt_blogger: uploadedFile,
-        }
+        offer: updatedOffer
       }));
       showToast('Первый отчёт по бартеру отправлен', 'success');
     } catch (error) {

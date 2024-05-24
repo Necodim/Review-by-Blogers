@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
+import { useToastManager } from '../../../hooks/useToast';
+import api from '../../../api/api';
 import Form from '../../Form/Form';
 import Input from '../../Form/Input';
 
 const BarterStatusSended = ({ barter, updateBarter }) => {
   const { role } = useUserProfile();
+  const { showToast } = useToastManager();
 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [title, setTitle] = useState('Средства отправлены');
   const [text, setText] = useState(null);
   const [formScreenshot, setFormScreenshot] = useState(null);
   const [file, setFile] = useState(null);
   const [fileLoading, setFileLoading] = useState(false);
   const [fileError, setFileError] = useState(null);
+
+  useEffect(() => {
+    if (errorMessage) {
+      showToast(errorMessage, 'error');
+      setErrorMessage('');
+    }
+  }, [errorMessage, showToast]);
 
   useEffect(() => {
     switch (role) {
@@ -65,13 +77,11 @@ const BarterStatusSended = ({ barter, updateBarter }) => {
         receipt: uploadedFile,
       }
       const updatedOffer = await api.updateBarterOffer(data);
+      console.log('updatedOffer', updatedOffer)
+      console.log(updatedOffer.status)
       updateBarter(prevBarter => ({
         ...prevBarter,
-        offer: {
-          ...prevBarter.offer,
-          status: updatedOffer.status,
-          receipt_blogger: uploadedFile,
-        }
+        offer: updatedOffer
       }));
       showToast('Вы успешно отправили подтверждение. Статус бартера изменён.', 'success');
     } catch (error) {
@@ -84,7 +94,7 @@ const BarterStatusSended = ({ barter, updateBarter }) => {
 
   return (
     <div className='list'>
-      <h2>Средства отправлены</h2>
+      <h2>{title}</h2>
       <p>{text}</p>
       {role === 'blogger' &&
         <Form

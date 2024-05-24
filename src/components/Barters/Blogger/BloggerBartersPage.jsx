@@ -8,6 +8,7 @@ import { useToastManager } from '../../../hooks/useToast';
 import Header from '../../Header/Header';
 import Link from '../../Button/Link';
 import BartersGrid from '../BartersGrid';
+import Preloader from '../../Preloader/Preloader';
 // import BartersHistoryTable from '../BartersHistoryTable';
 
 const BloggerBartersPage = () => {
@@ -22,7 +23,10 @@ const BloggerBartersPage = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [barters, setBarterOffers] = useState([]);
-  const [bartersIsLoading, setBarterOffersIsLoading] = useState(true);
+  const [bartersIsLoading, setBartersIsLoading] = useState(true);
+  const [newBarters, setNewBarters] = useState([]);
+  const [inProgressBarters, setInProgressBarters] = useState([]);
+  const [completedBarters, setCompletedBarters] = useState([]);
 
   useEffect(() => {
     if (errorMessage) {
@@ -33,42 +37,70 @@ const BloggerBartersPage = () => {
 
   useEffect(() => {
     const fetchBartersCurrent = async () => {
-      setBarterOffersIsLoading(true);
+      setBartersIsLoading(true);
       try {
-        const fetchedBarters = await api.getBarterOffersByCurrentBlogger(10, 0);
-        console.log('fetchedBarters', fetchedBarters)
-        if (bartersIsLoading && Array.isArray(fetchedBarters) && !!fetchedBarters.length) {
-          setBarterOffers(fetchedBarters);
-        } else {
-          throw new Error('Произошла ошибка при получении списка бартеров');
-        }
+        // const fetchedBarters = await api.getBarterOffersByCurrentBlogger(10, 0);
+        // console.log('fetchedBarters', fetchedBarters)
+        // if (bartersIsLoading && Array.isArray(fetchedBarters) && !!fetchedBarters.length) {
+        //   setBarterOffers(fetchedBarters);
+        // } else {
+        //   throw new Error('Произошла ошибка при получении списка бартеров');
+        // }
+        const response = await api.getBarterOffersByCurrentSeller();
+        const { newBarters, inProgressBarters, completedBarters } = response;
+        setNewBarters(transformBarters(newBarters));
+        setInProgressBarters(transformBarters(inProgressBarters));
+        setCompletedBarters(transformBarters(completedBarters));
+        setBartersIsLoading(false);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
-        setBarterOffersIsLoading(false);
+        setBartersIsLoading(false);
       }
     }
     fetchBartersCurrent();
-  }, [profile])
+  }, [profile]);
 
-  const openBartersPage = () => {
-    navigate('/barters/progress', { state: { barters: barters, title: 'В работе' } });
+  const transformBarters = (barters) => {
+    return barters
+      .flatMap(barter => 
+        barter.offers.map(offer => ({ ...barter, offer }))
+      )
+      .sort((a, b) => new Date(b.offer.updatedAt) - new Date(a.offer.updatedAt));
+  };
+
+  const goToBartersType = (type, barters) => {
+    navigate(`/barters/type/${type}`, {state: { barters: barters }});
+  }
+
+  const createCards = (barters, type, title) => {
+    if (barters.length > 0) {
+      return (
+        <div className='container' id={`barters-${type}`} >
+          <div className='list'>
+            <div className='list-item'>
+              <h2>{title}</h2>
+              <Link onClick={() => goToBartersType(type, barters)}>Ещё</Link>
+            </div>
+          </div>
+          <BartersGrid barters={barters.slice(0, 2)} />
+        </div>
+      );
+    } else {
+      return;
+    }
+  }
+
+  if (bartersIsLoading) {
+    return <Preloader>Загружаюсь...</Preloader>;
   }
 
   return (
     <div className='content-wrapper'>
       <Header />
-      <div className='container' id='barters' >
-        <div className='list'>
-          <div className='list-item'>
-            <h2>В работе</h2>
-            <Link onClick={openBartersPage}>Ещё</Link>
-          </div>
-        </div>
-        <BartersGrid
-          barters={barters.slice(0, 4)}
-        />
-      </div>
+      {createCards(inProgressBarters, 'progress', 'В работе')}
+      {createCards(newBarters, 'new', 'На рассмотрении')}
+      {createCards(completedBarters, 'completed', 'Завершённые')}
       {/* <BartersHistoryTable /> */}
     </div>
   );

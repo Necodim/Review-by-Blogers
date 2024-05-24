@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../api/api';
+import api from '../../api/api.js';
 import { useUserProfile } from '../../hooks/UserProfileContext.js';
-import { useToastManager } from '../../hooks/useToast'
-import Popup from './Popup';
-import Form from '../Form/Form';
-import Textarea from '../Form/Textarea';
-import Input from '../Form/Input';
+import { useToastManager } from '../../hooks/useToast.js'
+import Popup from './Popup.jsx';
+import Form from '../Form/Form.jsx';
+import Textarea from '../Form/Textarea.jsx';
+import Input from '../Form/Input.jsx';
 
-const PopupWriteTask = ({ isOpen, onClose, selectedProducts }) => {
+const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 	const navigate = useNavigate();
 	const { profile } = useUserProfile();
 	const { showToast } = useToastManager();
@@ -43,12 +43,11 @@ const PopupWriteTask = ({ isOpen, onClose, selectedProducts }) => {
 		e.preventDefault();
 		if (selectedProducts.length > 0) {
 			const data = {
-				userId: profile.id,
 				products: selectedProducts,
 				task: task,
 				brandInstagram: brandInstagram,
 				needFeedback: feedback,
-				// maxResponses: null
+				// maxResponses: null,
 			}
 			try {
 				const barters = await api.createBarters(data);
@@ -105,4 +104,4 @@ const PopupWriteTask = ({ isOpen, onClose, selectedProducts }) => {
 	);
 };
 
-export default PopupWriteTask;
+export default PopupTaskWrite;

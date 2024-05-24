@@ -15,6 +15,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
   const [text, setText] = useState(null);
   const [blogger, setBlogger] = useState({});
   const [cardnumber, setCardnumber] = useState(null);
+  const [instagramLink, setInstagramLink] = useState(null);
   const [formScreenshot, setFormScreenshot] = useState(null);
   const [file, setFile] = useState(null);
   const [fileLoading, setFileLoading] = useState(false);
@@ -41,9 +42,14 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
             const userId = barter.offer.user_id;
             const user = await api.getUserById(userId);
             setBlogger(user);
-            if (blogger?.card_number) {
-              const number = blogger.card_number.replace(/(\d{4})(?=\d)/g, '$1 ');
+            console.log(user)
+            if (user?.card_number) {
+              const number = user.card_number.replace(/(\d{4})(?=\d)/g, '$1 ');
               setCardnumber(number);
+            }
+            if (user?.instagram?.username) {
+              const link = 'https://www.instagram.com/' + user?.instagram?.username;
+              setInstagramLink(link);
             }
           } catch (error) {
             setErrorMessage(error.message);
@@ -53,6 +59,10 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
         break;
     }
   }, [role, barter]);
+
+  const openInstagramPage = () => {
+    window.open(instagramLink, '_blank', 'noopener,noreferrer');
+  }
 
   const handleChangeScreenshot = (file) => {
     setFile(file);
@@ -132,7 +142,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
       {(role === 'seller' && blogger) &&
         <div className='list gap-xl'>
           <div className='list-item vertical'>
-            <Button className='w-100' target='_blank' icon='center_focus_strong'>Смотреть профиль</Button>
+            <Button className={'w-100' + (!instagramLink && ' disabled')} target='_blank' icon='center_focus_strong' onClick={openInstagramPage}>Смотреть профиль</Button>
             <Input
               id='card-number'
               name='card-number'
@@ -166,6 +176,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
           <PopupOfferRefuseReason
             isOpen={isPopupRefuseOpen}
             onClose={closePopupRefuse}
+            offer={barter.offer}
           />
         </div>
       }

@@ -6,7 +6,7 @@ import Popup from './Popup.jsx';
 import Form from '../Form/Form.jsx';
 import Textarea from '../Form/Textarea.jsx';
 
-const PopupOfferRefuseReason = ({ isOpen, onClose }) => {
+const PopupOfferRefuseReason = ({ isOpen, onClose, offer }) => {
 	const navigate = useNavigate();
 	const { showToast } = useToastManager();
 
@@ -39,11 +39,15 @@ const PopupOfferRefuseReason = ({ isOpen, onClose }) => {
 	const submitForm = async (e) => {
 		e.preventDefault();
 		try {
-      const refusedOffer = await api.refuseBarterOffer();
-      showToast(refusedOffer.message, 'warning');
-			onClose();
-			setTimeout(() => resetForm(), 500);
-			navigate('/barters');
+			if (offer && offer.id) {
+				const refusedOffer = await api.refuseBarterOffer(offer.id, reason);
+				showToast(refusedOffer.message, 'warning');
+				onClose();
+				setTimeout(() => resetForm(), 500);
+				navigate('/barters');
+			} else {
+				throw new Error('Предложение о бартере не найдено.');
+			}
 		} catch (error) {
 			console.error(error);
       setErrorMessage(error.message);
