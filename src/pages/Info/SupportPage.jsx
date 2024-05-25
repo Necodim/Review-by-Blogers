@@ -34,9 +34,10 @@ const SupportPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!message.trim()) return;
+    const data = `${subject}: message`;
 
     try {
-      const response = await sendSupportMessage({ userId: user?.id, message: message });
+      const response = await sendSupportMessage({ userId: user?.id, message: data });
       if (!!response.message) {
         showToast(response.message);
         setMessage('');
@@ -68,6 +69,10 @@ const SupportPage = () => {
     {
       label: 'Подписка',
       value: 'subscription',
+    },
+    {
+      label: 'Ошибки и баги',
+      value: 'error',
     },
     {
       label: 'Другое',

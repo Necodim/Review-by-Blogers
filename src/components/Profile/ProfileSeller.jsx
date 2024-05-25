@@ -98,7 +98,8 @@ const ProfileSeller = () => {
 				</div>
 				<div className='list'>
 					{canAddApi && <Button className='list-item' onClick={openPopupApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>}
-					{!profile.subscription?.active && <Button className='list-item' onClick={goToSubscribe}>Оформить подписку</Button>}
+					{!profile.subscription?.active && <Button className='list-item' onClick={goToSubscribe} disabled={true}>Оформить подписку</Button>}
+					<small>На данный момент оформление подписки недоступно.</small>
 					{/* {!profile.subscription?.active && !profile.subscription?.avaliable && !profile.trial.active && profile.trial['barters-left'] > 0 && <Button className='list-item disabled' onClick={startTrial}>Попробовать бесплатно</Button>} */}
 				</div>
 			</div>
