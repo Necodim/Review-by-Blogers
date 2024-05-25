@@ -34,12 +34,13 @@ const SupportPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!message.trim()) return;
-    const data = `${subject}: message`;
+    const data = `${subject}: ${message}`;
 
     try {
       const response = await sendSupportMessage({ userId: user?.id, message: data });
       if (!!response.message) {
-        showToast(response.message);
+        showToast(response.message, 'success');
+        setSubject('');
         setMessage('');
       } else {
         setErrorMessage('Ошибка при отправке сообщения, попробуйте снова');
