@@ -10,7 +10,7 @@ import Header from '../../Header/Header';
 const SubscribeHasNoSubscription = () => {
   const { profile } = useUserProfile();
   const { showToast } = useToastManager();
-  const { createPaymentPayload } = useYooKassa();
+  const { createYookassaPayload } = useYooKassa();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
@@ -112,7 +112,7 @@ const SubscribeHasNoSubscription = () => {
     }
 
     try {
-      const payment = await createPaymentPayload(cardData);
+      const payment = await createYookassaPayload(cardData);
     } catch (error) {
       setIsFormValid(true);
       console.log(error);

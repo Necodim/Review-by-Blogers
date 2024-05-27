@@ -21,6 +21,8 @@ const ProfileSeller = () => {
 	const [errorMessage, setErrorMessage] = useState('');
 	const [isApi, setIsApi] = useState(false);
 	const [canAddApi, setCanAddApi] = useState('');
+	const [isSubscribed, setIsSubscribed] = useState(false);
+	const [expiredDate, setExpiredDate] = useState('');
 	const [totalProducts, setTotalProducts] = useState(0);
 	const [isPopupConfirmationOpen, setIsPopupConfirmationOpen] = useState(false);
 	const [isPopupApiOpen, setIsPopupApiOpen] = useState(false);
@@ -33,6 +35,10 @@ const ProfileSeller = () => {
 	}, [errorMessage, showToast]);
 
 	useEffect(() => {
+		setIsSubscribed(profile.subscription?.active);
+		if (profile.subscription?.expired_at) {
+			setExpiredDate(moment(profile.subscription?.expired_at).format('DD.MM.YYYY, HH:mm'));
+		}
 		setCanAddApi(profile.trial.active && profile.trial['barters-left'] > 0);
 		if (profile.subscription && (profile.subscription.active || profile.subscription.avaliable)) {
 			setCanAddApi(true);
@@ -42,8 +48,6 @@ const ProfileSeller = () => {
 	useEffect(() => {
 		setIsApi(!!profile.api?.wildberries?.token);
 	}, [profile.api?.wildberries?.token]);
-	
-	
 
 	const openPopupApi = () => setIsPopupApiOpen(true);
 	const closePopupApi = () => setIsPopupApiOpen(false);
@@ -81,8 +85,7 @@ const ProfileSeller = () => {
 	}
 
 	const cancellingSubscription = async () => {
-		const cancelledSubscription = await cancelSubscription();
-		updateProfile({ ...profile, subscription: cancelledSubscription });
+		await cancelSubscription();
 	}
 
 	return (
@@ -94,12 +97,12 @@ const ProfileSeller = () => {
 						<h2>{profile.subscription?.active ? 'Подписка' : profile.subscription?.avaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}</h2>
 						{profile.subscription?.active ? <Link onClick={() => setIsPopupConfirmationOpen(true)}>Отменить</Link> : profile.subscription?.avaliable ? '' : profile.trial?.active && profile.trial['barters-left'] > 0 ? <small>{`Еще ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бартер', 'бартера', 'бартеров')}`}</small> : ''}
 					</div>
-					{profile.subscription?.avaliable && profile.subscription?.expired_at > new Date().getTime() && <div className='list-item'>{(profile.subscription?.active ? 'Следующее списание ' : 'Сервис доступен до ') + moment(profile.subscription?.expired_at).format('DD.MM.YYYY')}</div>}
+					{profile.subscription?.avaliable && profile.subscription?.expired_at > new Date().getTime() && <div className='list-item'>{(profile.subscription?.active ? 'Следующее списание ' : 'Сервис доступен до ') + expiredDate}</div>}
 				</div>
 				<div className='list'>
 					{canAddApi && <Button className='list-item' onClick={openPopupApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>}
-					{!profile.subscription?.active && <Button className='list-item' onClick={goToSubscribe} disabled={true}>Оформить подписку</Button>}
-					<small>На данный момент оформление подписки недоступно.</small>
+					{!isSubscribed && <Button className='list-item' onClick={goToSubscribe}>Оформить подписку</Button>}
+					{/* <small>На данный момент оформление подписки недоступно.</small> */}
 					{/* {!profile.subscription?.active && !profile.subscription?.avaliable && !profile.trial.active && profile.trial['barters-left'] > 0 && <Button className='list-item disabled' onClick={startTrial}>Попробовать бесплатно</Button>} */}
 				</div>
 			</div>
@@ -120,8 +123,8 @@ const ProfileSeller = () => {
 				text='Вы действительно хотите отменить подписку?'
 				descr={
 					<div className='list'>
-						<p className='list-item'>Это действие необратимо! Вы не&nbsp;сможете пользоваться сервисом после истечения оплаченного срока действия ({moment(profile.subscription?.expired_at).format('DD.MM.YYYY')}).</p>
-						<p className='list-item'>После окончания срока действия вы не&nbsp;будете получать предложения о&nbsp;бартер, но&nbsp;все ваши данные и&nbsp;товары сохранятся.</p>
+						<p className='list-item'>{`Это действие необратимо! Вы не&nbsp;сможете пользоваться сервисом после истечения оплаченного срока действия${expiredDate ? ` (${expiredDate})` : ''}.`}</p>
+						<p className='list-item'>После окончания срока действия вы не&nbsp;будете получать предложения о&nbsp;бартере, но&nbsp;все ваши данные и&nbsp;товары сохранятся.</p>
 					</div>
 				}
 				isOpen={isPopupConfirmationOpen}

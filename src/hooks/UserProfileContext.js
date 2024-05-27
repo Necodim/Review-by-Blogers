@@ -177,14 +177,13 @@ export const UserProfileProvider = ({ children }) => {
 	const cancelSubscription = async () => {
 		setLoading(true);
 		try {
-			const result = await cancelSellerSubscription(profile.id);
-			if (!!result && result.success && result.subscription) {
-				sessionStorage.setItem('userData', JSON.stringify(result));
+			const cancelledSubscription = await cancelSellerSubscription();
+			if (cancelledSubscription) {
+				updateProfile({ ...profile, subscription: cancelledSubscription });
+				sessionStorage.setItem('userData', JSON.stringify(cancelledSubscription));
 				showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.subscription.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
-			} else if (!!result && !result.success && result.error) {
-				setErrorMessage(result.message);
 			} else {
-				setErrorMessage('Произошла неизвестная ошибка');
+				setErrorMessage(cancelledSubscription.message);
 			}
 		} catch (error) {
 			setErrorMessage(error.message);

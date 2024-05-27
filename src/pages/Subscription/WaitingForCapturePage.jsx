@@ -19,7 +19,7 @@ const WaitingForCapturePage = () => {
         
         const checkPaymentStatus = async () => {
             try {
-                const response = await api.getPaymentStatus(paymentId);
+                const response = await api.getYookassaPaymentStatus(paymentId);
                 if (response.status === 'succeeded') {
                     showToast('Платёж прошёл успешно!', 'success');
                     sessionStorage.removeItem('paymentId');
@@ -57,7 +57,7 @@ const WaitingForCapturePage = () => {
 
     // useEffect(async () => {
     //     try {
-    //         await api.getPaymentStatus(paymentId)
+    //         await api.getYookassaPaymentStatus(paymentId)
     //     } catch (error) {
     //         console.log(error);
     //         setErrorMessage('Произошла ошибка при оплате подписки');

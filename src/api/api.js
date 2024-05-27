@@ -281,13 +281,13 @@ const setCategoryPage = async (subCategoryID) => {
   return response.data;
 }
 
-const createPaymentPayload = async (data) => {
-  const response = await apiClient.post('/payment/create-payload', data);
+const getYookassaPaymentStatus = async (paymentId) => {
+  const response = await apiClient.get(`/payment/status/${paymentId}`);
   return response.data;
 }
 
-const getPaymentStatus = async (paymentId) => {
-  const response = await apiClient.get(`/payment/status/${paymentId}`);
+const createYookassaPayload = async (data) => {
+  const response = await apiClient.post('/payment/subscription/yookassa/payload', data);
   return response.data;
 }
 
@@ -360,8 +360,8 @@ export default {
   setStore,
   setCategoryPage,
 
-  createPaymentPayload,
-  getPaymentStatus,
+  getYookassaPaymentStatus,
+  createYookassaPayload,
   sendSupportMessage,
 
   uploadReceipt,

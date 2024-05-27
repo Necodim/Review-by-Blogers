@@ -27,30 +27,30 @@ const SettingsPage = () => {
         setNewRole(profile.role);
     }, [profile.role]);
 
-    // Тестовый функционал
-    const goToStartScreen = () => {
-        navigate('/');
-    }
+    // // Тестовый функционал
+    // const goToStartScreen = () => {
+    //     navigate('/');
+    // }
 
-    // Тестовый функционал
-    const addSellerSubscription = async () => {
-        const data = {
-            yookassa_id: '39afc4a2-6325-475b-9980-c4323ed72fa6',
-            amount_value: 10000,
-            amount_currency: 'RUB'
-        }
-        const addedSubscription = await addSubscription(data);
-        updateProfile({ subscription: addedSubscription });
-        goToStartScreen();
-    }
+    // // Тестовый функционал
+    // const addSellerSubscription = async () => {
+    //     const data = {
+    //         yookassa_id: '39afc4a2-6325-475b-9980-c4323ed72fa6',
+    //         amount_value: 10000,
+    //         amount_currency: 'RUB'
+    //     }
+    //     const addedSubscription = await addSubscription(data);
+    //     updateProfile({ subscription: addedSubscription });
+    //     goToStartScreen();
+    // }
 
-    // Тестовый функционал
-    const removeRole = async () => {
-        await updateUserData({role: ''});
-        setCurrentRole(newRole);
-        updateProfile({ role: newRole });
-        goToStartScreen();
-    }
+    // // Тестовый функционал
+    // const removeRole = async () => {
+    //     await updateUserData({role: ''});
+    //     setCurrentRole(newRole);
+    //     updateProfile({ role: newRole });
+    //     goToStartScreen();
+    // }
 
     const radioOptions = [
         { label: 'Селлер', value: 'seller', icon: 'store' },

@@ -41,7 +41,7 @@ export const useYooKassa = () => {
     }
   }
 
-  const createPaymentPayload = async (cardData) => {
+  const createYookassaPayload = async (cardData) => {
     showToast('Проводим оплату...', 'loading');
     setIdempotenceKey(uuidv4());
     try {
@@ -52,14 +52,14 @@ export const useYooKassa = () => {
         idempotenceKey: idempotenceKey
       }
       try {
-        const payload = await api.createPaymentPayload(data);
+        const payload = await api.createYookassaPayload(data);
         console.log(payload);
         sessionStorage.setItem('paymentId', payload.id);
         if (payload.status === 'pending') {
           window.location.href = payload.confirmation.confirmation_url;
         } else if (payload.status === 'waiting_for_capture') {
           try {
-            const payment = await api.getPaymentStatus(payload.id);
+            const payment = await api.getYookassaPaymentStatus(payload.id);
             console.log(payment);
           } catch (error) {
             console.log(error);
@@ -79,5 +79,5 @@ export const useYooKassa = () => {
     }
   }
 
-  return { createPaymentPayload }
+  return { createYookassaPayload }
 }
