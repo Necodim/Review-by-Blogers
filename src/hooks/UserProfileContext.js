@@ -17,9 +17,9 @@ export const UserProfileProvider = ({ children }) => {
 	const { getUser, createUser, upsertUser, generateAuthToken, verifyAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
 	const { showToast } = useToastManager();
 
-	// const userId = user?.id;
+	const userId = user?.id;
 	// Для тестов
-	const userId = 82431798;
+	// const userId = 82431798;
 	// const userId = 404;
 
 	useEffect(() => {
@@ -162,9 +162,8 @@ export const UserProfileProvider = ({ children }) => {
 
 	const addSubscription = async (data) => {
 		setLoading(true);
-		alert(JSON.stringify(data));
 		try {
-			const result = await addSellerSubscription(profile.id, data);
+			const result = await addSellerSubscription(data);
 			updateProfile({ ...profile, subscription: result });
 			showToast(`Вы подключили подписку. Сервис будет доступен до ${moment(result.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
 			return result;
