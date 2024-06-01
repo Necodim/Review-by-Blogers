@@ -8,7 +8,7 @@ import { useToastManager } from '../../hooks/useToast';
 const WaitingForCapturePage = () => {
 	const navigate = useNavigate();
 	const { showToast } = useToastManager();
-	const { profile, updateProfile, updateUserData } = useUserProfile();
+	const { profile, updateProfile, updateUserData, addSubscription } = useUserProfile();
 
 	const [errorMessage, setErrorMessage] = useState('');
 	const [paymentId, setPaymentId] = useState(null);
@@ -30,6 +30,12 @@ const WaitingForCapturePage = () => {
 				if (response.status === 'succeeded') {
 					showToast('Платёж прошёл успешно!', 'success');
 					sessionStorage.removeItem('paymentId');
+					const data = {
+						yookassa_id: response.id,
+						amount_value: response.amount.value,
+						amount_currency: response.amount.currency
+					}
+					await addSubscription(data);
 					navigate('/profile');
 				} else if (response.status === 'pending') {
 					showToast('Платёж находится в обработке', 'loading');
