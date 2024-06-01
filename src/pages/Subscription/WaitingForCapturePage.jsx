@@ -27,6 +27,7 @@ const WaitingForCapturePage = () => {
 				}
 
 				const response = await api.getYookassaPaymentStatus(paymentId);
+				alert(JSON.stringify(response))
 				if (response.status === 'succeeded') {
 					showToast('Платёж прошёл успешно!', 'success');
 					sessionStorage.removeItem('paymentId');
