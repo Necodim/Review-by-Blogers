@@ -6,11 +6,12 @@ import { useYooKassa } from '../../../hooks/useYooKassa';
 import Form from '../../Form/Form';
 import Input from '../../Form/Input';
 import Header from '../../Header/Header';
+import api from '../../../api/api';
 
 const SubscribeHasNoSubscription = () => {
   const { profile } = useUserProfile();
   const { showToast } = useToastManager();
-  const { createYookassaPayload } = useYooKassa();
+  const { createYookassaPayload, getYookassaConfirmationToken } = useYooKassa();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
@@ -23,6 +24,73 @@ const SubscribeHasNoSubscription = () => {
   const [cardNumberValue, setCardNumberValue] = useState('');
   const [cardPeriodValue, setCardPeriodValue] = useState('');
   const [cardCodeValue, setCardCodeValue] = useState('');
+  const [token, setToken] = useState(null);
+  const [loadingText, setLoadingText] = useState('Загрузка платёжного виджета...');
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      setLoadingText('Загрузка платёжного виджета...');
+      try {
+        const response = await getYookassaConfirmationToken();
+        sessionStorage.setItem('paymentId', response.id);
+        const token = response.confirmation.confirmation_token;
+        setToken(token);
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
+    };
+
+    fetchToken();
+  }, []);
+
+  useEffect(() => {
+    if (!token) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://yookassa.ru/checkout-widget/v1/checkout-widget.js';
+    script.async = true;
+
+    const getParams = (token) => {
+      return {
+        confirmation_token: token,
+        return_url: 'http://reviewbybloggers.ru/profile/subscribe/waiting-for-capture',
+        customization: {
+          colors: {
+            control_primary: '#47a7ff',
+            control_primary_content: '#ffffff',
+            text: '#ffffff',
+            background: '#1C4366',
+            border: '#1C4366',
+            // control_secondary: '',
+          }
+        },
+        error_callback: function (error) {
+          console.log(error);
+        }
+      };
+    };
+
+    const prepareWidget = async () => {
+      const params = getParams(token);
+
+      script.onload = () => {
+        const checkout = new window.YooMoneyCheckoutWidget(params);
+        document.getElementById('payment-form').innerHTML = '';
+        checkout.render('payment-form');
+        setLoadingText('');
+      };
+
+      document.body.appendChild(script);
+    };
+
+    prepareWidget();
+
+    return () => {
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+  }, [token]);
 
   useEffect(() => {
     if (errorMessage && attemptedSubmit) {
@@ -105,7 +173,7 @@ const SubscribeHasNoSubscription = () => {
     }
 
     const cardData = {
-      number: cardNumberValue,
+      number: cardNumberValue.replace(/\D/gi, ''),
       month: periodParts[0],
       year: periodParts[1],
       cvc: cardCodeValue
@@ -122,7 +190,7 @@ const SubscribeHasNoSubscription = () => {
   return (
     <div className='content-wrapper'>
       <Header />
-      <div className='container' id='subscribe'>
+      {/* <div className='container' id='subscribe'>
         <div className='list'>
           <div className='list-item'>
             <h2>Оформление подписки</h2>
@@ -167,7 +235,9 @@ const SubscribeHasNoSubscription = () => {
             maxLength='3'
           />
         </Form>
-      </div>
+      </div> */}
+      <div>{loadingText}</div>
+      <div id="payment-form"></div>
     </div>
   )
 }

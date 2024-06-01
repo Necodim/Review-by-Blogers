@@ -132,7 +132,7 @@ export const UserProfileProvider = ({ children }) => {
 		setProfile(currentProfile => {
 			const updatedProfile = { ...currentProfile, ...updates };
 			console.log('Обновленный профиль:', updatedProfile);
-			localStorage.setItem('userData', JSON.stringify(updatedProfile));
+			sessionStorage.setItem('userData', JSON.stringify(updatedProfile));
 			return updatedProfile;
 		});
 	};	

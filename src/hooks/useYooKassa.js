@@ -5,7 +5,7 @@ import { useUserProfile } from './UserProfileContext';
 import { useToastManager } from './useToast';
 import api from '../api/api';
 
-const checkout = YooMoneyCheckout(362812);
+const checkout = YooMoneyCheckout(360975);
 
 export const useYooKassa = () => {
   const navigate = useNavigate();
@@ -14,23 +14,54 @@ export const useYooKassa = () => {
 
   const [idempotenceKey, setIdempotenceKey] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+  useEffect(() => {
+    if (errorMessage) {
+      showToast(errorMessage, 'error');
+      setErrorMessage('');
+    }
+  }, [errorMessage, showToast]);
+
   useEffect(() => {
     setIdempotenceKey(uuidv4());
   }, []);
 
+  const getYookassaConfirmationToken = async () => {
+    try {
+      const response = await api.getYookassaConfirmationToken();
+      return response;
+    } catch (error) {
+      const message = 'Ошибка при попытке получения токена';
+      console.error(`${message}:`, error);
+      throw new Error(message);
+    }
+  }
+
   const getToken = async (cardData) => {
+    console.log(cardData)
+    console.log({
+      number: cardData.number,
+      cvc: cardData.cvc,
+      month: cardData.month,
+      year: cardData.year
+    })
+
     try {
       const response = await checkout.tokenize({
         number: cardData.number,
+        cvc: cardData.cvc,
         month: cardData.month,
-        year: cardData.year,
-        cvc: cardData.cvc
+        year: cardData.year
       });
+      console.log(response)
       if (response.status === 'success') {
         const { paymentToken } = response.data.response;
         return paymentToken;
       }
       if (response.status === 'error') {
+        if (response.error.message) {
+          setErrorMessage(response.error.message);
+        }
         const { params } = response.error;
         params.forEach(param => {
           setErrorMessage(param.message);
@@ -46,6 +77,7 @@ export const useYooKassa = () => {
     setIdempotenceKey(uuidv4());
     try {
       const token = await getToken(cardData);
+      return
       const data = {
         userId: profile.id,
         token: token,
@@ -79,5 +111,5 @@ export const useYooKassa = () => {
     }
   }
 
-  return { createYookassaPayload }
+  return { createYookassaPayload, getYookassaConfirmationToken }
 }

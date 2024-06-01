@@ -282,7 +282,12 @@ const setCategoryPage = async (subCategoryID) => {
 }
 
 const getYookassaPaymentStatus = async (paymentId) => {
-  const response = await apiClient.get(`/payment/status/${paymentId}`);
+  const response = await apiClient.get(`/payment/subscription/status/${paymentId}`);
+  return response.data;
+}
+
+const getYookassaConfirmationToken = async () => {
+  const response = await apiClient.get(`/payment/subscription/yookassa/token`);
   return response.data;
 }
 
@@ -361,6 +366,7 @@ export default {
   setCategoryPage,
 
   getYookassaPaymentStatus,
+  getYookassaConfirmationToken,
   createYookassaPayload,
   sendSupportMessage,
 
