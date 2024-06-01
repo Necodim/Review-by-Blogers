@@ -17,9 +17,9 @@ export const UserProfileProvider = ({ children }) => {
 	const { getUser, createUser, upsertUser, generateAuthToken, verifyAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
 	const { showToast } = useToastManager();
 
-	const userId = user?.id;
+	// const userId = user?.id;
 	// Для тестов
-	// const userId = 82431798;
+	const userId = 82431798;
 	// const userId = 404;
 
 	useEffect(() => {
@@ -162,10 +162,10 @@ export const UserProfileProvider = ({ children }) => {
 
 	const addSubscription = async (data) => {
 		setLoading(true);
+		alert(JSON.stringify(data));
 		try {
 			const result = await addSellerSubscription(profile.id, data);
 			updateProfile({ ...profile, subscription: result });
-			sessionStorage.setItem('userData', JSON.stringify(result));
 			showToast(`Вы подключили подписку. Сервис будет доступен до ${moment(result.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
 			return result;
 		} catch (error) {
@@ -180,7 +180,6 @@ export const UserProfileProvider = ({ children }) => {
 		try {
 			const result = await cancelSellerSubscription();
 			updateProfile({ ...profile, subscription: result });
-			sessionStorage.setItem('userData', JSON.stringify(result));
 			showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
 		} catch (error) {
 			setErrorMessage(error.message);

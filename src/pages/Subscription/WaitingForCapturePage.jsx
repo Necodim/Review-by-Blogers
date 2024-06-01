@@ -17,7 +17,7 @@ const WaitingForCapturePage = () => {
 
 	useEffect(() => {
 		setPaymentId(sessionStorage.getItem('paymentId'));
-	}, [])
+	}, []);
 
 	useEffect(() => {
 		const checkPaymentStatus = async () => {
@@ -27,7 +27,6 @@ const WaitingForCapturePage = () => {
 				}
 
 				const response = await api.getYookassaPaymentStatus(paymentId);
-				alert(JSON.stringify(response))
 				if (response.status === 'succeeded') {
 					showToast('Платёж прошёл успешно!', 'success');
 					sessionStorage.removeItem('paymentId');
@@ -38,16 +37,18 @@ const WaitingForCapturePage = () => {
 					}
 					await addSubscription(data);
 					navigate('/profile');
+					clearInterval(intervalPaymentStatus);
 				} else if (response.status === 'pending') {
 					showToast('Платёж находится в обработке', 'loading');
 				} else if (response.status === 'waiting_for_capture') {
 					showToast('Платёж прошёл успешно, деньги авторизованы и ожидают списания...', 'loading');
 				} else if (response.status === 'canceled') {
 					setErrorMessage('Платеж отменен. Это произошло, если вы отменили платеж самостоятельно, истекло время на принятие платежа или платеж был отклонен ЮKassa или платежным провайдером.')
+					clearInterval(intervalPaymentStatus);
 				} else {
 					showToast('Неизвестный статус платежа. Свяжитесь с поддержкой.', 'info');
+					clearInterval(intervalPaymentStatus);
 				}
-				clearInterval(intervalPaymentStatus);
 			} catch (error) {
 				console.error(error);
 				setErrorMessage('Произошла ошибка при оплате подписки. Если средства списались, обратитесь в поддержку.');
