@@ -84,6 +84,8 @@ const SettingsPage = () => {
         <div className='content-wrapper'>
             <div className='container' id='settings'>
                 <h2>Настройки</h2>
+                <div>{'Ваш ID: ' + profile.id}</div>
+                <div>{'Ваш username: ' + profile.username}</div>
                 {profile && profile.role &&
                 <Input
                     id='settings-role'
