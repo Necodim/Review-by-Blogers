@@ -76,6 +76,7 @@ const ProfileSeller = () => {
 				showToast(result.message, 'success');
 				updateProfile({api: { wildberries: { expired: false, token: true }}});
 				closePopupApi();
+				showToast('Отлично. Теперь включите бартеры на товарах, которые хотите продвигать.', 'info');
 				showToast('Товары обновлены. Перейдите в раздел «Товары», чтобы посмотреть обновления.', 'success');
 			}
 		} catch (error) {

@@ -43,7 +43,7 @@ const CategoryPage = () => {
           throw new Error('Неверный формат данных');
         }
       } catch (error) {
-        setErrorMessage('Произошла ошибка при получении списка товаров в данной категории');
+        setErrorMessage(error.message);
         setProducts([]);
         console.error(error);
       } finally {

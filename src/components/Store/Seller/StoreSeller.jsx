@@ -68,7 +68,7 @@ const StoreSeller = () => {
         setProducts([]);
         setActiveBarters([]);
         setInactiveBarters([]);
-        setErrorMessage('Произошла ошибка при получении списка товаров');
+        setErrorMessage(error.message);
         console.error(error.message);
       } finally {
         setProductsIsLoading(false);

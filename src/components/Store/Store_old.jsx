@@ -58,7 +58,7 @@ const StoreSeller = (props) => {
                 if (productsIsLoading && Array.isArray(fetchedProducts) && !!fetchedProducts.length) {
                     setProducts(fetchedProducts);
                 } else {
-                    throw new Error('Произошла ошибка при получении списка товаров');
+                    throw new Error(error.message);
                 }
             } catch (error) {
                 setErrorMessage(error.message);
