@@ -159,6 +159,7 @@ select {
 textarea {
     background-color: var(--primary-dark-2);
     border-radius: var(--m);
+    white-space: pre-wrap;
 }
 
 .input-wrapper .input-fade {

@@ -1,0 +1,21 @@
+.note {
+  width: 100%;
+  position: relative;
+  font-size: var(--text-size-m);
+  white-space: pre-wrap;
+  color: var(--text-color);
+  border: none;
+  background-color: var(--grey);
+  border-radius: var(--m);
+  box-shadow: none;
+  outline: 0;
+  padding: var(--xs) var(--s);
+}
+
+.note.bg-primary {
+  background-color: var(--primary-dark-3);
+}
+
+.note.bg-secondary {
+  background-color: var(--secondary-dark-1);
+}

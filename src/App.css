@@ -51,9 +51,19 @@
   --grey: #4A5965;
   --grey-rgb: 74, 89, 101;
   --bg-gradient: linear-gradient(108deg, var(--primary-dark-2) 0%, var(--primary-dark-3) 100%);
-  --active-gradient: linear-gradient(108deg, var(--primary-light-1) 0%, var(--primary-light-2) 100%);
+  --bg-gradient-warning: linear-gradient(108deg, var(--warning-dark-2) 0%, var(--warning-dark-3) 100%);
+  --bg-gradient-active: linear-gradient(108deg, var(--primary-light-1) 0%, var(--primary-light-2) 100%);
   --success: var(--tertiary);
   --warning: #fffb47;
+  --warning-rgb: 255, 251, 71;
+  --warning-dark-1: #33320e;
+  --warning-dark-1-rgb: 51, 50, 14;
+  --warning-dark-2: #66641c;
+  --warning-dark-2-rgb: 102, 100, 28;
+  --warning-dark-3: #99972b;
+  --warning-dark-3-rgb: 153, 151, 43;
+  --warning-dark-4: #ccc939;
+  --warning-dark-4-rgb: 204, 201, 57;
   /* --error: var(--secondary-dark-1); */
   --error: #ff474b;
 }
@@ -190,7 +200,7 @@ h3 {
   background: var(--bg-gradient);
   border: none;
   border-radius: var(--l);
-  padding: var(--xl) var(--m);
+  padding: var(--l) var(--m);
   margin: 0 auto;
 }
 
@@ -306,6 +316,10 @@ h3 {
   text-decoration: underline;
 }
 
+.c-pointer {
+  cursor: pointer;
+}
+
 .d-block {
   display: block !important;
 }
@@ -328,6 +342,10 @@ h3 {
 
 .align-items-start {
   align-items: flex-start;
+}
+
+.align-items-center {
+  align-items: center;
 }
 
 .self-start {

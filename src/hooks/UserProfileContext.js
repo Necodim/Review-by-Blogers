@@ -17,10 +17,10 @@ export const UserProfileProvider = ({ children }) => {
 	const { getUser, createUser, upsertUser, generateAuthToken, verifyAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
 	const { showToast } = useToastManager();
 
-	const userId = user?.id;
+	// const userId = user?.id;
 	// Для тестов
 	// const userId = 82431798;
-	// const userId = 404;
+	const userId = 89141992;
 
 	useEffect(() => {
 		if (!!profile) console.log(profile)

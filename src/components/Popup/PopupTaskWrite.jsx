@@ -8,6 +8,7 @@ import Popup from './Popup.jsx';
 import Form from '../Form/Form.jsx';
 import Textarea from '../Form/Textarea.jsx';
 import Input from '../Form/Input.jsx';
+import Note from '../Note/Note.jsx';
 
 const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 	const navigate = useNavigate();
@@ -20,6 +21,7 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 	const [task, setTask] = useState('');
 	const [brandInstagram, setBrandInstagram] = useState('');
 	const [feedback, setFeedback] = useState(false);
+	const [hasTasks, setHasTasks] = useState(false);
 
 	useEffect(() => {
 		if (errorMessage) {
@@ -27,6 +29,28 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 			setErrorMessage('');
 		}
 	}, [errorMessage, showToast]);
+
+	useEffect(() => {
+		if (selectedProducts.length === 1) {
+			const barter = selectedProducts[0].barter;
+			if (barter) {
+				setTask(barter.task);
+				setBrandInstagram(barter.brand_instagram);
+				setFeedback(barter.need_feedback);
+			}
+		} else if (selectedProducts.length > 1) {
+			const array = new Array();
+			selectedProducts.forEach(product => {
+				product.barter && (!!product.barter.task || !!product.barter.brand_instagram || !!product.barter.need_feedback) ? array.push(true) : false;
+			});
+			setHasTasks(array.some(item => item === true));
+		} else {
+			setTask('');
+			setBrandInstagram('');
+			setFeedback('');
+			setHasTasks(false);
+		}
+	}, [selectedProducts]);
 
 	useEffect(() => {
 		if (!isActive) {
@@ -84,8 +108,12 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 
 	return (
 		<Popup id='popup-write-task' isOpen={isOpen} onClose={onClose}>
+			{selectedProducts.length > 1 &&
+				<Note className='note bg-secondary list'>
+					<p>{`Вы редактируете ${selectedProducts.length} ${getPlural(selectedProducts.length, 'товар', 'товара', 'товаров')}. ТЗ будет одинаковым для их бартеров${hasTasks ? ', а старое ТЗ изменится' : ''}.`}</p>
+				</Note>
+			}
 			<h2>Техническое задание</h2>
-			<div>Что блогер должен сказать о товаре?</div>
 			<Form
 				onSubmit={submitForm}
 				btntext='Сохранить'
@@ -99,7 +127,7 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 					title='Описание'
 					value={task}
     			onChange={handleTaskChange}
-					placeholder='Необходимо распаковать товар на камеру и...'
+					placeholder='Опишите, что блогер должен сказать о товаре? Например: необходимо распаковать товар на камеру и произнести название бренда'
 				/>
 				<Input
 					id='brand-instagram'
@@ -108,7 +136,7 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 					placeholder='username'
 					value={brandInstagram}
 					onChange={handleBrandInstagramChange}
-					comment='Укажите аккаунт вашего бренда в Instagram, если хотите, чтобы блогер вас отметил'
+					comment='Укажите аккаунт вашего бренда в Instagram, если хотите, чтобы блогер вас отметил'
 				/>
 				<Input
 					type='checkbox'

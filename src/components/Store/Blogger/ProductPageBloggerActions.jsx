@@ -97,7 +97,7 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
       {!!product.barter?.task && <PopupTaskRead
           isOpen={isPopupTaskReadVisible}
           onClose={() => setIsPopupTaskReadVisible(false)}
-          task={product.barter?.task}
+          barter={product.barter}
         />}
       <PopupConfirmation
         id='popup-barter-offer'

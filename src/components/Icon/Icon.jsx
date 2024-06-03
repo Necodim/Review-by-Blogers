@@ -7,6 +7,7 @@ const Icon = (props) => {
 
     let iconClass = ['icon', iconType];
     if (!!props.size) iconClass.push(props.size);
+    if (!!props.onClick) iconClass.push('c-pointer');
     iconClass = iconClass.join(' ');
 
     return (

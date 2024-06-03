@@ -66,7 +66,7 @@
 }
 
 .button.nav-button.active {
-  background: var(--active-gradient) !important;
+  background: var(--bg-gradient-active) !important;
 }
 
 .button.nav-button.disabled {
