@@ -46,7 +46,7 @@ const BloggerBartersPage = () => {
         // } else {
         //   throw new Error('Произошла ошибка при получении списка бартеров');
         // }
-        const response = await api.getBarterOffersByCurrentSeller();
+        const response = await api.getBarterOffersByCurrentBlogger();
         const { newBarters, inProgressBarters, completedBarters } = response;
         setNewBarters(transformBarters(newBarters));
         setInProgressBarters(transformBarters(inProgressBarters));
