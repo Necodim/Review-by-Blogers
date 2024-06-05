@@ -32,29 +32,28 @@ const PopupTaskRead = ({ isOpen, onClose, barter, onEdit }) => {
 					</div>
 					{barter.brand_instagram && 
 						<div className='list-item'>
-							<div className='list'>
-								<Input
-									className='list-item'
-									id='brand-instagram'
-									name='brand-instagram'
-									title='Укажите аккаунт бренда'
-									placeholder={barter.brand_instagram}
-									value={barter.brand_instagram}
-									readOnly={true}
-									icon={'copy'}
-									iconCallback={() => { copyToClipboard(`@${barter.brand_instagram}`, 'Вы успешно скопировали аккаунт', 'Не удалось скопировать аккаунт')}}
-									fade={true}
-								/>
-								{barter.need_feedback && 
-									<Input 
-										className='list-item'
-										type='checkbox'
-										label='Обязательно оставьте отзыв к товару на маркетплейсе после покупки'
-										checked={true}
-										readOnly={true}
-									/>
-								}
-							</div>
+							<Input
+								id='brand-instagram'
+								name='brand-instagram'
+								title='Укажите аккаунт бренда'
+								placeholder={barter.brand_instagram}
+								value={barter.brand_instagram}
+								readOnly={true}
+								icon={'copy'}
+								iconCallback={() => { copyToClipboard(`@${barter.brand_instagram}`, 'Вы успешно скопировали аккаунт', 'Не удалось скопировать аккаунт')}}
+								fade={true}
+							/>
+						</div>
+					}
+					{barter.need_feedback && 
+						<div className='list-item'>
+							<Input 
+								className='list-item'
+								type='checkbox'
+								label='Обязательно оставьте отзыв к товару на маркетплейсе после покупки'
+								checked={true}
+								readOnly={true}
+							/>
 						</div>
 					}
 				</div>

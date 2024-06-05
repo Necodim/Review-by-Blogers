@@ -105,7 +105,7 @@ function App() {
         <Route path="/store/products" element={<SelectedProductsProvider><ProductsPage /></SelectedProductsProvider>} />
         <Route path="/barters" element={<BartersPage />} />
         <Route path="/barters/type/:type" element={<BartersTypePage />} />
-        <Route path="/barters/:barterId" element={<BarterPage />} />
+        <Route path="/barters/:barterId/:offerId" element={<BarterPage />} />
         <Route path="/barters/new/:productId" element={<NewBarterPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/info/support" element={<SupportPage />} />

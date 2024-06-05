@@ -10,7 +10,7 @@ import Button from '../Button/Button';
 import BarterStatus from './BrterStatus/BarterStatus';
 
 const BarterPage = () => {
-  const { barterId } = useParams();
+  const { barterId, offerId } = useParams();
   const location = useLocation();
   const { barter } = location.state || {};
   const navigate = useNavigate();
@@ -108,7 +108,6 @@ const BarterPage = () => {
         </div>
       </div>
       <div className='container barter-status' id='status'>
-        <p>{currentBarter?.id + '-' + currentBarter?.offer.status}</p>
         <BarterStatus key={currentBarter?.id + '-' + currentBarter?.offer.status} barter={currentBarter} updateBarter={setCurrentBarter} />
       </div>
     </div>

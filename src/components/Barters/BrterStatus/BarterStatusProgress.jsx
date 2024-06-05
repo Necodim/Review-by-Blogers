@@ -89,7 +89,6 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
       setFormScreenshot(uploadedFile);
 
       const data = {
-        barterId: barter.id,
         offerId: barter.offer.id,
         status: barter.offer.status,
         screenshot: uploadedFile,

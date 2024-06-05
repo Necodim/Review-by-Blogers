@@ -24,7 +24,7 @@ const BartersGrid = ({ barters }) => {
   }, [barters]);
 
   const handleBarterClick = (barter) => {
-    navigate(`/barters/${barter.id}`, { state: { barter: barter } });
+    navigate(`/barters/${barter.id}/${barter.offer.id}`, { state: { barter: barter } });
   }
 
   return (

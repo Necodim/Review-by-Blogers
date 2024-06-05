@@ -26,8 +26,8 @@ const BartersHistoryTable = ({ barters }) => {
     }
   }, [barters]);
 
-  const openBarter = (id) => {
-    navigate(`/barters/${id}`);
+  const openBarter = (barter) => {
+    navigate(`/barters/${barter.id}/${barter.offer.id}`);
   }
 
   const goToHistory = () => {
@@ -47,7 +47,7 @@ const BartersHistoryTable = ({ barters }) => {
           <div
             key={barter.id}
             className='list-item barter-card-wrapper'
-            // onClick={() => { openBarter(barter.id) }}
+            // onClick={() => { openBarter(barter) }}
             data-barter-id={barter.id}
           >
             <div className='list list-item vertical barter-card'>

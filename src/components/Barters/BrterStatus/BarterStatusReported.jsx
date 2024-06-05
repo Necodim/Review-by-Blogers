@@ -52,7 +52,6 @@ const BarterStatusReported = ({ barter, updateBarter }) => {
 
     try {
       const data = {
-        barterId: barter.id,
         offerId: barter.offer.id,
         status: barter.offer.status,
         feedback: formFeedback,

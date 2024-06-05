@@ -7,15 +7,15 @@ import { useToastManager } from './useToast';
 const UserProfileContext = createContext();
 
 export const UserProfileProvider = ({ children }) => {
+	const { tg, user, isAvailable } = useTelegram();
+	const { getUser, createUser, upsertUser, generateAuthToken, verifyAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
+	const { showToast } = useToastManager();
+
 	const [profile, setProfile] = useState(null);
 	const [role, setRole] = useState(null);
 	const [isActive, setIsActive] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState('');
-
-	const { tg, user, isAvailable } = useTelegram();
-	const { getUser, createUser, upsertUser, generateAuthToken, verifyAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
-	const { showToast } = useToastManager();
 
 	const userId = user?.id;
 	// Для тестов

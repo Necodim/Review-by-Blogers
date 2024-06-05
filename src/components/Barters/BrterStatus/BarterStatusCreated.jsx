@@ -103,8 +103,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
       const uploadedFile = await uploadScreenshot(formData);
       setFormScreenshot(uploadedFile);
       const data = {
-        barterId: barter.id,
-        userId: barter.offer.userId,
+        offerId: barter.offer.id,
         status: barter.offer.status,
         receipt: uploadedFile,
       }
