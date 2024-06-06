@@ -37,7 +37,7 @@ const SupportPage = () => {
     const data = `${subject}: ${message}`;
 
     try {
-      const response = await sendSupportMessage({ userId: user?.id, message: data });
+      const response = await sendSupportMessage({ message: data });
       if (!!response.message) {
         showToast(response.message, 'success');
         setSubject('');
