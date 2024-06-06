@@ -22,11 +22,29 @@ const BarterStatusClosed = ({ barter }) => {
     setFeedback(barter.offer?.feedback_seller);
   }, [barter]);
 
+  const goToInstagram = () => {
+    window.open(barter.offer.reels, '_blank', 'noopener,noreferrer');
+  }
+
   return (
     <div className='list'>
-      <h2>Бартер окончен</h2>
-      <p>{text}</p>
-      {feedback && <Textarea id='feedback' name='feedback' value={feedback} readOnly={true} />}
+      <div className='list-item'>
+        <h2>Бартер окончен</h2>
+      </div>
+      <div className='list-item'>
+        <p>{barter?.offer?.date ? `Дата бартера: ${moment(barter.offer.date).format('DD.MM.YYYY')}` : ''}</p>
+      </div>
+      {barter.offer.reels &&
+        <div className='list-item'>
+          <Button className='w-100' target='_blank' icon='center_focus_strong' onClick={goToInstagram}>Смотреть Reels</Button>
+        </div>
+      }
+      <div className='list-item'>{text}</div>
+      {feedback && 
+        <div className='list-item'>
+          <Textarea id='feedback' name='feedback' value={feedback} readOnly={true} />
+        </div>
+      }
     </div>
   );
 }

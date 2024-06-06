@@ -33,7 +33,7 @@ const BarterStatusPlanned = ({ barter, updateBarter }) => {
     switch (role) {
       case 'blogger':
         setTitle('Отчёт по бартеру №2');
-        setText('Отправьте ссылку на выложенный reels и укажите, оставили ли вы отзыв на купленный товар в магазине селлера на маркетплейсе.');
+        setText(`Опубликуйте reels${barter?.offer?.date ? ` ${moment(barter.offer.date).format('DD.MM.YYYY')}` : ''}, отправьте ссылку на него и укажите, оставили ли вы отзыв на купленный товар в магазине селлера на маркетплейсе.`);
         break;
       case 'seller':
         setTitle('Готов отчёт №1');
