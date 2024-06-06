@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
+import Button from '../../Button/Button';
 import Textarea from '../../Form/Textarea';
 
 const BarterStatusClosed = ({ barter }) => {
@@ -32,7 +34,7 @@ const BarterStatusClosed = ({ barter }) => {
         <h2>Бартер окончен</h2>
       </div>
       <div className='list-item'>
-        <p>{barter?.offer?.date ? `Дата бартера: ${moment(barter.offer.date).format('DD.MM.YYYY')}` : ''}</p>
+        <p>{barter?.offer?.date ? `Дата публикации: ${moment(barter.offer.date).format('DD.MM.YYYY')}` : ''}</p>
       </div>
       {barter.offer.reels &&
         <div className='list-item'>

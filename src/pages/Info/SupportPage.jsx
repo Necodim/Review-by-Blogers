@@ -102,10 +102,10 @@ const SupportPage = () => {
         </div>
         <Form onSubmit={handleSubmit} isDisabled={isFormDisabled} btntext='Отправить'>
           <Select
-            id="subject"
-            name="subject"
-            placeholder="Выберите тему запроса"
-            defaultValue={subject}
+            id='subject'
+            name='subject'
+            placeholder='Выберите тему запроса'
+            value={subject}
             options={selectOptions}
             onChange={handleSelectChange}
           />
