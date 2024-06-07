@@ -10,6 +10,8 @@ import imgInstruction1 from '../../images/instruction-1.png';
 import imgInstruction2 from '../../images/instruction-2.png';
 import imgInstruction3 from '../../images/instruction-3.png';
 import imgInstruction4 from '../../images/instruction-4.png';
+import Icon from '../Icon/Icon';
+import moment from 'moment';
 
 const PopupApi = (props) => {
 	const { handleFocus } = useEvents();
@@ -23,6 +25,13 @@ const PopupApi = (props) => {
 	const [display, setDisplay] = useState('none');
 	const [contentHeight, setContentHeight] = useState(0);
 	const ref = useRef(null);
+
+	// useEffect(() => {
+  //   if (errorMessage) {
+  //     showToast(errorMessage, 'error');
+  //     setErrorMessage('');
+  //   }
+  // }, [errorMessage, showToast]);
 
 	useEffect(() => {
 		if (errorMessage && attemptedSubmit) {
@@ -103,6 +112,17 @@ const PopupApi = (props) => {
 		setToken(value);
 	}
 
+	const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setToken(text);
+    } catch (error) {
+			const message = 'Не удалось прочитать данные из буфера обмена';
+			setErrorMessage(message);
+      console.error(`${message}:`, error);
+    }
+  };
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		setAttemptedSubmit(true);
@@ -124,19 +144,19 @@ const PopupApi = (props) => {
 				<animated.div className='list-item' style={{ ...animation, display }}>
 					<div ref={ref} className='hint-wrapper list'>
 						<div className='list-item vertical'>
-							<p>Войдите в настройки профиля.</p>
+							<p>Войдите в настройки профиля.</p>
 							<img style={{ width: '100%', borderRadius: 'var(--xs)' }} src={imgInstruction1} />
 						</div>
 						<div className='list-item vertical'>
-							<p>Откройте вкладку «Доступ к API» и нажмите кнопку «Создать новый токен».</p>
+							<p>Откройте вкладку «Доступ к API» и нажмите кнопку «Создать новый токен».</p>
 							<img style={{ width: '100%', borderRadius: 'var(--xs)' }} src={imgInstruction2} />
 						</div>
 						<div className='list-item vertical'>
-							<p>Задайте имя токена, поставьте галочку «Только на чтение...», выберите «Контент» и нажмите кнопку «Создать токен». Чтобы не запутаться в будущем, рекомендуем дать имя «review-by-bloggers», так вы будете понимать, для какого сервиса создали токен.</p>
+							<p>Задайте имя токена, поставьте галочку «Только на чтение...», выберите «Контент» и нажмите кнопку «Создать токен». Чтобы не запутаться в будущем, рекомендуем дать имя «{'Unpacks ' + moment().format('YYYY.MM.DD')}» – так вы будете понимать, для какого сервиса и когда создали токен.</p>
 							<img style={{ width: '100%', borderRadius: 'var(--xs)' }} src={imgInstruction3} />
 						</div>
 						<div className='list-item vertical'>
-							<p>Скопируйте токен, вставьте в поле ниже и нажмите «Сохранить».</p>
+							<p>Скопируйте токен, перейдите обратно в приложение Unpacks и нажмите иконку <Icon icon='content_paste' size='small' /> в поле для ввода, чтобы вставить токен. После этого нажмите «Сохранить».</p>
 							<img style={{ width: '100%', borderRadius: 'var(--xs)' }} src={imgInstruction4} />
 						</div>
 					</div>
@@ -147,8 +167,8 @@ const PopupApi = (props) => {
 					id='input-token'
 					name='token'
 					title='Введите API-ключ'
-					icon='backspace'
-					iconCallback={() => {setToken('')}}
+					icon='content_paste'
+					iconCallback={async () => {await handlePaste()}}
 					fade={true}
 					placeholder='eyJhbGciOiJ...'
 					value={token}
