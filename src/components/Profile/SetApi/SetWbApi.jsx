@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useEvents } from '../../../hooks/useEvents';
 import { useToastManager } from '../../../hooks/useToast';
+import { useUserProfile } from '../../../hooks/UserProfileContext';
 import moment from 'moment';
+import api from '../../../api/api';
 import Header from '../../Header/Header';
 import Link from '../../Button/Link';
 import Form from '../../Form/Form';
@@ -16,6 +18,7 @@ import imgInstruction4 from '../../../images/instruction-4.png';
 const SetWbApi = (props) => {
 	const { handleFocus } = useEvents();
 	const { showToast } = useToastManager();
+  const { updateProfile } = useUserProfile()
 
 	const [errorMessage, setErrorMessage] = useState('');
 	const [token, setToken] = useState('');
@@ -112,14 +115,24 @@ const SetWbApi = (props) => {
 		setToken(value);
 	}
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setAttemptedSubmit(true);
 		if (isValid) {
-			props.onSubmit(event);
-			if (props.onSuccess) {
-				props.onSuccess();
-			}
+      const formData = Object.fromEntries(new FormData(event.target));
+      showToast('Отправка данных...', 'loading');
+      try {
+        const result = await api.setApiWildberries(formData.token);
+        if (result.message) {
+          showToast(result.message, 'success');
+          updateProfile({api: { wildberries: { expired: false, token: true }}});
+          showToast('Отлично. Теперь включите бартеры на товарах, которые хотите продвигать.', 'info');
+          showToast('Товары обновлены. Перейдите в раздел «Товары», чтобы посмотреть обновления.', 'success');
+        }
+      } catch (error) {
+        setErrorMessage(error.message);
+        console.error(`${error.message}:`, error);
+      }
 		}
 	}
 
