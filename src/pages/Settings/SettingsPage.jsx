@@ -1,3 +1,4 @@
+import packageJson from '../../../package.json';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
@@ -104,8 +105,8 @@ const SettingsPage = () => {
 				}
 				<Button onClick={() => { navigate('/info/support') }} icon='support_agent'>Поддержка</Button>
 				<Link onClick={() => { navigate('/info/user-agreement') }}>Пользовательское соглашение</Link>
+				<small>Версия: {packageJson.version}</small>
 			</div>
-
 
 
 			{/* <div className='container' id='tests'>

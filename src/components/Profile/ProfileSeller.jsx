@@ -14,6 +14,7 @@ import PopupConfirmation from '../Popup/PopupConfirmation';
 import PopupApi from '../Popup/PopupApi.jsx';
 
 const ProfileSeller = () => {
+	const navigate = useNavigate();
 	const { profile, updateProfile, cancelSubscription } = useUserProfile();
 	const { getPlural } = useHelpers();
 	const { showToast } = useToastManager();
@@ -52,7 +53,9 @@ const ProfileSeller = () => {
 	const openPopupApi = () => setIsPopupApiOpen(true);
 	const closePopupApi = () => setIsPopupApiOpen(false);
 
-	const navigate = useNavigate();
+	const goToSetApi = () => {
+		navigate('/profile/api');
+	}
 
 	const goToSubscribe = () => {
 		if (profile.subscription?.active) showToast('У вас уже есть подписка', 'error');
@@ -92,7 +95,7 @@ const ProfileSeller = () => {
 	return (
 		<div className='content-wrapper'>
 			<Header />
-			<div className='container' id='subscription' >
+			<div className='container' id='subscription'>
 				<div className='list'>
 					<div className='list-item'>
 						<h2>{profile.subscription?.active ? 'Подписка' : profile.subscription?.avaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}</h2>
@@ -101,7 +104,7 @@ const ProfileSeller = () => {
 					{profile.subscription?.avaliable && profile.subscription?.expired_at > new Date().getTime() && <div className='list-item'>{(profile.subscription?.active ? 'Следующее списание ' : 'Сервис доступен до ') + expiredDate}</div>}
 				</div>
 				<div className='list'>
-					{canAddApi && <Button className='list-item' onClick={openPopupApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>}
+					{canAddApi && <Button className='list-item' onClick={goToSetApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>}
 					{!isSubscribed && <Button className='list-item' onClick={goToSubscribe}>Оформить подписку</Button>}
 					{/* <small>На данный момент оформление подписки недоступно.</small> */}
 					{/* {!profile.subscription?.active && !profile.subscription?.avaliable && !profile.trial.active && profile.trial['barters-left'] > 0 && <Button className='list-item disabled' onClick={startTrial}>Попробовать бесплатно</Button>} */}

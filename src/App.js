@@ -19,6 +19,7 @@ import BarterPage from './components/Barters/BarterPage';
 import NewBarterPage from './components/Barters/BartersPage';
 import Profile from './components/Profile/Profile';
 import Subscribe from './components/Profile/Subscription/Subscribe';
+import SetWbApi from './components/Profile/SetApi/SetWbApi';
 import WaitingForCapturePage from './pages/Subscription/WaitingForCapturePage';
 import SettingsPage from './pages/Settings/SettingsPage';
 import SupportPage from './pages/Info/SupportPage';
@@ -99,6 +100,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/subscribe" element={<Subscribe />} />
         <Route path="/profile/subscribe/waiting-for-capture" element={<WaitingForCapturePage />} />
+        <Route path="/profile/api" element={<SetWbApi />} />
         <Route path="/store" element={<SelectedProductsProvider><Store /></SelectedProductsProvider>} />
         <Route path="/store/categories/:subCategoryId" element={<SelectedProductsProvider><CategoryPage /></SelectedProductsProvider>} />
         <Route path="/store/products/:productId" element={<ProductPage />} />
