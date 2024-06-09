@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import react from '@vitejs/plugin-react'
 // import svgrPlugin from 'vite-plugin-svgr'
 
-export default defineConfig(configEnv => ({
+export default defineConfig(() => ({
   base: `${process.env.BASE_URL || ''}`,
   esbuild: {
     loader: "jsx",
@@ -38,4 +38,7 @@ export default defineConfig(configEnv => ({
       ],
     },
   },
+  build: {
+    outDir: '../build'
+  }
 }))
