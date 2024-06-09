@@ -17,8 +17,4 @@ const Icon = (props) => {
     )
 }
 
-Icon.defaultProps = {
-    size: 'normal',
-};
-
 export default Icon

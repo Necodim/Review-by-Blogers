@@ -2,10 +2,12 @@
   "name": "unpacks",
   "version": "1.0.1.1",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@vitejs/plugin-react": "^4.3.0",
     "axios": "^1.6.7",
     "create-react-app": "^1.2.1",
     "material-icons": "^1.13.12",
@@ -19,13 +21,18 @@
     "react-toastify": "^10.0.4",
     "swiper": "^11.1.0",
     "uuid": "^9.0.1",
+    "vite": "^5.2.13",
+    "vite-plugin-linter": "^2.1.1",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^4.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "vite build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "VITE_CJS_TRACE=true VITE_CJS_IGNORE_WARNING=true vite"
   },
   "browserslist": {
     "production": [
