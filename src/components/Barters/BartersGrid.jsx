@@ -9,7 +9,10 @@ const BartersGrid = ({ barters }) => {
 
   const initialBartersPlaceholder = new Array(4).fill({}).map((_, index) => ({
     placeholder: true,
-    id: `placeholder-${index}`,
+    id: `barter-placeholder-${index}`,
+    offer: {
+      id: `offer-placeholder-${index}`,
+    },
     product: {
       placeholder: true,
       nmid: `product-placeholder-${index}`,
@@ -31,7 +34,7 @@ const BartersGrid = ({ barters }) => {
     <div className='cards'>
       {displayBarters.map((barter) => (
         <BarterCard
-          key={barter.id}
+          key={barter.offer?.id}
           barter={barter}
           onClick={() => handleBarterClick(barter)}
         />

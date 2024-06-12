@@ -36,7 +36,7 @@ export function useHelpers() {
 
 	const copyToClipboard = (data, successMessage, errorMessage) => {
 		try {
-			navigator.clipboard.writeText(data)
+			navigator.clipboard.writeText(data.trim());
 			return {status: 'success', message: successMessage};
 		} catch (error) {
 			console.error(error);

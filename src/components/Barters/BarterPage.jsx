@@ -5,11 +5,12 @@ import api from '../../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
 import { useHelpers } from '../../hooks/useHelpers';
+import Preloader from '../Preloader/Preloader';
 import Header from '../Header/Header';
 import Input from '../Form/Input';
 import Button from '../Button/Button';
 import BarterStatus from './BrterStatus/BarterStatus';
-import Preloader from '../Preloader/Preloader';
+import PopupTaskRead from '../Popup/PopupTaskRead';
 import PopupBloggerInfo from '../Popup/PopupBloggerInfo';
 
 const BarterPage = () => {
@@ -29,6 +30,7 @@ const BarterPage = () => {
   const [productLink, setProductLink] = useState('');
   const [marketplaceShortName, setMarketplaceShortName] = useState('');
   const [bloggerId, setBloggerId] = useState(null);
+  const [isPopupTaskReadVisible, setIsPopupTaskReadVisible] = useState(false);
   const [isPopupBloggerInfoOpen, setIsPopupBloggerInfoOpen] = useState(false);
 
   useEffect(() => {
@@ -82,11 +84,15 @@ const BarterPage = () => {
     showToast(result.message, result.status);
   };
 
-  const openBarter = () => {
+  const openProduct = () => {
     const product = { ...currentBarter.product, barter: currentBarter };
     delete product.barter.product;
     navigate(`/store/products/${product.id}`, { state: { product: product } });
   };
+
+  const openTask = () => {
+    setIsPopupTaskReadVisible(true);
+  }
 
   if (barterIsLoading) {
     return <Preloader>Загрузка...</Preloader>;
@@ -130,7 +136,7 @@ const BarterPage = () => {
           </div>
           <div className='list'>
             <div className='list-item'>
-              <Button className='light' icon='inventory_2' onClick={openBarter}>К товару</Button>
+              <Button className='light' icon='format_list_bulleted' onClick={openTask}>Смотреть ТЗ</Button>
               <Button className='light' icon='contact_page' onClick={() => setIsPopupBloggerInfoOpen(true)}>О блогере</Button>
             </div>
           </div>
@@ -139,6 +145,13 @@ const BarterPage = () => {
       <div className='container barter-status' id='status'>
         <BarterStatus key={currentBarter?.id + '-' + currentBarter?.offer.status} barter={currentBarter} updateBarter={setCurrentBarter} />
       </div>
+      {(!!barter?.task || !!barter?.brand_instagram || !!barter?.need_feedback) &&
+        <PopupTaskRead
+          isOpen={isPopupTaskReadVisible}
+          onClose={() => setIsPopupTaskReadVisible(false)}
+          barter={barter}
+        />
+      }
       {role === 'seller' && <PopupBloggerInfo isOpen={isPopupBloggerInfoOpen} onClose={() => setIsPopupBloggerInfoOpen(false)} userId={bloggerId} />}
     </div>
   );
