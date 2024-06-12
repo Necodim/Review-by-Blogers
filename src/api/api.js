@@ -301,6 +301,11 @@ const sendSupportMessage = async (data) => {
   return response.data;
 }
 
+const uploadImage = async (data) => {
+  const response = await apiClient.post(`/storage/upload/image`, data, {headers: {'Content-Type': 'multipart/form-data'}});
+  return response.data;
+}
+
 const uploadReceipt = async (barterId, data) => {
   const response = await apiClient.post(`/storage/barters/${barterId}/receipt`, data, {headers: {'Content-Type': 'multipart/form-data'}});
   return response.data;
@@ -370,6 +375,7 @@ export default {
   createYookassaPayload,
   sendSupportMessage,
 
+  uploadImage,
   uploadReceipt,
   uploadBarterScreenshot,
 }

@@ -9,16 +9,15 @@ const FileField = ({ id, title, accept, placeholder, value, multiple, iconCallba
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   useEffect(() => {
-    if (value) {
-      setTextValue(value);
-    }
+    setTextValue(value);
   }, [value]);
 
   useEffect(() => {
     setTextValue(uploadedFiles.join(', '));
   }, [uploadedFiles])
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e) => {
+    e.preventDefault();
     fileInputRef.current.click();
   };
 
@@ -32,6 +31,10 @@ const FileField = ({ id, title, accept, placeholder, value, multiple, iconCallba
       onChange(files[i]);
     }
   };
+
+  const handleChangeTextValue = (event) => {
+    setTextValue(event.target.value);
+  }
 
   const inputName = inputProps.name || id || 'input-name';
 
@@ -56,6 +59,7 @@ const FileField = ({ id, title, accept, placeholder, value, multiple, iconCallba
             placeholder={placeholder}
             value={textValue}
             readOnly={true}
+            onChange={handleChangeTextValue}
             fade={true}
             icon='cloud_upload'
             iconCallback={handleButtonClick}

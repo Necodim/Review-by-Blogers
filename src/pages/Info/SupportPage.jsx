@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api/api';
-import { useTelegram } from '../../hooks/useTelegram';
 import { useToastManager } from '../../hooks/useToast';
+import Header from '../../components/Header/Header';
 import Form from '../../components/Form/Form';
 import Select from '../../components/Form/Select';
 import Textarea from '../../components/Form/Textarea';
+import Input from '../../components/Form/Input';
 
 const SupportPage = () => {
-  const { sendSupportMessage } = api;
-  const { isAvailable, showBackButton, user } = useTelegram();
+  const { uploadImage, sendSupportMessage } = api;
   const { showToast } = useToastManager();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [formScreenshot, setFormScreenshot] = useState('');
+  const [file, setFile] = useState(null);
+  const [fileLoading, setFileLoading] = useState(false);
+  const [fileError, setFileError] = useState(null);
   const [isFormDisabled, setIsFormDisabled] = useState(true);
-
-  useEffect(() => {
-    if (isAvailable) showBackButton();
-  }, [isAvailable, showBackButton]);
 
   useEffect(() => {
     if (errorMessage) {
@@ -31,22 +31,68 @@ const SupportPage = () => {
     setIsFormDisabled(!(subject !== '' && message.trim()));
   }, [subject, message]);
 
+  const handleSelectChange = (event) => {
+    setSubject(event.target.value);
+  }
+
+  const handleTextareaChange = (event) => {
+    setMessage(event.target.value);
+  }
+
+  const handleChangeScreenshot = (file) => {
+    setFile(file);
+    setFileError(null);
+  };
+
+  const uploadScreenshot = async (formData) => {
+    try {
+      setFileLoading(true);
+      const response = await uploadImage(formData);
+      setFormScreenshot(response);
+      return response;
+    } catch (error) {
+      const message = 'Ошибка при загрузке скриншота';
+      console.error(`${message}:`, error);
+      setFileError(message);
+      throw Error('Не удалось загрузить изображение');
+    } finally {
+      setFileLoading(false);
+    }
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsFormDisabled(true);
+    
     if (!message.trim()) return;
-    const data = `${subject}: ${message}`;
+    const data = {
+      message: `${subject}: ${message}`,
+    }
 
     try {
-      const response = await sendSupportMessage({ message: data });
+      if (!!file) {
+        const formData = new FormData();
+        formData.append('image', file);
+        const uploadedFile = await uploadScreenshot(formData);
+        data.screenshot = uploadedFile;
+      }
+
+      const response = await sendSupportMessage(data);
       if (!!response.message) {
         showToast(response.message, 'success');
         setSubject('');
         setMessage('');
+        document.querySelector('[name="screenshot"]').value = '';
+        setFile(null);
+        setFileError(null);
+        setFormScreenshot('');
       } else {
         setErrorMessage('Ошибка при отправке сообщения, попробуйте снова');
       }
     } catch (error) {
-      setErrorMessage(response.error);
+      setErrorMessage(error.message);
+    } finally {
+      setIsFormDisabled(false);
     }
   }
 
@@ -81,29 +127,27 @@ const SupportPage = () => {
     }
   ];
 
-  const handleSelectChange = (event) => {
-    setSubject(event.target.value);
-  }
-
-  const handleTextareaChange = (event) => {
-    setMessage(event.target.value);
-  }
-
   return (
     <div className='content-wrapper'>
+      <Header />
       <div className='container' id='support'>
         <div className='list'>
           <div className='list-item'>
             <h2>Поддержка</h2>
           </div>
           <div className='list-item'>
-            <small>Напишите свой вопрос или предложение, мы&nbsp;ответим в&nbsp;ближайшее время</small>
+            <small>Подробно опишите свой вопрос, предложение или проблему и&nbsp;приложите скриншот, если необходимо. Мы&nbsp;ответим в&nbsp;ближайшее время</small>
           </div>
         </div>
-        <Form onSubmit={handleSubmit} isDisabled={isFormDisabled} btntext='Отправить'>
+        <Form 
+          onSubmit={handleSubmit}
+          isDisabled={isFormDisabled || fileLoading}
+          btntext='Отправить'
+        >
           <Select
             id='subject'
             name='subject'
+            title='Тема'
             placeholder='Выберите тему запроса'
             value={subject}
             options={selectOptions}
@@ -112,9 +156,19 @@ const SupportPage = () => {
           <Textarea
             id='question'
             name='question'
+            title='Описание'
             placeholder='Задайте вопрос или напишите о неработающем функционале...'
             value={message}
             onChange={handleTextareaChange}
+          />
+          <Input
+            type='file'
+            id='screenshot'
+            name='screenshot'
+            title='Снимок экрана'
+            value={formScreenshot}
+            onChange={handleChangeScreenshot}
+            error={fileError}
           />
         </Form>
       </div>

@@ -12,6 +12,9 @@ const BartersGrid = ({ barters }) => {
     id: `barter-placeholder-${index}`,
     offer: {
       id: `offer-placeholder-${index}`,
+      status: 'Загрузка...',
+      instagram_username: 'username',
+      updated_at: 'Дата и время',
     },
     product: {
       placeholder: true,
@@ -22,7 +25,8 @@ const BartersGrid = ({ barters }) => {
 
   useEffect(() => {
     if (barters.length > 0) {
-      setDisplayBarters(barters);
+      const sortedBarters = barters.sort((a, b) => b.offer.updated_at > a.offer.updated_at);
+      setDisplayBarters(sortedBarters);
     }
   }, [barters]);
 
@@ -31,7 +35,7 @@ const BartersGrid = ({ barters }) => {
   }
 
   return (
-    <div className='cards'>
+    <div className='barter-cards'>
       {displayBarters.map((barter) => (
         <BarterCard
           key={barter.offer?.id}

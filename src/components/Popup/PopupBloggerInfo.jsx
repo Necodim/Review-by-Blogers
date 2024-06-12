@@ -73,7 +73,7 @@ const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
       </div>
       <div className='list'>
         <div className='list-item'>
-          {/* <Button className={!telegramLink && 'disabled'} onClick={openTelegramPage}>Telegram</Button> */}
+          <Button className={!telegramLink && 'disabled'} onClick={openTelegramPage}>Telegram</Button>
           <Button className={!instagramLink && 'disabled'} onClick={openInstagramPage}>Instagram</Button>
         </div>
       </div>

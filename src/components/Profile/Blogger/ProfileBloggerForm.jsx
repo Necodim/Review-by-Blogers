@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Profile.css';
-import { useTelegram } from '../../hooks/useTelegram.js'
-import { useToastManager } from '../../hooks/useToast.js';
-import { useUserProfile } from '../../hooks/UserProfileContext.js';
-import Header from '../Header/Header.jsx';
-import ProfileFooter from './ProfileFooter.jsx';
-import Form from '../Form/Form.jsx';
-import Input from '../Form/Input.jsx';
-import Link from '../Button/Link.jsx';
-import ProfileBloggerForm from './Blogger/ProfileBloggerForm.jsx';
+import { useToastManager } from '../../../hooks/useToast.js';
+import { useUserProfile } from '../../../hooks/UserProfileContext.js';
+import Form from '../../Form/Form.jsx';
+import Input from '../../Form/Input.jsx';
 
-const ProfileBlogger = () => {
+const ProfileBloggerForm = () => {
   const { profile, updateUserData } = useUserProfile();
-  const { isAvailable } = useTelegram();
   const { showToast } = useToastManager();
 
-  const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     'card-number': '',
@@ -47,16 +38,6 @@ const ProfileBlogger = () => {
     setIsFormValid(isValid);
   }, [formData]);
 
-  const navigate = useNavigate();
-
-  const goToSettings = () => {
-		navigate('/settings');
-	}
-
-  const toggleEdit = () => {
-    setIsEditing(!isEditing);
-  }
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setAttemptedSubmit(true);
@@ -69,6 +50,7 @@ const ProfileBlogger = () => {
       return false;
     }
     let instagram = formData.get('instagram-username');
+    instagram = instagram.split('?')[0];
     if (instagram.includes('instagram.com/')) instagram = instagram.split('instagram.com/')[1].split('/')[0];
     if (instagram.includes('@')) instagram = instagram.split('@')[1];
     if (instagram.length < 3) {
@@ -124,8 +106,8 @@ const ProfileBlogger = () => {
     addFormData(name, value);
   }
 
-  const profileBloggerForm = () => {
-    return <Form onSubmit={handleSubmit} btntext='Сохранить' btnicon='save' isDisabled={!isFormValid}>
+  return (
+    <Form onSubmit={handleSubmit} btntext='Сохранить' btnicon='save' isDisabled={!isFormValid}>
       <Input
         id='card-number'
         name='card-number'
@@ -158,32 +140,7 @@ const ProfileBlogger = () => {
         onChange={handleCoverageChange}
       />
     </Form>
-  }
-
-  return (
-    <div className='content-wrapper'>
-      <Header />
-      <div className='container' id='profile'>
-        <div className='list gap-l'>
-          <div className='list-item'>
-            <h2>{(profile.instagram.username && profile.instagram.coverage && profile.card_number) || !profile.onboarding ? 'Профиль' : 'Заполните профиль'}</h2>
-            {!profile.onboarding && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
-          </div>
-          {isEditing && (
-            <div className='list-item'>
-              <ProfileBloggerForm />
-            </div>
-          )}
-          {profile.onboarding && <ProfileBloggerForm />}
-          {/* {profile.onboarding &&
-            <div className='list-item'>
-              <span>После регистрации напишите в Instagram <a href='https://instagram.com/reviewbybloggers'>@reviewbybloggers</a> кодовое слово RB для подтверждения профиля</span>
-            </div>} */}
-        </div>
-      </div>
-      <ProfileFooter />
-    </div>
   );
 };
 
-export default ProfileBlogger;
+export default ProfileBloggerForm;

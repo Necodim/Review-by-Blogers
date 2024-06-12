@@ -32,11 +32,11 @@ const BarterStatusPlanned = ({ barter, updateBarter }) => {
   useEffect(() => {
     switch (role) {
       case 'blogger':
-        setTitle('Отчёт по бартеру №2');
+        setTitle('Отчёт №2 по бартеру');
         setText(`Опубликуйте reels${barter?.offer?.date ? ` ${moment(barter.offer.date).format('DD.MM.YYYY')}` : ''}, отправьте ссылку на него и укажите, оставили ли вы отзыв на купленный товар в магазине селлера на маркетплейсе.`);
         break;
       case 'seller':
-        setTitle('Готов отчёт №1');
+        setTitle('Выбрана дата рекламы');
         setText(`Блогер подтвердил факт заказа товара и запланировал дату рекламной кампании${barter?.offer?.date ? ` на ${moment(barter.offer.date).format('DD.MM.YYYY')}` : ''}.`);
         break;
     }

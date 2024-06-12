@@ -1,9 +1,11 @@
 import React from 'react';
+import Header from '../../components/Header/Header';
 
 const UserAgreementPage = () => {
 
     return (
         <div className='content-wrapper'>
+            <Header />
             <div className='container doc-counter' id='user-agreement'>
                 <h2>Пользовательское соглашение</h2>
                 <div className='list'>

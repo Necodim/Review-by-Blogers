@@ -55,10 +55,62 @@ export function useHelpers() {
 		return link;
 	}
 
+	const getBarterTitle = (status, role) => {
+		const statuses = [
+			{
+				name: 'queued',
+				blogger: 'В очереди',
+				seller: 'В очереди',
+			},
+			{
+				name: 'created',
+				blogger: 'Предложение создано',
+				seller: 'Новое предложение',
+			},
+			{
+				name: 'sended',
+				blogger: 'Получите средства',
+				seller: 'Средства отправлены',
+			},
+			{
+				name: 'progress',
+				blogger: 'Отправьте отчёт №1',
+				seller: 'Блоггер начал работу',
+			},
+			{
+				name: 'planned',
+				blogger: 'Отправьте отчёт №2',
+				seller: 'Выбрана дата рекламы',
+			},
+			{
+				name: 'reported',
+				blogger: 'Ожидает завершения',
+				seller: 'Публикация готова',
+			},
+			{
+				name: 'closed',
+				blogger: 'Бартер завершен',
+				seller: 'Бартер завершен',
+			},
+			{
+				name: 'refused',
+				blogger: 'Отклонено',
+				seller: 'Отклонено',
+			},
+		]
+		const object = statuses.find(obj => obj.name === status);
+		if (object) {
+			return object[role];
+		} else {
+			return null;
+		}
+	}
+
 	return {
 		getPlural,
 		copyToClipboard,
 		getMarketplaceShortName,
 		getMarketplaceProductLink,
+		getBarterTitle,
 	}
 }

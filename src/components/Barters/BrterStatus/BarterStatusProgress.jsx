@@ -51,14 +51,14 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
   };
 
   const handleChangeDate = (e) => {
-    setFormDate(e.target.value);
+    const date = new Date(e.target.value).toISOString().split('T')[0];
+    setFormDate(date);
     setDateError(null);
   }
 
   const uploadScreenshot = async (formData) => {
     try {
       setFileLoading(true);
-      console.log(barter)
       const response = await api.uploadBarterScreenshot(barter.id, formData);
       setFormScreenshot(response);
       return response;
@@ -86,7 +86,6 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
 
     try {
       const uploadedFile = await uploadScreenshot(formData);
-      setFormScreenshot(uploadedFile);
 
       const data = {
         offerId: barter.offer.id,
@@ -134,9 +133,9 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
             name='date'
             title='Дата рекламы *'
             placeholder={moment().format('DD.MM.YYYY')}
-            value={formDate}
+            // value={formDate}
             min={new Date().toISOString().split('T')[0]}
-            onChange={handleChangeDate}
+            // onChange={handleChangeDate}
             error={dateError}
           />
         </Form>

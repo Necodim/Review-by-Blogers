@@ -142,7 +142,7 @@ const BarterPage = () => {
           </div>
         </div>
       </div>
-      <div className='container barter-status' id='status'>
+      <div className='container barter-offer-status' id='status'>
         <BarterStatus key={currentBarter?.id + '-' + currentBarter?.offer.status} barter={currentBarter} updateBarter={setCurrentBarter} />
       </div>
       {(!!barter?.task || !!barter?.brand_instagram || !!barter?.need_feedback) &&

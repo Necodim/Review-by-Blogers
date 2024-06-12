@@ -1,7 +1,6 @@
 import packageJson from '../../../package.json';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTelegram } from '../../hooks/useTelegram';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
 import Input from '../../components/Form/Input';
@@ -12,16 +11,11 @@ import PopupConfirmation from '../../components/Popup/PopupConfirmation';
 const SettingsPage = () => {
 	const navigate = useNavigate();
 	const { profile, updateProfile, updateUserData, addSubscription } = useUserProfile();
-	const { isAvailable, showBackButton, user } = useTelegram();
 	const { showToast } = useToastManager();
 
 	const [isPopupChangeRoleVisible, setIsPopupChangeRoleVisible] = useState(false);
 	const [currentRole, setCurrentRole] = useState(profile.role);
 	const [newRole, setNewRole] = useState(profile.role);
-
-	useEffect(() => {
-		if (isAvailable) showBackButton();
-	}, [isAvailable, showBackButton]);
 
 	useEffect(() => {
 		setCurrentRole(profile.role);

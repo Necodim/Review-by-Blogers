@@ -7,6 +7,7 @@ import { useHelpers } from '../../hooks/useHelpers';
 import { useToastManager } from '../../hooks/useToast';
 import { useUserProfile } from '../../hooks/UserProfileContext.js';
 import Header from '../Header/Header';
+import ProfileFooter from './ProfileFooter.jsx';
 import Button from '../Button/Button';
 import Link from '../Button/Link';
 import BrandsList from '../BrandList/BrandList';
@@ -59,7 +60,11 @@ const ProfileSeller = () => {
 
 	const goToSubscribe = () => {
 		if (profile.subscription?.active) showToast('У вас уже есть подписка', 'error');
-		navigate('/profile/subscribe')
+		navigate('/profile/subscribe');
+	}
+
+	const goToSettings = () => {
+		navigate('/settings');
 	}
 
 	const startTrial = () => {
@@ -121,6 +126,7 @@ const ProfileSeller = () => {
 					<BrandsList setTotalProducts={setTotalProducts} />
 				</div>
 			}
+			<ProfileFooter />
 			{profile.subscription?.active && <PopupConfirmation
 				id='popup-cancel-subscription'
 				title='Отмена подписки'

@@ -1,3 +1,55 @@
+.barter-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: var(--s);
+}
+
+.barter-card {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: var(--m);
+  background: var(--gradient-primary-dark-1-2);
+  border-radius: var(--s);
+  padding: var(--s);
+}
+
+.barter-card .barter-status {
+  --size: var(--xs);
+  position: absolute;
+  top: var(--s);
+  right: var(--s);
+  z-index: 1;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--grey);
+}
+
+.barter-card .barter-status.new {
+  background: var(--success);
+}
+
+.barter-card .barter-status.action {
+  background: var(--warning);
+}
+
+.barter-card .barter-image {
+  flex: 0 1 27%;
+}
+
+.barter-card .barter-blogger-username {
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 #barter-history .barter-card-wrapper {}
 
 #barter-history .barter-card {}
