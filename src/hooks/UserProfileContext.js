@@ -17,10 +17,10 @@ export const UserProfileProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	// const userId = user?.id;
+	const userId = user?.id;
 	// Для тестов
 	// const userId = 82431798; // Я
-	const userId = 89141992; // Снежана
+	// const userId = 89141992; // Снежана
 	// const userId = 976651721;
 
 	useEffect(() => {
