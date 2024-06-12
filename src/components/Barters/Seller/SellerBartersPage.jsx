@@ -83,9 +83,9 @@ const SellerBartersPage = () => {
     }
   }
 
-  if (bartersIsLoading) {
-    return <Preloader>Загружаюсь...</Preloader>;
-  }
+  // if (bartersIsLoading) {
+  //   return <Preloader>Загружаюсь...</Preloader>;
+  // }
 
   return (
     <div className='content-wrapper'>
@@ -93,6 +93,18 @@ const SellerBartersPage = () => {
       {createCards(newBarters, 'new', 'Новые предложения')}
       {createCards(inProgressBarters, 'progress', 'В работе')}
       {createCards(completedBarters, 'completed', 'Завершённые')}
+      {(newBarters.length === 0 && inProgressBarters.length === 0 && completedBarters.length === 0) &&
+        <div className='container' id='barters-none'>
+          <div className='list'>
+            <div className='list-item'>
+              <h2>Нужно подождать...</h2>
+            </div>
+            <div className='list-item'>
+              <p>У вас пока нет предложений от блогеров</p>
+            </div>
+          </div>
+        </div>
+      }
       {/* <BartersHistoryTable /> */}
     </div>
   );

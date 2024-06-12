@@ -8,7 +8,7 @@ const Button = ({ onClick, className, icon, size, disabled, children, ...buttonP
     const { hapticFeedback } = useTelegram();
 
     useEffect(() => {
-      const disabledStatus = className?.includes('disabled') || disabled;
+      const disabledStatus = (className && className?.includes('disabled')) || disabled;
       setIsDisabled(disabledStatus);
     }, [className]);
 
@@ -24,7 +24,7 @@ const Button = ({ onClick, className, icon, size, disabled, children, ...buttonP
     return (
         <button {...buttonProps} className={`button ${className || (disabled ? 'disabled' : '')}`} onClick={handleClick} disabled={isDisabled}>
             { icon && <Icon icon={icon} size={size}></Icon> }
-            { children }
+            {children}
         </button>
     )
 }

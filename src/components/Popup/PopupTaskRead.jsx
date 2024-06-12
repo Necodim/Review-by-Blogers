@@ -58,7 +58,7 @@ const PopupTaskRead = ({ isOpen, onClose, barter, onEdit }) => {
 					}
 				</div>
 			}
-			{!!onEdit && <Button class='w-100' icon='edit' onClick={onEdit}>Редактировать</Button>}
+			{!!onEdit && <Button className='w-100' icon='edit' onClick={onEdit}>Редактировать</Button>}
 		</Popup>
 	);
 };

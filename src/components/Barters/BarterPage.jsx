@@ -2,18 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import './Barters.css';
 import api from '../../api/api';
+import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
 import { useHelpers } from '../../hooks/useHelpers';
 import Header from '../Header/Header';
 import Input from '../Form/Input';
 import Button from '../Button/Button';
 import BarterStatus from './BrterStatus/BarterStatus';
+import Preloader from '../Preloader/Preloader';
+import PopupBloggerInfo from '../Popup/PopupBloggerInfo';
 
 const BarterPage = () => {
-  const { barterId, offerId } = useParams();
   const location = useLocation();
-  const { barter } = location.state || {};
   const navigate = useNavigate();
+  
+  const { barterId, offerId } = useParams();
+  const { barter } = location.state || {};
+  
+  const { role } = useUserProfile();
   const { showToast } = useToastManager();
   const { copyToClipboard, getMarketplaceShortName, getMarketplaceProductLink } = useHelpers();
 
@@ -22,6 +28,8 @@ const BarterPage = () => {
   const [barterIsLoading, setBarterIsLoading] = useState(false);
   const [productLink, setProductLink] = useState('');
   const [marketplaceShortName, setMarketplaceShortName] = useState('');
+  const [bloggerId, setBloggerId] = useState(null);
+  const [isPopupBloggerInfoOpen, setIsPopupBloggerInfoOpen] = useState(false);
 
   useEffect(() => {
     if (errorMessage) {
@@ -38,6 +46,7 @@ const BarterPage = () => {
         console.log('fetchedBarter', fetchedBarter);
         if (fetchedBarter) {
           setCurrentBarter(fetchedBarter);
+          setBloggerId(barter.offer.user_id);
           const short = await getMarketplaceShortName(fetchedBarter?.product?.marketplace_id);
           const link = await getMarketplaceProductLink(fetchedBarter?.product?.marketplace_id, fetchedBarter?.product?.nmid);
           setMarketplaceShortName(short);
@@ -56,6 +65,7 @@ const BarterPage = () => {
       fetchBarter();
     } else {
       setCurrentBarter(barter);
+      setBloggerId(barter.offer.user_id);
     }
     console.log('barter', barter)
     console.log('current', currentBarter)
@@ -79,11 +89,25 @@ const BarterPage = () => {
   };
 
   if (barterIsLoading) {
-    return <div>Загрузка данных о бартере...</div>;
+    return <Preloader>Загрузка...</Preloader>;
   }
 
   if (!currentBarter) {
-    return <div>Бартер не найден</div>;
+    return (
+      <div className='content-wrapper'>
+        <Header />
+        <div className='container' id='barter'>
+          <div className='list'>
+            <div className='list-item'>
+              <h2>Бартер не найден</h2>
+            </div>
+            <div className='list-item'>
+              <p>Попробуйте ещё раз...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -104,12 +128,18 @@ const BarterPage = () => {
               </div>
             </div>
           </div>
-          <Button className='light w-100' icon='info' onClick={openBarter}>Информация о бартере</Button>
+          <div className='list'>
+            <div className='list-item'>
+              <Button className='light' icon='inventory_2' onClick={openBarter}>К товару</Button>
+              <Button className='light' icon='contact_page' onClick={() => setIsPopupBloggerInfoOpen(true)}>О блогере</Button>
+            </div>
+          </div>
         </div>
       </div>
       <div className='container barter-status' id='status'>
         <BarterStatus key={currentBarter?.id + '-' + currentBarter?.offer.status} barter={currentBarter} updateBarter={setCurrentBarter} />
       </div>
+      {role === 'seller' && <PopupBloggerInfo isOpen={isPopupBloggerInfoOpen} onClose={() => setIsPopupBloggerInfoOpen(false)} userId={bloggerId} />}
     </div>
   );
 };

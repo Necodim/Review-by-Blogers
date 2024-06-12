@@ -13,9 +13,6 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
   
   const [errorMessage, setErrorMessage] = useState('');
   const [text, setText] = useState(null);
-  const [blogger, setBlogger] = useState({});
-  const [cardnumber, setCardnumber] = useState(null);
-  const [instagramLink, setInstagramLink] = useState(null);
   const [formScreenshot, setFormScreenshot] = useState(null);
   const [file, setFile] = useState(null);
   const [fileLoading, setFileLoading] = useState(false);
@@ -36,33 +33,10 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
         setText('Вы отправили предложение о бартере, но селлер ещё не принял его.');
         break;
       case 'seller':
-        setText(`Блоггер отправил предложение о бартере. Ознакомьтесь с его профилем и, если вас всё устроит, отправьте средства для покупки товаров на карту.`);
-        const fetchBlogger = async () => {
-          try {
-            const userId = barter.offer.user_id;
-            const user = await api.getUserById(userId);
-            setBlogger(user);
-            console.log(user)
-            if (user?.card_number) {
-              const number = user.card_number.replace(/(\d{4})(?=\d)/g, '$1 ');
-              setCardnumber(number);
-            }
-            if (user?.instagram?.username) {
-              const link = 'https://www.instagram.com/' + user?.instagram?.username;
-              setInstagramLink(link);
-            }
-          } catch (error) {
-            setErrorMessage(error.message);
-          }
-        }
-        fetchBlogger();
+        setText(`Блоггер отправил предложение о бартере. Ознакомьтесь с его профилем (кнопка выше) и, если вас всё устроит, отправьте средства для покупки товаров на карту. После чего подтвердите перевод средств.`);
         break;
     }
   }, [role, barter]);
-
-  const openInstagramPage = () => {
-    window.open(instagramLink, '_blank', 'noopener,noreferrer');
-  }
 
   const handleChangeScreenshot = (file) => {
     setFile(file);
@@ -135,23 +109,12 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
   }
 
   return (
-    <div className='list'>
+    <div className='list gap-xl'>
       <h2>Предложение создано</h2>
       <p>{text}</p>
-      {(role === 'seller' && blogger) &&
+      {role === 'seller' &&
         <div className='list gap-xl'>
           <div className='list-item vertical'>
-            <Button className={'w-100' + (!instagramLink && ' disabled')} target='_blank' icon='center_focus_strong' onClick={openInstagramPage}>Смотреть профиль</Button>
-            <Input
-              id='card-number'
-              name='card-number'
-              value={cardnumber}
-              icon='content_copy'
-              readOnly={true}
-            />
-          </div>
-          <div className='list-item vertical'>
-            <p>После чего подтвердите перевод средств.</p>
             <Form
               onSubmit={handleSubmit}
               isDisabled={fileLoading}
@@ -179,6 +142,9 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
           />
         </div>
       }
+      {/* {role === 'blogger' &&
+        
+      } */}
     </div>
   );
 }

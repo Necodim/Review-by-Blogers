@@ -41,7 +41,7 @@ const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
     <>
       <div className='w-100'>
         <div className='list'>
-          {!!barter?.task || !!barter?.brand_instagram || !!barter?.need_feedback &&
+          {(!!barter?.task || !!barter?.brand_instagram || !!barter?.need_feedback) &&
             <div className='list-item'>
               <Button icon='format_list_bulleted' onClick={openPopupTaskRead}>Смотреть / Изменить ТЗ</Button>
             </div>
@@ -56,7 +56,7 @@ const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
           }
         </div>
       </div>
-      {!!barter?.task || !!barter?.brand_instagram || !!barter?.need_feedback &&
+      {(!!barter?.task || !!barter?.brand_instagram || !!barter?.need_feedback) &&
         <PopupTaskRead
           isOpen={isPopupTaskReadVisible}
           onClose={() => setIsPopupTaskReadVisible(false)}

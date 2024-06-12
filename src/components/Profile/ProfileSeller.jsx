@@ -110,7 +110,7 @@ const ProfileSeller = () => {
 					{/* {!profile.subscription?.active && !profile.subscription?.avaliable && !profile.trial.active && profile.trial['barters-left'] > 0 && <Button className='list-item disabled' onClick={startTrial}>Попробовать бесплатно</Button>} */}
 				</div>
 			</div>
-			{(profile.subscription?.active || profile.subscription?.avaliable) && profile.api.wildberries.token &&
+			{(profile.subscription?.active || profile.subscription?.avaliable || profile.trial.active) && profile.api.wildberries.token &&
 				<div className='container' id='brands' >
 					<div className='list'>
 						<div className='list-item'>
