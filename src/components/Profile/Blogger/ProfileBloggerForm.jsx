@@ -29,6 +29,12 @@ const ProfileBloggerForm = () => {
   }, [errorMessage, attemptedSubmit, showToast]);
 
   useEffect(() => {
+    setCardNumberValue(profile.card_number?.replace(/(\d{4})(?=\d)/g, '$1 '));
+    setInstagramValue(profile.instagram?.username);
+    setCoverageValue(profile.instagram?.coverage);
+  }, [profile])
+
+  useEffect(() => {
     const keys = Object.keys(formData);
     let array = new Array();
     for (let field of keys) {

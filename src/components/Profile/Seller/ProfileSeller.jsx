@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Profile.css';
+import '../Profile.css';
 import moment from 'moment';
-import api from '../../api/api';
-import { useHelpers } from '../../hooks/useHelpers';
-import { useToastManager } from '../../hooks/useToast';
-import { useUserProfile } from '../../hooks/UserProfileContext.js';
-import Header from '../Header/Header';
-import ProfileFooter from './ProfileFooter.jsx';
-import Button from '../Button/Button';
-import Link from '../Button/Link';
-import BrandsList from '../BrandList/BrandList';
-import PopupConfirmation from '../Popup/PopupConfirmation';
-import PopupApi from '../Popup/PopupApi.jsx';
+import api from '../../../api/api.js';
+import { useHelpers } from '../../../hooks/useHelpers.js';
+import { useToastManager } from '../../../hooks/useToast.js';
+import { useUserProfile } from '../../../hooks/UserProfileContext.js';
+import Header from '../../Header/Header.jsx';
+import ProfileFooter from '../ProfileFooter.jsx';
+import Button from '../../Button/Button.jsx';
+import Link from '../../Button/Link.jsx';
+import BrandsList from '../../BrandList/BrandList.jsx';
+import PopupConfirmation from '../../Popup/PopupConfirmation.jsx';
+import PopupApi from '../../Popup/PopupApi.jsx';
 
 const ProfileSeller = () => {
 	const navigate = useNavigate();

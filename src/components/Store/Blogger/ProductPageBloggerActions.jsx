@@ -94,7 +94,7 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
           </div>
         </div>
       </div>
-      {!!product.barter?.task || !!product.barter?.brand_instagram || !!product.barter?.need_feedback &&
+      {(!!product.barter?.task || !!product.barter?.brand_instagram || !!product.barter?.need_feedback) &&
         <PopupTaskRead
           isOpen={isPopupTaskReadVisible}
           onClose={() => setIsPopupTaskReadVisible(false)}
@@ -103,7 +103,7 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
       <PopupConfirmation
         id='popup-barter-offer'
         title='Предложить бартер?'
-        text={(!!product.barter?.task || !!product.barter?.brand_instagram || !!product.barter?.need_feedback ? 'Вы подтверждаете, что ознакомились с техническим заданием? ' : '') + 'Мы уведомим Селлера сразу после вашего предложения.'}
+        text={((!!product.barter?.task || !!product.barter?.brand_instagram || !!product.barter?.need_feedback) ? 'Вы подтверждаете, что ознакомились с техническим заданием? ' : '') + 'Мы уведомим Селлера сразу после вашего предложения.'}
         isOpen={isPopupConfirmationBarterOfferVisible}
         onClose={() => setIsPopupConfirmationBarterOfferVisible(false)}
         onConfirmation={offerBarter}
