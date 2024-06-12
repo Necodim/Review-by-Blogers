@@ -75,7 +75,7 @@ export function useHelpers() {
 			{
 				name: 'progress',
 				blogger: 'Отправьте отчёт №1',
-				seller: 'Блоггер начал работу',
+				seller: 'Блогер начал работу',
 			},
 			{
 				name: 'planned',

@@ -16,6 +16,7 @@
   background: var(--gradient-primary-dark-1-2);
   border-radius: var(--s);
   padding: var(--s);
+  cursor: pointer;
 }
 
 .barter-card .barter-status {
@@ -39,7 +40,9 @@
 }
 
 .barter-card .barter-image {
-  flex: 0 1 27%;
+  --size: 90px;
+  min-width: var(--size);
+  max-width: var(--size);
 }
 
 .barter-card .barter-blogger-username {

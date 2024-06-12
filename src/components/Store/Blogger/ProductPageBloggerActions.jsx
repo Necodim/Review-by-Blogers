@@ -4,6 +4,7 @@ import PopupTaskRead from '../../Popup/PopupTaskRead';
 import PopupConfirmation from '../../Popup/PopupConfirmation';
 import api from '../../../api/api';
 import { useToastManager } from '../../../hooks/useToast';
+import Input from '../../Form/Input';
 
 const ProductPageBloggerActions = ({ selectedProducts }) => {
   const { showToast, resetLoadingToast } = useToastManager();
@@ -13,6 +14,8 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
   const [ canMakeOffer, setCanMakeOffer ] = useState(true);
   const [ isPopupTaskReadVisible, setIsPopupTaskReadVisible ] = useState(false);
   const [ isPopupConfirmationBarterOfferVisible, setIsPopupConfirmationBarterOfferVisible ] = useState(false);
+  const [ price, setPrice ] = useState('');
+  const [ priceError, setPriceError ] = useState('');
 
   useEffect(() => {
     if (errorMessage) {
@@ -54,11 +57,17 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
   }
 
   const offerBarter = async () => {
+    if (!price) {
+      setPriceError('Укажите сумму');
+      return;
+    }
+
     setIsPopupConfirmationBarterOfferVisible(false);
     setCanMakeOffer(false);
     showToast('Отправляем предложение...', 'loading');
     const data = {
       barterId: product.barter.id,
+      price: price,
       details: ''
     }
 
@@ -82,6 +91,8 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
     }
   }
 
+  const handleChangePrice = (e) => setPrice(e.target.value.replace(/\D/gi, ''));
+
   return (
     <>
       <div className='w-100'>
@@ -103,11 +114,24 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
       <PopupConfirmation
         id='popup-barter-offer'
         title='Предложить бартер?'
-        text={((!!product.barter?.task || !!product.barter?.brand_instagram || !!product.barter?.need_feedback) ? 'Вы подтверждаете, что ознакомились с техническим заданием? ' : '') + 'Мы уведомим Селлера сразу после вашего предложения.'}
+        text={((!!product.barter?.task || !!product.barter?.brand_instagram || !!product.barter?.need_feedback) ? 'Вы подтверждаете, что ознакомились с техническим заданием? ' : '') + 'Мы уведомим селлера сразу после вашего предложения.'}
         isOpen={isPopupConfirmationBarterOfferVisible}
         onClose={() => setIsPopupConfirmationBarterOfferVisible(false)}
         onConfirmation={offerBarter}
-      />
+      >
+        <Input
+          id='price'
+          name='price'
+          title='Сумма с доставкой'
+          value={price}
+          onChange={handleChangePrice}
+          required={true}
+          icon='currency_ruble'
+          fade={true}
+          comment='Посмотрите на маркетплейте, сколько будет стоить товар с доставкой до вашего местоположения.'
+          error={priceError}
+        />
+      </PopupConfirmation>
     </>
   );
 };

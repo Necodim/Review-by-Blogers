@@ -33,7 +33,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
         setText('Вы отправили предложение о бартере, но селлер ещё не принял его.');
         break;
       case 'seller':
-        setText(`Блоггер отправил предложение о бартере. Ознакомьтесь с его профилем (кнопка выше) и, если вас всё устроит, отправьте средства для покупки товаров на карту. После чего подтвердите перевод средств.`);
+        setText(`Блогер отправил предложение о бартере. Ознакомьтесь с его профилем (кнопка выше) и, если вас всё устроит, отправьте блогеру на карту средства ${!!barter?.offer?.order_price ? `(в размере ${barter?.offer?.order_price}₽ с учётом доставки) ` : ''}для покупки товаров. После чего подтвердите перевод средств.`);
         break;
     }
   }, [role, barter]);
@@ -90,7 +90,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
           receipt_seller: uploadedFile,
         }
       }));
-      showToast('Вы приняли предложение от блоггера', 'success');
+      showToast('Вы приняли предложение от блогера', 'success');
     } catch (error) {
       console.error(error);
       setErrorMessage(error.message);
@@ -128,6 +128,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
                 onChange={handleChangeScreenshot}
                 required={true}
                 error={fileError}
+                comment={!!barter?.offer?.order_price ? barter?.offer?.order_price + '₽ (с учётом доставки)' : 'Уточните сумму у блогера'}
               />
             </Form>
           </div>

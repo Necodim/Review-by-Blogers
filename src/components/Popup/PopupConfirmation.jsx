@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Popup from './Popup';
 import Button from '../Button/Button';
 
-const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirmation, timer }) => {
+const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirmation, timer, children }) => {
   const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false);
   const [seconds, setSeconds] = useState(0);
 
@@ -41,6 +41,7 @@ const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirma
           {descr && <small>{descr}</small>}
         </div>
       </div>
+      {children}
       <div className='list'>
         <div className='list-item'>
           <Button className='list-item' onClick={onClose}>Нет</Button>

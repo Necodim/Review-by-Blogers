@@ -41,18 +41,22 @@ const BarterPage = () => {
   }, [errorMessage, showToast]);
 
   useEffect(() => {
+    const setBarterInfo = async (barter) => {
+      setCurrentBarter(barter);
+      setBloggerId(barter.offer.user_id);
+      const short = await getMarketplaceShortName(barter?.product?.marketplace_id);
+      const link = await getMarketplaceProductLink(barter?.product?.marketplace_id, barter?.product?.nmid);
+      setMarketplaceShortName(short);
+      setProductLink(link);
+    }
+
     const fetchBarter = async () => {
       setBarterIsLoading(true);
       try {
         const fetchedBarter = await api.getBarterById(barterId);
         console.log('fetchedBarter', fetchedBarter);
         if (fetchedBarter) {
-          setCurrentBarter(fetchedBarter);
-          setBloggerId(barter.offer.user_id);
-          const short = await getMarketplaceShortName(fetchedBarter?.product?.marketplace_id);
-          const link = await getMarketplaceProductLink(fetchedBarter?.product?.marketplace_id, fetchedBarter?.product?.nmid);
-          setMarketplaceShortName(short);
-          setProductLink(link);
+          await setBarterInfo(fetchedBarter);
         } else {
           throw new Error('Произошла ошибка при получении бартера');
         }
@@ -66,8 +70,7 @@ const BarterPage = () => {
     if (!barter) {
       fetchBarter();
     } else {
-      setCurrentBarter(barter);
-      setBloggerId(barter.offer.user_id);
+      setBarterInfo(barter);
     }
     console.log('barter', barter)
     console.log('current', currentBarter)

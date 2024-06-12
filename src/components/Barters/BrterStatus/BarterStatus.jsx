@@ -10,7 +10,7 @@ import BarterStatusRefused from './BarterStatusRefused';
 
 const BarterStatus = ({ barter, updateBarter }) => {
   switch (barter.offer.status) {
-    case 'queued': // Предложение находится в очереди на обработку, т.к. у блоггера много активных бартеров
+    case 'queued': // Предложение находится в очереди на обработку, т.к. у блогера много активных бартеров
       return <BarterStatusQueued />
     case 'created': // Предложение создано, но еще не обработано
       return <BarterStatusCreated barter={barter} updateBarter={updateBarter} />
@@ -18,7 +18,7 @@ const BarterStatus = ({ barter, updateBarter }) => {
       return <BarterStatusSended barter={barter} updateBarter={updateBarter} />
     case 'progress': // Предложение обрабатывается (статус, если не sended и не reported)
       return <BarterStatusProgress barter={barter} updateBarter={updateBarter} />
-    case 'planned': // Блоггер запланировал дату рекламной кампании
+    case 'planned': // Блогер запланировал дату рекламной кампании
       return <BarterStatusPlanned barter={barter} updateBarter={updateBarter} />
     case 'reported': // Предложение отмечено как выполненное
       return <BarterStatusReported barter={barter} updateBarter={updateBarter} />
