@@ -98,7 +98,7 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
       <div className='w-100'>
         <div className='list'>
           <div className='list-item'>
-            <Button icon='format_list_bulleted' onClick={openPopupTaskRead}>Смотреть ТЗ</Button>
+            <Button icon='format_list_bulleted' onClick={openPopupTaskRead}>Смотреть ТЗ</Button>
           </div>
           <div className='list-item'>
             <Button className={canMakeOffer ? '' : 'disabled'} icon='handshake' onClick={openPopupConfirmation}>{canMakeOffer ? 'Предложить бартер' : 'Уже сделали предложение'}</Button>
@@ -110,7 +110,8 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
           isOpen={isPopupTaskReadVisible}
           onClose={() => setIsPopupTaskReadVisible(false)}
           barter={product.barter}
-        />}
+        />
+      }
       <PopupConfirmation
         id='popup-barter-offer'
         title='Предложить бартер?'

@@ -41,8 +41,6 @@ const BarterPage = () => {
   }, [errorMessage, showToast]);
 
   useEffect(() => {
-
-
     const fetchBarter = async () => {
       setBarterIsLoading(true);
       try {
