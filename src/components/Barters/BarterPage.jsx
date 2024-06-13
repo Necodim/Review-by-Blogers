@@ -18,14 +18,14 @@ const BarterPage = () => {
   const location = useLocation();
 
   const { barterId } = useParams();
-  const { barter } = location.state || {};
+  const { barter: barterFromLocationState } = location.state || {};
 
   const { role } = useUserProfile();
   const { showToast } = useToastManager();
   const { copyToClipboard, getBarterInfo } = useHelpers();
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [currentBarter, setCurrentBarter] = useState(barter);
+  const [currentBarter, setCurrentBarter] = useState(barterFromLocationState);
   const [barterIsLoading, setBarterIsLoading] = useState(false);
   const [productLink, setProductLink] = useState('');
   const [marketplaceShortName, setMarketplaceShortName] = useState('');
@@ -64,11 +64,10 @@ const BarterPage = () => {
       }
     };
 
-    if (!barter) {
+    if (!barterFromLocationState) {
       fetchBarter();
     }
     console.log('barterId', barterId)
-    console.log('barter', barter)
     console.log('current', currentBarter)
   }, [barterId]);
 
@@ -102,6 +101,10 @@ const BarterPage = () => {
       </div>
     );
   }
+  const barter = currentBarter || barterFromLocationState;
+  if (import.meta.env.DEV) {
+    console.log('barter = ', barter);
+  }
 
   return (
     <div className='content-wrapper'>
@@ -132,7 +135,7 @@ const BarterPage = () => {
           </div>
           <div className='list'>
             <div className='list-item'>
-              <Button className='light' icon='format_list_bulleted' onClick={openTask}>Смотреть ТЗ</Button>
+              <Button className='light' icon='format_list_bulleted' onClick={openTask}>Смотреть ТЗ</Button>
               {role === 'seller' && <Button className='light' icon='contact_page' onClick={() => setIsPopupBloggerInfoOpen(true)}>О блогере</Button>}
             </div>
           </div>
