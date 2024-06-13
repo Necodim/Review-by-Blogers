@@ -4,6 +4,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProfileProvider } from './hooks/UserProfileContext';
 import Background from './components/Background/Background';
+import Preloader from "./components/Preloader/Preloader.jsx";
 
 if (location.pathname.endsWith('/')) {
   const newPathname = location.pathname.slice(0, -1);
@@ -13,11 +14,13 @@ if (location.pathname.endsWith('/')) {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <UserProfileProvider>
-        <App />
-      </UserProfileProvider>
-    </BrowserRouter>
+      <BrowserRouter>
+          <React.Suspense fallback={<Preloader>Загружаюсь...</Preloader>}>
+              <UserProfileProvider>
+                  <App />
+              </UserProfileProvider>
+          </React.Suspense>
+      </BrowserRouter>
     <Background />
     <div id='popup-root' />
   </React.StrictMode>
