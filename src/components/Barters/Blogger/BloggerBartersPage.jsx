@@ -5,10 +5,12 @@ import api from '../../../api/api';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { useToastManager } from '../../../hooks/useToast';
+import { useHelpers } from '../../../hooks/useHelpers';
 import Header from '../../Header/Header';
 import Link from '../../Button/Link';
 import BartersGrid from '../BartersGrid';
 import Preloader from '../../Preloader/Preloader';
+import PreloaderContainer from '../../Preloader/PreloaderContainer';
 // import BartersHistoryTable from '../BartersHistoryTable';
 
 const BloggerBartersPage = () => {
@@ -16,17 +18,19 @@ const BloggerBartersPage = () => {
   const { profile } = useUserProfile();
   const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
+  const { sortBy } = useHelpers();
 
 	useEffect(() => {
 		if (isAvailable) showBackButton();
 	}, [isAvailable, showBackButton]);
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [barters, setBarterOffers] = useState([]);
-  const [bartersIsLoading, setBartersIsLoading] = useState(true);
-  const [newBarters, setNewBarters] = useState([]);
-  const [inProgressBarters, setInProgressBarters] = useState([]);
-  const [completedBarters, setCompletedBarters] = useState([]);
+  const [barterOffers, setBarterOffers] = useState([]);
+  const [offersIsLoading, setOffersIsLoading] = useState(true);
+  const [queOffers, setQueOffers] = useState([]);
+  const [newOffers, setNewOffers] = useState([]);
+  const [progressOffers, setProgressOffers] = useState([]);
+  const [completedOffers, setCompletedOffers] = useState([]);
 
   useEffect(() => {
     if (errorMessage) {
@@ -36,54 +40,49 @@ const BloggerBartersPage = () => {
   }, [errorMessage, showToast]);
 
   useEffect(() => {
-    const fetchBartersCurrent = async () => {
-      setBartersIsLoading(true);
+    const fetchOffers = async () => {
+      setOffersIsLoading(true);
       try {
-        // const fetchedBarters = await api.getBarterOffersByCurrentBlogger(10, 0);
-        // console.log('fetchedBarters', fetchedBarters)
-        // if (bartersIsLoading && Array.isArray(fetchedBarters) && !!fetchedBarters.length) {
-        //   setBarterOffers(fetchedBarters);
-        // } else {
-        //   throw new Error('Произошла ошибка при получении списка бартеров');
-        // }
-        const response = await api.getBarterOffersByCurrentBlogger();
-        const { newBarters, inProgressBarters, completedBarters } = response;
-        setNewBarters(transformBarters(newBarters));
-        setInProgressBarters(transformBarters(inProgressBarters));
-        setCompletedBarters(transformBarters(completedBarters));
-        setBartersIsLoading(false);
+        const offers = await api.getBarterOffersByCurrentBlogger();
+        setBarterOffers(offers);
+        const responseQueOffers = offers.filter(offer => ['queued'].includes(offer.status));
+        const responseNewOffers = offers.filter(offer => ['created'].includes(offer.status));
+        const responseProgressOffers = offers.filter(offer => ['sended', 'progress', 'planned', 'reported'].includes(offer.status));
+        const responseCompletedOffers = offers.filter(offer => ['closed', 'refused'].includes(offer.status));
+        setQueOffers(sortBy(responseQueOffers, 'updated_at'));
+        setNewOffers(sortBy(responseNewOffers, 'updated_at'));
+        setProgressOffers(sortBy(responseProgressOffers, 'updated_at'));
+        setCompletedOffers(sortBy(responseCompletedOffers, 'updated_at'));
+        setOffersIsLoading(false);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
-        setBartersIsLoading(false);
+        setOffersIsLoading(false);
       }
     }
-    fetchBartersCurrent();
-  }, [profile]);
+    fetchOffers();
+  }, []);
 
-  const transformBarters = (barters) => {
-    return barters
-      .flatMap(barter => 
-        barter.offers.map(offer => ({ ...barter, offer }))
-      )
-      .sort((a, b) => new Date(b.offer.updatedAt) - new Date(a.offer.updatedAt));
-  };
-
-  const goToBartersType = (type, barters) => {
-    navigate(`/barters/type/${type}`, {state: { barters: barters }});
+  const goToBartersType = (type, offers) => {
+    navigate(`/barters/type/${type}`, {state: { barters: offers }});
   }
 
-  const createCards = (barters, type, title) => {
-    if (barters.length > 0) {
+  const createCards = (offers, type, title) => {
+    if (offers.length > 0) {
       return (
-        <div className='container' id={`barters-${type}`} >
+        <div className='container' id={`offers-${type}`} >
           <div className='list'>
             <div className='list-item'>
               <h2>{title}</h2>
-              <Link onClick={() => goToBartersType(type, barters)}>Ещё</Link>
+              <Link onClick={() => goToBartersType(type, offers)}>Ещё</Link>
             </div>
+            {type === 'que' &&
+              <div className='list-item'>
+                <small>Завершите работу по другим бартерам, чтобы приступить к этим</small>
+              </div>
+            }
           </div>
-          <BartersGrid barters={barters.slice(0, 2)} />
+          <BartersGrid barters={offers.slice(0, 2)} />
         </div>
       );
     } else {
@@ -91,17 +90,19 @@ const BloggerBartersPage = () => {
     }
   }
 
-  if (bartersIsLoading) {
-    return <Preloader>Загружаюсь...</Preloader>;
+  if (offersIsLoading) {
+    return <PreloaderContainer text='Секундочку, загружаю ваши бартеры...' />
+  } else if (queOffers.length === 0 && newOffers.length === 0 && progressOffers.length === 0 && completedOffers.length === 0) {
+    return <PreloaderContainer title='Нужно подождать...' text='У вас пока нет предложений от блогеров.' />
   }
 
   return (
     <div className='content-wrapper'>
       <Header />
-      {createCards(inProgressBarters, 'progress', 'В работе')}
-      {createCards(newBarters, 'new', 'На рассмотрении')}
-      {createCards(completedBarters, 'completed', 'Завершённые')}
-      {/* <BartersHistoryTable /> */}
+      {createCards(progressOffers, 'progress', 'В работе')}
+      {createCards(newOffers, 'new', 'Новые')}
+      {createCards(queOffers, 'que', 'В ожидании')}
+      {createCards(completedOffers, 'completed', 'Завершённые')}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 {
   "name": "unpacks",
-  "version": "1.0.4.6",
+  "version": "1.0.5",
   "private": true,
   "type": "module",
   "dependencies": {

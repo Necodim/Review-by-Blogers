@@ -1,5 +1,9 @@
 export function useHelpers() {
 
+	const sortBy = (arrayOfObjects, sortKey) => {
+    return arrayOfObjects.sort((a, b) => new Date(b[sortKey]) - new Date(a[sortKey]));
+  };
+
 	const getPlural = (n, form1, form2, form5) => {
 		let nAbs = Math.abs(n) % 100;
 		let n1 = n % 10;
@@ -115,6 +119,7 @@ export function useHelpers() {
 	}
 
 	return {
+		sortBy,
 		getPlural,
 		copyToClipboard,
 		getMarketplaceShortName,
