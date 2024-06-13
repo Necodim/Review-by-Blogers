@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import './Barters.css';
 import moment from 'moment';
 import api from '../../api/api';
@@ -16,14 +16,13 @@ import PopupBloggerInfo from '../Popup/PopupBloggerInfo';
 
 const BarterPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  
-  const { barterId, offerId } = useParams();
+
+  const { barterId } = useParams();
   const { barter } = location.state || {};
-  
+
   const { role } = useUserProfile();
   const { showToast } = useToastManager();
-  const { copyToClipboard, getMarketplaceShortName, getMarketplaceProductLink } = useHelpers();
+  const { copyToClipboard, getBarterInfo } = useHelpers();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [currentBarter, setCurrentBarter] = useState(barter);
@@ -42,14 +41,7 @@ const BarterPage = () => {
   }, [errorMessage, showToast]);
 
   useEffect(() => {
-    const setBarterInfo = async (barter) => {
-      setCurrentBarter(barter);
-      setBloggerId(barter.offer.user_id);
-      const short = await getMarketplaceShortName(barter?.product?.marketplace_id);
-      const link = await getMarketplaceProductLink(barter?.product?.marketplace_id, barter?.product?.nmid);
-      setMarketplaceShortName(short);
-      setProductLink(link);
-    }
+
 
     const fetchBarter = async () => {
       setBarterIsLoading(true);
@@ -57,7 +49,11 @@ const BarterPage = () => {
         const fetchedBarter = await api.getBarterById(barterId);
         console.log('fetchedBarter', fetchedBarter);
         if (fetchedBarter) {
-          await setBarterInfo(fetchedBarter);
+          const info = await getBarterInfo(fetchedBarter);
+          setMarketplaceShortName(info.short)
+          setProductLink(info.link)
+          setCurrentBarter(fetchedBarter)
+          setBloggerId(fetchedBarter.offer.user_id)
         } else {
           throw new Error('Произошла ошибка при получении бартера');
         }
@@ -70,28 +66,15 @@ const BarterPage = () => {
 
     if (!barter) {
       fetchBarter();
-    } else {
-      setBarterInfo(barter);
     }
+    console.log('barterId', barterId)
     console.log('barter', barter)
     console.log('current', currentBarter)
-  }, [barterId, barter, getMarketplaceShortName, getMarketplaceProductLink]);
-
-  useEffect(() => {
-    if (currentBarter !== barter) {
-      setCurrentBarter(currentBarter);
-    }
-  }, [barter, currentBarter]);
+  }, [barterId]);
 
   const handleCopy = () => {
     const result = copyToClipboard(currentBarter?.product?.nmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
     showToast(result.message, result.status);
-  };
-
-  const openProduct = () => {
-    const product = { ...currentBarter.product, barter: currentBarter };
-    delete product.barter.product;
-    navigate(`/store/products/${product.id}`, { state: { product: product } });
   };
 
   const openTask = () => {
@@ -143,7 +126,7 @@ const BarterPage = () => {
                 <Button className='secondary w-auto size-input' icon='launch' onClick={() => window.open(productLink, '_blank')}>{marketplaceShortName}</Button>
               </div>
               <div className='list-item'>
-                <small>Изменено: {moment(barter.offer?.updated_at).format('DD.MM.YYYY в HH:mm')}</small>
+                <small>Изменено: {moment(barter?.offer?.updated_at).format('DD.MM.YYYY в HH:mm')}</small>
               </div>
             </div>
           </div>
@@ -158,7 +141,7 @@ const BarterPage = () => {
       <div className='container barter-offer-status' id='status'>
         <BarterStatus key={currentBarter?.id + '-' + currentBarter?.offer.status} barter={currentBarter} updateBarter={setCurrentBarter} />
       </div>
-      
+
       {(!!barter?.task || !!barter?.brand_instagram || !!barter?.need_feedback) &&
         <PopupTaskRead
           isOpen={isPopupTaskReadVisible}

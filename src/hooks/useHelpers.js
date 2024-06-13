@@ -1,6 +1,5 @@
-import api from "../api/api";
-
 export function useHelpers() {
+
 	const getPlural = (n, form1, form2, form5) => {
 		let nAbs = Math.abs(n) % 100;
 		let n1 = n % 10;
@@ -53,6 +52,15 @@ export function useHelpers() {
 		const marketplace = await getMarketplace(id);
 		const link = marketplace.link.base + marketplace.link.product.start + productId + marketplace.link.product.end;
 		return link;
+	}
+
+	const getBarterInfo = async (barter) => {
+		const short = await getMarketplaceShortName(barter?.product?.marketplace_id);
+		const link = await getMarketplaceProductLink(barter?.product?.marketplace_id, barter?.product?.nmid);
+		return {
+			short,
+			link,
+		}
 	}
 
 	const getBarterTitle = (status, role) => {
@@ -112,5 +120,6 @@ export function useHelpers() {
 		getMarketplaceShortName,
 		getMarketplaceProductLink,
 		getBarterTitle,
+		getBarterInfo,
 	}
 }
