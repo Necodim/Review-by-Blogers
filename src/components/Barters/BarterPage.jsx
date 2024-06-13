@@ -158,6 +158,7 @@ const BarterPage = () => {
       <div className='container barter-offer-status' id='status'>
         <BarterStatus key={currentBarter?.id + '-' + currentBarter?.offer.status} barter={currentBarter} updateBarter={setCurrentBarter} />
       </div>
+      
       {(!!barter?.task || !!barter?.brand_instagram || !!barter?.need_feedback) &&
         <PopupTaskRead
           isOpen={isPopupTaskReadVisible}
@@ -165,7 +166,9 @@ const BarterPage = () => {
           barter={barter}
         />
       }
-      {role === 'seller' && <PopupBloggerInfo isOpen={isPopupBloggerInfoOpen} onClose={() => setIsPopupBloggerInfoOpen(false)} userId={bloggerId} />}
+      {role === 'seller' && bloggerId &&
+        <PopupBloggerInfo isOpen={isPopupBloggerInfoOpen} onClose={() => setIsPopupBloggerInfoOpen(false)} userId={bloggerId} />
+      }
     </div>
   );
 };

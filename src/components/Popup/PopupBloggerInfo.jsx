@@ -27,25 +27,27 @@ const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
 
   useEffect(() => {
     const fetchBlogger = async () => {
-      try {
-        const user = await api.getUserById(userId);
-        setBlogger(user);
-        console.log('blogger:', user)
-        user.username ? setTelegramLink('https://t.me/' + user.username) : false;
-        if (user?.card_number) {
-          const number = user.card_number.replace(/(\d{4})(?=\d)/g, '$1 ');
-          setCardnumber(number);
+      if (userId) {
+        try {
+          const user = await api.getUserById(userId);
+          setBlogger(user);
+          console.log('blogger:', user)
+          user.username ? setTelegramLink('https://t.me/' + user.username) : false;
+          if (user?.card_number) {
+            const number = user.card_number.replace(/(\d{4})(?=\d)/g, '$1 ');
+            setCardnumber(number);
+          }
+          if (user?.instagram?.username) {
+            const username = user?.instagram?.username.split('?')[0];
+            setInstagramUsername(username);
+            setInstagramLink('https://instagram.com/' + username);
+          }
+          if (user?.instagram?.coverage) {
+            setInstagramCoverage(user?.instagram?.coverage);
+          }
+        } catch (error) {
+          setErrorMessage(error.message);
         }
-        if (user?.instagram?.username) {
-          const username = user?.instagram?.username.split('?')[0];
-          setInstagramUsername(username);
-          setInstagramLink('https://instagram.com/' + username);
-        }
-        if (user?.instagram?.coverage) {
-          setInstagramCoverage(user?.instagram?.coverage);
-        }
-      } catch (error) {
-        setErrorMessage(error.message);
       }
     }
     fetchBlogger();
