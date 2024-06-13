@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 // import svgrPlugin from 'vite-plugin-svgr'
 
 export default defineConfig(() => ({
-  base: `${process.env.BASE_URL || ''}`,
+  base: '/',
   esbuild: {
     loader: "jsx",
     include: /src\/.*\.jsx?$/,
