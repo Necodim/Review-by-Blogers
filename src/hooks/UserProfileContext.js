@@ -21,7 +21,7 @@ export const UserProfileProvider = ({ children }) => {
 	// Для тестов
 	// const userId = 82431798; // Я
 	// const userId = 89141992; // Снежана
-	// const userId = 976651721;
+	// const userId = 36058859; // Альберт
 
 	useEffect(() => {
 		if (!!profile) console.log(profile)
