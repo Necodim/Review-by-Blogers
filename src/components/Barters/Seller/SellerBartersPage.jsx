@@ -5,10 +5,9 @@ import api from '../../../api/api';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { useToastManager } from '../../../hooks/useToast';
 import Header from '../../Header/Header';
+import PreloaderContainer from '../../Preloader/PreloaderContainer';
 import Link from '../../Button/Link';
-import BartersHistoryTable from '../BartersHistoryTable';
 import BartersGrid from '../BartersGrid';
-import Preloader from '../../Preloader/Preloader';
 
 const SellerBartersPage = () => {
   const navigate = useNavigate();
@@ -83,9 +82,9 @@ const SellerBartersPage = () => {
     }
   }
 
-  // if (bartersIsLoading) {
-  //   return <Preloader>Загружаюсь...</Preloader>;
-  // }
+  if (bartersIsLoading) {
+    return <PreloaderContainer text='Секундочку, загружаю ваши бартеры...' />
+  }
 
   return (
     <div className='content-wrapper'>
@@ -93,19 +92,9 @@ const SellerBartersPage = () => {
       {createCards(newBarters, 'new', 'Новые предложения')}
       {createCards(inProgressBarters, 'progress', 'В работе')}
       {createCards(completedBarters, 'completed', 'Завершённые')}
-      {(newBarters.length === 0 && inProgressBarters.length === 0 && completedBarters.length === 0) &&
-        <div className='container' id='barters-none'>
-          <div className='list'>
-            <div className='list-item'>
-              <h2>Нужно подождать...</h2>
-            </div>
-            <div className='list-item'>
-              <p>У вас пока нет предложений от блогеров</p>
-            </div>
-          </div>
-        </div>
+      {(!bartersIsLoading && newBarters.length === 0 && inProgressBarters.length === 0 && completedBarters.length === 0) &&
+        <PreloaderContainer title='Нужно подождать...' text='У вас пока нет предложений от блогеров.' />
       }
-      {/* <BartersHistoryTable /> */}
     </div>
   );
 }
