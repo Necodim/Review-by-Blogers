@@ -2,16 +2,7 @@ import React, { useState } from 'react';
 import './Form.css';
 import InputIcon from './InputIcon';
 
-const DateField = ({ id, title, value, comment, onClick, error, ...inputProps }) => {
-  const today = new Date().toISOString().split('T')[0];
-
-  const [selectedDate, setSelectedDate] = useState(!!value ? value : '');
-
-  const handleDateChange = (e) => {
-    const selected = e.target.value;
-    setSelectedDate(selected);
-  };
-
+const DateField = ({ id, title, value, comment, onClick, error, min, max, onChange, ...inputProps }) => {
   return (
     <div id={'input-block-' + id} className='input-block'>
       {error && <small className='error-wrapper'>{error}</small>}
@@ -19,10 +10,12 @@ const DateField = ({ id, title, value, comment, onClick, error, ...inputProps })
       <div className='input-wrapper'>
         <input
           type='date'
+          id={id}
           name={inputProps.name || id || 'input-name'}
-          value={selectedDate}
-          onChange={handleDateChange}
-          {...inputProps}
+          value={value}
+          min={min}
+          max={max}
+          onChange={onChange}
         />
         <div className='input-fade' />
         <InputIcon icon='calendar_today' disabled={true} />

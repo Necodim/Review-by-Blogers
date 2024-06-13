@@ -5,6 +5,7 @@
   align-items: center !important;
   gap: var(--xs);
   font-size: var(--text-size-m);
+  font-weight: 400 !important;
   text-decoration: none;
   color: var(--text-color);
   background: var(--primary);

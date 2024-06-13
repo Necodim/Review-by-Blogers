@@ -18,7 +18,7 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
   const [fileLoading, setFileLoading] = useState(false);
   const [fileError, setFileError] = useState(null);
   const [formScreenshot, setFormScreenshot] = useState(null);
-  const [formDate, setFormDate] = useState(new Date().toISOString().split('T')[0]);
+  const [formDate, setFormDate] = useState(moment().format('YYYY-MM-DD'));
   const [dateError, setDateError] = useState(null);
 
   useEffect(() => {
@@ -50,11 +50,15 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
     setFileError(null);
   };
 
-  const handleChangeDate = (e) => {
-    const date = new Date(e.target.value).toISOString().split('T')[0];
-    setFormDate(date);
-    setDateError(null);
-  }
+  const handleChangeDate = (event) => {
+    const selectedDate = event.target.value;
+    setFormDate(selectedDate);
+    if (new Date(selectedDate) < new Date()) {
+      setDateError('Дата не может быть в прошлом');
+    } else {
+      setDateError('');
+    }
+  };
 
   const uploadScreenshot = async (formData) => {
     try {
@@ -132,10 +136,9 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
             id='date'
             name='date'
             title='Дата рекламы *'
-            placeholder={moment().format('DD.MM.YYYY')}
-            // value={formDate}
+            value={formDate}
             min={new Date().toISOString().split('T')[0]}
-            // onChange={handleChangeDate}
+            onChange={handleChangeDate}
             error={dateError}
           />
         </Form>

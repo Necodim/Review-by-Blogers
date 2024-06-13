@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import './Barters.css';
+import moment from 'moment';
 import api from '../../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
@@ -128,19 +129,28 @@ const BarterPage = () => {
             <img className='product-image small' src={currentBarter?.product?.photos[0]} alt={currentBarter?.product?.title} />
             <div className='list gap-m'>
               <div className='list gap-xs'>
-                <h3>{currentBarter?.product?.title}</h3>
-                <small>{currentBarter?.product?.brand}</small>
+                <div className='list-item'>
+                  <h3>{currentBarter?.product?.title}</h3>
+                </div>
+                {currentBarter?.product?.brand &&
+                  <div className='list-item'>
+                    <small>Бренд: {currentBarter?.product?.brand}</small>
+                  </div>
+                }
               </div>
               <div className='list-item gap-s'>
                 <Input id='product-nmid' name='product-nmid' value={currentBarter?.product?.nmid} readOnly fade={true} icon='content_copy' iconCallback={handleCopy} onClick={handleCopy} />
                 <Button className='secondary w-auto size-input' icon='launch' onClick={() => window.open(productLink, '_blank')}>{marketplaceShortName}</Button>
               </div>
+              <div className='list-item'>
+                <small>Изменено: {moment(barter.offer?.updated_at).format('DD.MM.YYYY в HH:mm')}</small>
+              </div>
             </div>
           </div>
           <div className='list'>
             <div className='list-item'>
-              <Button className='light' icon='format_list_bulleted' onClick={openTask}>Смотреть ТЗ</Button>
-              <Button className='light' icon='contact_page' onClick={() => setIsPopupBloggerInfoOpen(true)}>О блогере</Button>
+              <Button className='light' icon='format_list_bulleted' onClick={openTask}>Смотреть ТЗ</Button>
+              {role === 'seller' && <Button className='light' icon='contact_page' onClick={() => setIsPopupBloggerInfoOpen(true)}>О блогере</Button>}
             </div>
           </div>
         </div>
