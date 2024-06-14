@@ -56,9 +56,9 @@ const BarterStatusPlanned = ({ offer, updateOffer }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formReels || (!formFeedback && offer.barter.need_feedback)) {
+    if (!formReels || (!formFeedback && offer.barter?.need_feedback)) {
       if (!formReels) setReelsError('Вставьте ссылку на reels');
-      if (!formFeedback && offer.barter.need_feedback) setFeedbackError('Необходимо оставить отзыв о товаре на маркетплейсе');
+      if (!formFeedback && offer.barter?.need_feedback) setFeedbackError('Необходимо оставить отзыв о товаре на маркетплейсе');
       return
     }
     setFormSending(true);
@@ -123,10 +123,10 @@ const BarterStatusPlanned = ({ offer, updateOffer }) => {
           type='checkbox'
           id='feedback'
           name='feedback'
-          title={`Сбор отзывов${offer.barter.need_feedback && ' *'}`}
+          title={`Сбор отзывов${offer.barter?.need_feedback && ' *'}`}
           label='Отзыв о товаре оставлен'
           checked={formFeedback}
-          // required={offer.barter.need_feedback}
+          // required={offer.barter?.need_feedback}
           onChange={handleChangeFeedback}
           error={feedbackError}
         />

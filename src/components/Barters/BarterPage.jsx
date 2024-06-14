@@ -35,6 +35,11 @@ const BarterPage = () => {
   const [isPopupTaskReadVisible, setIsPopupTaskReadVisible] = useState(false);
   const [isPopupBloggerInfoOpen, setIsPopupBloggerInfoOpen] = useState(false);
 
+  const offer = currentOffer || offerFromLocationState;
+  if (import.meta.env.DEV) {
+    console.log('offer = ', offer);
+  }
+
   useEffect(() => {
     if (errorMessage) {
       showToast(errorMessage, 'error');
@@ -42,34 +47,25 @@ const BarterPage = () => {
     }
   }, [errorMessage, showToast]);
 
-  useEffect(() => {
-    const fetchOffer = async () => {
-      setOfferIsLoading(true);
-      try {
-        const fetchedOffer = await api.getBarterOfferById(offerId);
-        if (fetchedOffer) {
-          setCurrentOffer(fetchedOffer);
-          setBloggerId(fetchedOffer.user_id);
-          setProductNmid(fetchedOffer.product?.nmid);
-          const info = await getProductInfo(fetchedOffer.product);
-          setMarketplaceShortName(info.short);
-          setProductLink(info.link);
-        } else {
-          throw new Error('Произошла ошибка при получении бартера');
-        }
-      } catch (error) {
-        setErrorMessage(error.message);
-      } finally {
-        setOfferIsLoading(false);
+  const fetchOffer = async () => {
+    setOfferIsLoading(true);
+    try {
+      const fetchedOffer = await api.getBarterOfferById(offerId);
+      if (fetchedOffer) {
+        setCurrentOffer(fetchedOffer);
+      } else {
+        throw new Error('Произошла ошибка при получении бартера');
       }
-    };
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setOfferIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     if (!offerFromLocationState) {
       fetchOffer();
-    } else {
-      setCurrentOffer(offerFromLocationState);
-      setBloggerId(offerFromLocationState.user_id);
-      setProductNmid(offerFromLocationState.product?.nmid);
     }
   }, [offerId]);
 
@@ -80,10 +76,24 @@ const BarterPage = () => {
     }
   }, [profile, role, currentOffer]);
 
-  const offer = currentOffer || offerFromLocationState;
-  if (import.meta.env.DEV) {
-    console.log('offer = ', offer);
-  }
+  useEffect(() => {
+    const setOfferInfo = async () => {
+      setBloggerId(currentOffer.user_id);
+      setProductNmid(currentOffer.product?.nmid);
+      const info = await getProductInfo(currentOffer.product);
+      setMarketplaceShortName(info.short);
+      setProductLink(info.link);
+    }
+    if (!!currentOffer) {
+      setOfferInfo();
+    }
+  }, [currentOffer]);
+
+  useEffect(() => {
+    if (!offer || (!!offer && !offer.hasOwnProperty('barter'))) {
+      fetchOffer();
+    }
+  }, [offer]);
 
   const handleCopy = () => {
     const result = copyToClipboard(productNmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
