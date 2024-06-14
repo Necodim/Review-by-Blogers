@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
-// Подключение скрипта Telegram Web App
-const tg = window.Telegram.WebApp;
+import { useTelegram } from './useTelegram';
 
 const BackButton = () => {
+  const { isAvailable, showBackButton, hideBackButton } = useTelegram();
   const [canGoBack, setCanGoBack] = useState(false);
 
   useEffect(() => {
@@ -25,14 +24,14 @@ const BackButton = () => {
   }, []);
 
   useEffect(() => {
-    if (canGoBack) {
+    if (canGoBack && isAvailable()) {
       // Включение кнопки "Назад"
-      tg.BackButton.show();
+      showBackButton();
     } else {
       // Выключение кнопки "Назад"
-      tg.BackButton.hide();
+      hideBackButton();
     }
-  }, [canGoBack]);
+  }, [canGoBack, isAvailable]);
 
   return null; // Этот компонент не рендерит ничего
 };
