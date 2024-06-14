@@ -47,7 +47,6 @@ const BarterPage = () => {
       setOfferIsLoading(true);
       try {
         const fetchedOffer = await api.getBarterOfferById(offerId);
-        console.log('fetchedOffer', fetchedOffer);
         if (fetchedOffer) {
           setCurrentOffer(fetchedOffer);
           setBloggerId(fetchedOffer.user_id);
@@ -72,9 +71,6 @@ const BarterPage = () => {
       setBloggerId(offerFromLocationState.user_id);
       setProductNmid(offerFromLocationState.product?.nmid);
     }
-    console.log('barterId', barterId)
-    console.log('offerId', offerId)
-    console.log('current', currentOffer)
   }, [offerId]);
 
   useEffect(() => {

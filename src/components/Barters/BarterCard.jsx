@@ -19,7 +19,6 @@ const BarterCard = ({ offer, onClick }) => {
 		} else {
 			setUsername(offer.barter.seller?.brand_instagram);
 		}
-		console.log(offer)
 	}, [offer, role])
 
 	return (

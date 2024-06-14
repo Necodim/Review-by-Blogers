@@ -42,7 +42,7 @@ const BartersGrid = ({ offers }) => {
     <div className='barter-cards'>
       {displayOffers.map((offer) => (
         <BarterCard
-          key={offer.barter.id}
+          key={offer.id}
           offer={offer}
           onClick={() => handleBarterClick(offer)}
         />

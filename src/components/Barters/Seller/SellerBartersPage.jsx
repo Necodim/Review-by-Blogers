@@ -35,7 +35,6 @@ const SellerBartersPage = () => {
       try {
         const offers = await api.getBarterOffersByCurrentSeller();
         setBarterOffers(offers);
-        console.log(offers)
         const responseQueOffers = offers.filter(offer => ['queued'].includes(offer.status));
         const responseNewOffers = offers.filter(offer => ['created'].includes(offer.status));
         const responseProgressOffers = offers.filter(offer => ['sended', 'progress', 'planned', 'reported'].includes(offer.status));
