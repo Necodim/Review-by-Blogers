@@ -68,7 +68,6 @@ const SettingsPage = () => {
 	const changeRole = async () => {
 		try {
 			await updateUserData({ role: newRole });
-			updateProfile({ role: newRole });
 			goToStartScreen();
 		} catch (error) {
 			showToast('Ошибка при обновлении роли', 'error');

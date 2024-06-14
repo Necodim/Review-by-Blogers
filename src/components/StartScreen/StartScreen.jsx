@@ -8,7 +8,7 @@ import Icon from '../Icon/Icon';
 
 const StartScreen = () => {
 	const navigate = useNavigate();
-	const { role, updateUserData } = useUserProfile();
+	const { profile, role, updateUserData } = useUserProfile();
 	const { showToast } = useToastManager();
 
 	const [errorMessage, setErrorMessage] = useState('');
@@ -25,13 +25,27 @@ const StartScreen = () => {
 		if (role && isUpdated) {
 			navigate('/profile');
 		}
-	}, [role, isUpdated]);
+	}, [role, isUpdated, navigate]);
 
 	useEffect(() => {
 		if (role) {
 			navigate('/profile');
 		}
-	}, [role]);
+	}, [role, navigate]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				await updateUserData(profile);
+			} catch (error) {
+				const errorText = 'Произошла ошибка при обновлении данных пользователя';
+				setErrorMessage(errorText);
+				console.error(`${errorText}:`, error);
+			}
+		};
+
+		fetchData();
+	}, [profile, updateUserData]);
 
 	const handleRoleSelect = async (role) => {
 		try {
