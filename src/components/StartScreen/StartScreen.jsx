@@ -33,20 +33,6 @@ const StartScreen = () => {
 		}
 	}, [role, navigate]);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				await updateUserData(profile);
-			} catch (error) {
-				const errorText = 'Произошла ошибка при обновлении данных пользователя';
-				setErrorMessage(errorText);
-				console.error(`${errorText}:`, error);
-			}
-		};
-
-		fetchData();
-	}, [profile, updateUserData]);
-
 	const handleRoleSelect = async (role) => {
 		try {
 			await updateUserData({ role: role });
