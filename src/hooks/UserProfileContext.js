@@ -21,13 +21,16 @@ export const UserProfileProvider = ({ children }) => {
 	useEffect(() => {
 		if (!!tg && !!user && !!user.id) {
 			setUserId(user.id);
-			// Для тестов
-			// setUserId(82431798); // Я
-			// setUserId(89141992); // Снежана
-			// setUserId(36058859); // Альберт
-			// setUserId(6738962263);
 		}
 	}, [tg, user]);
+
+	// useEffect(() => {
+	// 	// Для тестов
+	// 	setUserId(82431798); // Я
+	// 	// setUserId(89141992); // Снежана
+	// 	// setUserId(36058859); // Альберт
+	// 	// setUserId(6738962263);
+	// }, []);
 
 	useEffect(() => {
 		if (!!profile) {

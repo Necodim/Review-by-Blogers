@@ -1,7 +1,26 @@
 import axios from 'axios';
+import { retrieveLaunchParams } from '@tma.js/sdk';
+
+const baseUrl = 'https://api.reviewbybloggers.ru';
+const { initDataRaw } = retrieveLaunchParams();
+
+const telegramInitData = async () => {
+  const headers = {
+    headers: {
+      Authorization: `tma ${initDataRaw}`,
+    },
+  };
+
+  try {
+    const response = await axios.post(baseUrl + '/telegram/init', {}, headers);
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error posting initData:', error);
+  }
+};
 
 const apiClient = axios.create({
-  baseURL: 'https://api.reviewbybloggers.ru'
+  baseURL: baseUrl
 });
 
 apiClient.interceptors.request.use(config => {
@@ -317,6 +336,8 @@ const uploadBarterScreenshot = async (barterId, data) => {
 }
 
 export default {
+  telegramInitData,
+
   generateAuthToken,
   verifyAuthToken,
   getUser,

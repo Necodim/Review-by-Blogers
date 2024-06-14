@@ -87,7 +87,7 @@ const BloggerBartersPage = () => {
   if (offersIsLoading) {
     return <PreloaderContainer text='Секундочку, загружаю ваши бартеры...' />
   } else if (queOffers.length === 0 && newOffers.length === 0 && progressOffers.length === 0 && completedOffers.length === 0) {
-    return <PreloaderContainer title='Нужно подождать...' text='У вас пока нет предложений от блогеров.' />
+    return <PreloaderContainer title='Бартеров нет' text='Вы ещё не отправляли предложения о сотрудничестве селлерам. Перейдите в каталог и выберите подходящий товар.' />
   }
 
   return (

@@ -1,5 +1,6 @@
 import packageJson from '../../../package.json';
 import React, { useEffect, useState } from 'react';
+import { TonConnectButton } from '@tonconnect/ui-react';
 import { useNavigate } from 'react-router-dom';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
@@ -95,6 +96,7 @@ const SettingsPage = () => {
 						selectedValue={newRole}
 					/>
 				}
+				<TonConnectButton className='w-100' />
 				<Button onClick={() => { navigate('/info/support') }} icon='support_agent'>Поддержка</Button>
 				<Link onClick={() => { navigate('/info/user-agreement') }}>Пользовательское соглашение</Link>
 				<small>Версия: {packageJson.version}</small>

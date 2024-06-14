@@ -1,6 +1,7 @@
 import React, { lazy, useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
+import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { SelectedProductsProvider } from './hooks/useSelectProductsContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -102,35 +103,37 @@ function App() {
 	}
 
 	return (
-		<div className="app">
-			<BackButton />
-			<Routes>
-				<Route index element={!profile || !profile.role ? <StartScreen /> : <Navigate to="/profile" replace />} />
+		<TonConnectUIProvider manifestUrl='https://reviewbybloggers.ru/tonconnect-manifest.json'>
+			<div className="app">
+				<BackButton />
+				<Routes>
+					<Route index element={!profile || !profile.role ? <StartScreen /> : <Navigate to="/profile" replace />} />
 
-				<Route path="/profile" element={<Profile />} />
-				<Route path="/profile/subscribe" element={<Subscribe />} />
-				<Route path="/profile/subscribe/waiting-for-capture" element={<WaitingForCapturePage />} />
-				<Route path="/profile/api" element={<SetWbApi />} />
+					<Route path="/profile" element={<Profile />} />
+					<Route path="/profile/subscribe" element={<Subscribe />} />
+					<Route path="/profile/subscribe/waiting-for-capture" element={<WaitingForCapturePage />} />
+					<Route path="/profile/api" element={<SetWbApi />} />
 
-				<Route path="/store" element={<SelectedProductsProvider><Store /></SelectedProductsProvider>} />
-				<Route path="/store/categories/:subCategoryId"
-					element={<SelectedProductsProvider><CategoryPage /></SelectedProductsProvider>} />
-				<Route path="/store/products/:productId" element={<ProductPage />} />
-				<Route path="/store/products"
-					element={<SelectedProductsProvider><ProductsPage /></SelectedProductsProvider>} />
+					<Route path="/store" element={<SelectedProductsProvider><Store /></SelectedProductsProvider>} />
+					<Route path="/store/categories/:subCategoryId"
+						element={<SelectedProductsProvider><CategoryPage /></SelectedProductsProvider>} />
+					<Route path="/store/products/:productId" element={<ProductPage />} />
+					<Route path="/store/products"
+						element={<SelectedProductsProvider><ProductsPage /></SelectedProductsProvider>} />
 
-				<Route path="/barters" element={<BartersPage />} />
-				<Route path="/barters/type/:type" element={<BartersTypePage />} />
+					<Route path="/barters" element={<BartersPage />} />
+					<Route path="/barters/type/:type" element={<BartersTypePage />} />
 
-				<Route path="/barters/:barterId/:offerId" element={<BarterPage />} />
-				<Route path="/barters/new/:productId" element={<BartersPage />} />
+					<Route path="/barters/:barterId/:offerId" element={<BarterPage />} />
+					<Route path="/barters/new/:productId" element={<BartersPage />} />
 
-				<Route path="/settings" element={<SettingsPage />} />
-				<Route path="/info/support" element={<SupportPage />} />
-				<Route path="/info/user-agreement" element={<UserAgreementPage />} />
-			</Routes>
-			<ToastContainer />
-		</div>
+					<Route path="/settings" element={<SettingsPage />} />
+					<Route path="/info/support" element={<SupportPage />} />
+					<Route path="/info/user-agreement" element={<UserAgreementPage />} />
+				</Routes>
+				<ToastContainer />
+			</div>
+		</TonConnectUIProvider>
 	);
 }
 
