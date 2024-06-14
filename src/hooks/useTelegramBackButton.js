@@ -1,30 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const BackButton = () => {
   const [canGoBack, setCanGoBack] = useState(false);
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const tg = window.Telegram.WebApp;
 
   useEffect(() => {
     const handleHistoryChange = () => {
-      setCanGoBack(history.length > 1);
+      setCanGoBack(window.history.length > 1);
     };
+
     handleHistoryChange();
-    const unlisten = history.listen(handleHistoryChange);
+
+    // Подписка на изменения истории
+    const unlisten = () => {
+      return () => {};
+    };
 
     return () => {
       unlisten();
     };
-  }, [history]);
+  }, [location]);
 
   useEffect(() => {
     if (canGoBack) {
       tg.BackButton.show();
+      tg.BackButton.onClick(() => navigate(-1));
     } else {
       tg.BackButton.hide();
     }
-  }, [canGoBack, tg]);
+  }, [canGoBack, navigate, tg]);
 
   return null;
 };
