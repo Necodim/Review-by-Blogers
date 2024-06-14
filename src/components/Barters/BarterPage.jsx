@@ -28,6 +28,7 @@ const BarterPage = () => {
   const [currentOffer, setCurrentOffer] = useState({});
   const [offerUnavailable, setOfferUnavailable] = useState(false);
   const [offerIsLoading, setOfferIsLoading] = useState(false);
+  const [productNmid, setProductNmid] = useState('');
   const [productLink, setProductLink] = useState('');
   const [marketplaceShortName, setMarketplaceShortName] = useState('');
   const [bloggerId, setBloggerId] = useState(null);
@@ -50,6 +51,7 @@ const BarterPage = () => {
         if (fetchedOffer) {
           setCurrentOffer(fetchedOffer);
           setBloggerId(fetchedOffer.user_id);
+          setProductNmid(fetchedOffer.product?.nmid);
           const info = await getProductInfo(fetchedOffer.product);
           setMarketplaceShortName(info.short);
           setProductLink(info.link);
@@ -68,6 +70,7 @@ const BarterPage = () => {
     } else {
       setCurrentOffer(offerFromLocationState);
       setBloggerId(offerFromLocationState.user_id);
+      setProductNmid(offerFromLocationState.product?.nmid);
     }
     console.log('barterId', barterId)
     console.log('offerId', offerId)
@@ -87,7 +90,7 @@ const BarterPage = () => {
   }
 
   const handleCopy = () => {
-    const result = copyToClipboard(currentOffer?.product?.nmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
+    const result = copyToClipboard(productNmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
     showToast(result.message, result.status);
   };
 
@@ -124,7 +127,17 @@ const BarterPage = () => {
                 }
               </div>
               <div className='list-item gap-s'>
-                <Input id='product-nmid' name='product-nmid' value={currentOffer?.product?.nmid} readOnly fade={true} icon='content_copy' iconCallback={handleCopy} onClick={handleCopy} />
+                <Input
+                  id='product-nmid'
+                  name='product-nmid'
+                  value={productNmid}
+                  onChange={() => {}}
+                  readOnly={true}
+                  fade={true}
+                  icon='content_copy'
+                  iconCallback={handleCopy}
+                  onClick={handleCopy}
+                />
                 <Button className='secondary w-auto size-input' icon='launch' onClick={() => window.open(productLink, '_blank')}>{marketplaceShortName}</Button>
               </div>
               <div className='list-item'>
