@@ -11,25 +11,30 @@ export const UserProfileProvider = ({ children }) => {
 	const { getUser, createUser, upsertUser, generateAuthToken, verifyAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
 	const { showToast } = useToastManager();
 
+	const [userId, setUserId] = useState(null);
 	const [profile, setProfile] = useState(null);
 	const [role, setRole] = useState(null);
 	const [isActive, setIsActive] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const userId = user?.id;
-	// Для тестов
-	// const userId = 82431798; // Я
-	// const userId = 89141992; // Снежана
-	// const userId = 36058859; // Альберт
-	// const userId = 6738962263;
+	useEffect(() => {
+		if (!!user && !!user.id) {
+			setUserId(user.id);
+			// Для тестов
+			// setUserId(82431798); // Я
+			// setUserId(89141992); // Снежана
+			// setUserId(36058859); // Альберт
+			// setUserId(6738962263);
+		}
+	}, [user]);
 
 	useEffect(() => {
 		if (!!profile) {
 			profile.id = userId;
 			console.log(profile);
 		}
-	}, [profile])
+	}, [profile, userId])
 
 	useEffect(() => {
 		const fetchData = async () => {
