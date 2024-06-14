@@ -36,7 +36,6 @@ const SupportPage = lazy(() => import('./pages/Info/SupportPage'));
 const UserAgreementPage = lazy(() => import('./pages/Info/UserAgreementPage'));
 
 function App() {
-	const { initDataRaw } = retrieveLaunchParams();
 	const { setReferral } = useReferral();
 	const { tg, defaultSettings } = useTelegram();
 	const { profile, loading } = useUserProfile();
@@ -93,6 +92,7 @@ function App() {
 
 	useEffect(() => {
 		if (tg) {
+			const { initDataRaw } = retrieveLaunchParams();
 			fetch('https://api.reviewbybloggers.ru/telegram/init', {
 				method: 'POST',
 				headers: {
