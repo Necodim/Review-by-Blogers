@@ -19,7 +19,7 @@ export const UserProfileProvider = ({ children }) => {
 	const [errorMessage, setErrorMessage] = useState('');
 
 	useEffect(() => {
-		if (!!user && !!user.id) {
+		if (!!tg && !!user && !!user.id) {
 			setUserId(user.id);
 			// Для тестов
 			// setUserId(82431798); // Я
@@ -27,7 +27,7 @@ export const UserProfileProvider = ({ children }) => {
 			// setUserId(36058859); // Альберт
 			// setUserId(6738962263);
 		}
-	}, [user]);
+	}, [tg, user]);
 
 	useEffect(() => {
 		if (!!profile) {
