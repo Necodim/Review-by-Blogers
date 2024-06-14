@@ -12,7 +12,7 @@ if (location.pathname.endsWith('/')) {
   history.pushState({}, '', newPathname);
 }
 
-await api.telegramInitData();
+api.telegramInitData();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
