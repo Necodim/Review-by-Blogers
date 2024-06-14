@@ -1,39 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useTelegram } from './useTelegram';
+import { useHistory } from 'react-router-dom';
 
 const BackButton = () => {
-  const { isAvailable, showBackButton, hideBackButton } = useTelegram();
   const [canGoBack, setCanGoBack] = useState(false);
+  const history = useHistory();
+  const tg = window.Telegram.WebApp;
 
   useEffect(() => {
-    const handlePopState = () => {
-      // Проверка, есть ли предыдущие страницы в истории
-      setCanGoBack(window.history.length > 1);
+    const handleHistoryChange = () => {
+      setCanGoBack(history.length > 1);
     };
+    handleHistoryChange();
+    const unlisten = history.listen(handleHistoryChange);
 
-    // Начальная проверка при монтировании компонента
-    handlePopState();
-
-    // Добавление слушателя события изменения истории
-    window.addEventListener('popstate', handlePopState);
-
-    // Удаление слушателя при размонтировании компонента
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      unlisten();
     };
-  }, []);
+  }, [history]);
 
   useEffect(() => {
-    if (canGoBack && isAvailable()) {
-      // Включение кнопки "Назад"
-      showBackButton();
+    if (canGoBack) {
+      tg.BackButton.show();
     } else {
-      // Выключение кнопки "Назад"
-      hideBackButton();
+      tg.BackButton.hide();
     }
-  }, [canGoBack, isAvailable]);
+  }, [canGoBack, tg]);
 
-  return null; // Этот компонент не рендерит ничего
+  return null;
 };
 
 export default BackButton;
