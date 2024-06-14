@@ -6,7 +6,7 @@ import api from '../../../api/api';
 import Form from '../../Form/Form';
 import Input from '../../Form/Input';
 
-const BarterStatusProgress = ({ barter, updateBarter }) => {
+const BarterStatusProgress = ({ offer, updateOffer }) => {
   const { role } = useUserProfile();
   const { showToast } = useToastManager();
 
@@ -42,8 +42,8 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
   }, [role]);
 
   useEffect(() => {
-    setFormScreenshot(barter?.offer?.screenshot);
-  }, [barter])
+    setFormScreenshot(offer?.screenshot);
+  }, [offer])
 
   const handleChangeScreenshot = (file) => {
     setFile(file);
@@ -63,7 +63,7 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
   const uploadScreenshot = async (formData) => {
     try {
       setFileLoading(true);
-      const response = await api.uploadBarterScreenshot(barter.id, formData);
+      const response = await api.uploadBarterScreenshot(offer.barter.id, formData);
       setFormScreenshot(response);
       return response;
     } catch (error) {
@@ -92,17 +92,14 @@ const BarterStatusProgress = ({ barter, updateBarter }) => {
       const uploadedFile = await uploadScreenshot(formData);
 
       const data = {
-        offerId: barter.offer.id,
-        status: barter.offer.status,
+        offerId: offer.id,
+        status: offer.status,
         screenshot: uploadedFile,
         date: formDate,
       }
 
       const updatedOffer = await api.updateBarterOffer(data);
-      updateBarter(prevBarter => ({
-        ...prevBarter,
-        offer: updatedOffer
-      }));
+      updateOffer(updatedOffer);
       showToast('Первый отчёт по бартеру отправлен', 'success');
     } catch (error) {
       console.error(error);

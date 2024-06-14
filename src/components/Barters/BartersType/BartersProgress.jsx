@@ -1,17 +1,17 @@
 import React from 'react';
 import BartersGrid from '../BartersGrid';
 
-const BartersInProgress = ({ barters }) => {
+const BartersProgress = ({ offers }) => {
   return (
-    <div className='container' id='barters-progress' >
+    <div className='container' id='offers-progress' >
       <div className='list'>
         <div className='list-item'>
           <h2>В работе</h2>
         </div>
       </div>
-      <BartersGrid barters={barters} />
+      <BartersGrid offers={offers} />
     </div>
   );
 }
 
-export default BartersInProgress;
+export default BartersProgress;

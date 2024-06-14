@@ -41,6 +41,7 @@ const SellerBartersPage = () => {
       try {
         const offers = await api.getBarterOffersByCurrentSeller();
         setBarterOffers(offers);
+        console.log(offers)
         const responseQueOffers = offers.filter(offer => ['queued'].includes(offer.status));
         const responseNewOffers = offers.filter(offer => ['created'].includes(offer.status));
         const responseProgressOffers = offers.filter(offer => ['sended', 'progress', 'planned', 'reported'].includes(offer.status));
@@ -64,7 +65,7 @@ const SellerBartersPage = () => {
   }
 
   const goToBartersType = (type, offers) => {
-    navigate(`/barters/type/${type}`, {state: { barters: offers }});
+    navigate(`/barters/type/${type}`, {state: { offers: offers }});
   }
 
   const createCards = (offers, type, title) => {
@@ -77,7 +78,7 @@ const SellerBartersPage = () => {
               <Link onClick={() => goToBartersType(type, offers)}>Ещё</Link>
             </div>
           </div>
-          <BartersGrid barters={offers.slice(0, 2)} />
+          <BartersGrid offers={offers.slice(0, 2)} />
         </div>
       );
     } else {

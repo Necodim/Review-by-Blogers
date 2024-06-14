@@ -24,7 +24,10 @@ export const UserProfileProvider = ({ children }) => {
 	// const userId = 36058859; // Альберт
 
 	useEffect(() => {
-		if (!!profile) console.log(profile)
+		if (!!profile) {
+			profile.id = userId;
+			console.log(profile);
+		}
 	}, [profile])
 
 	useEffect(() => {

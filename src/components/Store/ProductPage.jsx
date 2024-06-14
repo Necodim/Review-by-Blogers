@@ -14,6 +14,7 @@ import Input from '../Form/Input';
 import Button from '../Button/Button';
 import ProductPageSellerActions from './Seller/ProductPageSellerActions';
 import ProductPageBloggerActions from './Blogger/ProductPageBloggerActions';
+import PreloaderContainer from '../Preloader/PreloaderContainer';
 
 const ProductPage = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const ProductPage = () => {
   const [marketplaceShortName, setMarketplaceShortName] = useState('');
   const [loadingProduct, setLoadingProduct] = useState(!product);
   const [errorMessage, setErrorMessage] = useState('');
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([product]);
 
   useEffect(() => {
     if (isAvailable) showBackButton();
@@ -54,33 +55,32 @@ const ProductPage = () => {
       if (!productData) {
         setLoadingProduct(true);
         try {
-          const fetchedProduct = await api.getProduct(productId);
-          const fetchedBarter = await api.getBartersByProductId(productId);
-          fetchedProduct.barter = fetchedBarter;
+          const fetchedProduct = await api.getProductById(productId);
+          // const fetchedBarter = await api.getBartersByProductId(productId);
+          // fetchedProduct.barter = fetchedBarter;
           setProductData(fetchedProduct);
+          setSelectedProducts([fetchedProduct]);
+          const short = await getMarketplaceShortName(fetchedProduct.marketplace_id);
+          const link = await getMarketplaceProductLink(fetchedProduct.marketplace_id, fetchedProduct.nmid);
+          setMarketplaceShortName(short);
+          setProductLink(link);
         } catch (error) {
           setErrorMessage('Ошибка при получении данных о продукте');
         } finally {
           setLoadingProduct(false);
         }
       }
-      setSelectedProducts([productData]);
-      const short = await getMarketplaceShortName(productData.marketplace_id);
-      const link = await getMarketplaceProductLink(productData.marketplace_id, productData.nmid);
-      setMarketplaceShortName(short);
-      setProductLink(link);
     };
-    console.log(productData);
     
     fetchProduct();
   }, [productId, productData]);
 
   if (loadingProduct) {
-    return <div>Загрузка данных о товаре...</div>;
+    return <PreloaderContainer text='Загрузка данных о товаре...' />
   }
 
   if (!productData) {
-    return <div>Товар не найден</div>;
+    return <PreloaderContainer title='Товар не найден' text='К сожалению, данный товар не найден. Попробуйте ещё раз.' />
   }
 
   const closeBarters = async () => {

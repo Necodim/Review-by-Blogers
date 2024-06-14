@@ -5,7 +5,7 @@ import api from '../../../api/api';
 import Form from '../../Form/Form';
 import Input from '../../Form/Input';
 
-const BarterStatusSended = ({ barter, updateBarter }) => {
+const BarterStatusSended = ({ offer, updateOffer }) => {
   const { role } = useUserProfile();
   const { showToast } = useToastManager();
 
@@ -43,7 +43,7 @@ const BarterStatusSended = ({ barter, updateBarter }) => {
   const uploadScreenshot = async (formData) => {
     try {
       setFileLoading(true);
-      const response = await api.uploadReceipt(barter.id, formData);
+      const response = await api.uploadReceipt(offer.barter.id, formData);
       setFormScreenshot(response);
       return response;
     } catch (error) {
@@ -71,17 +71,12 @@ const BarterStatusSended = ({ barter, updateBarter }) => {
       const uploadedFile = await uploadScreenshot(formData);
       setFormScreenshot(uploadedFile);
       const data = {
-        offerId: barter.offer.id,
-        status: barter.offer.status,
+        offerId: offer.id,
+        status: offer.status,
         receipt: uploadedFile,
       }
       const updatedOffer = await api.updateBarterOffer(data);
-      console.log('updatedOffer', updatedOffer)
-      console.log(updatedOffer.status)
-      updateBarter(prevBarter => ({
-        ...prevBarter,
-        offer: updatedOffer
-      }));
+      updateOffer(updatedOffer);
       showToast('Вы успешно отправили подтверждение. Статус бартера изменён.', 'success');
     } catch (error) {
       console.error(error);

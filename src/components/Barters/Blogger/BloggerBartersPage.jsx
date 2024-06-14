@@ -64,7 +64,7 @@ const BloggerBartersPage = () => {
   }, []);
 
   const goToBartersType = (type, offers) => {
-    navigate(`/barters/type/${type}`, {state: { barters: offers }});
+    navigate(`/barters/type/${type}`, {state: { offers: offers }});
   }
 
   const createCards = (offers, type, title) => {
@@ -82,7 +82,7 @@ const BloggerBartersPage = () => {
               </div>
             }
           </div>
-          <BartersGrid barters={offers.slice(0, 2)} />
+          <BartersGrid offers={offers.slice(0, 2)} />
         </div>
       );
     } else {

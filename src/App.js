@@ -25,7 +25,7 @@ const BartersPage = lazy(() => import('./components/Barters/BartersPage'));
 const CategoryPage = lazy(() => import('./components/Store/Blogger/CategoryPage'));
 const ProductPage = lazy(() => import('./components/Store/ProductPage'));
 const ProductsPage = lazy(() => import('./components/Store/ProductsPage'));
-const BartersTypePage = lazy(() => import('./components/Barters/BartersTypePage'));
+const BartersTypePage = lazy(() => import('./components/Barters/BartersType/BartersTypePage'));
 
 const SettingsPage = lazy(() => import('./pages/Settings/SettingsPage'));
 

@@ -7,7 +7,7 @@ import Form from '../../Form/Form';
 import Input from '../../Form/Input';
 import PopupOfferRefuseReason from '../../Popup/PopupOfferRefuseReason';
 
-const BarterStatusCreated = ({ barter, updateBarter }) => {
+const BarterStatusCreated = ({ offer, updateOffer }) => {
   const { role } = useUserProfile();
   const { showToast } = useToastManager();
   
@@ -33,10 +33,10 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
         setText('Вы отправили предложение о бартере, но селлер ещё не принял его.');
         break;
       case 'seller':
-        setText(`Блогер отправил предложение о бартере. Ознакомьтесь с его профилем (кнопка выше) и, если вас всё устроит, отправьте блогеру на карту средства ${!!barter?.offer?.order_price ? `(в размере ${barter?.offer?.order_price}₽ с учётом доставки) ` : ''}для покупки товаров. После чего подтвердите перевод средств.`);
+        setText(`Блогер отправил предложение о бартере. Ознакомьтесь с его профилем (кнопка выше) и, если вас всё устроит, отправьте блогеру на карту средства ${!!offer?.order_price ? `(в размере ${offer?.order_price}₽ с учётом доставки) ` : ''}для покупки товаров. После чего подтвердите перевод средств.`);
         break;
     }
-  }, [role, barter]);
+  }, [role, offer]);
 
   const handleChangeScreenshot = (file) => {
     setFile(file);
@@ -47,7 +47,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
     try {
       setFileLoading(true);
       setBtnRefuseDisabled(true);
-      const response = await api.uploadReceipt(barter.id, formData);
+      const response = await api.uploadReceipt(offer.barter.id, formData);
       setFormScreenshot(response);
       return response;
     } catch (error) {
@@ -77,18 +77,15 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
       const uploadedFile = await uploadScreenshot(formData);
       setFormScreenshot(uploadedFile);
       const data = {
-        offerId: barter.offer.id,
-        status: barter.offer.status,
+        offerId: offer.id,
+        status: offer.status,
         receipt: uploadedFile,
       }
       const updatedOffer = await api.updateBarterOffer(data);
-      updateBarter(prevBarter => ({
-        ...prevBarter,
-        offer: {
-          ...prevBarter.offer,
-          status: updatedOffer.status,
-          receipt_seller: uploadedFile,
-        }
+      updateOffer(prev => ({
+        ...prev,
+        status: updatedOffer.status,
+        receipt_seller: uploadedFile,
       }));
       showToast('Вы приняли предложение от блогера', 'success');
     } catch (error) {
@@ -128,7 +125,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
                 onChange={handleChangeScreenshot}
                 required={true}
                 error={fileError}
-                comment={!!barter?.offer?.order_price ? barter?.offer?.order_price + '₽ (с учётом доставки)' : 'Уточните сумму у блогера'}
+                comment={!!offer?.order_price ? offer?.order_price + '₽ (с учётом доставки)' : 'Уточните сумму у блогера'}
               />
             </Form>
           </div>
@@ -139,7 +136,7 @@ const BarterStatusCreated = ({ barter, updateBarter }) => {
           <PopupOfferRefuseReason
             isOpen={isPopupRefuseOpen}
             onClose={closePopupRefuse}
-            offer={barter.offer}
+            offer={offer}
           />
         </div>
       }

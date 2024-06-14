@@ -6,7 +6,7 @@ import api from '../../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
 import { useHelpers } from '../../hooks/useHelpers';
-import Preloader from '../Preloader/Preloader';
+import PreloaderContainer from '../Preloader/PreloaderContainer';
 import Header from '../Header/Header';
 import Input from '../Form/Input';
 import Button from '../Button/Button';
@@ -17,16 +17,17 @@ import PopupBloggerInfo from '../Popup/PopupBloggerInfo';
 const BarterPage = () => {
   const location = useLocation();
 
-  const { barterId } = useParams();
-  const { barter: barterFromLocationState } = location.state || {};
+  const { barterId, offerId } = useParams();
+  const { offer: offerFromLocationState } = location.state || {};
 
-  const { role } = useUserProfile();
+  const { profile, role } = useUserProfile();
   const { showToast } = useToastManager();
-  const { copyToClipboard, getBarterInfo } = useHelpers();
+  const { copyToClipboard, getProductInfo } = useHelpers();
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [currentBarter, setCurrentBarter] = useState(barterFromLocationState);
-  const [barterIsLoading, setBarterIsLoading] = useState(false);
+  const [currentOffer, setCurrentOffer] = useState({});
+  const [offerUnavailable, setOfferUnavailable] = useState(false);
+  const [offerIsLoading, setOfferIsLoading] = useState(false);
   const [productLink, setProductLink] = useState('');
   const [marketplaceShortName, setMarketplaceShortName] = useState('');
   const [bloggerId, setBloggerId] = useState(null);
@@ -41,36 +42,52 @@ const BarterPage = () => {
   }, [errorMessage, showToast]);
 
   useEffect(() => {
-    const fetchBarter = async () => {
-      setBarterIsLoading(true);
+    const fetchOffer = async () => {
+      setOfferIsLoading(true);
       try {
-        const fetchedBarter = await api.getBarterById(barterId);
-        console.log('fetchedBarter', fetchedBarter);
-        if (fetchedBarter) {
-          const info = await getBarterInfo(fetchedBarter);
-          setMarketplaceShortName(info.short)
-          setProductLink(info.link)
-          setCurrentBarter(fetchedBarter)
-          setBloggerId(fetchedBarter.offer.user_id)
+        const fetchedOffer = await api.getBarterOfferById(offerId);
+        console.log('fetchedOffer', fetchedOffer);
+        if (fetchedOffer) {
+          setCurrentOffer(fetchedOffer);
+          setBloggerId(fetchedOffer.user_id);
+          const info = await getProductInfo(fetchedOffer.product);
+          setMarketplaceShortName(info.short);
+          setProductLink(info.link);
         } else {
           throw new Error('Произошла ошибка при получении бартера');
         }
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
-        setBarterIsLoading(false);
+        setOfferIsLoading(false);
       }
     };
 
-    if (!barterFromLocationState) {
-      fetchBarter();
+    if (!offerFromLocationState) {
+      fetchOffer();
+    } else {
+      setCurrentOffer(offerFromLocationState);
+      setBloggerId(offerFromLocationState.user_id);
     }
     console.log('barterId', barterId)
-    console.log('current', currentBarter)
-  }, [barterId]);
+    console.log('offerId', offerId)
+    console.log('current', currentOffer)
+  }, [offerId]);
+
+  useEffect(() => {
+    if (!!currentOffer && !!currentOffer[role] && profile.id !== currentOffer[role].id) {
+      setOfferIsLoading(false);
+      setOfferUnavailable(true);
+    }
+  }, [profile, role, currentOffer]);
+
+  const offer = currentOffer || offerFromLocationState;
+  if (import.meta.env.DEV) {
+    console.log('offer = ', offer);
+  }
 
   const handleCopy = () => {
-    const result = copyToClipboard(currentBarter?.product?.nmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
+    const result = copyToClipboard(currentOffer?.product?.nmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
     showToast(result.message, result.status);
   };
 
@@ -78,56 +95,40 @@ const BarterPage = () => {
     setIsPopupTaskReadVisible(true);
   }
 
-  if (barterIsLoading) {
-    return <Preloader>Загрузка...</Preloader>;
+  if (offerIsLoading) {
+    return <PreloaderContainer text='Бартер загружается...' />
+  } else if (!currentOffer) {
+    return <PreloaderContainer title='Бартер не найден' text='Попробуйте ещё раз...' />
   }
 
-  if (!currentBarter) {
-    return (
-      <div className='content-wrapper'>
-        <Header />
-        <div className='container' id='barter'>
-          <div className='list'>
-            <div className='list-item'>
-              <h2>Бартер не найден</h2>
-            </div>
-            <div className='list-item'>
-              <p>Попробуйте ещё раз...</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  const barter = currentBarter || barterFromLocationState;
-  if (import.meta.env.DEV) {
-    console.log('barter = ', barter);
+  if (offerUnavailable) {
+    return <PreloaderContainer title='Нет доступа' text='Этот бартер вам недоступен.' />
   }
 
   return (
     <div className='content-wrapper'>
       <Header />
-      <div className='container product-page' id='barter' data-barter-id={currentBarter?.id} data-product-id={currentBarter?.product?.nmid} data-product-brand={currentBarter?.product?.brand}>
+      <div className='container product-page' id='offer' data-offer-id={currentOffer?.id} data-product-id={currentOffer?.product?.nmid} data-product-brand={currentOffer?.product?.brand}>
         <div className='list gap-l'>
           <div className='list-item align-items-start'>
-            <img className='product-image small' src={currentBarter?.product?.photos[0]} alt={currentBarter?.product?.title} />
+            <img className='product-image small' src={currentOffer?.product?.photos[0]} alt={currentOffer?.product?.title} />
             <div className='list gap-m'>
               <div className='list gap-xs'>
                 <div className='list-item'>
-                  <h3>{currentBarter?.product?.title}</h3>
+                  <h3>{currentOffer?.product?.title}</h3>
                 </div>
-                {currentBarter?.product?.brand &&
+                {currentOffer?.product?.brand &&
                   <div className='list-item'>
-                    <small>Бренд: {currentBarter?.product?.brand}</small>
+                    <small>Бренд: {currentOffer?.product?.brand}</small>
                   </div>
                 }
               </div>
               <div className='list-item gap-s'>
-                <Input id='product-nmid' name='product-nmid' value={currentBarter?.product?.nmid} readOnly fade={true} icon='content_copy' iconCallback={handleCopy} onClick={handleCopy} />
+                <Input id='product-nmid' name='product-nmid' value={currentOffer?.product?.nmid} readOnly fade={true} icon='content_copy' iconCallback={handleCopy} onClick={handleCopy} />
                 <Button className='secondary w-auto size-input' icon='launch' onClick={() => window.open(productLink, '_blank')}>{marketplaceShortName}</Button>
               </div>
               <div className='list-item'>
-                <small>Изменено: {moment(barter?.offer?.updated_at).format('DD.MM.YYYY в HH:mm')}</small>
+                <small>Изменено: {moment(offer?.updated_at).format('DD.MM.YYYY в HH:mm')}</small>
               </div>
             </div>
           </div>
@@ -140,14 +141,14 @@ const BarterPage = () => {
         </div>
       </div>
       <div className='container barter-offer-status' id='status'>
-        <BarterStatus key={currentBarter?.id + '-' + currentBarter?.offer.status} barter={currentBarter} updateBarter={setCurrentBarter} />
+        <BarterStatus key={currentOffer?.id + '-' + currentOffer?.status} offer={currentOffer} updateOffer={setCurrentOffer} />
       </div>
 
-      {(!!barter?.task || !!barter?.brand_instagram || !!barter?.need_feedback) &&
+      {(!!offer?.barter?.task || !!offer?.barter?.brand_instagram || !!offer?.barter?.need_feedback) &&
         <PopupTaskRead
           isOpen={isPopupTaskReadVisible}
           onClose={() => setIsPopupTaskReadVisible(false)}
-          barter={barter}
+          barter={offer.barter}
         />
       }
       {role === 'seller' && bloggerId &&

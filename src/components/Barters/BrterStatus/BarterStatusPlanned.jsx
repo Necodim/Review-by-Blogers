@@ -8,7 +8,7 @@ import Input from '../../Form/Input';
 import Popup from '../../Popup/Popup';
 import Button from '../../Button/Button';
 
-const BarterStatusPlanned = ({ barter, updateBarter }) => {
+const BarterStatusPlanned = ({ offer, updateOffer }) => {
   const { role } = useUserProfile();
   const { showToast } = useToastManager();
 
@@ -33,14 +33,14 @@ const BarterStatusPlanned = ({ barter, updateBarter }) => {
     switch (role) {
       case 'blogger':
         setTitle('Отчёт №2 по бартеру');
-        setText(`Опубликуйте reels${barter?.offer?.date ? ` ${moment(barter.offer.date).format('DD.MM.YYYY')}` : ''}, отправьте ссылку на него и укажите, оставили ли вы отзыв на купленный товар в магазине селлера на маркетплейсе.`);
+        setText(`Опубликуйте reels${offer?.date ? ` ${moment(offer.date).format('DD.MM.YYYY')}` : ''}, отправьте ссылку на него и укажите, оставили ли вы отзыв на купленный товар в магазине селлера на маркетплейсе.`);
         break;
       case 'seller':
         setTitle('Выбрана дата рекламы');
-        setText(`Блогер подтвердил факт заказа товара и запланировал дату рекламной кампании${barter?.offer?.date ? ` на ${moment(barter.offer.date).format('DD.MM.YYYY')}` : ''}.`);
+        setText(`Блогер подтвердил факт заказа товара и запланировал дату рекламной кампании${offer?.date ? ` на ${moment(offer.date).format('DD.MM.YYYY')}` : ''}.`);
         break;
     }
-  }, [role, barter]);
+  }, [role, offer]);
 
   const handleChangeReels = (e) => {
     setFormReels(e.target.value);
@@ -56,26 +56,23 @@ const BarterStatusPlanned = ({ barter, updateBarter }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formReels || (!formFeedback && barter.need_feedback)) {
+    if (!formReels || (!formFeedback && offer.barter.need_feedback)) {
       if (!formReels) setReelsError('Вставьте ссылку на reels');
-      if (!formFeedback && barter.need_feedback) setFeedbackError('Необходимо оставить отзыв о товаре на маркетплейсе');
+      if (!formFeedback && offer.barter.need_feedback) setFeedbackError('Необходимо оставить отзыв о товаре на маркетплейсе');
       return
     }
     setFormSending(true);
 
     try {
       const data = {
-        offerId: barter.offer.id,
-        status: barter.offer.status,
+        offerId: offer.id,
+        status: offer.status,
         reels: formReels,
         feedback: formFeedback,
       }
 
       const updatedOffer = await api.updateBarterOffer(data);
-      updateBarter(prevBarter => ({
-        ...prevBarter,
-        offer: updatedOffer
-      }));
+      updateOffer(updatedOffer);
       showToast('Второй отчёт по бартеру отправлен', 'success');
     } catch (error) {
       console.error(error);
@@ -98,7 +95,7 @@ const BarterStatusPlanned = ({ barter, updateBarter }) => {
       <>
         <Button className='w-100' icon='screenshot' onClick={openPopupScreenshot}>Посмотреть скриншот заказа</Button>
         <Popup id='popup-order-screenshot' isOpen={isPopupOpen} onClose={closePopupScreenshot}>
-          <img src={barter?.offer?.screenshot} className='w-100' />
+          <img src={offer?.screenshot} className='w-100' />
         </Popup>
       </>
     )
@@ -126,10 +123,10 @@ const BarterStatusPlanned = ({ barter, updateBarter }) => {
           type='checkbox'
           id='feedback'
           name='feedback'
-          title={`Сбор отзывов${barter.need_feedback && ' *'}`}
+          title={`Сбор отзывов${offer.barter.need_feedback && ' *'}`}
           label='Отзыв о товаре оставлен'
           checked={formFeedback}
-          // required={barter.need_feedback}
+          // required={offer.barter.need_feedback}
           onChange={handleChangeFeedback}
           error={feedbackError}
         />

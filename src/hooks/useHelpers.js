@@ -58,16 +58,16 @@ export function useHelpers() {
 		return link;
 	}
 
-	const getBarterInfo = async (barter) => {
-		const short = await getMarketplaceShortName(barter?.product?.marketplace_id);
-		const link = await getMarketplaceProductLink(barter?.product?.marketplace_id, barter?.product?.nmid);
+	const getProductInfo = async (product) => {
+		const short = await getMarketplaceShortName(product.marketplace_id);
+		const link = await getMarketplaceProductLink(product.marketplace_id, product.nmid);
 		return {
 			short,
 			link,
 		}
 	}
 
-	const getBarterTitle = (status, role) => {
+	const getOfferTitle = (status, role) => {
 		const statuses = [
 			{
 				name: 'queued',
@@ -124,7 +124,7 @@ export function useHelpers() {
 		copyToClipboard,
 		getMarketplaceShortName,
 		getMarketplaceProductLink,
-		getBarterTitle,
-		getBarterInfo,
+		getProductInfo,
+		getOfferTitle,
 	}
 }

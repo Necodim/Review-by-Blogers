@@ -4,10 +4,10 @@ import { useUserProfile } from '../../../hooks/UserProfileContext';
 import Button from '../../Button/Button';
 import Textarea from '../../Form/Textarea';
 
-const BarterStatusClosed = ({ barter }) => {
+const BarterStatusClosed = ({ offer }) => {
   const { role } = useUserProfile();
   const [text, setText] = useState(null);
-  const [feedback, setFeedback] = useState(barter.offer?.feedback_seller);
+  const [feedback, setFeedback] = useState(offer?.feedback_seller);
 
   useEffect(() => {
     switch (role) {
@@ -21,11 +21,11 @@ const BarterStatusClosed = ({ barter }) => {
   }, [role]);
 
   useEffect(() => {
-    setFeedback(barter.offer?.feedback_seller);
-  }, [barter]);
+    setFeedback(offer?.feedback_seller);
+  }, [offer]);
 
   const goToInstagram = () => {
-    window.open(barter.offer.reels, '_blank', 'noopener,noreferrer');
+    window.open(offer.reels, '_blank', 'noopener,noreferrer');
   }
 
   return (
@@ -34,9 +34,9 @@ const BarterStatusClosed = ({ barter }) => {
         <h2>Бартер окончен</h2>
       </div>
       <div className='list-item'>
-        <p>{barter?.offer?.date ? `Дата публикации: ${moment(barter.offer.date).format('DD.MM.YYYY')}` : ''}</p>
+        <p>{offer?.date ? `Дата публикации: ${moment(offer.date).format('DD.MM.YYYY')}` : ''}</p>
       </div>
-      {barter.offer.reels &&
+      {offer.reels &&
         <div className='list-item'>
           <Button className='w-100' target='_blank' icon='center_focus_strong' onClick={goToInstagram}>Смотреть Reels</Button>
         </div>

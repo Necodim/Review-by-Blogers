@@ -1,46 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Barters.css';
 import '../Store/Store.css';
+import { useNavigate } from 'react-router-dom';
+import { useHelpers } from '../../hooks/useHelpers';
 import BarterCard from './BarterCard';
 
-const BartersGrid = ({ barters }) => {
+const BartersGrid = ({ offers }) => {
   const navigate = useNavigate();
 
-  const initialBartersPlaceholder = new Array(4).fill({}).map((_, index) => ({
-    placeholder: true,
-    id: `barter-placeholder-${index}`,
-    offer: {
-      id: `offer-placeholder-${index}`,
-      status: 'Загрузка...',
-      instagram_username: 'username',
-      updated_at: 'Дата и время',
+  const { sortBy } = useHelpers();
+
+  const initialOffersPlaceholder = new Array(2).fill({}).map((_, index) => ({
+    id: `offer-placeholder-${index}`,
+    status: 'Загрузка...',
+    instagram_username: 'username',
+    updated_at: 'Дата и время',
+    barter: {
+      placeholder: true,
+      id: `barter-placeholder-${index}`,
     },
     product: {
       placeholder: true,
       nmid: `product-placeholder-${index}`,
     }
   }));
-  const [displayBarters, setDisplayBarters] = useState(initialBartersPlaceholder);
+
+  const [displayOffers, setDisplayOffers] = useState(initialOffersPlaceholder);
 
   useEffect(() => {
-    if (barters.length > 0) {
-      const sortedBarters = barters.sort((a, b) => b.offer.updated_at > a.offer.updated_at);
-      setDisplayBarters(sortedBarters);
+    if (offers && offers.length > 0) {
+      const sortedOffers = sortBy(offers, 'updated_at');
+      setDisplayOffers(sortedOffers);
     }
-  }, [barters]);
+  }, [offers]);
 
-  const handleBarterClick = (barter) => {
-    navigate(`/barters/${barter.id}/${barter.offer.id}`, { state: { barter: barter } });
+  const handleBarterClick = (offer) => {
+    navigate(`/barters/${offer.barter.id}/${offer.id}`, { state: { barter: offer } });
   }
 
   return (
     <div className='barter-cards'>
-      {displayBarters.map((barter) => (
+      {displayOffers.map((offer) => (
         <BarterCard
-          key={barter.offer?.id}
-          barter={barter}
-          onClick={() => handleBarterClick(barter)}
+          key={offer.barter.id}
+          offer={offer}
+          onClick={() => handleBarterClick(offer)}
         />
       ))}
     </div>

@@ -15,8 +15,8 @@ const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
   const [isPopupConfirmationBarterCloseVisible, setIsPopupConfirmationBarterCloseVisible] = useState(false);
 
   useEffect(() => {
-    if (selectedProducts && selectedProducts.length > 0) {
-      if (selectedProducts[0].barter) {
+    if (!!selectedProducts && selectedProducts.length > 0) {
+      if (selectedProducts[0] && selectedProducts[0].barter) {
         setBarter(selectedProducts[0].barter);
         if (selectedProducts[0].barter.closedat == null || moment(selectedProducts[0].barter.closedat).isAfter(moment())) {
           setIsBarterOpen(true);

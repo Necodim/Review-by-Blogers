@@ -5,57 +5,57 @@ import moment from 'moment';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useHelpers } from '../../hooks/useHelpers';
 
-const BarterCard = ({ barter, onClick }) => {
+const BarterCard = ({ offer, onClick }) => {
 	const { role } = useUserProfile();
-	const { getBarterTitle } = useHelpers();
+	const { getOfferTitle } = useHelpers();
 
 	const [title, setTitle] = useState('Статус');
 	const [username, setUsername] = useState('');
 
 	useEffect(() => {
-		setTitle(getBarterTitle(barter.offer?.status, role));
+		setTitle(getOfferTitle(offer.status, role));
 		if (role === 'seller') {
-			setUsername('@' + barter.offer?.instagram_username);
+			setUsername('@' + offer.blogger?.instagram_username);
 		} else {
-			setUsername(barter.brand_instagram);
+			setUsername(offer.barter.seller?.brand_instagram);
 		}
-		console.log(barter)
-	}, [barter, role])
+		console.log(offer)
+	}, [offer, role])
 
 	return (
 		// <div
-		// 	id={barter.offer?.id}
+		// 	id={offer.id}
 		// 	className='card product-card'
 		// 	onClick={onClick}
 		// >
 		// 	<div
-		// 		className={`product-image ${barter.product.photos && barter.product.photos.length > 0 ? '' : barter.product.placeholder ? 'loading' : 'default'}`}
-		// 		style={{ backgroundImage: barter.product.photos && barter.product.photos.length > 0 ? `url(${barter.product.photos[0]})` : '' }}
+		// 		className={`product-image ${offer.product.photos && offer.product.photos.length > 0 ? '' : offer.product.placeholder ? 'loading' : 'default'}`}
+		// 		style={{ backgroundImage: offer.product.photos && offer.product.photos.length > 0 ? `url(${offer.product.photos[0]})` : '' }}
 		// 	>
 		// 	</div>
 		// 	<div className='product-content'>
-		// 		{barter.product.placeholder ? (
+		// 		{offer.product.placeholder ? (
 		// 			<span className='product-title'>Загрузка...</span>
 		// 		) : (
-		// 			<span className='product-title'>{barter.product.title}</span>
+		// 			<span className='product-title'>{offer.product.title}</span>
 		// 		)}
 		// 	</div>
 		// </div>
 		<div
-			id={barter.offer?.id}
+			id={offer.id}
 			className='barter-card'
 			onClick={onClick}
 		>
 			<div
-				className={`barter-image product-image ${barter.product.photos && barter.product.photos.length > 0 ? '' : barter.product.placeholder ? 'loading' : 'default'}`}
-				style={{ backgroundImage: barter.product.photos && barter.product.photos.length > 0 ? `url(${barter.product.photos[0]})` : '' }}
+				className={`barter-image product-image ${offer.product.photos && offer.product.photos.length > 0 ? '' : offer.product.placeholder ? 'loading' : 'default'}`}
+				style={{ backgroundImage: offer.product.photos && offer.product.photos.length > 0 ? `url(${offer.product.photos[0]})` : '' }}
 			/>
 			<div className='product-content'>
-		 		{barter.product.placeholder ? (
+		 		{offer.product.placeholder ? (
 					<span className='product-title'>Загрузка...</span>
 				) : (
 					<>
-						<small>{moment(barter.offer?.updated_at).format('DD.MM.YYYY, HH:mm')}</small>
+						<small>{moment(offer.updated_at).format('DD.MM.YYYY, HH:mm')}</small>
 						<div className='list'>
 							<div className='list-item'>
 								<h4>{title}</h4>
@@ -65,7 +65,7 @@ const BarterCard = ({ barter, onClick }) => {
 								{username}
 							</div>
 						</div>
-						<span className='product-title'>{barter.product.title}</span>
+						<span className='product-title'>{offer.product.title}</span>
 					</>
 				)}
 			</div>

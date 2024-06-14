@@ -8,7 +8,7 @@ import Input from '../../Form/Input';
 import Textarea from '../../Form/Textarea';
 import Button from '../../Button/Button';
 
-const BarterStatusReported = ({ barter, updateBarter }) => {
+const BarterStatusReported = ({ offer, updateOffer }) => {
   const { role } = useUserProfile();
   const { showToast } = useToastManager();
 
@@ -33,13 +33,13 @@ const BarterStatusReported = ({ barter, updateBarter }) => {
         break;
       case 'seller':
         setTitle('Готов отчёт №2');
-        setText(`Блогер выложил ролик${barter.offer.feedback_blogger ? ' и оставил отзыв на товар' : ''}. Посмотрите ролик и закройте текущий бартер. Если вам понравилась работа с этим блогером или его ролик, напишите, пожалуйста, отзыв.`);
+        setText(`Блогер выложил ролик${offer.feedback_blogger ? ' и оставил отзыв на товар' : ''}. Посмотрите ролик и закройте текущий бартер. Если вам понравилась работа с этим блогером или его ролик, напишите, пожалуйста, отзыв.`);
         break;
     }
-  }, [role, barter]);
+  }, [role, offer]);
 
   const goToInstagram = () => {
-    window.open(barter.offer.reels, '_blank', 'noopener,noreferrer');
+    window.open(offer.reels, '_blank', 'noopener,noreferrer');
   }
 
   const handleChangeFeedback = (e) => {
@@ -52,16 +52,13 @@ const BarterStatusReported = ({ barter, updateBarter }) => {
 
     try {
       const data = {
-        offerId: barter.offer.id,
-        status: barter.offer.status,
+        offerId: offer.id,
+        status: offer.status,
         feedback: formFeedback,
       }
 
       const updatedOffer = await api.updateBarterOffer(data);
-      updateBarter(prevBarter => ({
-        ...prevBarter,
-        offer: updatedOffer
-      }));
+      updateOffer(updatedOffer);
       showToast('Вы завершили текущий бартер', 'success');
     } catch (error) {
       console.error(error);
@@ -74,7 +71,7 @@ const BarterStatusReported = ({ barter, updateBarter }) => {
   const sellerReported = () => {
     return (
       <div className='list gap-xl w-100'>
-        <Button className={'w-100' + (!barter.offer.reels && ' disabled')} target='_blank' icon='center_focus_strong' onClick={goToInstagram}>Смотреть Reels</Button>
+        <Button className={'w-100' + (!offer.reels && ' disabled')} target='_blank' icon='center_focus_strong' onClick={goToInstagram}>Смотреть Reels</Button>
         <Form
           onSubmit={handleSubmit}
           isDisabled={formSending}

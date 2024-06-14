@@ -80,7 +80,7 @@ const cancelSellerSubscription = async () => {
   return response.data;
 }
 
-const getProduct = async (productId) => {
+const getProductById = async (productId) => {
   const response = await apiClient.get(`/products/${productId}`);
   return response.data;
 }
@@ -327,7 +327,7 @@ export default {
   addSellerSubscription,
   cancelSellerSubscription,
 
-  getProduct,
+  getProductById,
   getProductsByUserId,
   getProductsWithBartersByUserId,
   deletProductsByUserId,

@@ -8,24 +8,24 @@ import BarterStatusReported from './BarterStatusReported';
 import BarterStatusClosed from './BarterStatusClosed';
 import BarterStatusRefused from './BarterStatusRefused';
 
-const BarterStatus = ({ barter, updateBarter }) => {
-  switch (barter.offer.status) {
+const BarterStatus = ({ offer, updateOffer }) => {
+  switch (offer.status) {
     case 'queued': // Предложение находится в очереди на обработку, т.к. у блогера много активных бартеров
       return <BarterStatusQueued />
     case 'created': // Предложение создано, но еще не обработано
-      return <BarterStatusCreated barter={barter} updateBarter={updateBarter} />
+      return <BarterStatusCreated offer={offer} updateOffer={updateOffer} />
     case 'sended': // Средства на покупку товаров отправлены
-      return <BarterStatusSended barter={barter} updateBarter={updateBarter} />
+      return <BarterStatusSended offer={offer} updateOffer={updateOffer} />
     case 'progress': // Предложение обрабатывается (статус, если не sended и не reported)
-      return <BarterStatusProgress barter={barter} updateBarter={updateBarter} />
+      return <BarterStatusProgress offer={offer} updateOffer={updateOffer} />
     case 'planned': // Блогер запланировал дату рекламной кампании
-      return <BarterStatusPlanned barter={barter} updateBarter={updateBarter} />
+      return <BarterStatusPlanned offer={offer} updateOffer={updateOffer} />
     case 'reported': // Предложение отмечено как выполненное
-      return <BarterStatusReported barter={barter} updateBarter={updateBarter} />
+      return <BarterStatusReported offer={offer} updateOffer={updateOffer} />
     case 'closed': // Предложение закрыто (все обяхательства выполнены)
-      return <BarterStatusClosed barter={barter} />
+      return <BarterStatusClosed offer={offer} />
     case 'refused': // Предложение отклонено
-      return <BarterStatusRefused barter={barter} />
+      return <BarterStatusRefused offer={offer} />
     default:
       return <div>Произошла ошибка при загрузке статуса текущего бартера</div>;
   }

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import Textarea from '../../Form/Textarea';
 
-const BarterStatusRefused = ({ barter }) => {
+const BarterStatusRefused = ({ offer }) => {
   const { role } = useUserProfile();
   const [text, setText] = useState(null);
-  const [reason, setReason] = useState(barter.offer?.reason);
+  const [reason, setReason] = useState(offer?.reason);
 
   useEffect(() => {
     switch (role) {
@@ -19,8 +19,8 @@ const BarterStatusRefused = ({ barter }) => {
   }, [role]);
 
   useEffect(() => {
-    setReason(barter.offer?.reason);
-  }, [barter]);
+    setReason(offer?.reason);
+  }, [offer]);
 
   return (
     <div className='list'>
