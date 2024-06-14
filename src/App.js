@@ -1,6 +1,7 @@
 import React, { lazy, useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
+import { retrieveLaunchParams } from '@tma.js/sdk';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { SelectedProductsProvider } from './hooks/useSelectProductsContext';
 import { ToastContainer } from 'react-toastify';
@@ -35,6 +36,7 @@ const SupportPage = lazy(() => import('./pages/Info/SupportPage'));
 const UserAgreementPage = lazy(() => import('./pages/Info/UserAgreementPage'));
 
 function App() {
+	const { initDataRaw } = retrieveLaunchParams();
 	const { setReferral } = useReferral();
 	const { tg, defaultSettings } = useTelegram();
 	const { profile, loading } = useUserProfile();
@@ -91,10 +93,16 @@ function App() {
 
 	useEffect(() => {
 		if (tg) {
+			fetch('https://api.reviewbybloggers.ru/telegram/init', {
+				method: 'POST',
+				headers: {
+					Authorization: `tma ${initDataRaw}`
+				},
+			});
 			tg.ready();
 			defaultSettings();
 		} else {
-			console.log('Telegram Web App API не доступен.');
+			console.log('Telegram Web App API недоступен.');
 		}
 	}, [tg, defaultSettings]);
 
