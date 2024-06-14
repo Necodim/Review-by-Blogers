@@ -107,7 +107,6 @@ export function useTelegram() {
         tg.setBackgroundColor('#1C4366');
         tg.enableClosingConfirmation();
         tg.expand();
-        showBackButton();
         settingsButton(true);
         listenViewportChanged();
     }

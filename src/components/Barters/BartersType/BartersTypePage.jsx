@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import '../Barters.css';
 import api from '../../../api/api';
-import { useTelegram } from '../../../hooks/useTelegram';
 import { useToastManager } from '../../../hooks/useToast';
 import { useHelpers } from '../../../hooks/useHelpers';
 import Header from '../../Header/Header';
@@ -16,17 +15,12 @@ const BartersTypePage = () => {
   const { type } = useParams();
   const location = useLocation();
   const { offers } = location.state || [];
-  const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
   const { sortBy } = useHelpers();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [typeOffersIsLoading, setTypeOffersIsLoading] = useState(false);
   const [typeOffers, setTypeOffers] = useState([]);
-
-  useEffect(() => {
-    if (isAvailable) showBackButton();
-  }, [isAvailable, showBackButton]);
 
   useEffect(() => {
     if (errorMessage) {

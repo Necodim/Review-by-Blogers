@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './Barters.css'
 import api from '../../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext';
-import { useTelegram } from '../../hooks/useTelegram'
 import { useToastManager } from '../../hooks/useToast';
 import Header from '../Header/Header';
 import Preloader from '../Preloader/Preloader';
@@ -42,9 +41,6 @@ const NewBarterPage = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const { showToast } = useToastManager();
-
-    const { hideBackButton, user } = useTelegram();
-    hideBackButton();
 
     useEffect(() => {
         if (errorMessage) {

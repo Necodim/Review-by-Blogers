@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Store.css';
 import { useSelectedProducts } from '../../hooks/useSelectProductsContext';
-import { useTelegram } from '../../hooks/useTelegram';
 import { useToastManager } from '../../hooks/useToast';
 import { useHelpers } from '../../hooks/useHelpers';
 import Header from '../Header/Header';
@@ -20,7 +19,6 @@ const ProductsPage = () => {
   const { products, title } = location.state || { products: [], title: 'Товары' };
 
   const { selectedProducts, setSelectedProducts } = useSelectedProducts();
-  const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
   const { getPlural } = useHelpers();
   
@@ -40,10 +38,6 @@ const ProductsPage = () => {
     useEffect(() => {
       window.scrollTo(0, 0);
     }, []);
-  
-  useEffect(() => {
-    if (isAvailable) showBackButton();
-  }, [isAvailable, showBackButton]);
 
   useEffect(() => {
     if (errorMessage) {

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import '../Barters.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../api/api';
-import { useTelegram } from '../../../hooks/useTelegram';
 import { useToastManager } from '../../../hooks/useToast';
 import { useHelpers } from '../../../hooks/useHelpers';
 import Header from '../../Header/Header';
@@ -12,7 +11,6 @@ import BartersGrid from '../BartersGrid';
 
 const SellerBartersPage = () => {
   const navigate = useNavigate();
-  const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
   const { sortBy } = useHelpers();
 
@@ -23,10 +21,6 @@ const SellerBartersPage = () => {
   const [newOffers, setNewOffers] = useState([]);
   const [progressOffers, setProgressOffers] = useState([]);
   const [completedOffers, setCompletedOffers] = useState([]);
-
-  useEffect(() => {
-    if (isAvailable) showBackButton();
-  }, [isAvailable, showBackButton]);
 
   useEffect(() => {
     if (errorMessage) {

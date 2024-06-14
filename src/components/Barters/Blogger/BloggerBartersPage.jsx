@@ -3,7 +3,6 @@ import '../Barters.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../api/api';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
-import { useTelegram } from '../../../hooks/useTelegram';
 import { useToastManager } from '../../../hooks/useToast';
 import { useHelpers } from '../../../hooks/useHelpers';
 import Header from '../../Header/Header';
@@ -16,13 +15,8 @@ import PreloaderContainer from '../../Preloader/PreloaderContainer';
 const BloggerBartersPage = () => {
   const navigate = useNavigate();
   const { profile } = useUserProfile();
-  const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
   const { sortBy } = useHelpers();
-
-	useEffect(() => {
-		if (isAvailable) showBackButton();
-	}, [isAvailable, showBackButton]);
 
   const [errorMessage, setErrorMessage] = useState('');
   const [barterOffers, setBarterOffers] = useState([]);

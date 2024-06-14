@@ -6,7 +6,6 @@ import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import api from '../../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext';
-import { useTelegram } from '../../hooks/useTelegram';
 import { useToastManager } from '../../hooks/useToast'
 import { useHelpers } from '../../hooks/useHelpers';
 import Header from '../Header/Header';
@@ -23,7 +22,6 @@ const ProductPage = () => {
   const { productId } = useParams();
 
   const { role } = useUserProfile();
-  const { isAvailable, showBackButton } = useTelegram();
   const { showToast } = useToastManager();
   const { getPlural, copyToClipboard, getMarketplaceShortName, getMarketplaceProductLink } = useHelpers();
 
@@ -34,10 +32,6 @@ const ProductPage = () => {
   const [loadingProduct, setLoadingProduct] = useState(!product);
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([product]);
-
-  useEffect(() => {
-    if (isAvailable) showBackButton();
-  }, [isAvailable, showBackButton]);
 
   useEffect(() => {
     if (errorMessage) {
