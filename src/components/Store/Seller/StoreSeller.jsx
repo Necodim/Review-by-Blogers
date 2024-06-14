@@ -48,7 +48,7 @@ const StoreSeller = () => {
           const active = [];
           const inactive = [];
           fetchedProducts.forEach(product => {
-            if (product.barter) {
+            if (product.barter && product.barter.id) {
               if (!product.barter.closedat || new Date(product.barter.closedat) > new Date()) {
                 active.push(product);
               } else {

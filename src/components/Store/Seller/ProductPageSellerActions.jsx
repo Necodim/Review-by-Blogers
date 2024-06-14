@@ -77,6 +77,7 @@ const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
         isOpen={isPopupConfirmationBarterCloseVisible}
         onClose={() => setIsPopupConfirmationBarterCloseVisible(false)}
         onConfirmation={closeBarters}
+        timer={4}
       />
     </>
   );

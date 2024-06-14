@@ -78,8 +78,16 @@ const ProductPage = () => {
   }
 
   const closeBarters = async () => {
-    const data = {ids: selectedProducts.map(product => product.id)}
+    const idsToClose = selectedProducts.map(product => product.barter.id);
+    const idsUnique = [...new Set(idsToClose)];
+    const ids = idsUnique.filter(id => id !== null && id !== undefined);
+    if (ids.length === 0) {
+      setErrorMessage('У этих товаров нет открытых бартеров.');
+      return;
+    }
 
+    const data = {ids: ids};
+    
     try {
       const closedBarters = await api.closeBarters(data);
       const count = closedBarters.length;

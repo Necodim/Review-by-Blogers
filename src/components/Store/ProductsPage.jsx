@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Store.css';
+import api from '../../api/api';
 import { useSelectedProducts } from '../../hooks/useSelectProductsContext';
 import { useToastManager } from '../../hooks/useToast';
 import { useHelpers } from '../../hooks/useHelpers';
@@ -45,6 +46,13 @@ const ProductsPage = () => {
       setErrorMessage('');
     }
   }, [errorMessage, showToast]);
+
+  useEffect(() => {
+    // Очистка selectedProducts при размонтировании компонента
+    return () => {
+      setSelectedProducts([]);
+    };
+  }, [setSelectedProducts]);
 
   const sortedProducts = useMemo(() => {
     let sortableProducts = [...products];
@@ -113,7 +121,15 @@ const ProductsPage = () => {
 
   const closeBarters = async () => {
     setIsPopupConfirmationBarterCloseVisible(true);
-    const data = {ids: selectedProducts.map(product => product.id)}
+    const idsToClose = selectedProducts.map(product => product.barter.id);
+    const idsUnique = [...new Set(idsToClose)];
+    const ids = idsUnique.filter(id => id !== null && id !== undefined);
+    if (ids.length === 0) {
+      setErrorMessage('У этих товаров нет открытых бартеров.');
+      return;
+    }
+
+    const data = {ids: ids};
 
     try {
       const closedBarters = await api.closeBarters(data);
