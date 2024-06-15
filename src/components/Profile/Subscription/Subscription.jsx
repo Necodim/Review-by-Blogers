@@ -82,9 +82,19 @@ const Subscription = () => {
         </div>
         <div className='list'>
           <div className='list-item'>
+            <h4>Описание</h4>
+          </div>
+          <div className='list-item'>
             С подпиской вы не ограничены в количестве создаваемых бартеров и количестве принятых предложений о сотрудничестве.
             {/* А также можете назначать менеджеров для управления своими бартерами. */}
           </div>
+        </div>
+        <div className='list'>
+          <div className='list-item'>
+            <h4>Стоимость в месяц</h4>
+          </div>
+          <div className='list-item'>4990 ₽</div>
+          <div className='list-item'>5.99 TON</div>
         </div>
         {!isSubscribed &&
           <div className='list'>
