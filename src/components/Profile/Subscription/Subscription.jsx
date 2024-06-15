@@ -90,6 +90,7 @@ const Subscription = () => {
           <div className='list'>
             <Button className='list-item' icon='currency_ruble' onClick={payWithRubles}>Оформить за рубли</Button>
             <Button className='list-item' icon='account_balance_wallet' onClick={payWithTon}>Оформить с помощью TON</Button>
+            <small className='list-item'>Оплата в TON выгоднее. Для оплаты подключите кошелёк в настройках.</small>
           </div>
         }
       </div>
