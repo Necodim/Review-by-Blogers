@@ -54,7 +54,7 @@ const Subscription = () => {
       messages: [
         {
           address: "UQDhqb6O3QqEuTjR73rKAcpL4eYBA-6LeZ_-G4Dqd-g-3mR7",
-          amount: "10000000"
+          amount: "5990000000" // 1000000000 = 1 TON
         }
       ]
     }

@@ -88,24 +88,25 @@ const SettingsPage = () => {
 								<small>{'Ваш ID: ' + profile.id}</small>
 							</div>
 						</div>
-					</div>
-					<div className='list-item'>
-						<TonConnectButton style={{ float: 'right', borderRadius: 'var(--m)' }} />
+						<div className='list-item'>
+							<TonConnectButton style={{ justifyContent: 'flex-end' }} />
+						</div>
 					</div>
 				</div>
-				{profile && profile.role &&
-					<Input
-						id='settings-role'
-						title='Роль'
-						type='radio'
-						options={radioOptions}
-						onChange={handleRadioChange}
-						selectedValue={newRole}
-					/>
-				}
-				<TonConnectButton style={{ width: '100%', float: 'right', borderRadius: 'var(--m)' }} />
-				<Button onClick={() => { navigate('/info/support') }} icon='support_agent'>Поддержка</Button>
-				<Link onClick={() => { navigate('/info/user-agreement') }}>Пользовательское соглашение</Link>
+				<div className='list'>
+					{profile && profile.role &&
+						<Input
+							id='settings-role'
+							title='Роль'
+							type='radio'
+							options={radioOptions}
+							onChange={handleRadioChange}
+							selectedValue={newRole}
+						/>
+					}
+					<Button onClick={() => { navigate('/info/support') }} icon='support_agent'>Поддержка</Button>
+					<Link onClick={() => { navigate('/info/user-agreement') }}>Пользовательское соглашение</Link>
+				</div>
 				<small>Версия: {packageJson.version}</small>
 			</div>
 
