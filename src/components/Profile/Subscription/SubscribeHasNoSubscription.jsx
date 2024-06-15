@@ -31,6 +31,7 @@ const SubscribeHasNoSubscription = ({ period }) => {
     const fetchToken = async () => {
       setLoadingText('Загрузка платёжного виджета...');
       try {
+        console.log(period)
         const response = await getYookassaConfirmationToken(period);
         sessionStorage.setItem('paymentId', response.id);
         const token = response.confirmation.confirmation_token;
