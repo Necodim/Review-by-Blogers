@@ -40,7 +40,9 @@ const SubscribeHasNoSubscription = ({ period }) => {
       }
     };
 
-    fetchToken();
+    if (!!period) {
+      fetchToken();
+    }
   }, [period]);
 
   useEffect(() => {
