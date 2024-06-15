@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTonConnectUI } from '@tonconnect/ui-react';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useToastManager } from '../../../hooks/useToast';
+import { useHelpers } from '../../../hooks/useHelpers';
 import moment from 'moment';
 import Header from '../../Header/Header';
 import PopupConfirmation from '../../Popup/PopupConfirmation';
@@ -11,6 +12,7 @@ import Button from '../../Button/Button';
 const Subscription = () => {
   const { profile, cancelSubscription } = useUserProfile();
   const { showToast } = useToastManager();
+  const { getPlural } = useHelpers();
 
   const [tonConnectUI] = useTonConnectUI();
 
@@ -71,13 +73,24 @@ const Subscription = () => {
       <div className='container' id='subscription'>
         <div className='list'>
           <div className='list-item'>
-            <h2>{isSubscribed ? 'Подписка' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}</h2>
+            <h2>Подписка</h2>
             {isSubscribed &&
               <Link onClick={() => setIsPopupConfirmationOpen(true)}>Отменить</Link>
             }
           </div>
+        </div>
+        <div className='list'>
+          <div className='list-item'>
+            <h4>Текущий статус</h4>
+          </div>
+          <div className='list-item'>
+            {isSubscribed ? 'Подписка есть' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}
+          </div>
           {(isSubscribed || isAvaliable) &&
             <div className='list-item'>{(isSubscribed ? 'Следующее списание ' : 'Сервис доступен до ') + expiredDate}</div>
+          }
+          {(!isSubscribed && !isAvaliable) &&
+            <div>{`Еще ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бартер', 'бартера', 'бартеров')}`}</div>
           }
         </div>
         <div className='list'>
@@ -89,17 +102,10 @@ const Subscription = () => {
             {/* А также можете назначать менеджеров для управления своими бартерами. */}
           </div>
         </div>
-        <div className='list'>
-          <div className='list-item'>
-            <h4>Стоимость в месяц</h4>
-          </div>
-          <div className='list-item'>4990 ₽</div>
-          <div className='list-item'>5.99 TON</div>
-        </div>
         {!isSubscribed &&
           <div className='list'>
-            <Button className='list-item' icon='currency_ruble' onClick={payWithRubles}>Оформить за рубли</Button>
-            <Button className='list-item' icon='account_balance_wallet' onClick={payWithTon}>Оформить с помощью TON</Button>
+            <Button className='list-item' icon='currency_ruble' onClick={payWithRubles}>Оформить за 4990 ₽</Button>
+            <Button className='list-item' icon='account_balance_wallet' onClick={payWithTon}>Оформить за 5.99 TON</Button>
             <small className='list-item'>Оплата в TON выгоднее. Для оплаты подключите кошелёк в настройках.</small>
           </div>
         }
