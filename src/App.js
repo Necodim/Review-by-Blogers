@@ -13,6 +13,7 @@ import Preloader from './components/Preloader/Preloader';
 
 import Store from './components/Store/Store';
 import BackButton from './hooks/useTelegramBackButton';
+import Subscription from './components/Profile/Subscription/Subscription';
 
 const StartScreen = lazy(() => import('./components/StartScreen/StartScreen'));
 const WaitingForCapturePage = lazy(() => import('./pages/Subscription/WaitingForCapturePage'));
