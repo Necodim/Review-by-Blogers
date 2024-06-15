@@ -114,9 +114,9 @@ const Subscription = () => {
         </div>
         {!isSubscribed &&
           <div className='list'>
-            <div  className='list-item'>
-              <Button icon='currency_ruble' onClick={payWithRublesMonth}>4990 ₽ / мес.</Button>
-              <Button icon='currency_ruble' onClick={payWithRublesYear}>39000 ₽ / год</Button>
+            <div  className='list-item gap-xs'>
+              <Button icon='currency_ruble' onClick={payWithRublesMonth}>4990 ₽/мес.</Button>
+              <Button icon='currency_ruble' onClick={payWithRublesYear}>39000 ₽/год</Button>
             </div>
             <Button className='list-item' icon='account_balance_wallet' onClick={payWithTon}>5.99 TON / мес.</Button>
             <small className='list-item'>Оплата в TON выгоднее. Для оплаты подключите кошелёк в настройках.</small>
