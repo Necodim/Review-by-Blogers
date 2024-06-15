@@ -53,7 +53,7 @@ const SubscribeHasNoSubscription = () => {
     const getParams = (token) => {
       return {
         confirmation_token: token,
-        return_url: 'http://reviewbybloggers.ru/profile/subscribe/waiting-for-capture',
+        return_url: 'http://reviewbybloggers.ru/profile/subscription/subscribe/waiting-for-capture',
         customization: {
           colors: {
             control_primary: '#47a7ff',

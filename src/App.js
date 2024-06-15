@@ -118,8 +118,9 @@ function App() {
 					<Route index element={!profile || !profile.role ? <StartScreen /> : <Navigate to="/profile" replace />} />
 
 					<Route path="/profile" element={<Profile />} />
-					<Route path="/profile/subscribe" element={<Subscribe />} />
-					<Route path="/profile/subscribe/waiting-for-capture" element={<WaitingForCapturePage />} />
+					<Route path="/profile/subscription" element={<Subscription />} />
+					<Route path="/profile/subscription/subscribe" element={<Subscribe />} />
+					<Route path="/profile/subscription/subscribe/waiting-for-capture" element={<WaitingForCapturePage />} />
 					<Route path="/profile/api" element={<SetWbApi />} />
 
 					<Route path="/store" element={<SelectedProductsProvider><Store /></SelectedProductsProvider>} />

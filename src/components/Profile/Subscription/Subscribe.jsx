@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Profile.css';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import SubscribeHasSubscription from './SubscribeHasSubscription';
 import SubscribeHasNoSubscription from './SubscribeHasNoSubscription';
