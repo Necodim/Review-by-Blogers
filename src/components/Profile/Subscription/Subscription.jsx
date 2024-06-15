@@ -12,6 +12,7 @@ import Button from '../../Button/Button';
 
 const Subscription = () => {
   const navigate = useNavigate();
+
   const { profile, cancelSubscription } = useUserProfile();
   const { showToast } = useToastManager();
   const { getPlural } = useHelpers();
@@ -47,7 +48,7 @@ const Subscription = () => {
       return;
     }
     navigate('/profile/subscription/subscribe', { state: { period: 'month' } });
-  }
+  };
 
   const payWithRublesYear = () => {
     if (isSubscribed) {
@@ -55,7 +56,7 @@ const Subscription = () => {
       return;
     }
     navigate('/profile/subscription/subscribe', { state: { period: 'year' } });
-  }
+  };
 
   const payWithTon = () => {
     if (isSubscribed) {

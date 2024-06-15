@@ -9,6 +9,8 @@ import Header from '../../Header/Header';
 import api from '../../../api/api';
 
 const SubscribeHasNoSubscription = ({ period }) => {
+  console.log('Selected period:', period);
+
   const { profile } = useUserProfile();
   const { showToast } = useToastManager();
   const { createYookassaPayload, getYookassaConfirmationToken } = useYooKassa();
