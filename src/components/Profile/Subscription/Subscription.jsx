@@ -39,12 +39,20 @@ const Subscription = () => {
     }
   }, [profile]);
 
-  const payWithRubles = () => {
+  const payWithRublesMonth = () => {
     if (isSubscribed) {
       showToast('У вас уже есть подписка', 'info');
       return;
     }
-    navigate('/profile/subscription/subscribe');
+    navigate('/profile/subscription/subscribe', { state: { period: 'month' } });
+  }
+
+  const payWithRublesYear = () => {
+    if (isSubscribed) {
+      showToast('У вас уже есть подписка', 'info');
+      return;
+    }
+    navigate('/profile/subscription/subscribe', { state: { period: 'year' } });
   }
 
   const payWithTon = () => {
@@ -104,8 +112,11 @@ const Subscription = () => {
         </div>
         {!isSubscribed &&
           <div className='list'>
-            <Button className='list-item' icon='currency_ruble' onClick={payWithRubles}>Оформить за 4990 ₽</Button>
-            <Button className='list-item' icon='account_balance_wallet' onClick={payWithTon}>Оформить за 5.99 TON</Button>
+            <div  className='list-item'>
+              <Button icon='currency_ruble' onClick={payWithRublesMonth}>4990 ₽ / мес.</Button>
+              <Button icon='currency_ruble' onClick={payWithRublesYear}>39000 ₽ / год</Button>
+            </div>
+            <Button className='list-item' icon='account_balance_wallet' onClick={payWithTon}>5.99 TON / мес.</Button>
             <small className='list-item'>Оплата в TON выгоднее. Для оплаты подключите кошелёк в настройках.</small>
           </div>
         }

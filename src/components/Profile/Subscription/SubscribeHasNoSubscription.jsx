@@ -8,7 +8,7 @@ import Input from '../../Form/Input';
 import Header from '../../Header/Header';
 import api from '../../../api/api';
 
-const SubscribeHasNoSubscription = () => {
+const SubscribeHasNoSubscription = ({ period }) => {
   const { profile } = useUserProfile();
   const { showToast } = useToastManager();
   const { createYookassaPayload, getYookassaConfirmationToken } = useYooKassa();
@@ -31,7 +31,7 @@ const SubscribeHasNoSubscription = () => {
     const fetchToken = async () => {
       setLoadingText('Загрузка платёжного виджета...');
       try {
-        const response = await getYookassaConfirmationToken();
+        const response = await getYookassaConfirmationToken(period);
         sessionStorage.setItem('paymentId', response.id);
         const token = response.confirmation.confirmation_token;
         setToken(token);
