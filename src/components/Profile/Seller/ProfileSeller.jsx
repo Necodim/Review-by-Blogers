@@ -68,9 +68,9 @@ const ProfileSeller = () => {
 							<small>{`Еще ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бартер', 'бартера', 'бартеров')}`}</small>
 						}
 					</div>
-					<Button className='list-item' onClick={goToSubscriptionPage}>Подписка</Button>
 				</div>
 				<div className='list'>
+					<Button className='list-item' onClick={goToSubscriptionPage}>Подписка</Button>
 					{canAddApi &&
 						<Button className='list-item' onClick={goToSetApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>
 					}
