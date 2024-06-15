@@ -80,10 +80,17 @@ const SettingsPage = () => {
 			<div className='container' id='settings'>
 				<div className='list'>
 					<div className='list-item'>
-						<h2>Настройки</h2>
+						<div className='list'>
+							<div className='list-item'>
+								<h2>Настройки</h2>
+							</div>
+							<div className='list-item'>
+								<small>{'Ваш ID: ' + profile.id}</small>
+							</div>
+						</div>
 					</div>
 					<div className='list-item'>
-						<small>{'Ваш ID: ' + profile.id}</small>
+						<TonConnectButton style={{ float: 'right', borderRadius: 'var(--m)' }} />
 					</div>
 				</div>
 				{profile && profile.role &&
@@ -96,7 +103,7 @@ const SettingsPage = () => {
 						selectedValue={newRole}
 					/>
 				}
-				<TonConnectButton className='w-100' />
+				<TonConnectButton style={{ width: '100%', float: 'right', borderRadius: 'var(--m)' }} />
 				<Button onClick={() => { navigate('/info/support') }} icon='support_agent'>Поддержка</Button>
 				<Link onClick={() => { navigate('/info/user-agreement') }}>Пользовательское соглашение</Link>
 				<small>Версия: {packageJson.version}</small>
