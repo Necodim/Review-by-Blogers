@@ -49,7 +49,9 @@ const ProfileSeller = () => {
 	}, [profile.api?.wildberries?.token]);
 
 	const goToSubscriptionPage = () => {
-		if (isSubscribed) showToast('У вас уже есть подписка', 'error');
+		if (isSubscribed) {
+			showToast('У вас уже есть подписка', 'info');
+		}
 		navigate('/profile/subscription');
 	}
 

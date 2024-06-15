@@ -39,13 +39,17 @@ const Subscription = () => {
 
   const payWithRubles = () => {
     if (isSubscribed) {
-      setErrorMessage('У вас уже есть подписка');
+      showToast('У вас уже есть подписка', 'info');
       return;
     }
     navigate('/profile/subscription/subscribe');
   }
 
   const payWithTon = () => {
+    if (isSubscribed) {
+      showToast('У вас уже есть подписка', 'info');
+      return;
+    }
     const transaction = {
       messages: [
         {
@@ -72,7 +76,11 @@ const Subscription = () => {
               <Link onClick={() => setIsPopupConfirmationOpen(true)}>Отменить</Link>
             }
           </div>
-          {isSubscribed && isAvaliable && <div className='list-item'>{(isSubscribed ? 'Следующее списание ' : 'Сервис доступен до ') + expiredDate}</div>}
+          {(isSubscribed || isAvaliable) &&
+            <div className='list-item'>{(isSubscribed ? 'Следующее списание ' : 'Сервис доступен до ') + expiredDate}</div>
+          }
+        </div>
+        <div className='list'>
           <div className='list-item'>
             С подпиской вы не ограничены в количестве создаваемых бартеров и количестве принятых предложений о сотрудничестве.
             {/* А также можете назначать менеджеров для управления своими бартерами. */}
@@ -80,12 +88,8 @@ const Subscription = () => {
         </div>
         {!isSubscribed &&
           <div className='list'>
-            <div className='list-item'>
-              <Button className='list-item' icon='currency_ruble' onClick={payWithRubles}>Оформить за рубли</Button>
-            </div>
-            <div className='list-item'>
-              <Button className='list-item' icon='account_balance_wallet' onClick={payWithTon}>Оформить с помощью TON</Button>
-            </div>
+            <Button className='list-item' icon='currency_ruble' onClick={payWithRubles}>Оформить за рубли</Button>
+            <Button className='list-item' icon='account_balance_wallet' onClick={payWithTon}>Оформить с помощью TON</Button>
           </div>
         }
       </div>
