@@ -4,10 +4,10 @@ import SubscribeHasSubscription from './SubscribeHasSubscription';
 import SubscribeHasNoSubscription from './SubscribeHasNoSubscription';
 
 const Subscribe = () => {
-    const { period } = location.state || { period: 'month' };
+    const { period } = location.state || {};
     const { profile } = useUserProfile();
 
-    return profile.subscription?.active ? <SubscribeHasSubscription /> : <SubscribeHasNoSubscription period={period} />;
+    return profile.subscription?.active ? <SubscribeHasSubscription /> : <SubscribeHasNoSubscription period={period.period} />;
 }
 
 export default Subscribe;
