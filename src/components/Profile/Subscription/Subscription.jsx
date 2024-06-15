@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useTonConnectUI } from '@tonconnect/ui-react';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useToastManager } from '../../../hooks/useToast';
+import moment from 'moment';
 import Header from '../../Header/Header';
 import PopupConfirmation from '../../Popup/PopupConfirmation';
-import moment from 'moment';
+import Link from '../../Button/Link';
+import Button from '../../Button/Button';
 
 const Subscription = () => {
   const { profile, cancelSubscription } = useUserProfile();
