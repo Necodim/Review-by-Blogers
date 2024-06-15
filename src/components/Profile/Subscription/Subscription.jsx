@@ -87,10 +87,10 @@ const Subscription = () => {
             {isSubscribed ? 'Подписка есть' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}
           </div>
           {(isSubscribed || isAvaliable) &&
-            <div className='list-item'>{(isSubscribed ? 'Следующее списание ' : 'Сервис доступен до ') + expiredDate}</div>
+            <small className='list-item'>{(isSubscribed ? 'Следующее списание ' : 'Сервис доступен до ') + expiredDate}</small>
           }
           {(!isSubscribed && !isAvaliable) &&
-            <div>{`Еще ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бартер', 'бартера', 'бартеров')}`}</div>
+            <small className='list-item'>{`Еще ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бартер', 'бартера', 'бартеров')}`}</small>
           }
         </div>
         <div className='list'>
