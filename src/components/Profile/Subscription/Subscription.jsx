@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTonConnectUI } from '@tonconnect/ui-react';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useToastManager } from '../../../hooks/useToast';
@@ -10,6 +11,7 @@ import Link from '../../Button/Link';
 import Button from '../../Button/Button';
 
 const Subscription = () => {
+  const navigate = useNavigate();
   const { profile, cancelSubscription } = useUserProfile();
   const { showToast } = useToastManager();
   const { getPlural } = useHelpers();
