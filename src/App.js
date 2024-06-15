@@ -92,13 +92,13 @@ function App() {
 
 	useEffect(() => {
 		if (tg) {
-			const { initDataRaw } = retrieveLaunchParams();
-			fetch('https://api.reviewbybloggers.ru/telegram/init', {
-				method: 'POST',
-				headers: {
-					Authorization: `tma ${initDataRaw}`
-				},
-			});
+			// const { initDataRaw } = retrieveLaunchParams();
+			// fetch('https://api.reviewbybloggers.ru/telegram/init', {
+			// 	method: 'POST',
+			// 	headers: {
+			// 		Authorization: `tma ${initDataRaw}`
+			// 	},
+			// });
 			tg.ready();
 			defaultSettings();
 		} else {
