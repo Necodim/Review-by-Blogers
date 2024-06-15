@@ -88,8 +88,8 @@ const SettingsPage = () => {
 								<small>{'Ваш ID: ' + profile.id}</small>
 							</div>
 						</div>
-						<div className='list-item'>
-							<TonConnectButton style={{ justifyContent: 'flex-end' }} />
+						<div className='list-item justify-content-end'>
+							<TonConnectButton />
 						</div>
 					</div>
 				</div>
