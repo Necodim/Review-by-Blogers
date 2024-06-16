@@ -19,6 +19,7 @@ const Subscription = () => {
 
   const [tonConnectUI] = useTonConnectUI();
 
+  const [testSubIndex, setTestSubIndex] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isAvaliable, setIsAvaliable] = useState(false);
@@ -78,23 +79,29 @@ const Subscription = () => {
     await cancelSubscription();
   }
 
+  const testSubscription = () => {
+    if (testSubIndex === 5) {
+      navigate('/profile/subscription/subscribe', { state: { period: 'test' } });
+    } else {
+      setTestSubIndex(testSubIndex + 1);
+    }
+  }
+
   return (
     <div className='content-wrapper'>
       <Header />
       <div className='container' id='subscription'>
         <div className='list'>
           <div className='list-item'>
-            <h1>Подписка</h1>
+            <h1 onClick={testSubscription}>Подписка</h1>
             {isSubscribed &&
               <Link onClick={() => setIsPopupConfirmationOpen(true)}>Отменить</Link>
             }
           </div>
         </div>
         <div className='list'>
-          <div className='list-item'>
+          <div className='list-item justify-content-start gap-s'>
             <h3>Текущий статус</h3>
-          </div>
-          <div className='list-item'>
             {isSubscribed ? 'Подписка есть' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}
           </div>
           {(isSubscribed || isAvaliable) &&
@@ -124,6 +131,7 @@ const Subscription = () => {
           </div>
         }
       </div>
+
       {isSubscribed &&
         <PopupConfirmation
           id='popup-cancel-subscription'
