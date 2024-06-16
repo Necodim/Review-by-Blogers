@@ -8,13 +8,16 @@ import Header from '../../Header/Header';
 import PreloaderContainer from '../../Preloader/PreloaderContainer';
 import Link from '../../Button/Link';
 import BartersGrid from '../BartersGrid';
+import { useUserProfile } from '../../../hooks/UserProfileContext';
 
 const SellerBartersPage = () => {
   const navigate = useNavigate();
+  const { profile } = useUserProfile();
   const { showToast } = useToastManager();
   const { sortBy } = useHelpers();
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [isApi, setIsApi] = useState(false);
   const [barterOffers, setBarterOffers] = useState([]);
   const [offersIsLoading, setOffersIsLoading] = useState(true);
   const [queOffers, setQueOffers] = useState([]);
@@ -28,6 +31,12 @@ const SellerBartersPage = () => {
       setErrorMessage('');
     }
   }, [errorMessage, showToast]);
+
+  useEffect(() => {
+    if (profile) {
+      setIsApi(!!profile.api?.wildberries?.token);
+    }
+  }, [profile]);
 
   useEffect(() => {
     const fetchOffers = async () => {
@@ -79,7 +88,9 @@ const SellerBartersPage = () => {
     }
   }
 
-  if (offersIsLoading) {
+  if (isApi) {
+    return <PreloaderContainer title='Нет API' text='Вы не добавили API. Сначала добавьте API маркетплейса, после чего загрузятся ваши товары, и вы сможете создать бартеры. Отклики от блогеров появятся тут.' />
+  } else if (offersIsLoading) {
     return <PreloaderContainer text='Секундочку, загружаю ваши бартеры...' />
   } else if (newOffers.length === 0 && progressOffers.length === 0 && completedOffers.length === 0) {
     return <PreloaderContainer title='Нужно подождать...' text='У вас пока нет предложений от блогеров.' />

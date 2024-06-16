@@ -47,3 +47,39 @@
     transform: rotate(360deg)
   }
 }
+
+.loader {
+  --size: 20px;
+  width: calc(var(--size) * 4);
+  height: calc(var(--size) * 4);
+  position: relative;
+  background-image:
+    linear-gradient(var(--primary-dark-2) var(--size), transparent 0),
+    linear-gradient(var(--light) var(--size), transparent 0),
+    linear-gradient(var(--primary) var(--size), transparent 0),
+    linear-gradient(var(--primary-dark-1) var(--size), transparent 0);
+  background-repeat: no-repeat;
+  background-size: var(--size) var(--size);
+  background-position: left top, left bottom, right top, right bottom;
+  animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    width: calc(var(--size) * 4);
+    height: calc(var(--size) * 4);
+    transform: rotate(0deg)
+  }
+
+  50% {
+    width: calc(var(--size) * 2);
+    height: calc(var(--size) * 2);
+    transform: rotate(180deg)
+  }
+
+  100% {
+    width: calc(var(--size) * 4);
+    height: calc(var(--size) * 4);
+    transform: rotate(360deg)
+  }
+}

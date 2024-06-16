@@ -212,8 +212,8 @@ const getBarterOffersByCurrentBlogger = async (type, limit, offset) => {
   if (type) queryParams.push(`type=${type}`);
   if (limit) queryParams.push(`limit=${limit}`);
   if (offset) queryParams.push(`offset=${offset}`);
-  const query = queryParams.join('&');
-  const response = await apiClient.get(`/offers/blogger?${query}`);
+  const query = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
+  const response = await apiClient.get(`/offers/blogger${query}`);
   return response.data;
 }
 
@@ -227,8 +227,8 @@ const getBarterOffersByCurrentSeller = async (type, limit, offset) => {
   if (type) queryParams.push(`type=${type}`);
   if (limit) queryParams.push(`limit=${limit}`);
   if (offset) queryParams.push(`offset=${offset}`);
-  const query = queryParams.join('&');
-  const response = await apiClient.get(`/offers/seller?${query}`);
+  const query = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
+  const response = await apiClient.get(`/offers/seller${query}`);
   return response.data;
 }
 
@@ -306,10 +306,9 @@ const getYookassaPaymentStatus = async (paymentId) => {
 }
 
 const getYookassaConfirmationToken = async (period) => {
-  let query = '';
-  if (period) {
-    query = `?period=${period}`;
-  }
+  const queryParams = [];
+  if (period) queryParams.push(`period=${period}`);
+  const query = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
   console.log(period)
   console.log(query)
   const response = await apiClient.get(`/payment/subscription/yookassa/token${query}`);

@@ -63,8 +63,13 @@ const ProductPage = () => {
         } finally {
           setLoadingProduct(false);
         }
+      } else {
+        const short = await getMarketplaceShortName(productData.marketplace_id);
+        const link = await getMarketplaceProductLink(productData.marketplace_id, productData.nmid);
+        setMarketplaceShortName(short);
+        setProductLink(link);
       }
-    };
+    }; 
     
     fetchProduct();
   }, [productId, productData]);
