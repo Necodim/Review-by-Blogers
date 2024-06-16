@@ -124,7 +124,7 @@ const BarterPage = () => {
             <div className='list gap-m'>
               <div className='list gap-xs'>
                 <div className='list-item'>
-                  <h3>{currentOffer?.product?.title}</h3>
+                  <h2>{currentOffer?.product?.title}</h2>
                 </div>
                 {currentOffer?.product?.brand &&
                   <div className='list-item'>

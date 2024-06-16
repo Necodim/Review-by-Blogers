@@ -153,7 +153,7 @@ const ProductsPage = () => {
       <div className='container' id='products'>
         <div className='list'>
           <div className='list-item'>
-            <h2>{title}</h2>
+            <h1>{title}</h1>
             {products.length > 0 && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
           </div>
           {isEditing &&

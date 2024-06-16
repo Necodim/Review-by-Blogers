@@ -36,7 +36,7 @@ const SubscribeHasSubscription = () => {
 			<div className='container' id='subscribe'>
 				<div className='list'>
 					<div className='list-item'>
-						<h2>У вас есть подписка</h2>
+						<h1>У вас есть подписка</h1>
 					</div>
 					<div className='list-item'>
 						<p>Следующее списание {expiredDate}</p>

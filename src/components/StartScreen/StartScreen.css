@@ -4,7 +4,7 @@
 }
 
 .startscreen h1 {
-    font-size: 36px;
+    font-size: var(--text-size-xxl);
     font-weight: 700;
 }
 

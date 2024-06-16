@@ -98,7 +98,7 @@ const WaitingForCapturePage = () => {
 	return (
 		<div className='content-wrapper'>
 			<div className='container' id='waiting-for-capture'>
-				<h2>Проверка платежа</h2>
+				<h1>Проверка платежа</h1>
 				<div>Проверяем статус платежа. Пожалуйста, подождите...</div>
 			</div>
 		</div>

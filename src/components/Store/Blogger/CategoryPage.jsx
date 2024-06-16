@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../../api/api';
 import { useToastManager } from '../../../hooks/useToast';
+import PreloaderContainer from '../../Preloader/PreloaderContainer';
 import Header from '../../Header/Header';
 import ProductsGrid from '../ProductsGrid';
 
@@ -56,9 +57,9 @@ const CategoryPage = () => {
   }, [subCategoryId]);
 
   if (productsIsLoading) {
-    return <div>Загрузка данных категории...</div>;
+    return <PreloaderContainer text='Загрузка данных категории...' />
   } else if (errorMessage) {
-    return <div>Ошибка: {errorMessage}</div>;
+    return <PreloaderContainer title='Ошибка' text={errorMessage} />
   } else {
     return (
       <div className='content-wrapper'>
@@ -66,7 +67,7 @@ const CategoryPage = () => {
         <div className='container' id='category-barters'>
           <div className='list'>
             <div className='list-item'>
-              <h2>{categoryName}</h2>
+              <h1>{categoryName}</h1>
             </div>
           </div>
           <ProductsGrid

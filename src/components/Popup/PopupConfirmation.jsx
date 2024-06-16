@@ -36,7 +36,7 @@ const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirma
     <Popup id={id} isOpen={isOpen} onClose={onClose}>
       <div className='list'>
         <div className='list-item vertical'>
-          <h2>{title}</h2>
+          <h1>{title}</h1>
           <span>{text}</span>
           {descr && <small>{descr}</small>}
         </div>

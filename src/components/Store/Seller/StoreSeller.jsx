@@ -100,7 +100,7 @@ const StoreSeller = () => {
         <div className='container' id='products-active'>
           <div className='list'>
             <div className='list-item'>
-              <h2>{titles.active}</h2>
+              <h1>{titles.active}</h1>
               <Link onClick={openActiveProductsPage}>Ещё</Link>
             </div>
             <div className='list-item'>
@@ -116,7 +116,7 @@ const StoreSeller = () => {
         <div className='container' id='products-inactive'>
           <div className='list'>
             <div className='list-item'>
-              <h2>{titles.inactive}</h2>
+              <h1>{titles.inactive}</h1>
               <Link onClick={openInactiveProductsPage}>Ещё</Link>
             </div>
             <div className='list-item'>

@@ -57,7 +57,7 @@ const BarterCard = ({ offer, onClick }) => {
 						<small>{moment(offer.updated_at).format('DD.MM.YYYY, HH:mm')}</small>
 						<div className='list'>
 							<div className='list-item'>
-								<h4>{title}</h4>
+								<h3>{title}</h3>
 								<div className='barter-status'></div>
 							</div>
 							<div className='list-item barter-blogger-username'>

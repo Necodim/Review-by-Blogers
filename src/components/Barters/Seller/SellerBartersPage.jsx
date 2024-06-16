@@ -76,7 +76,7 @@ const SellerBartersPage = () => {
         <div className='container' id={`offers-${type}`} >
           <div className='list'>
             <div className='list-item'>
-              <h2>{title}</h2>
+              <h1>{title}</h1>
               <Link onClick={() => goToBartersType(type, offers)}>Ещё</Link>
             </div>
           </div>

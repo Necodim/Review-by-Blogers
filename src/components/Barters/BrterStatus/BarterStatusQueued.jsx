@@ -18,7 +18,7 @@ const BarterStatusQueued = () => {
 
   return (
     <div className='list'>
-      <h2>Предложение в очереди</h2>
+      <h1>Предложение в очереди</h1>
       <p>{text}</p>
     </div>
   );

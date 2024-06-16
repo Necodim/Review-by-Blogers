@@ -84,7 +84,7 @@ const Subscription = () => {
       <div className='container' id='subscription'>
         <div className='list'>
           <div className='list-item'>
-            <h2>Подписка</h2>
+            <h1>Подписка</h1>
             {isSubscribed &&
               <Link onClick={() => setIsPopupConfirmationOpen(true)}>Отменить</Link>
             }
@@ -92,7 +92,7 @@ const Subscription = () => {
         </div>
         <div className='list'>
           <div className='list-item'>
-            <h4>Текущий статус</h4>
+            <h3>Текущий статус</h3>
           </div>
           <div className='list-item'>
             {isSubscribed ? 'Подписка есть' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}
@@ -106,7 +106,7 @@ const Subscription = () => {
         </div>
         <div className='list'>
           <div className='list-item'>
-            <h4>Описание</h4>
+            <h3>Описание</h3>
           </div>
           <div className='list-item'>
             С подпиской вы не ограничены в количестве создаваемых бартеров и количестве принятых предложений о сотрудничестве.

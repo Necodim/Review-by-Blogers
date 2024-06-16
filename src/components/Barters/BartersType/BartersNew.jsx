@@ -6,7 +6,7 @@ const BartersNew = ({ offers }) => {
     <div className='container' id='offers-new' >
       <div className='list'>
         <div className='list-item'>
-          <h2>Новые предложения</h2>
+          <h1>Новые предложения</h1>
         </div>
       </div>
       <BartersGrid offers={offers} />

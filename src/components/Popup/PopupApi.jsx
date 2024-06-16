@@ -138,7 +138,7 @@ const PopupApi = (props) => {
 		<Popup id={props.id} isOpen={props.isOpen} onClose={props.onClose} {...props}>
 			<div className='list'>
 				<div className='list-item'>
-					<h2>API-ключ</h2>
+					<h1>API-ключ</h1>
 					<Link onClick={toggleVisibility}>Где взять?</Link>
 				</div>
 				<animated.div className='list-item' style={{ ...animation, display }}>

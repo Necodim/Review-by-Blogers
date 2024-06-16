@@ -107,7 +107,7 @@ const BarterStatusCreated = ({ offer, updateOffer }) => {
 
   return (
     <div className='list gap-xl'>
-      <h2>Предложение создано</h2>
+      <h1>Предложение создано</h1>
       <p>{text}</p>
       {role === 'seller' &&
         <div className='list gap-xl'>

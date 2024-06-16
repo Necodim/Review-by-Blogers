@@ -19,7 +19,7 @@ const BartersQue = ({ offers }) => {
     <div className='container' id='offers-que' >
       <div className='list'>
         <div className='list-item'>
-          <h2>В ожидании</h2>
+          <h1>В ожидании</h1>
         </div>
         <div className='list-item'>
           <small>{roleText} завершить бартеры, которые находятся в работе, чтобы эти бартеры стали доступны.</small>

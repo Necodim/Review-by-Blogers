@@ -31,7 +31,7 @@ const BarterStatusClosed = ({ offer }) => {
   return (
     <div className='list'>
       <div className='list-item'>
-        <h2>Бартер окончен</h2>
+        <h1>Бартер окончен</h1>
       </div>
       <div className='list-item'>
         <p>{offer?.date ? `Дата публикации: ${moment(offer.date).format('DD.MM.YYYY')}` : ''}</p>

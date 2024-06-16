@@ -65,7 +65,7 @@ const ProfileSeller = () => {
 			<div className='container' id='profile'>
 				<div className='list'>
 					<div className='list-item'>
-						<h2>{isSubscribed ? 'Подписка' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}</h2>
+						<h1>{isSubscribed ? 'Подписка' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}</h1>
 						{!isAvaliable && canAddApi &&
 							<small>{`Еще ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бартер', 'бартера', 'бартеров')}`}</small>
 						}
@@ -82,7 +82,7 @@ const ProfileSeller = () => {
 				<div className='container' id='brands' >
 					<div className='list'>
 						<div className='list-item'>
-							<h2>Мои бренды</h2>
+							<h1>Мои бренды</h1>
 							<small>{`${totalProducts} ${getPlural(totalProducts, 'товар', 'товара', 'товаров')}`}</small>
 						</div>
 					</div>

@@ -38,7 +38,7 @@ const BartersHistoryTable = ({ barters }) => {
     <div className='container' id='barter-history' >
       <div className='list'>
         <div className='list-item'>
-          <h2>История</h2>
+          <h1>История</h1>
           <Link onClick={goToHistory}>Ещё</Link>
         </div>
       </div>

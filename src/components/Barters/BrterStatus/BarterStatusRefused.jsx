@@ -24,7 +24,7 @@ const BarterStatusRefused = ({ offer }) => {
 
   return (
     <div className='list'>
-      <h2>Предложение отклонено</h2>
+      <h1>Предложение отклонено</h1>
       <p>{text}</p>
       {reason && <Textarea id='reason' name='reason' value={reason} readOnly={true} />}
     </div>

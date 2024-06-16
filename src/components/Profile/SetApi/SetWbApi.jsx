@@ -142,7 +142,7 @@ const SetWbApi = (props) => {
 			<div className='container' id='subscription'>
 				<div className='list'>
           <div className='list-item'>
-            <h2>API-ключ</h2>
+            <h1>API-ключ</h1>
             <Link onClick={toggleVisibility}>Где взять?</Link>
           </div>
           <animated.div className='list-item' style={{ ...animation, display }}>

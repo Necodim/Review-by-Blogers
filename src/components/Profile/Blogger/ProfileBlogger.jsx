@@ -14,7 +14,7 @@ const ProfileBlogger = () => {
       <div className='container' id='profile'>
         <div className='list gap-l'>
           <div className='list-item'>
-            <h2>{(profile.instagram.username && profile.instagram.coverage && profile.card_number) || !profile.onboarding ? 'Профиль' : 'Заполните профиль'}</h2>
+            <h1>{(profile.instagram.username && profile.instagram.coverage && profile.card_number) || !profile.onboarding ? 'Профиль' : 'Заполните профиль'}</h1>
           </div>
           <ProfileBloggerForm />
         </div>

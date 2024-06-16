@@ -18,6 +18,11 @@
   background: linear-gradient(180deg, var(--primary-dark-1) 50%, var(--primary-dark-2) 100%);
 }
 
+.preloader-wrapper h1 {
+  font-size: var(--text-size-xxl);
+  font-weight: 700;
+}
+
 .preloader-box {
   --size: 120px;
   width: var(--size);

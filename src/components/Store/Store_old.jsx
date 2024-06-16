@@ -103,7 +103,7 @@ const StoreSeller = (props) => {
             <div className='container' id='products'>
                 <div className='list'>
                     <div className='list-item'>
-                        <h2>Мои товары</h2>
+                        <h1>Мои товары</h1>
                         {products.length > 0 && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
                     </div>
                 </div>
@@ -145,7 +145,7 @@ const StoreSeller = (props) => {
                 </div>
             </Popup>}
             {<Popup id='popup-write-task' isOpen={isPopupTaskWriteVisible} onClose={() => setIsPopupTaskWriteVisible(false)}>
-                <h2>Техническое задание</h2>
+                <h1>Техническое задание</h1>
                 <Form onSubmit={() => {}} btntext='Сохранить' btnicon='save'>
                     <Textarea 
                         id='task' 

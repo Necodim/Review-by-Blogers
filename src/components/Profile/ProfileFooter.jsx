@@ -11,7 +11,7 @@ const ProfileFooter = () => {
     <div className='container' id='footer' >
       <div className='list'>
         <div className='list-item'>
-          <h2>Другое</h2>
+          <h1>Другое</h1>
         </div>
       </div>
       <div className='list'>

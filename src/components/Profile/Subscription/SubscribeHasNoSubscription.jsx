@@ -206,7 +206,7 @@ const SubscribeHasNoSubscription = ({ period }) => {
         {/* <div className='container' id='subscribe'>
           <div className='list'>
             <div className='list-item'>
-              <h2>Оформление подписки</h2>
+              <h1>Оформление подписки</h1>
             </div>
             <div className='list-item justify-content-start'>
               <small>Стоимость:</small>

@@ -102,7 +102,7 @@ const NewBarterPage = () => {
                 <div className='container' id='barter-new' >
                     <div className='list'>
                         <div className='list-item'>
-                            <h2>Новые заявки</h2>
+                            <h1>Новые заявки</h1>
                             <Link onClick={() => {}}>Ещё</Link>
                         </div>
                     </div>
@@ -128,7 +128,7 @@ const NewBarterPage = () => {
                 <div className='container' id='barter-current' >
                     <div className='list'>
                         <div className='list-item'>
-                            <h2>В работе</h2>
+                            <h1>В работе</h1>
                             <Link onClick={() => {}}>Ещё</Link>
                         </div>
                     </div>
@@ -154,7 +154,7 @@ const NewBarterPage = () => {
                 <div className='container' id='barter-history' >
                     <div className='list'>
                         <div className='list-item'>
-                            <h2>История</h2>
+                            <h1>История</h1>
                             <Link onClick={() => {}}>Ещё</Link>
                         </div>
                     </div>
@@ -189,7 +189,7 @@ const NewBarterPage = () => {
                 <div className='container' id='barter-current' >
                     <div className='list'>
                         <div className='list-item'>
-                            <h2>В работе</h2>
+                            <h1>В работе</h1>
                             <Link onClick={() => {}}>Ещё</Link>
                         </div>
                     </div>
@@ -215,7 +215,7 @@ const NewBarterPage = () => {
                 <div className='container' id='barter-history' >
                     <div className='list'>
                         <div className='list-item'>
-                            <h2>История</h2>
+                            <h1>История</h1>
                             <Link onClick={() => {}}>Ещё</Link>
                         </div>
                     </div>

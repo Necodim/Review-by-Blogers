@@ -133,7 +133,7 @@ const SupportPage = () => {
       <div className='container' id='support'>
         <div className='list'>
           <div className='list-item'>
-            <h2>Поддержка</h2>
+            <h1>Поддержка</h1>
           </div>
           <div className='list-item'>
             <small>Подробно опишите свой вопрос, предложение или проблему и&nbsp;приложите скриншот, если необходимо. Мы&nbsp;ответим в&nbsp;ближайшее время</small>

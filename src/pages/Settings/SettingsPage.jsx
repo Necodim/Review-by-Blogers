@@ -82,7 +82,7 @@ const SettingsPage = () => {
 					<div className='list-item'>
 						<div className='list'>
 							<div className='list-item'>
-								<h2>Настройки</h2>
+								<h1>Настройки</h1>
 							</div>
 							<div className='list-item'>
 								<small>{'Ваш ID: ' + profile.id}</small>
@@ -112,7 +112,7 @@ const SettingsPage = () => {
 
 
 			{/* <div className='container' id='tests'>
-				<h2>Тестовый функционал</h2>
+				<h1>Тестовый функционал</h1>
 				<span>Telergam username: {user?.username}</span>
 				<Link onClick={goToStartScreen}>Стартовый экран</Link>
 				<Link onClick={removeRole}>Удалить роль</Link>

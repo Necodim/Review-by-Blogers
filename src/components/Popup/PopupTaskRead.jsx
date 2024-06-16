@@ -28,12 +28,12 @@ const PopupTaskRead = ({ isOpen, onClose, barter, onEdit }) => {
 		<Popup id='popup-task' isOpen={isOpen} onClose={onClose}>
 			<div className='list'>
 				<div className='list-item'>
-					<h2>Техническое задание</h2>
+					<h1>Техническое задание</h1>
 				</div>
 				{barter?.task &&
 					<>
 						<div className='list-item'>
-							<h3>Текст задания</h3>
+							<h2>Текст задания</h2>
 						</div>
 						<div className='list-item'>
 							<Quote>{barter.task}</Quote>
@@ -44,7 +44,7 @@ const PopupTaskRead = ({ isOpen, onClose, barter, onEdit }) => {
 			{(barter.brand_instagram || barter.need_feedback) && 
 				<div className='list'>
 					<div className='list-item'>
-						<h3>Дополнительные требования</h3>
+						<h2>Дополнительные требования</h2>
 					</div>
 					{barter.brand_instagram && 
 						<div className='list-item'>

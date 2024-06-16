@@ -140,7 +140,7 @@ const BarterStatusPlanned = ({ offer, updateOffer }) => {
 
   return (
     <div className='list'>
-      <h2>{title}</h2>
+      <h1>{title}</h1>
       <p>{text}</p>
       {contentToShow()}
     </div>

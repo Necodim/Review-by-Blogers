@@ -6,7 +6,7 @@ const BartersProgress = ({ offers }) => {
     <div className='container' id='offers-progress' >
       <div className='list'>
         <div className='list-item'>
-          <h2>В работе</h2>
+          <h1>В работе</h1>
         </div>
       </div>
       <BartersGrid offers={offers} />

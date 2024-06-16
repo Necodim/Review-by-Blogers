@@ -18,7 +18,7 @@ const PreloaderContainer = ({ title, text }) => {
       <div className='container' id='loading'>
         <div className='list'>
           <div className='list-item'>
-            <h2>{loadingTitle}</h2>
+            <h1>{loadingTitle}</h1>
           </div>
           <div className='list-item'>
             <p>{loadingText}</p>

@@ -7,7 +7,7 @@ const UserAgreementPage = () => {
         <div className='content-wrapper'>
             <Header />
             <div className='container doc-counter' id='user-agreement'>
-                <h2>Пользовательское соглашение</h2>
+                <h1>Пользовательское соглашение</h1>
                 <div className='list'>
                     <p>Настоящий документ «Пользовательское соглашение» (далее - Соглашение) представляет собой предложение ИП Иванова Снежана Игоревна, ОГРНИП 315313000011285, размещенное по адресу в сети интернет <a href='https://t.me/unpacks/app?page=/info/user-agreement' className='underline'>https://t.me/unpacks/app?page=/info/user-agreement</a> (далее - «Приложение»), заключить договор на изложенных ниже условиях Соглашения.</p>
                     <ol>
@@ -103,7 +103,7 @@ const UserAgreementPage = () => {
                     </ol>
                 </div>
                 <div className='list'>
-                    <h3>Реквизиты Приложения</h3>
+                    <h2>Реквизиты Приложения</h2>
                     <div>
                         <p>ИП: Иванова Снежана Игоревна</p>
                         <p>ИНН: 310259579703</p>

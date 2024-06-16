@@ -125,7 +125,7 @@ const ProductPage = () => {
         <div className='list'>
           <div className='list-item vartical'>
             {productData?.placeholder ? (
-              <h1 className='product-title'>Загрузка...</h1>
+              <h1 className='product-title'>Загрузка...</h1> 
             ) : (
               <h1 className='product-title'>{productData?.title}</h1>
             )}

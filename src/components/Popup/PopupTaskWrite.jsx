@@ -113,7 +113,7 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 					<p>{`Вы редактируете ${selectedProducts.length} ${getPlural(selectedProducts.length, 'товар', 'товара', 'товаров')}. ТЗ будет одинаковым для их бартеров${hasTasks ? ', а старое ТЗ изменится' : ''}.`}</p>
 				</Note>
 			}
-			<h2>Техническое задание</h2>
+			<h1>Техническое задание</h1>
 			<Form
 				onSubmit={submitForm}
 				btntext='Сохранить'

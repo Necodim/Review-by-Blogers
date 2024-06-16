@@ -70,7 +70,7 @@ const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
     <Popup id='popup-blogger' isOpen={isOpen} onClose={onClose}>
       <div className='list'>
         <div className='list-item'>
-          <h2>{(blogger.firstname || blogger.lastname) ? [blogger.firstname, blogger.lastname].join(' ') : 'Карточка блогера'}</h2>
+          <h1>{(blogger.firstname || blogger.lastname) ? [blogger.firstname, blogger.lastname].join(' ') : 'Карточка блогера'}</h1>
         </div>
       </div>
       <div className='list'>
