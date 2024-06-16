@@ -26,6 +26,7 @@ const SubscribeHasNoSubscription = ({ period }) => {
   const [cardPeriodValue, setCardPeriodValue] = useState('');
   const [cardCodeValue, setCardCodeValue] = useState('');
   const [token, setToken] = useState(null);
+  const [loadingTitle, setLoadingTitle] = useState('Загрузка');
   const [loadingText, setLoadingText] = useState('Получение токена для оплаты.');
 
   useEffect(() => {
@@ -38,8 +39,11 @@ const SubscribeHasNoSubscription = ({ period }) => {
         setToken(token);
       } catch (error) {
         setErrorMessage(error.message);
+        setLoadingTitle('Ошибка');
+        setLoadingText(error.message);
       } finally {
-        setLoadingText('Ещё пару секунд...');
+        setLoadingTitle('');
+        setLoadingText('');
       }
     };
 
@@ -77,7 +81,6 @@ const SubscribeHasNoSubscription = ({ period }) => {
       };
   
       const prepareWidget = async () => {
-        setLoadingText('');
         const params = getParams(token);
   
         script.onload = () => {
@@ -195,7 +198,7 @@ const SubscribeHasNoSubscription = ({ period }) => {
   // }
 
   if (!!loadingText) {
-    return <PreloaderContainer text={loadingText} />
+    return <PreloaderContainer title={loadingTitle} text={loadingText} />
   } else {
     return (
       <div className='content-wrapper'>
