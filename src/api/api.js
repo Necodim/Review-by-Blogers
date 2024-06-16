@@ -309,8 +309,6 @@ const getYookassaConfirmationToken = async (period) => {
   const queryParams = [];
   if (period) queryParams.push(`period=${period}`);
   const query = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
-  console.log(period)
-  console.log(query)
   const response = await apiClient.get(`/payment/subscription/yookassa/token${query}`);
   return response.data;
 }

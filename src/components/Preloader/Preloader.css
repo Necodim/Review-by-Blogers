@@ -18,6 +18,15 @@
   background: linear-gradient(180deg, var(--primary-dark-1) 50%, var(--primary-dark-2) 100%);
 }
 
+.preloader-box {
+  --size: 120px;
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .preloader {
   position: relative;
   width: calc(var(--xxxl) * 2);

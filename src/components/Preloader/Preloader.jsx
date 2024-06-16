@@ -6,7 +6,9 @@ const Preloader = (props) => {
 	return (
 		<div className='preloader-wrapper'>
 			<h1>{props.children}</h1>
-			<div className='loader'></div>
+			<div className='preloader-box'>
+				<div className='loader'></div>
+			</div>
 			<Background />
 		</div>
 	);

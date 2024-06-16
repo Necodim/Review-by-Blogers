@@ -7,6 +7,7 @@ import Form from '../../Form/Form';
 import Input from '../../Form/Input';
 import Header from '../../Header/Header';
 import api from '../../../api/api';
+import PreloaderContainer from '../../Preloader/PreloaderContainer';
 
 const SubscribeHasNoSubscription = ({ period }) => {
   const { profile } = useUserProfile();
@@ -31,7 +32,6 @@ const SubscribeHasNoSubscription = ({ period }) => {
     const fetchToken = async () => {
       setLoadingText('Загрузка платёжного виджета...');
       try {
-        console.log(period)
         const response = await getYookassaConfirmationToken(period);
         sessionStorage.setItem('paymentId', response.id);
         const token = response.confirmation.confirmation_token;
@@ -239,7 +239,7 @@ const SubscribeHasNoSubscription = ({ period }) => {
           />
         </Form>
       </div> */}
-      <div>{loadingText}</div>
+      <PreloaderContainer text={loadingText} />
       <div id="payment-form"></div>
     </div>
   )

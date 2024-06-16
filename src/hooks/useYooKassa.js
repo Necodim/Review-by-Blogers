@@ -26,9 +26,9 @@ export const useYooKassa = () => {
     setIdempotenceKey(uuidv4());
   }, []);
 
-  const getYookassaConfirmationToken = async () => {
+  const getYookassaConfirmationToken = async (period) => {
     try {
-      const response = await api.getYookassaConfirmationToken();
+      const response = await api.getYookassaConfirmationToken(period);
       return response;
     } catch (error) {
       const message = 'Ошибка при попытке получения токена';
