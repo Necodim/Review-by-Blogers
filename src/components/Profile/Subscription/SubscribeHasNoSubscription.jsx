@@ -80,6 +80,7 @@ const SubscribeHasNoSubscription = ({ period }) => {
         const params = getParams(token);
   
         script.onload = () => {
+          setLoadingText('');
           const checkout = new window.YooMoneyCheckoutWidget(params);
           document.getElementById('payment-form').innerHTML = '';
           checkout.render('payment-form');
@@ -93,7 +94,6 @@ const SubscribeHasNoSubscription = ({ period }) => {
       return () => {
         if (script.parentNode) {
           script.parentNode.removeChild(script);
-          setLoadingText('');
         }
       };
     }
