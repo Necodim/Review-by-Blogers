@@ -11,26 +11,16 @@ export const UserProfileProvider = ({ children }) => {
 	const { getUser, createUser, upsertUser, generateAuthToken, verifyAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
 	const { showToast } = useToastManager();
 
-	const [userId, setUserId] = useState(null);
 	const [profile, setProfile] = useState(null);
 	const [role, setRole] = useState(null);
 	const [isActive, setIsActive] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	useEffect(() => {
-		if (!!tg && !!user && !!user.id) {
-			setUserId(user.id);
-		}
-	}, [tg, user]);
-
-	// useEffect(() => {
-	// 	// Для тестов
-	// 	setUserId(82431798); // Я
-	// 	// setUserId(89141992); // Снежана
-	// 	// setUserId(36058859); // Альберт
-	// 	// setUserId(6738962263);
-	// }, []);
+	let userId = user?.id;
+	// userId = 82431798;// Я
+	// userId = 89141992;// Снежана
+	// userId = 36058859;// Альберт
 
 	useEffect(() => {
 		if (!!profile) {

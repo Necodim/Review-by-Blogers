@@ -30,7 +30,6 @@ const SubscribeHasNoSubscription = ({ period }) => {
 
   useEffect(() => {
     const fetchToken = async () => {
-      setLoadingText('Загрузка платёжного виджета...');
       try {
         const response = await getYookassaConfirmationToken(period);
         sessionStorage.setItem('paymentId', response.id);
@@ -190,6 +189,10 @@ const SubscribeHasNoSubscription = ({ period }) => {
     }
   }
 
+  if (!!loadingText) {
+    return <PreloaderContainer text={loadingText} />
+  }
+
   return (
     <div className='content-wrapper'>
       <Header />
@@ -239,7 +242,6 @@ const SubscribeHasNoSubscription = ({ period }) => {
           />
         </Form>
       </div> */}
-      <PreloaderContainer text={loadingText} />
       <div id="payment-form"></div>
     </div>
   )
