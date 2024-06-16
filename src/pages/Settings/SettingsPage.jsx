@@ -24,11 +24,6 @@ const SettingsPage = () => {
 	}, [profile.role]);
 
 	// // Тестовый функционал
-	// const goToStartScreen = () => {
-	//     navigate('/');
-	// }
-
-	// // Тестовый функционал
 	// const addSellerSubscription = async () => {
 	//     const data = {
 	//         yookassa_id: '39afc4a2-6325-475b-9980-c4323ed72fa6',
@@ -69,7 +64,6 @@ const SettingsPage = () => {
 	const changeRole = async () => {
 		try {
 			await updateUserData({ role: newRole });
-			goToStartScreen();
 		} catch (error) {
 			showToast('Ошибка при обновлении роли', 'error');
 		}

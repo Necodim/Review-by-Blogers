@@ -1,0 +1,32 @@
+.empty-space {
+  width: 100%;
+  height: calc(var(--m) * 2);
+}
+
+.empty-space.size-xxl {
+  height: calc(var(--xxl) * 2);
+}
+
+.empty-space.size-xl {
+  height: calc(var(--xl) * 2);
+}
+
+.empty-space.size-l {
+  height: calc(var(--l) * 2);
+}
+
+.empty-space.size-m {
+  height: calc(var(--m) * 2);
+}
+
+.empty-space.size-s {
+  height: calc(var(--s) * 2);
+}
+
+.empty-space.size-xs {
+  height: calc(var(--xs) * 2);
+}
+
+.empty-space.size-xxs {
+  height: calc(var(--xxs) * 2);
+}
