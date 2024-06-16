@@ -88,7 +88,7 @@ const SellerBartersPage = () => {
     }
   }
 
-  if (isApi) {
+  if (!isApi) {
     return <PreloaderContainer title='Нет API' text='Вы не добавили API. Сначала добавьте API маркетплейса, после чего загрузятся ваши товары, и вы сможете создать бартеры. Отклики от блогеров появятся тут.' />
   } else if (offersIsLoading) {
     return <PreloaderContainer text='Секундочку, загружаю ваши бартеры...' />
