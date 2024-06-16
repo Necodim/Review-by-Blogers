@@ -37,6 +37,8 @@ const SubscribeHasNoSubscription = ({ period }) => {
         setToken(token);
       } catch (error) {
         setErrorMessage(error.message);
+      } finally {
+        setLoadingText('');
       }
     };
 
@@ -46,52 +48,53 @@ const SubscribeHasNoSubscription = ({ period }) => {
   }, [period]);
 
   useEffect(() => {
-    if (!token) return;
-
-    const script = document.createElement('script');
-    script.src = 'https://yookassa.ru/checkout-widget/v1/checkout-widget.js';
-    script.async = true;
-
-    const getParams = (token) => {
-      return {
-        confirmation_token: token,
-        return_url: 'http://reviewbybloggers.ru/profile/subscription/subscribe/waiting-for-capture',
-        customization: {
-          colors: {
-            control_primary: '#47a7ff',
-            control_primary_content: '#ffffff',
-            text: '#ffffff',
-            background: '#1C4366',
-            border: '#1C4366',
-            // control_secondary: '',
+    if (!token) {
+      return;
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://yookassa.ru/checkout-widget/v1/checkout-widget.js';
+      script.async = true;
+  
+      const getParams = (token) => {
+        return {
+          confirmation_token: token,
+          return_url: 'http://reviewbybloggers.ru/profile/subscription/subscribe/waiting-for-capture',
+          customization: {
+            colors: {
+              control_primary: '#47a7ff',
+              control_primary_content: '#ffffff',
+              text: '#ffffff',
+              background: '#1C4366',
+              border: '#1C4366',
+              // control_secondary: '',
+            }
+          },
+          error_callback: function (error) {
+            console.log(error);
           }
-        },
-        error_callback: function (error) {
-          console.log(error);
+        };
+      };
+  
+      const prepareWidget = async () => {
+        const params = getParams(token);
+  
+        script.onload = () => {
+          const checkout = new window.YooMoneyCheckoutWidget(params);
+          document.getElementById('payment-form').innerHTML = '';
+          checkout.render('payment-form');
+        };
+  
+        document.body.appendChild(script);
+      };
+  
+      prepareWidget();
+  
+      return () => {
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
         }
       };
-    };
-
-    const prepareWidget = async () => {
-      const params = getParams(token);
-
-      script.onload = () => {
-        const checkout = new window.YooMoneyCheckoutWidget(params);
-        document.getElementById('payment-form').innerHTML = '';
-        checkout.render('payment-form');
-        setLoadingText('');
-      };
-
-      document.body.appendChild(script);
-    };
-
-    prepareWidget();
-
-    return () => {
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
+    }
   }, [token]);
 
   useEffect(() => {
