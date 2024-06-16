@@ -26,10 +26,11 @@ const SubscribeHasNoSubscription = ({ period }) => {
   const [cardPeriodValue, setCardPeriodValue] = useState('');
   const [cardCodeValue, setCardCodeValue] = useState('');
   const [token, setToken] = useState(null);
-  const [loadingText, setLoadingText] = useState('Загрузка платёжного виджета...');
+  const [loadingText, setLoadingText] = useState('Получение токена для оплаты.');
 
   useEffect(() => {
     const fetchToken = async () => {
+      setLoadingText('Загрузка платёжного виджета.');
       try {
         const response = await getYookassaConfirmationToken(period);
         sessionStorage.setItem('paymentId', response.id);
@@ -38,7 +39,7 @@ const SubscribeHasNoSubscription = ({ period }) => {
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
-        setLoadingText('');
+        setLoadingText('Ещё пару секунд...');
       }
     };
 
@@ -92,6 +93,7 @@ const SubscribeHasNoSubscription = ({ period }) => {
       return () => {
         if (script.parentNode) {
           script.parentNode.removeChild(script);
+          setLoadingText('');
         }
       };
     }
