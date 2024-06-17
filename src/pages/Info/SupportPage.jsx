@@ -54,7 +54,8 @@ const SupportPage = () => {
       const message = 'Ошибка при загрузке скриншота';
       console.error(`${message}:`, error);
       setFileError(message);
-      throw Error('Не удалось загрузить изображение');
+      // throw Error('Не удалось загрузить изображение');
+      throw Error(error.message);
     } finally {
       setFileLoading(false);
     }
