@@ -113,7 +113,13 @@ const ProfileBloggerForm = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit} btntext='Сохранить' btnicon='save' isDisabled={!isFormValid}>
+    <Form
+      onSubmit={handleSubmit}
+      btntext='Сохранить'
+      btnicon='save'
+      isDisabled={!isFormValid}
+      text='Заполните каждое поле, чтобы изменить данные'
+    >
       <Input
         id='card-number'
         name='card-number'

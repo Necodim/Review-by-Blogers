@@ -74,6 +74,8 @@ const BarterStatusSended = ({ offer, updateOffer }) => {
         offerId: offer.id,
         status: offer.status,
         receipt: uploadedFile,
+        seller_id: offer.barter?.user_id,
+        blogger_id: offer.user_id,
       }
       const updatedOffer = await api.updateBarterOffer(data);
       updateOffer(updatedOffer);

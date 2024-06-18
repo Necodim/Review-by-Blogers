@@ -74,6 +74,7 @@ const FileField = ({ id, title, accept, placeholder, value, multiple, iconCallba
 
 FileField.defaultProps = {
 	accept: 'image/*',
+  multiple: false,
 	placeholder: 'image.png',
 };
 

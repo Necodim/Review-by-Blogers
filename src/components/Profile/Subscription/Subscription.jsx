@@ -13,7 +13,7 @@ import Button from '../../Button/Button';
 const Subscription = () => {
   const navigate = useNavigate();
 
-  const { profile, cancelSubscription } = useUserProfile();
+  const { profile, updateProfile } = useUserProfile();
   const { showToast } = useToastManager();
   const { getPlural } = useHelpers();
 
@@ -75,9 +75,17 @@ const Subscription = () => {
     tonConnectUI.sendTransaction(transaction)
   }
 
-  const cancellingSubscription = async () => {
-    await cancelSubscription();
-  }
+  const cancelSubscription = async () => {
+		try {
+			const result = await cancelSellerSubscription();
+			updateProfile({subscription: result});
+			showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
+		} catch (error) {
+			setErrorMessage(error.message);
+		} finally {
+			setIsPopupConfirmationOpen(false);
+		}
+	}
 
   const testSubscription = () => {
     if (testSubIndex === 5) {
@@ -145,7 +153,7 @@ const Subscription = () => {
           }
           isOpen={isPopupConfirmationOpen}
           onClose={() => setIsPopupConfirmationOpen(false)}
-          onConfirmation={cancellingSubscription}
+          onConfirmation={cancelSubscription}
           timer={4}
         />
       }

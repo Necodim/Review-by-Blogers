@@ -79,7 +79,7 @@ const BarterStatusProgress = ({ offer, updateOffer }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file) setFileError('Выберите файл для загрузки');
-    if (!formDate) setDateError('Укажите дату выхода reels');
+    if (!formDate) setDateError('Укажите дату выхода публикации');
     if (!file || !formDate) {
       return
     }
@@ -96,6 +96,8 @@ const BarterStatusProgress = ({ offer, updateOffer }) => {
         status: offer.status,
         screenshot: uploadedFile,
         date: formDate,
+        seller_id: offer.barter?.user_id,
+        blogger_id: offer.user_id,
       }
 
       const updatedOffer = await api.updateBarterOffer(data);

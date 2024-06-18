@@ -300,6 +300,11 @@ const setCategoryPage = async (subCategoryID) => {
   return response.data;
 }
 
+const getUserSubscription = async () => {
+  const response = await apiClient.get(`/payment/subscription`);
+  return response.data;
+}
+
 const getYookassaPaymentStatus = async (paymentId) => {
   const response = await apiClient.get(`/payment/subscription/status/${paymentId}`);
   return response.data;
@@ -394,6 +399,7 @@ export default {
   setStore,
   setCategoryPage,
 
+  getUserSubscription,
   getYookassaPaymentStatus,
   getYookassaConfirmationToken,
   createYookassaPayload,

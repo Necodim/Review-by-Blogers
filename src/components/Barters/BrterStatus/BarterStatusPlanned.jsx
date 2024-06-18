@@ -33,7 +33,7 @@ const BarterStatusPlanned = ({ offer, updateOffer }) => {
     switch (role) {
       case 'blogger':
         setTitle('Отчёт №2 по бартеру');
-        setText(`Опубликуйте reels${offer?.date ? ` ${moment(offer.date).format('DD.MM.YYYY')}` : ''}, отправьте ссылку на него и укажите, оставили ли вы отзыв на купленный товар в магазине селлера на маркетплейсе.`);
+        setText(`Опубликуйте рекламу${offer?.date ? ` ${moment(offer.date).format('DD.MM.YYYY')}` : ''}, отправьте ссылку на публикацию и укажите, оставили ли вы отзыв на купленный товар в магазине селлера на маркетплейсе.`);
         break;
       case 'seller':
         setTitle('Выбрана дата рекламы');
@@ -57,7 +57,7 @@ const BarterStatusPlanned = ({ offer, updateOffer }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formReels || (!formFeedback && offer.barter?.need_feedback)) {
-      if (!formReels) setReelsError('Вставьте ссылку на reels');
+      if (!formReels) setReelsError('Вставьте ссылку на публикацию');
       if (!formFeedback && offer.barter?.need_feedback) setFeedbackError('Необходимо оставить отзыв о товаре на маркетплейсе');
       return
     }
@@ -69,6 +69,8 @@ const BarterStatusPlanned = ({ offer, updateOffer }) => {
         status: offer.status,
         reels: formReels,
         feedback: formFeedback,
+        seller_id: offer.barter?.user_id,
+        blogger_id: offer.user_id,
       }
 
       const updatedOffer = await api.updateBarterOffer(data);

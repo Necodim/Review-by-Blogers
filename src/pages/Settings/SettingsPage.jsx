@@ -11,7 +11,7 @@ import PopupConfirmation from '../../components/Popup/PopupConfirmation';
 
 const SettingsPage = () => {
 	const navigate = useNavigate();
-	const { profile, updateProfile, updateUserData, addSubscription } = useUserProfile();
+	const { profile, updateUserData } = useUserProfile();
 	const { showToast } = useToastManager();
 
 	const [isPopupChangeRoleVisible, setIsPopupChangeRoleVisible] = useState(false);

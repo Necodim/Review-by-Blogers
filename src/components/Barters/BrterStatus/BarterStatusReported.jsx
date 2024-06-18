@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useToastManager } from '../../../hooks/useToast';
 import api from '../../../api/api';
 import Form from '../../Form/Form';
-import Input from '../../Form/Input';
 import Textarea from '../../Form/Textarea';
 import Button from '../../Button/Button';
 
@@ -55,6 +53,8 @@ const BarterStatusReported = ({ offer, updateOffer }) => {
         offerId: offer.id,
         status: offer.status,
         feedback: formFeedback,
+        seller_id: offer.barter?.user_id,
+        blogger_id: offer.user_id,
       }
 
       const updatedOffer = await api.updateBarterOffer(data);
@@ -71,7 +71,7 @@ const BarterStatusReported = ({ offer, updateOffer }) => {
   const sellerReported = () => {
     return (
       <div className='list gap-xl w-100'>
-        <Button className={'w-100' + (!offer.reels && ' disabled')} target='_blank' icon='center_focus_strong' onClick={goToInstagram}>Смотреть Reels</Button>
+        <Button className={'w-100' + (!offer.reels && ' disabled')} target='_blank' icon='center_focus_strong' onClick={goToInstagram}>Смотреть публикацию</Button>
         <Form
           onSubmit={handleSubmit}
           isDisabled={formSending}

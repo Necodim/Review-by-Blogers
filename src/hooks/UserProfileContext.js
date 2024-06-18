@@ -163,43 +163,8 @@ export const UserProfileProvider = ({ children }) => {
 		}
 	}
 
-	const addSubscription = async (data) => {
-		setLoading(true);
-		try {
-			const result = await addSellerSubscription(data);
-			setProfile(currentProfile => {
-				const updatedProfile = { ...currentProfile, subscription: result };
-				sessionStorage.setItem('userData', JSON.stringify(updatedProfile));
-				return updatedProfile;
-			});
-			showToast(`Вы подключили подписку. Сервис будет доступен до ${moment(result.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
-			return result;
-		} catch (error) {
-			setErrorMessage(error.message);
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	const cancelSubscription = async () => {
-		setLoading(true);
-		try {
-			const result = await cancelSellerSubscription();
-			setProfile(currentProfile => {
-				const updatedProfile = { ...currentProfile, subscription: result };
-				sessionStorage.setItem('userData', JSON.stringify(updatedProfile));
-				return updatedProfile;
-			});
-			showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
-		} catch (error) {
-			setErrorMessage(error.message);
-		} finally {
-			setLoading(false);
-		}
-	}
-
 	return (
-		<UserProfileContext.Provider value={{ loading, profile, role, isActive, updateProfile, updateUserData, addSubscription, cancelSubscription }}>
+		<UserProfileContext.Provider value={{ loading, profile, role, isActive, updateProfile, updateUserData }}>
 			{children}
 		</UserProfileContext.Provider>
 	);

@@ -7,11 +7,12 @@ import Header from '../../Header/Header';
 import Button from '../../Button/Button';
 
 const SubscribeHasSubscription = () => {
-	const { profile, cancelSubscription } = useUserProfile();
+	const { profile, updateProfile } = useUserProfile();
 	const { showToast } = useToastManager();
 
 	const [errorMessage, setErrorMessage] = useState('');
 	const [expiredDate, setExpiredDate] = useState('');
+	const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
 	useEffect(() => {
 		if (errorMessage) {
@@ -26,8 +27,17 @@ const SubscribeHasSubscription = () => {
 		}
 	}, [profile]);
 
-	const cancellingSubscription = async () => {
-		await cancelSubscription();
+	const cancelSubscription = async () => {
+		setIsBtnDisabled(true);
+		try {
+			const result = await cancelSellerSubscription();
+			updateProfile({ subscription: result });
+			showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
+		} catch (error) {
+			setErrorMessage(error.message);
+		} finally {
+			setIsBtnDisabled(false);
+		}
 	}
 
 	return (
@@ -44,8 +54,8 @@ const SubscribeHasSubscription = () => {
 				</div>
 				<div className='list'>
 					<div className='list-item'>
-						<Button className='error w-100' onClick={cancellingSubscription}>Отменить подписку</Button>
-          </div>
+						<Button className='error w-100' disabled={isBtnDisabled} onClick={cancelSubscription}>Отменить подписку</Button>
+					</div>
 				</div>
 			</div>
 		</div>

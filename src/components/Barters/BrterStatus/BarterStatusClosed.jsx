@@ -38,7 +38,7 @@ const BarterStatusClosed = ({ offer }) => {
       </div>
       {offer.reels &&
         <div className='list-item'>
-          <Button className='w-100' target='_blank' icon='center_focus_strong' onClick={goToInstagram}>Смотреть Reels</Button>
+          <Button className='w-100' target='_blank' icon='center_focus_strong' onClick={goToInstagram}>Смотреть публикацию</Button>
         </div>
       }
       <div className='list-item'>{text}</div>
