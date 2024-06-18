@@ -32,7 +32,6 @@ const ProductsPage = () => {
   const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
   const [isPopupTaskWriteVisible, setIsPopupTaskWriteVisible] = useState(false);
   const [isPopupConfirmationBarterCloseVisible, setIsPopupConfirmationBarterCloseVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
@@ -154,7 +153,6 @@ const ProductsPage = () => {
   };
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
     const lowerCaseQuery = query.toLowerCase();
     const filtered = products.filter(product =>
       product.nmid.toString().includes(lowerCaseQuery) ||

@@ -26,7 +26,6 @@ const BloggerBartersPage = () => {
   const [newOffers, setNewOffers] = useState([]);
   const [progressOffers, setProgressOffers] = useState([]);
   const [completedOffers, setCompletedOffers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [filteredBarterOffers, setFilteredBarterOffers] = useState(barterOffers);
 
   useEffect(() => {
@@ -44,7 +43,6 @@ const BloggerBartersPage = () => {
         setBarterOffers(offers);
         setOffersByStatus(offers);
         setFilteredBarterOffers(offers);
-        setOffersIsLoading(false);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
@@ -93,7 +91,6 @@ const BloggerBartersPage = () => {
   }
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
     const lowerCaseQuery = query.toLowerCase();
     const filtered = barterOffers.filter(bo =>
       bo.product?.nmid?.toString().includes(lowerCaseQuery) ||
@@ -107,7 +104,6 @@ const BloggerBartersPage = () => {
     );
     setFilteredBarterOffers(filtered);
     setOffersByStatus(filtered);
-    console.log(filtered)
   };
 
   if (offersIsLoading) {

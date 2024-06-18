@@ -25,7 +25,6 @@ const SellerBartersPage = () => {
   const [newOffers, setNewOffers] = useState([]);
   const [progressOffers, setProgressOffers] = useState([]);
   const [completedOffers, setCompletedOffers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [filteredBarterOffers, setFilteredBarterOffers] = useState(barterOffers);
 
   useEffect(() => {
@@ -49,7 +48,6 @@ const SellerBartersPage = () => {
         setBarterOffers(offers);
         setOffersByStatus(offers);
         setFilteredBarterOffers(offers);
-        setOffersIsLoading(false);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
@@ -93,7 +91,6 @@ const SellerBartersPage = () => {
   }
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
     const lowerCaseQuery = query.toLowerCase();
     const filtered = barterOffers.filter(bo =>
       bo.product?.nmid?.toString().includes(lowerCaseQuery) ||

@@ -24,7 +24,6 @@ const StoreSeller = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [activeBarters, setActiveBarters] = useState([]);
   const [inactiveBarters, setInactiveBarters] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -89,7 +88,6 @@ const StoreSeller = () => {
   };
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
     const lowerCaseQuery = query.toLowerCase();
     const filtered = products.filter(product => 
       product.nmid.toString().includes(lowerCaseQuery) ||
