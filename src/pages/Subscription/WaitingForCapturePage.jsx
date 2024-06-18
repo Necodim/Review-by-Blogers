@@ -36,7 +36,7 @@ const WaitingForCapturePage = () => {
 							expired_at: new Date(addedSubscription.next_charge_date).getTime()
 						}
 						updateProfile({subscription: subscription});
-						showToast(`Вы подключили подписку. Сервис будет доступен до ${moment(subscription.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
+						showToast(`Вы подключили подписку. Сервис будет доступен до ${moment(addedSubscription.next_charge_date).format('DD.MM.YYYY, HH:mm')}.`, 'success');
 					} else {
 						setErrorMessage('Ошибка при добавлении подписки. Перезайдите в приложение. Если подписка не появится, напишите в поддержку.');
 					}

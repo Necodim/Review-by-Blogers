@@ -1,7 +1,6 @@
 import React, { lazy, useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
-import { retrieveLaunchParams } from '@tma.js/sdk';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { SelectedProductsProvider } from './hooks/useSelectProductsContext';
 import { ToastContainer } from 'react-toastify';
@@ -93,13 +92,6 @@ function App() {
 
 	useEffect(() => {
 		if (tg) {
-			// const { initDataRaw } = retrieveLaunchParams();
-			// fetch('https://api.reviewbybloggers.ru/telegram/init', {
-			// 	method: 'POST',
-			// 	headers: {
-			// 		Authorization: `tma ${initDataRaw}`
-			// 	},
-			// });
 			tg.ready();
 			defaultSettings();
 		} else {

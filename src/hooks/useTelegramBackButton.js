@@ -9,7 +9,7 @@ const BackButton = () => {
 
   useEffect(() => {
     const handleHistoryChange = () => {
-      setCanGoBack(window.history.length > 1);
+      setCanGoBack(window.history.length > 2);
     };
 
     handleHistoryChange();
@@ -26,8 +26,13 @@ const BackButton = () => {
 
   useEffect(() => {
     if (canGoBack) {
-      tg.BackButton.show();
-      tg.BackButton.onClick(() => navigate(-1));
+      if (location.pathname === '/settings') {
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => navigate('/profile'));
+      } else {
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => navigate(-1));
+      }
     } else {
       tg.BackButton.hide();
     }

@@ -34,7 +34,8 @@ const SubscribeHasSubscription = () => {
 		try {
 			const result = await cancelSellerSubscription();
 			updateProfile({ subscription: result });
-			showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.expired_at).format('DD.MM.YYYY, HH:mm')}.`, 'success');
+			showToast(`Вы успешно отменили подписку. Сервис будет доступен до ${moment(result.next_charge_date).format('DD.MM.YYYY, HH:mm')}.`, 'success');
+			navigate('/profile');
 		} catch (error) {
 			setErrorMessage(error.message);
 		} finally {
