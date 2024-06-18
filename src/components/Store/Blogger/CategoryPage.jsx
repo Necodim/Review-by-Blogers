@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../../api/api';
 import { useToastManager } from '../../../hooks/useToast';
-import PreloaderContainer from '../../Preloader/PreloaderContainer';
+import PreloaderPage from '../../Preloader/PreloaderPage';
 import Header from '../../Header/Header';
 import ProductsGrid from '../ProductsGrid';
 
@@ -57,9 +57,9 @@ const CategoryPage = () => {
   }, [subCategoryId]);
 
   if (productsIsLoading) {
-    return <PreloaderContainer text='Загрузка данных категории...' />
+    return <PreloaderPage text='Загрузка данных категории...' />
   } else if (errorMessage) {
-    return <PreloaderContainer title='Ошибка' text={errorMessage} />
+    return <PreloaderPage title='Ошибка' text={errorMessage} />
   } else {
     return (
       <div className='content-wrapper'>

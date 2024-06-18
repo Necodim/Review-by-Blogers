@@ -1,8 +1,8 @@
 export function useHelpers() {
 
 	const sortBy = (arrayOfObjects, sortKey) => {
-    return arrayOfObjects.sort((a, b) => new Date(b[sortKey]) - new Date(a[sortKey]));
-  };
+		return arrayOfObjects.sort((a, b) => new Date(b[sortKey]) - new Date(a[sortKey]));
+	};
 
 	const getPlural = (n, form1, form2, form5) => {
 		let nAbs = Math.abs(n) % 100;
@@ -41,10 +41,10 @@ export function useHelpers() {
 		try {
 			const text = data.toString().trim();
 			navigator.clipboard.writeText(text);
-			return {status: 'success', message: successMessage};
+			return { status: 'success', message: successMessage };
 		} catch (error) {
 			console.error(error);
-			return {status: 'error', message: errorMessage};
+			return { status: 'error', message: errorMessage };
 		}
 	}
 
@@ -119,6 +119,10 @@ export function useHelpers() {
 		}
 	}
 
+	const formatNumberToLocale = (number, locale = 'ru-RU') => {
+		return number.toLocaleString(locale);
+	}
+
 	return {
 		sortBy,
 		getPlural,
@@ -127,5 +131,6 @@ export function useHelpers() {
 		getMarketplaceProductLink,
 		getProductInfo,
 		getOfferTitle,
+		formatNumberToLocale,
 	}
 }

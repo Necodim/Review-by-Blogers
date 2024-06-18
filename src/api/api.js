@@ -305,6 +305,11 @@ const getUserSubscription = async () => {
   return response.data;
 }
 
+const getPrices = async () => {
+  const response = await apiClient.get(`/payment/subscription/prices`);
+  return response.data;
+}
+
 const getYookassaPaymentStatus = async (paymentId) => {
   const response = await apiClient.get(`/payment/subscription/status/${paymentId}`);
   return response.data;
@@ -400,6 +405,7 @@ export default {
   setCategoryPage,
 
   getUserSubscription,
+  getPrices,
   getYookassaPaymentStatus,
   getYookassaConfirmationToken,
   createYookassaPayload,

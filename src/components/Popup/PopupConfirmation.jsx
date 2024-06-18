@@ -33,11 +33,11 @@ const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirma
   }, [isOpen, timer]);
 
   return (
-    <Popup id={id} isOpen={isOpen} onClose={onClose}>
+    <Popup id={id || 'popup-confirmation'} isOpen={isOpen} onClose={onClose}>
       <div className='list'>
         <div className='list-item vertical'>
-          <h1>{title}</h1>
-          <span>{text}</span>
+          <h1>{title || 'Подтвердите действие'}</h1>
+          <span>{text || 'Вы уверены?'}</span>
           {descr && <small>{descr}</small>}
         </div>
       </div>
@@ -50,12 +50,6 @@ const PopupConfirmation = ({ id, title, text, descr, isOpen, onClose, onConfirma
       </div>
     </Popup>
   );
-};
-
-PopupConfirmation.defaultProps = {
-  id: 'popup-confirmation',
-  title: 'Подтвердите действие',
-  text: 'Вы уверены?',
 };
 
 export default PopupConfirmation;

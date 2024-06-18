@@ -7,7 +7,7 @@ import Form from '../../Form/Form';
 import Input from '../../Form/Input';
 import Header from '../../Header/Header';
 import api from '../../../api/api';
-import PreloaderContainer from '../../Preloader/PreloaderContainer';
+import PreloaderPage from '../../Preloader/PreloaderPage';
 
 const SubscribeHasNoSubscription = ({ period }) => {
   const { profile } = useUserProfile();
@@ -198,7 +198,7 @@ const SubscribeHasNoSubscription = ({ period }) => {
   // }
 
   if (!!loadingText) {
-    return <PreloaderContainer title={loadingTitle} text={loadingText} />
+    return <PreloaderPage title={loadingTitle} text={loadingText} />
   } else {
     return (
       <div className='content-wrapper'>

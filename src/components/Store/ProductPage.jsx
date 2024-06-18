@@ -13,7 +13,7 @@ import Input from '../Form/Input';
 import Button from '../Button/Button';
 import ProductPageSellerActions from './Seller/ProductPageSellerActions';
 import ProductPageBloggerActions from './Blogger/ProductPageBloggerActions';
-import PreloaderContainer from '../Preloader/PreloaderContainer';
+import PreloaderPage from '../Preloader/PreloaderPage';
 
 const ProductPage = () => {
   const navigate = useNavigate();
@@ -75,11 +75,11 @@ const ProductPage = () => {
   }, [productId, productData]);
 
   if (loadingProduct) {
-    return <PreloaderContainer text='Загрузка данных о товаре...' />
+    return <PreloaderPage text='Загрузка данных о товаре...' />
   }
 
   if (!productData) {
-    return <PreloaderContainer title='Товар не найден' text='К сожалению, данный товар не найден. Попробуйте ещё раз.' />
+    return <PreloaderPage title='Товар не найден' text='К сожалению, данный товар не найден. Попробуйте ещё раз.' />
   }
 
   const closeBarters = async () => {

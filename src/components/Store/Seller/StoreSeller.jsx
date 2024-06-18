@@ -9,6 +9,7 @@ import Header from '../../Header/Header';
 import SearchBar from '../../SearchBar/SearchBar';
 import Link from '../../Button/Link';
 import ProductsGrid from '../ProductsGrid';
+import PreloaderPage from '../../Preloader/PreloaderPage';
 import PreloaderContainer from '../../Preloader/PreloaderContainer';
 
 const StoreSeller = () => {
@@ -19,11 +20,12 @@ const StoreSeller = () => {
   const { getPlural } = useHelpers();
 
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const [productsIsLoading, setProductsIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [activeBarters, setActiveBarters] = useState([]);
   const [inactiveBarters, setInactiveBarters] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     if (errorMessage) {
@@ -87,6 +89,7 @@ const StoreSeller = () => {
   };
 
   const handleSearch = (query) => {
+    setSearchQuery(query);
     const lowerCaseQuery = query.toLowerCase();
     const filtered = products.filter(product => 
       product.nmid.toString().includes(lowerCaseQuery) ||
@@ -108,17 +111,19 @@ const StoreSeller = () => {
   };
 
   if (productsIsLoading) {
-    return <PreloaderContainer text='Товары загружаются...' />;
-  } else if (products.length === 0) {
-    return <PreloaderContainer title='Нет товаров' text='У вас нет товаров. Загрузите товары, добавив API маркетплейса. Если товары не отобразятся, сообщите в поддержку.' />;
+    return <PreloaderPage text='Товары загружаются...' />;
+  } else if (!products) {
+    return <PreloaderPage title='Нет товаров' text='У вас нет товаров. Загрузите товары, добавив API маркетплейса. Если товары не отобразятся, сообщите в поддержку.' />;
   }
 
   return (
     <div className='content-wrapper'>
       <Header />
-      <div className='container' id='search'>
-        <SearchBar onSearch={handleSearch} placeholder='Поиск товаров...' />
-      </div>
+      {products &&
+        <div className='container' id='search'>
+          <SearchBar onSearch={handleSearch} placeholder='Поиск товаров...' />
+        </div>
+      }
       {activeBarters.length > 0 &&
         <div className='container' id='products-active'>
           <div className='list'>
@@ -149,6 +154,9 @@ const StoreSeller = () => {
           <ProductsGrid
             products={inactiveBarters.slice(0, 2)}
           />
+          {!filteredProducts.length &&
+            <PreloaderContainer title='Не найдено' text='Попробуйте изменить поисковый запрос.' />
+          }
         </div>
       }
     </div>

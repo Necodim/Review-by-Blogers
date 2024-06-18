@@ -5,14 +5,16 @@ import api from '../../api/api';
 import { useSelectedProducts } from '../../hooks/useSelectProductsContext';
 import { useToastManager } from '../../hooks/useToast';
 import { useHelpers } from '../../hooks/useHelpers';
-import SearchBar from '../SearchBar/SearchBar';
+import PreloaderPage from '../Preloader/PreloaderPage';
 import Header from '../Header/Header';
+import SearchBar from '../SearchBar/SearchBar';
 import Button from '../Button/Button';
 import Link from '../Button/Link';
 import ProductsGrid from './ProductsGrid';
 import PopupEditProducts from '../Popup/PopupEditProducts';
 import PopupTaskWrite from '../Popup/PopupTaskWrite';
 import PopupConfirmation from '../Popup/PopupConfirmation';
+import PreloaderContainer from '../Preloader/PreloaderContainer';
 
 const ProductsPage = () => {
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ const ProductsPage = () => {
   const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
   const [isPopupTaskWriteVisible, setIsPopupTaskWriteVisible] = useState(false);
   const [isPopupConfirmationBarterCloseVisible, setIsPopupConfirmationBarterCloseVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
@@ -151,6 +154,7 @@ const ProductsPage = () => {
   };
 
   const handleSearch = (query) => {
+    setSearchQuery(query);
     const lowerCaseQuery = query.toLowerCase();
     const filtered = products.filter(product =>
       product.nmid.toString().includes(lowerCaseQuery) ||
@@ -162,12 +166,18 @@ const ProductsPage = () => {
     setFilteredProducts(filtered);
   };
 
+  if (!products.length) {
+    return <PreloaderPage title='Не найдено' text='Попробуйте перейти на страницу через главный раздел.' />
+  }
+
   return (
     <div className='content-wrapper'>
       <Header />
-      <div className='container' id='search'>
-        <SearchBar onSearch={handleSearch} placeholder='Поиск товаров...' />
-      </div>
+      {products &&
+        <div className='container' id='search'>
+          <SearchBar onSearch={handleSearch} placeholder='Поиск товаров...' disabled={isEditing} />
+        </div>
+      }
       <div className='container' id='products'>
         <div className='list'>
           <div className='list-item'>
@@ -206,6 +216,9 @@ const ProductsPage = () => {
           isEditing={isEditing}
         />
         {isEditing && <Button onClick={openPopupEditProducts} className={selectedProducts.length > 0 ? 'sticky b-s shadow' : 'relative b-0 disabled'} icon='edit'>Редактировать</Button>}
+        {!filteredProducts.length &&
+          <PreloaderContainer title='Не найдено' text='Попробуйте изменить поисковый запрос.' />
+        }
       </div>
       <PopupEditProducts
         isOpen={isPopupEditProductsVisible}

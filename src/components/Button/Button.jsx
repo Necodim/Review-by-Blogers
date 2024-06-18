@@ -10,7 +10,7 @@ const Button = ({ onClick, className, icon, size, disabled, children, ...buttonP
     useEffect(() => {
       const disabledStatus = (className && className?.includes('disabled')) || disabled;
       setIsDisabled(disabledStatus);
-    }, [className]);
+    }, [className, disabled]);
 
     const handleClick = (event) => {
         if (isDisabled) {
@@ -22,7 +22,7 @@ const Button = ({ onClick, className, icon, size, disabled, children, ...buttonP
     }
 
     return (
-        <button {...buttonProps} className={`button ${className || (disabled ? 'disabled' : '')}`} onClick={handleClick} disabled={isDisabled}>
+        <button {...buttonProps} className={`button ${className} ${(isDisabled ? 'disabled' : '')}`} onClick={handleClick} disabled={isDisabled}>
             { icon && <Icon icon={icon} size={size}></Icon> }
             {children}
         </button>

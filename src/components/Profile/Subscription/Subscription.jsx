@@ -6,6 +6,7 @@ import api from '../../../api/api';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useToastManager } from '../../../hooks/useToast';
 import { useHelpers } from '../../../hooks/useHelpers';
+import PreloaderPage from '../../Preloader/PreloaderPage';
 import Header from '../../Header/Header';
 import PopupConfirmation from '../../Popup/PopupConfirmation';
 import Link from '../../Button/Link';
@@ -17,16 +18,57 @@ const Subscription = () => {
   const { cancelSellerSubscription } = api;
   const { profile, updateProfile } = useUserProfile();
   const { showToast } = useToastManager();
-  const { getPlural } = useHelpers();
+  const { getPlural, formatNumberToLocale } = useHelpers();
 
   const [tonConnectUI] = useTonConnectUI();
 
   const [testSubIndex, setTestSubIndex] = useState(0);
+  const [prices, setPrices] = useState({});
+  const [priceRubMonth, setPriceRubMonth] = useState('');
+  const [priceRubYear, setPriceRubYear] = useState('');
+  const [priceTonMonth, setPriceTonMonth] = useState('');
+  const [priceTonYear, setPriceTonYear] = useState('');
+  const [pricesIsLoading, setPricesIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isAvaliable, setIsAvaliable] = useState(false);
   const [expiredDate, setExpiredDate] = useState('');
   const [isPopupConfirmationOpen, setIsPopupConfirmationOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      setPricesIsLoading(true);
+      try {
+        const fetchedPrices = await api.getPrices();
+        if (fetchedPrices) {
+          setPrices(fetchedPrices);
+          setFetchedPrices(fetchedPrices)
+        } else {
+          throw new Error('Произошла ошибка при получении стоимости подписок');
+        }
+      } catch (error) {
+        setErrorMessage(error.message);
+      } finally {
+        setPricesIsLoading(false);
+      }
+    }
+    setTimeout(() => {
+      fetchPrices();
+    }, 1000 * 60 * 10);
+    fetchPrices();
+  }, []);
+
+  const setFetchedPrices = (fetchedPrices) => {
+    if (!!fetchedPrices.rub) {
+      setPriceRubMonth(formatNumberToLocale(fetchedPrices?.rub?.month));
+      setPriceRubYear(formatNumberToLocale(fetchedPrices?.rub?.year));
+    }
+    if (fetchedPrices.ton) {
+      const nanotones = 1000000000; // 1000000000 = 1 TON
+      setPriceTonMonth(fetchedPrices?.ton?.month * nanotones);
+      setPriceTonYear(fetchedPrices?.ton?.year * nanotones);
+    }
+  }
 
   useEffect(() => {
     if (errorMessage) {
@@ -61,7 +103,7 @@ const Subscription = () => {
     navigate('/profile/subscription/subscribe', { state: { period: 'year' } });
   };
 
-  const payWithTon = () => {
+  const payWithTonMonth = () => {
     if (isSubscribed) {
       showToast('У вас уже есть подписка', 'info');
       return;
@@ -70,7 +112,23 @@ const Subscription = () => {
       messages: [
         {
           address: "UQDhqb6O3QqEuTjR73rKAcpL4eYBA-6LeZ_-G4Dqd-g-3mR7",
-          amount: "5990000000" // 1000000000 = 1 TON
+          amount: priceTonMonth
+        }
+      ]
+    }
+    tonConnectUI.sendTransaction(transaction)
+  }
+
+  const payWithTonYear = () => {
+    if (isSubscribed) {
+      showToast('У вас уже есть подписка', 'info');
+      return;
+    }
+    const transaction = {
+      messages: [
+        {
+          address: "UQDhqb6O3QqEuTjR73rKAcpL4eYBA-6LeZ_-G4Dqd-g-3mR7",
+          amount: priceTonYear
         }
       ]
     }
@@ -95,6 +153,10 @@ const Subscription = () => {
     } else {
       setTestSubIndex(testSubIndex + 1);
     }
+  }
+
+  if (pricesIsLoading) {
+    <PreloaderPage text='Загружаю стоимость подписки...' />
   }
 
   return (
@@ -130,16 +192,23 @@ const Subscription = () => {
             {/* А также можете назначать менеджеров для управления своими бартерами. */}
           </div>
         </div>
-        {!isSubscribed &&
+        {/* {!isSubscribed && */}
           <div className='list'>
-            <div  className='list-item gap-xs'>
-              <Button icon='currency_ruble' onClick={payWithRublesMonth}>4990 ₽/мес.</Button>
-              <Button icon='currency_ruble' onClick={payWithRublesYear}>39000 ₽/год</Button>
+          <div  className='list-item'>
+              <small className='w-100 text-center'>Месяц</small>
+              <small className='w-100 text-center'>Год</small>
             </div>
-            <Button className='list-item' icon='account_balance_wallet' onClick={payWithTon}>5.99 TON / мес.</Button>
+            <div  className='list-item gap-xs'>
+              <Button icon='currency_ruble' onClick={payWithRublesMonth}>{priceRubMonth + ' ₽'}</Button>
+              <Button icon='currency_ruble' onClick={payWithRublesYear}>{priceRubYear + ' ₽'}</Button>
+            </div>
+            <div  className='list-item gap-xs'>
+              <Button className='list-item' icon='account_balance_wallet' onClick={payWithTonMonth}>{prices?.ton?.month + ' TON'}</Button>
+              <Button className='list-item' icon='account_balance_wallet' onClick={payWithTonYear}>{prices?.ton?.year + ' TON'}</Button>
+            </div>
             <small className='list-item'>Оплата в TON выгоднее. Для оплаты подключите кошелёк в настройках.</small>
           </div>
-        }
+        {/* } */}
       </div>
 
       {isSubscribed &&

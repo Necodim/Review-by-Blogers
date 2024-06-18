@@ -9,7 +9,7 @@ import BartersNew from './BartersNew';
 import BartersProgress from './BartersProgress';
 import BartersCompleted from './BartersCompleted';
 import BartersQue from './BartersQue';
-import PreloaderContainer from '../../Preloader/PreloaderContainer';
+import PreloaderPage from '../../Preloader/PreloaderPage';
 
 const BartersTypePage = () => {
   const { type } = useParams();
@@ -63,7 +63,7 @@ const BartersTypePage = () => {
   }
 
   if (typeOffersIsLoading) {
-    return <PreloaderContainer text='Предложения загружаются...' />
+    return <PreloaderPage text='Предложения загружаются...' />
   }
 
   return (

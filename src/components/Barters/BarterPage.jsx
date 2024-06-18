@@ -6,7 +6,7 @@ import api from '../../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
 import { useHelpers } from '../../hooks/useHelpers';
-import PreloaderContainer from '../Preloader/PreloaderContainer';
+import PreloaderPage from '../Preloader/PreloaderPage';
 import Header from '../Header/Header';
 import Input from '../Form/Input';
 import Button from '../Button/Button';
@@ -105,13 +105,13 @@ const BarterPage = () => {
   }
 
   if (offerIsLoading) {
-    return <PreloaderContainer text='Бартер загружается...' />
+    return <PreloaderPage text='Бартер загружается...' />
   } else if (!currentOffer) {
-    return <PreloaderContainer title='Бартер не найден' text='Попробуйте ещё раз...' />
+    return <PreloaderPage title='Бартер не найден' text='Попробуйте ещё раз...' />
   }
 
   if (offerUnavailable) {
-    return <PreloaderContainer title='Нет доступа' text='Этот бартер вам недоступен.' />
+    return <PreloaderPage title='Нет доступа' text='Этот бартер вам недоступен.' />
   }
 
   return (

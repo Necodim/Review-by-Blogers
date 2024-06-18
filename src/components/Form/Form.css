@@ -56,6 +56,17 @@ textarea {
     box-shadow: none;
     outline: 0;
     padding: var(--xs) var(--s);
+    transition: all .3s ease-in-out;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled,
+input:disabled ~ *,
+select:disabled ~ *,
+textarea:disabled ~ * {
+    opacity: .5;
+    pointer-events: none;
 }
 
 input {
