@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTonConnectUI } from '@tonconnect/ui-react';
+import moment from 'moment';
+import api from '../../../api/api';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useToastManager } from '../../../hooks/useToast';
 import { useHelpers } from '../../../hooks/useHelpers';
-import moment from 'moment';
 import Header from '../../Header/Header';
 import PopupConfirmation from '../../Popup/PopupConfirmation';
 import Link from '../../Button/Link';
@@ -13,6 +14,7 @@ import Button from '../../Button/Button';
 const Subscription = () => {
   const navigate = useNavigate();
 
+  const { cancelSellerSubscription } = api;
   const { profile, updateProfile } = useUserProfile();
   const { showToast } = useToastManager();
   const { getPlural } = useHelpers();

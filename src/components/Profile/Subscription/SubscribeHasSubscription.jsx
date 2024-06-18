@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import '../Profile.css';
 import moment from 'moment';
+import api from '../../../api/api';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useToastManager } from '../../../hooks/useToast';
 import Header from '../../Header/Header';
 import Button from '../../Button/Button';
 
 const SubscribeHasSubscription = () => {
+	const { cancelSellerSubscription } = api;
 	const { profile, updateProfile } = useUserProfile();
 	const { showToast } = useToastManager();
 

@@ -8,7 +8,7 @@ const UserProfileContext = createContext();
 
 export const UserProfileProvider = ({ children }) => {
 	const { tg, user, isAvailable } = useTelegram();
-	const { getUser, createUser, upsertUser, generateAuthToken, verifyAuthToken, addSellerSubscription, cancelSellerSubscription } = api;
+	const { getUser, upsertUser, generateAuthToken } = api;
 	const { showToast } = useToastManager();
 
 	const [profile, setProfile] = useState(null);
