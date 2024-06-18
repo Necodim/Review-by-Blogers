@@ -46,17 +46,17 @@ const FileField = ({ id, title, accept, placeholder, value, multiple, iconCallba
         <div className='input-wrapper'>
           <input
             type='file'
-            accept={accept}
+            accept={accept || 'image/*'}
             className='file'
             ref={fileInputRef}
             name={inputName}
             onChange={handleFileChange}
-            multiple={multiple}
+            multiple={multiple || false}
             {...inputProps}
           />
           <InputField
             name={'file-' + inputName}
-            placeholder={placeholder}
+            placeholder={placeholder || 'image.png'}
             value={textValue}
             readOnly={true}
             onChange={handleChangeTextValue}
@@ -70,12 +70,6 @@ const FileField = ({ id, title, accept, placeholder, value, multiple, iconCallba
       {comment && <small>{comment}</small>}
     </div>
   );
-};
-
-FileField.defaultProps = {
-	accept: 'image/*',
-  multiple: false,
-	placeholder: 'image.png',
 };
 
 export default FileField;

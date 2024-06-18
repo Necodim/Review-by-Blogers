@@ -19,7 +19,7 @@ const SearchBar = ({ onSearch, placeholder }) => {
   }
 
   return (
-    <div id='search-bar' className='list-item gap-s'>
+    <div id='search-bar' className='list-item justify-content-start gap-s'>
       <InputField
         type='text'
         value={query}
@@ -28,7 +28,7 @@ const SearchBar = ({ onSearch, placeholder }) => {
         icon='backspace'
         iconCallback={handleClearAndCancel}
       />
-      <Button icon='search' onClick={handleSearch} />
+      <Button className='w-auto size-input' icon='search' onClick={handleSearch} />
     </div>
   );
 };

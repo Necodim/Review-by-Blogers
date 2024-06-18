@@ -166,7 +166,7 @@ const ProductsPage = () => {
     <div className='content-wrapper'>
       <Header />
       <div className='container' id='search'>
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar onSearch={handleSearch} placeholder='Поиск товаров...' />
       </div>
       <div className='container' id='products'>
         <div className='list'>

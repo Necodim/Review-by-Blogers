@@ -9,8 +9,8 @@ const Textarea = ({ id, title, name, rows, placeholder, value, onChange, disable
 			<textarea
 				id={id}
 				name={name}
-				rows={rows}
-				placeholder={placeholder}
+				rows={rows || '5'}
+				placeholder={placeholder || 'Введите текст'}
 				value={value}
 				onChange={onChange}
 				disabled={disabled}
@@ -18,11 +18,6 @@ const Textarea = ({ id, title, name, rows, placeholder, value, onChange, disable
 			{comment && <small>{comment}</small>}
 		</div>
 	);
-};
-
-Textarea.defaultProps = {
-	rows: '5',
-	placeholder: 'Введите текст',
 };
 
 export default Textarea;

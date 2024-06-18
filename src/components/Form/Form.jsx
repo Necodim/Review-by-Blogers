@@ -6,14 +6,10 @@ const Form = ({ className, btnicon, btntext, isDisabled, text, ...props }) => {
     return (
         <form {...props} className={`form-wrapper ${className || ''}`}>
             {props.children}
-            <Button type="submit" icon={btnicon} className={isDisabled ? 'disabled' : ''}>{btntext}</Button>
+            <Button type="submit" icon={btnicon} className={isDisabled ? 'disabled' : ''}>{btntext || 'Отправить'}</Button>
             {text && <small>{text}</small>}
         </form>
     );
-};
-
-Form.defaultProps = {
-    btntext: 'Отправить',
 };
 
 export default Form;

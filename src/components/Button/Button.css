@@ -52,9 +52,9 @@
 }
 
 .button.size-input {
+  height: var(--xxxl);
   font-size: var(--text-size-m);
-  line-height: 2;
-  padding: var(--xs) var(--m);
+  padding: var(--xs) var(--s);
 }
 
 .button.nav-button {
