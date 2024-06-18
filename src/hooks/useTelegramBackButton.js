@@ -25,7 +25,8 @@ const BackButton = () => {
   }, [location]);
 
   useEffect(() => {
-    if (canGoBack) {
+    const notStartPage = location.pathname !== '/' && location.pathname !== '/profile' && location.pathname !== '/store' && location.pathname !== '/barters'
+    if (notStartPage && canGoBack) {
       if (location.pathname === '/settings') {
         tg.BackButton.show();
         tg.BackButton.onClick(() => navigate('/profile'));
@@ -35,8 +36,9 @@ const BackButton = () => {
       }
     } else {
       tg.BackButton.hide();
+      tg.BackButton.offClick();
     }
-  }, [canGoBack, navigate, tg]);
+  }, [location, canGoBack, navigate, tg]);
 
   return null;
 };

@@ -5,6 +5,7 @@ import api from '../../api/api';
 import { useSelectedProducts } from '../../hooks/useSelectProductsContext';
 import { useToastManager } from '../../hooks/useToast';
 import { useHelpers } from '../../hooks/useHelpers';
+import SearchBar from '../SearchBar/SearchBar';
 import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Link from '../Button/Link';
@@ -22,23 +23,26 @@ const ProductsPage = () => {
   const { selectedProducts, setSelectedProducts } = useSelectedProducts();
   const { showToast } = useToastManager();
   const { getPlural } = useHelpers();
-  
+
   const [errorMessage, setErrorMessage] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [isEditing, setIsEditing] = useState(false);
   const [isPopupEditProductsVisible, setIsPopupEditProductsVisible] = useState(false);
   const [isPopupTaskWriteVisible, setIsPopupTaskWriteVisible] = useState(false);
   const [isPopupConfirmationBarterCloseVisible, setIsPopupConfirmationBarterCloseVisible] = useState(false);
-  
+  const [filteredProducts, setFilteredProducts] = useState(products);
+
   useEffect(() => {
     if (products.length === 0) {
       navigate('/store');
+    } else {
+      setFilteredProducts(products);
     }
-  }, [products]);
-  
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  }, [products, navigate]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (errorMessage) {
@@ -55,7 +59,7 @@ const ProductsPage = () => {
   }, [setSelectedProducts]);
 
   const sortedProducts = useMemo(() => {
-    let sortableProducts = [...products];
+    let sortableProducts = [...filteredProducts];
     if (sortConfig.key !== null) {
       sortableProducts.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -68,7 +72,7 @@ const ProductsPage = () => {
       });
     }
     return sortableProducts;
-  }, [products, sortConfig]);
+  }, [filteredProducts, sortConfig]);
 
   const SortIndicator = ({ isActive, direction }) => {
     if (!isActive) return null;
@@ -76,7 +80,7 @@ const ProductsPage = () => {
     return (
       <span className='m-l-xxxs'>{direction === 'ascending' ? '↓' : '↑'}</span>
     );
-  }
+  };
 
   const handleSort = (key) => {
     setSortConfig((currentSortConfig) => {
@@ -88,14 +92,14 @@ const ProductsPage = () => {
       }
       return { key, direction: 'ascending' };
     });
-  }
+  };
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
     if (isEditing) {
       setSelectedProducts([]);
     }
-  }
+  };
 
   const toggleSelectAllProducts = () => {
     if (selectedProducts.length < products.length) {
@@ -103,21 +107,21 @@ const ProductsPage = () => {
     } else {
       setSelectedProducts([]);
     }
-  }
+  };
 
   const openPopupEditProducts = () => {
     if (selectedProducts.length > 0) setIsPopupEditProductsVisible(true);
-  }
+  };
 
   const openPopupTaskWrite = () => {
     setIsPopupEditProductsVisible(false);
     setIsPopupTaskWriteVisible(true);
-  }
+  };
 
   const openPopupConfirmation = () => {
     setIsPopupEditProductsVisible(false);
     setIsPopupConfirmationBarterCloseVisible(true);
-  }
+  };
 
   const closeBarters = async () => {
     setIsPopupConfirmationBarterCloseVisible(true);
@@ -129,7 +133,7 @@ const ProductsPage = () => {
       return;
     }
 
-    const data = {ids: ids};
+    const data = { ids: ids };
 
     try {
       const closedBarters = await api.closeBarters(data);
@@ -144,12 +148,26 @@ const ProductsPage = () => {
       setErrorMessage(message);
       console.error(message, error);
     }
-  }
-  
-  return (
+  };
 
+  const handleSearch = (query) => {
+    const lowerCaseQuery = query.toLowerCase();
+    const filtered = products.filter(product =>
+      product.nmid.toString().includes(lowerCaseQuery) ||
+      product.subjectname.toLowerCase().includes(lowerCaseQuery) ||
+      product.vendorcode.toLowerCase().includes(lowerCaseQuery) ||
+      product.brand.toLowerCase().includes(lowerCaseQuery) ||
+      product.title.toLowerCase().includes(lowerCaseQuery)
+    );
+    setFilteredProducts(filtered);
+  };
+
+  return (
     <div className='content-wrapper'>
       <Header />
+      <div className='container' id='search'>
+        <SearchBar onSearch={handleSearch} />
+      </div>
       <div className='container' id='products'>
         <div className='list'>
           <div className='list-item'>
