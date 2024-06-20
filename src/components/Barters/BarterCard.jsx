@@ -46,12 +46,12 @@ const BarterCard = ({ offer, onClick }) => {
 							</div>
 							<div className='list-item barter-blogger-username'>
 							{username && username}
-								{!username &&
-									<>
-										<Icon className='text-error' icon='priority_high' size='small' />
-										<span className='text-error'>Ник не указан</span>
-									</>
-								}
+							{/* {!username &&
+								<>
+									<Icon className='text-error' icon='priority_high' size='small' />
+									<span className='text-error'>Ник не указан</span>
+								</>
+							} */}
 							</div>
 						</div>
 						<span className='product-title'>{offer.product.title}</span>

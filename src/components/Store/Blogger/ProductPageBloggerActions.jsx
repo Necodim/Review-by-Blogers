@@ -123,7 +123,7 @@ const ProductPageBloggerActions = ({ selectedProducts }) => {
         <Input
           id='price'
           name='price'
-          title='Сумма с доставкой'
+          title='Стоимость товара'
           value={price}
           onChange={handleChangePrice}
           required={true}
