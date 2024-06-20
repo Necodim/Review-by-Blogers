@@ -34,9 +34,9 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 		if (selectedProducts.length === 1) {
 			const barter = selectedProducts[0].barter;
 			if (barter) {
-				setTask(barter.task);
-				setBrandInstagram(barter.brand_instagram);
-				setFeedback(barter.need_feedback);
+				setTask(barter.task || '');
+				setBrandInstagram(barter.brand_instagram || '');
+				setFeedback(barter.need_feedback || '');
 			}
 		} else if (selectedProducts.length > 1) {
 			const array = new Array();

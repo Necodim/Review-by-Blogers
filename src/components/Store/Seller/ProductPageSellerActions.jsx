@@ -15,8 +15,9 @@ const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
   const [isPopupConfirmationBarterCloseVisible, setIsPopupConfirmationBarterCloseVisible] = useState(false);
 
   useEffect(() => {
+    console.log(selectedProducts[0])
     if (!!selectedProducts && selectedProducts.length > 0) {
-      if (selectedProducts[0] && selectedProducts[0].barter) {
+      if (selectedProducts[0] && selectedProducts[0].barter && selectedProducts[0].barter?.id) {
         setBarter(selectedProducts[0].barter);
         if (selectedProducts[0].barter.closedat == null || moment(selectedProducts[0].barter.closedat).isAfter(moment())) {
           setIsBarterOpen(true);
@@ -46,10 +47,12 @@ const ProductPageSellerActions = ({ selectedProducts, closeBarters }) => {
               <Button icon='format_list_bulleted' onClick={openPopupTaskRead}>Смотреть / Изменить ТЗ</Button>
             </div>
           }
-          {isBarterOpen ?
+          {isBarterOpen &&
             <div className='list-item'>
               <Button icon='cancel' onClick={openPopupConfirmation}>Закрыть бартер</Button>
-            </div> :
+            </div>
+          }
+          {!isBarterOpen &&
             <div className='list-item'>
               <Button icon='add' onClick={openPopupTaskWrite} disabled={!isActive}>Открыть бартер</Button>
             </div>

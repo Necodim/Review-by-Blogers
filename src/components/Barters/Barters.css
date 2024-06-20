@@ -4,9 +4,12 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: var(--s);
+  overflow: hidden;
 }
 
 .barter-card {
+  --size-image: 90px;
+  --size-status: var(--xs);
   position: relative;
   width: 100%;
   display: flex;
@@ -20,7 +23,7 @@
 }
 
 .barter-card .barter-status {
-  --size: var(--xs);
+  --size: var(--size-status);
   position: absolute;
   top: var(--s);
   right: var(--s);
@@ -40,17 +43,20 @@
 }
 
 .barter-card .barter-image {
-  --size: 90px;
+  --size: var(--size-image);
   min-width: var(--size);
   max-width: var(--size);
 }
 
 .barter-card .barter-blogger-username {
-  display: -webkit-box;
   line-clamp: 1;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+  display: block;
 }
 
 /* #barter-history .barter-card-wrapper {}
