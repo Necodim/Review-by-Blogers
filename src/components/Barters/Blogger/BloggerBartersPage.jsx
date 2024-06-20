@@ -67,6 +67,22 @@ const BloggerBartersPage = () => {
     navigate(`/barters/type/${type}`, {state: { offers: offers }});
   }
 
+  const handleSearch = (query) => {
+    const lowerCaseQuery = query.toLowerCase();
+    const filtered = barterOffers.filter(bo =>
+      bo.product?.nmid?.toString().includes(lowerCaseQuery) ||
+      bo.product?.subjectname?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.product?.vendorcode?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.product?.brand?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.product?.title?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.seller?.firstname?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.seller?.lastname?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.seller?.username?.toLowerCase().includes(lowerCaseQuery)
+    );
+    setFilteredBarterOffers(filtered);
+    setOffersByStatus(filtered);
+  };
+
   const createCards = (offers, type, title) => {
     if (offers.length > 0) {
       return (
@@ -89,22 +105,6 @@ const BloggerBartersPage = () => {
       return;
     }
   }
-
-  const handleSearch = (query) => {
-    const lowerCaseQuery = query.toLowerCase();
-    const filtered = barterOffers.filter(bo =>
-      bo.product?.nmid?.toString().includes(lowerCaseQuery) ||
-      bo.product?.subjectname?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.product?.vendorcode?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.product?.brand?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.product?.title?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.seller?.firstname?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.seller?.lastname?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.seller?.username?.toLowerCase().includes(lowerCaseQuery)
-    );
-    setFilteredBarterOffers(filtered);
-    setOffersByStatus(filtered);
-  };
 
   if (offersIsLoading) {
     return <PreloaderPage text='Секундочку, загружаю ваши бартеры...' />

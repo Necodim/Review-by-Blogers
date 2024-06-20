@@ -169,18 +169,18 @@
     overflow: hidden;
 }
 
-.edit-products-wrapper {
-    /* width: 100%;
+/* .edit-products-wrapper {
+    width: 100%;
     position: absolute;
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
-    padding: var(--m); */
+    padding: var(--m);
 }
 
 .categories-wrapper {
     
-}
+} */
 
 .category-card {
     width: 100%;

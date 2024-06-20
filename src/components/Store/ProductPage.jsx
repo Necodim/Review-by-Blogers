@@ -109,10 +109,6 @@ const ProductPage = () => {
     }
   }
 
-  const addBarter = () => {
-    navigate('/barters/new/:productId', {state: {productId: productId}});
-  }
-
   const handleCopy = () => {
     const result = copyToClipboard(productData?.nmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
     showToast(result.message, result.status);

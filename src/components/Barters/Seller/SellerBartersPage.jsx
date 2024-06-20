@@ -73,6 +73,23 @@ const SellerBartersPage = () => {
     navigate(`/barters/type/${type}`, {state: { offers: offers }});
   }
 
+  const handleSearch = (query) => {
+    const lowerCaseQuery = query.toLowerCase();
+    const filtered = barterOffers.filter(bo =>
+      bo.product?.nmid?.toString().includes(lowerCaseQuery) ||
+      bo.product?.subjectname?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.product?.vendorcode?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.product?.brand?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.product?.title?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.blogger?.firstname?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.blogger?.lastname?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.blogger?.instagram_username?.toLowerCase().includes(lowerCaseQuery) ||
+      bo.blogger?.username?.toLowerCase().includes(lowerCaseQuery)
+    );
+    setFilteredBarterOffers(filtered);
+    setOffersByStatus(filtered);
+  };
+
   const createCards = (offers, type, title) => {
     if (offers.length > 0) {
       return (
@@ -90,23 +107,6 @@ const SellerBartersPage = () => {
       return;
     }
   }
-
-  const handleSearch = (query) => {
-    const lowerCaseQuery = query.toLowerCase();
-    const filtered = barterOffers.filter(bo =>
-      bo.product?.nmid?.toString().includes(lowerCaseQuery) ||
-      bo.product?.subjectname?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.product?.vendorcode?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.product?.brand?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.product?.title?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.blogger?.firstname?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.blogger?.lastname?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.blogger?.instagram_username?.toLowerCase().includes(lowerCaseQuery) ||
-      bo.blogger?.username?.toLowerCase().includes(lowerCaseQuery)
-    );
-    setFilteredBarterOffers(filtered);
-    setOffersByStatus(filtered);
-  };
 
   if (!isApi) {
     return <PreloaderPage title='Нет API' text='Вы не добавили API. Сначала добавьте API маркетплейса, после чего загрузятся ваши товары, и вы сможете создать бартеры. Отклики от блогеров появятся тут.' />

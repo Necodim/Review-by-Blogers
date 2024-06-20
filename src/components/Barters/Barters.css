@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: var(--s);
+  gap: var(--xs);
   overflow: hidden;
 }
 

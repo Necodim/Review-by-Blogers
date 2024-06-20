@@ -68,10 +68,8 @@ const ProfileSeller = () => {
 					</div>
 				</div>
 				<div className='list'>
+					<Button className='list-item success' onClick={goToSetApi} disabled={!canAddApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>
 					<Button className='list-item' onClick={goToSubscriptionPage}>Подписка</Button>
-					{canAddApi &&
-						<Button className='list-item' onClick={goToSetApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>
-					}
 				</div>
 			</div>
 			{(isSubscribed || isAvaliable || profile.trial?.active) && profile.api?.wildberries?.token &&
