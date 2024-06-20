@@ -49,14 +49,15 @@
 }
 
 .barter-card .barter-blogger-username {
+  /* display: -webkit-box; */
+  display: block;
   line-clamp: 1;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 220px;
-  display: block;
+  max-width: 220px;;
 }
 
 /* #barter-history .barter-card-wrapper {}

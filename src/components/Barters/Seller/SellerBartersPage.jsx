@@ -58,6 +58,7 @@ const SellerBartersPage = () => {
   }, []);
 
   const setOffersByStatus = (offers) => {
+    console.log(offers)
     const filterQueOffers = offers.filter(offer => ['queued'].includes(offer.status));
     const filterNewOffers = offers.filter(offer => ['created'].includes(offer.status));
     const filterProgressOffers = offers.filter(offer => ['sended', 'progress', 'planned', 'reported'].includes(offer.status));

@@ -13,6 +13,7 @@ import Button from '../Button/Button';
 import BarterStatus from './BrterStatus/BarterStatus';
 import PopupTaskRead from '../Popup/PopupTaskRead';
 import PopupBloggerInfo from '../Popup/PopupBloggerInfo';
+import Icon from '../Icon/Icon';
 
 const BarterPage = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const BarterPage = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [currentOffer, setCurrentOffer] = useState({});
+  const [offerNumber, setOfferNumber] = useState(barterId + '-' + offerId);
   const [offerUnavailable, setOfferUnavailable] = useState(false);
   const [offerIsLoading, setOfferIsLoading] = useState(false);
   const [productNmid, setProductNmid] = useState('');
@@ -53,6 +55,7 @@ const BarterPage = () => {
       const fetchedOffer = await api.getBarterOfferById(offerId);
       if (fetchedOffer) {
         setCurrentOffer(fetchedOffer);
+        setOfferNumber(fetchedOffer.barter?.id + '-' + fetchedOffer.id);
       } else {
         throw new Error('Произошла ошибка при получении бартера');
       }
@@ -95,10 +98,15 @@ const BarterPage = () => {
     }
   }, [offer]);
 
-  const handleCopy = () => {
+  const handleCopyProductNmid = () => {
     const result = copyToClipboard(productNmid, 'Вы скопировали артикул товара', 'Не удалось скопировать артикул товара');
     showToast(result.message, result.status);
   };
+
+  const handleCopyOfferNumber = () => {
+    const result = copyToClipboard(offerNumber, 'Вы успешно скопировали номер предложения', 'Скопировать номер предложения не удалось')
+    showToast(result.message, result.status);
+  }
 
   const openTask = () => {
     setIsPopupTaskReadVisible(true);
@@ -119,6 +127,17 @@ const BarterPage = () => {
       <Header />
       <div className='container product-page' id='offer' data-offer-id={currentOffer?.id} data-product-id={currentOffer?.product?.nmid} data-product-brand={currentOffer?.product?.brand}>
         <div className='list gap-l'>
+          <div className='list-item'>
+            <div className='list'>
+              <div className='list-item justify-content-start gap-xs'>
+                <h1>Бартер № {offerNumber}</h1>
+                <Icon icon='copy' onClick={handleCopyOfferNumber} />
+              </div>
+              <div className='list-item'>
+                <small>Изменено: {moment(offer?.updated_at).format('DD.MM.YYYY в HH:mm')}</small>
+              </div>
+            </div>
+          </div>
           <div className='list-item align-items-start'>
             <img className='product-image small' src={currentOffer?.product?.photos[0]} alt={currentOffer?.product?.title} />
             <div className='list gap-m'>
@@ -137,17 +156,14 @@ const BarterPage = () => {
                   id='product-nmid'
                   name='product-nmid'
                   value={productNmid}
-                  onChange={() => {}}
+                  onChange={() => { }}
                   readOnly={true}
                   fade={true}
                   icon='content_copy'
-                  iconCallback={handleCopy}
-                  onClick={handleCopy}
+                  iconCallback={handleCopyProductNmid}
+                  onClick={handleCopyProductNmid}
                 />
                 <Button className='secondary w-auto size-input' icon='launch' onClick={() => window.open(productLink, '_blank')}>{marketplaceShortName}</Button>
-              </div>
-              <div className='list-item'>
-                <small>Изменено: {moment(offer?.updated_at).format('DD.MM.YYYY в HH:mm')}</small>
               </div>
             </div>
           </div>

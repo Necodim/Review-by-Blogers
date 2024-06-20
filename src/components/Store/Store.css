@@ -159,7 +159,7 @@
     gap: var(--xs);
 }
 
-.product-content .product-title {
+.product-title {
     color: var(--text-color);
     font-size: var(--text-size-s);
     display: -webkit-box;
@@ -213,7 +213,7 @@
     opacity: .5;
 }
 
-.product-page .product-title {
+.product-page .product-title-h1 {
     color: var(--text-color);
     font-size: var(--text-size-xl);
 }
