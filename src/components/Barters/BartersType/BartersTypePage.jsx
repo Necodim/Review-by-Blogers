@@ -18,7 +18,7 @@ const BartersTypePage = () => {
   const location = useLocation();
   const { offers } = location.state || [];
   const { showToast } = useToastManager();
-  const { sortBy } = useHelpers();
+  const { sortDatesByKey } = useHelpers();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [typeOffersIsLoading, setTypeOffersIsLoading] = useState(false);
@@ -37,7 +37,7 @@ const BartersTypePage = () => {
       setTypeOffersIsLoading(true);
       try {
         const response = await api.getBarterOffersByCurrentSeller(type);
-        const sortedOffers = sortBy(response, 'updated_at');
+        const sortedOffers = sortDatesByKey(response, 'updated_at');
         setTypeOffers(sortedOffers);
         setFilteredBarterOffers(sortedOffers);
       } catch (error) {

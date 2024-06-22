@@ -8,7 +8,7 @@ import BarterCard from './BarterCard';
 const BartersGrid = ({ offers }) => {
   const navigate = useNavigate();
 
-  const { sortBy } = useHelpers();
+  const { sortDatesByKey } = useHelpers();
 
   const initialOffersPlaceholder = new Array(2).fill({}).map((_, index) => ({
     id: `offer-placeholder-${index}`,
@@ -29,7 +29,7 @@ const BartersGrid = ({ offers }) => {
 
   useEffect(() => {
     if (offers && offers.length > 0) {
-      const sortedOffers = sortBy(offers, 'updated_at');
+      const sortedOffers = sortDatesByKey(offers, 'updated_at');
       setDisplayOffers(sortedOffers);
     }
   }, [offers]);

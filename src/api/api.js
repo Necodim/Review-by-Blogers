@@ -141,16 +141,6 @@ const getBartersByProductIds = async (productIdsArray) => {
   return response.data;
 }
 
-const getBartersNewByUserId = async (userId) => {
-  const response = await apiClient.get(`/barters/new/user/${userId}`);
-  return response.data;
-}
-
-const getBartersCurrentByUserId = async (userId) => {
-  const response = await apiClient.get(`/barters/current/user/${userId}`);
-  return response.data;
-}
-
 const createBarter = async (data) => {
   const response = await apiClient.post(`/barters/create/one`, data);
   return response.data;
@@ -348,6 +338,16 @@ const uploadBarterScreenshot = async (barterId, data) => {
   return response.data;
 }
 
+const getNotificationSettings = async () => {
+  const response = await apiClient.get(`/settings/notifications`);
+  return response.data;
+}
+
+const updateNotificationSetting = async (data) => {
+  const response = await apiClient.post(`/settings/notifications`, data);
+  return response.data;
+}
+
 export default {
   telegramInitData,
 
@@ -370,8 +370,6 @@ export default {
   getBarterById,
   getBartersByProductId,
   getBartersByProductIds,
-  getBartersNewByUserId,
-  getBartersCurrentByUserId,
   createBarter,
   createBarters,
   updateBarter,
@@ -414,4 +412,7 @@ export default {
   uploadImage,
   uploadReceipt,
   uploadBarterScreenshot,
+
+  getNotificationSettings,
+  updateNotificationSetting,
 }

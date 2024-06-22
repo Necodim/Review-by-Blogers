@@ -20,6 +20,7 @@ const WaitingForCapturePage = lazy(() => import('./pages/Subscription/WaitingFor
 const Profile = lazy(() => import('./components/Profile/Profile'));
 const Subscribe = lazy(() => import('./components/Profile/Subscription/Subscribe'));
 const SetWbApi = lazy(() => import('./components/Profile/SetApi/SetWbApi'));
+const NotificationSettingsPage = lazy(() => import('./pages/NotificationSettings/NotificationSettingsPage'));
 
 const BarterPage = lazy(() => import('./components/Barters/BarterPage'));
 
@@ -115,6 +116,7 @@ function App() {
 					<Route path="/profile/subscription/subscribe" element={<Subscribe />} />
 					<Route path="/profile/subscription/subscribe/waiting-for-capture" element={<WaitingForCapturePage />} />
 					<Route path="/profile/api" element={<SetWbApi />} />
+					<Route path="/profile/notifications" element={<NotificationSettingsPage />} />
 
 					<Route path="/store" element={<SelectedProductsProvider><Store /></SelectedProductsProvider>} />
 					<Route path="/store/categories/:subCategoryId"

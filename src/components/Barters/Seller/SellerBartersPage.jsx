@@ -15,7 +15,7 @@ const SellerBartersPage = () => {
   const navigate = useNavigate();
   const { profile } = useUserProfile();
   const { showToast } = useToastManager();
-  const { sortBy } = useHelpers();
+  const { sortDatesByKey } = useHelpers();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [isApi, setIsApi] = useState(false);
@@ -63,10 +63,10 @@ const SellerBartersPage = () => {
     const filterNewOffers = offers.filter(offer => ['created'].includes(offer.status));
     const filterProgressOffers = offers.filter(offer => ['sended', 'progress', 'planned', 'reported'].includes(offer.status));
     const filterCompletedOffers = offers.filter(offer => ['closed', 'refused'].includes(offer.status));
-    setQueOffers(sortBy(filterQueOffers, 'updated_at'));
-    setNewOffers(sortBy(filterNewOffers, 'updated_at'));
-    setProgressOffers(sortBy(filterProgressOffers, 'updated_at'));
-    setCompletedOffers(sortBy(filterCompletedOffers, 'updated_at'));
+    setQueOffers(sortDatesByKey(filterQueOffers, 'updated_at'));
+    setNewOffers(sortDatesByKey(filterNewOffers, 'updated_at'));
+    setProgressOffers(sortDatesByKey(filterProgressOffers, 'updated_at'));
+    setCompletedOffers(sortDatesByKey(filterCompletedOffers, 'updated_at'));
   }
 
   const goToBartersType = (type, offers) => {

@@ -44,6 +44,10 @@ const ProfileSeller = () => {
 		setIsApi(!!profile.api?.wildberries?.token);
 	}, [profile.api?.wildberries?.token]);
 
+	const goToNotificationsPage = () => {
+		navigate('/profile/notifications');
+	}
+
 	const goToSubscriptionPage = () => {
 		if (isSubscribed) {
 			showToast('У вас уже есть подписка', 'info');
@@ -68,8 +72,9 @@ const ProfileSeller = () => {
 					</div>
 				</div>
 				<div className='list'>
-					<Button className='list-item success' onClick={goToSetApi} disabled={!canAddApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>
-					<Button className='list-item' onClick={goToSubscriptionPage}>Подписка</Button>
+					<Button className='list-item success' icon='key' onClick={goToSetApi} disabled={!canAddApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>
+					<Button className='list-item' icon='notifications' onClick={goToNotificationsPage}>Уведомления</Button>
+					<Button className='list-item' icon='account_balance_wallet' onClick={goToSubscriptionPage}>Подписка</Button>
 				</div>
 			</div>
 			{(isSubscribed || isAvaliable || profile.trial?.active) && profile.api?.wildberries?.token &&

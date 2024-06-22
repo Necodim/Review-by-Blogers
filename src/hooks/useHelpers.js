@@ -1,6 +1,17 @@
 export function useHelpers() {
+	const sortByKey = (arrayOfObjects, sortKey) => {
+		arrayOfObjects.sort((a, b) => {
+      if (a[sortKey] < b[sortKey]) {
+        return -1;
+      }
+      if (a[sortKey] > b[sortKey]) {
+        return 1;
+      }
+      return 0;
+    });
+	};
 
-	const sortBy = (arrayOfObjects, sortKey) => {
+	const sortDatesByKey = (arrayOfObjects, sortKey) => {
 		return arrayOfObjects.sort((a, b) => new Date(b[sortKey]) - new Date(a[sortKey]));
 	};
 
@@ -124,7 +135,8 @@ export function useHelpers() {
 	}
 
 	return {
-		sortBy,
+		sortByKey,
+		sortDatesByKey,
 		getPlural,
 		copyToClipboard,
 		getMarketplaceShortName,
