@@ -1,12 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Profile.css';
 import { useUserProfile } from '../../../hooks/UserProfileContext.js';
 import Header from '../../Header/Header.jsx';
 import ProfileFooter from '../ProfileFooter.jsx';
 import ProfileBloggerForm from './ProfileBloggerForm.jsx';
+import Button from '../../Button/Button.jsx';
 
 const ProfileBlogger = () => {
+  const navigate = useNavigate();
   const { profile } = useUserProfile();
+
+	const goToNotificationsPage = () => {
+		navigate('/profile/notifications');
+	}
 
   return (
     <div className='content-wrapper'>
@@ -17,6 +24,9 @@ const ProfileBlogger = () => {
             <h1>{(profile.instagram.username && profile.instagram.coverage && profile.card_number) || !profile.onboarding ? 'Профиль' : 'Заполните профиль'}</h1>
           </div>
           <ProfileBloggerForm />
+        </div>
+        <div className='list'>
+          <Button className='list-item' icon='notifications' onClick={goToNotificationsPage}>Уведомления</Button>
         </div>
       </div>
       <ProfileFooter />
