@@ -156,7 +156,7 @@ const Subscription = () => {
   }
 
   if (pricesIsLoading) {
-    <PreloaderPage text='Загружаю стоимость подписки...' />
+    return <PreloaderPage text='Загружаю стоимость подписки...' />
   }
 
   return (
@@ -192,23 +192,21 @@ const Subscription = () => {
             {/* А также можете назначать менеджеров для управления своими бартерами. */}
           </div>
         </div>
-        {/* {!isSubscribed && */}
-          <div className='list'>
-          <div  className='list-item'>
-              <small className='w-100 text-center'>Месяц</small>
-              <small className='w-100 text-center'>Год</small>
-            </div>
-            <div  className='list-item gap-xs'>
-              <Button icon='currency_ruble' onClick={payWithRublesMonth}>{priceRubMonth + ' ₽'}</Button>
-              <Button icon='currency_ruble' onClick={payWithRublesYear}>{priceRubYear + ' ₽'}</Button>
-            </div>
-            <div  className='list-item gap-xs'>
-              <Button className='list-item' icon='account_balance_wallet' onClick={payWithTonMonth}>{prices?.ton?.month + ' TON'}</Button>
-              <Button className='list-item' icon='account_balance_wallet' onClick={payWithTonYear}>{prices?.ton?.year + ' TON'}</Button>
-            </div>
-            <small className='list-item'>Оплата в TON выгоднее. Для оплаты подключите кошелёк в настройках.</small>
+        <div className='list'>
+        <div  className='list-item'>
+            <small className='w-100 text-center'>Месяц</small>
+            <small className='w-100 text-center'>Год</small>
           </div>
-        {/* } */}
+          <div  className='list-item gap-xs'>
+            <Button icon='currency_ruble' onClick={payWithRublesMonth}>{priceRubMonth ? priceRubMonth + ' ₽' : 'Загрузка'}</Button>
+            <Button icon='currency_ruble' onClick={payWithRublesYear}>{priceRubYear ? priceRubYear + ' ₽' : 'Загрузка'}</Button>
+          </div>
+          <div  className='list-item gap-xs'>
+            <Button className='list-item' icon='account_balance_wallet' onClick={payWithTonMonth}>{prices?.ton?.month ? prices?.ton?.month + ' TON' : 'Загрузка'}</Button>
+            <Button className='list-item' icon='account_balance_wallet' onClick={payWithTonYear}>{prices?.ton?.year ? prices?.ton?.year + ' TON' : 'Загрузка'}</Button>
+          </div>
+          <small className='list-item'>Оплата в TON выгоднее. Для оплаты подключите кошелёк в настройках.</small>
+        </div>
       </div>
 
       {isSubscribed &&
