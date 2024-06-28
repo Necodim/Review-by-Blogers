@@ -6,7 +6,7 @@ const Form = ({ className, btnicon, btntext, isDisabled, text, ...props }) => {
     return (
         <form {...props} className={`form-wrapper ${className || ''}`}>
             {props.children}
-            <Button type="submit" icon={btnicon} className={isDisabled ? 'disabled' : ''}>{btntext || 'Отправить'}</Button>
+            <Button type="submit" icon={btnicon} className={isDisabled ? 'disabled' : ''} disabled={isDisabled}>{btntext || 'Отправить'}</Button>
             {text && <small>{text}</small>}
         </form>
     );

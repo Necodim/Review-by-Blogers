@@ -54,13 +54,23 @@ apiClient.interceptors.response.use(
 
 const generateAuthToken = async (userId) => {
   const data = { 'id': userId }
-  const response = await apiClient.post('/user/token/generate', data);
+  const response = await apiClient.post(`/user/token/generate`, data);
   return response;
 }
 
 const verifyAuthToken = async () => {
-  const response = await apiClient.get('/user/token/verify');
+  const response = await apiClient.get(`/user/token/verify`);
   return response;
+}
+
+const getUserAuthByPhoneCode = async (code) => {
+  const response = await apiClient.get(`/user/phone?code=${code}`);
+  return response.data;
+}
+
+const setUserAuthByPhoneCode = async (data) => {
+  const response = await apiClient.post(`/user/phone`, data);
+  return response.data;
 }
 
 const getUser = async () => {
@@ -353,6 +363,8 @@ export default {
 
   generateAuthToken,
   verifyAuthToken,
+  getUserAuthByPhoneCode,
+  setUserAuthByPhoneCode,
   getUser,
   getUserById,
   createUser,

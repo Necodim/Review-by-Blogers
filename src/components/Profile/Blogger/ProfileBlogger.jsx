@@ -25,8 +25,12 @@ const ProfileBlogger = () => {
           </div>
           <ProfileBloggerForm />
         </div>
+      </div>
+      <div className='container' id='additional'>
         <div className='list'>
           <Button className='list-item' icon='notifications' onClick={goToNotificationsPage}>Уведомления</Button>
+          <Button className='list-item' icon='handshake' onClick={() => { navigate('/profile/referral') } }>Партнёрская программа</Button>
+          <Button className={'list-item' + (!profile.phone && ' success')} icon='verified_user' disabled={!!profile.phone} onClick={() => { navigate('/profile/verification') } }>Верификация</Button>
         </div>
       </div>
       <ProfileFooter />

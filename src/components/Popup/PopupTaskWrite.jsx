@@ -125,18 +125,18 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 					id='task'
 					name='task'
 					title='Описание'
+					placeholder='Опишите, что блогер должен сказать о товаре? Например: необходимо распаковать товар на камеру и произнести название бренда'
 					value={task}
     			onChange={handleTaskChange}
-					placeholder='Опишите, что блогер должен сказать о товаре? Например: необходимо распаковать товар на камеру и произнести название бренда'
 				/>
 				<Input
 					id='brand-instagram'
 					name='brand-instagram'
 					title='Instagram бренда, если есть'
+					comment='Укажите аккаунт вашего бренда в Instagram, если хотите, чтобы блогер вас отметил'
 					placeholder='username'
 					value={brandInstagram}
 					onChange={handleBrandInstagramChange}
-					comment='Укажите аккаунт вашего бренда в Instagram, если хотите, чтобы блогер вас отметил'
 				/>
 				<Input
 					type='checkbox'

@@ -4,7 +4,7 @@ import { useTelegram } from "../../hooks/useTelegram";
 import Icon from '../Icon/Icon';
 
 const Button = ({ onClick, className, icon, size, disabled, children, ...buttonProps }) => {
-    const [isDisabled, setIsDisabled] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(disabled);
     const { hapticFeedback } = useTelegram();
 
     useEffect(() => {

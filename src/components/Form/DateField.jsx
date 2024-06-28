@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import './Form.css';
 import InputIcon from './InputIcon';
+import { useEvents } from '../../hooks/useEvents';
 
 const DateField = ({ id, title, value, comment, onClick, error, min, max, onChange, ...inputProps }) => {
+  const { handleFocus } = useEvents();
+  
   return (
     <div id={'input-block-' + id} className='input-block'>
       {error && <small className='error-wrapper'>{error}</small>}
@@ -16,6 +19,7 @@ const DateField = ({ id, title, value, comment, onClick, error, min, max, onChan
           min={min}
           max={max}
           onChange={onChange}
+          onFocus={handleFocus}
         />
         <div className='input-fade' />
         <InputIcon icon='calendar_today' disabled={true} />

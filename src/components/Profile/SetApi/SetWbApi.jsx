@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { useEvents } from '../../../hooks/useEvents';
 import { useToastManager } from '../../../hooks/useToast';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import moment from 'moment';
@@ -16,7 +15,6 @@ import imgInstruction3 from '../../../images/instruction-3.png';
 import imgInstruction4 from '../../../images/instruction-4.png';
 
 const SetWbApi = (props) => {
-	const { handleFocus } = useEvents();
 	const { showToast } = useToastManager();
   const { updateProfile } = useUserProfile()
 
@@ -177,7 +175,6 @@ const SetWbApi = (props) => {
             placeholder='eyJhbGciOiJ...'
             value={token}
             onChange={handleApiChange}
-            onFocus={handleFocus}
             error={errorMessage}
           />
         </Form>

@@ -92,45 +92,6 @@ export const UserProfileProvider = ({ children }) => {
 		}
 	}, [errorMessage, showToast]);
 
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		setLoading(true);
-	// 		if (userId) {
-	// 			try {
-	// 				await generateAuthToken(userId);
-	// 				const existingUser = await getUser(userId);
-	// 				if (!existingUser) {
-	// 					const data = {
-	// 						username: user?.username,
-	// 						firstname: user?.first_name,
-	// 						lastname: user?.last_name
-	// 					}
-	// 					const newUser = await createUser(userId, data);
-	// 					console.log(newUser);
-	// 					setProfile(newUser);
-	// 					setRole(newUser.role)
-	// 				} else {
-	// 					console.log(existingUser);
-	// 					setProfile(existingUser);
-	// 					setRole(existingUser.role)
-	// 				}
-	// 				// setProfile({id:82431798, trial:{active:false}, role:'seller'})
-	// 			} catch (error) {
-	// 				setErrorMessage('Ошибка при получении данных пользователя');
-	// 				if (isAvailable()) tg.showAlert('Ошибка при получении данных пользователя');
-	// 			} finally {
-	// 				setLoading(false);
-	// 			}
-	// 		} else {
-	// 			setErrorMessage('Воспользоваться приложением можно только в Telegram. Если приложение не запускается, напишите в бот @unpacksbot команду /help.')
-	// 		}
-	// 	};
-
-	// 	if (userId) {
-	// 		fetchData();
-	// 	}
-	// }, [userId, getUser, generateAuthToken]);
-
 	const updateProfile = (updates) => {
 		setProfile(currentProfile => {
 			const updatedProfile = { ...currentProfile, ...updates };
@@ -139,6 +100,25 @@ export const UserProfileProvider = ({ children }) => {
 			return updatedProfile;
 		});
 	};
+
+	const getUserData = async () => {
+		try {
+			const result = await getUser();
+			if (!!result) {
+				console.log('userData', result)
+				setProfile(result);
+				setRole(result.role);
+				setIsActive(result.subscription.active || result.subscription.avaliable || result.trial.active || result.trial['barters-left'] > 0);
+				sessionStorage.setItem('userData', JSON.stringify(result));
+				return result;
+			} else {
+				console.error(result.message || 'Произошла неизвестная ошибка');
+				return false;
+			}
+		} catch (error) {
+			console.error(error.message.toString());
+		}
+	}
 
 	const updateUserData = async (data) => {
 		setLoading(true);
@@ -164,7 +144,7 @@ export const UserProfileProvider = ({ children }) => {
 	}
 
 	return (
-		<UserProfileContext.Provider value={{ loading, profile, role, isActive, updateProfile, updateUserData }}>
+		<UserProfileContext.Provider value={{ loading, profile, role, isActive, updateProfile, getUserData, updateUserData }}>
 			{children}
 		</UserProfileContext.Provider>
 	);

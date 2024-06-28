@@ -5,7 +5,6 @@ import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { SelectedProductsProvider } from './hooks/useSelectProductsContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useReferral } from './hooks/useReferral';
 import { useTelegram } from './hooks/useTelegram';
 import { useUserProfile } from './hooks/UserProfileContext';
 import Preloader from './components/Preloader/Preloader';
@@ -21,6 +20,8 @@ const Profile = lazy(() => import('./components/Profile/Profile'));
 const Subscribe = lazy(() => import('./components/Profile/Subscription/Subscribe'));
 const SetWbApi = lazy(() => import('./components/Profile/SetApi/SetWbApi'));
 const NotificationSettingsPage = lazy(() => import('./pages/NotificationSettings/NotificationSettingsPage'));
+const VerificationPage = lazy(() => import('./pages/VerificationPage/VerificationPage'));
+const PartnershipPage = lazy(() => import('./pages/PartnershipPage/PartnershipPage'));
 
 const BarterPage = lazy(() => import('./components/Barters/BarterPage'));
 
@@ -37,30 +38,12 @@ const SupportPage = lazy(() => import('./pages/Info/SupportPage'));
 const UserAgreementPage = lazy(() => import('./pages/Info/UserAgreementPage'));
 
 function App() {
-	const { setReferral } = useReferral();
 	const { tg, defaultSettings } = useTelegram();
 	const { profile, loading } = useUserProfile();
 	const navigate = useNavigate();
 	const location = useLocation();
 
 	const [, setKeyboardHeight] = useState(0);
-
-	useEffect(() => {
-		const searchParams = new URLSearchParams(window.location.search);
-		const params = {};
-		for (let param of searchParams) {
-			const [key, value] = param;
-			params[key] = value;
-		}
-
-		if (params.ref) {
-			setReferral(params.ref);
-		}
-
-		if (params.page) {
-			navigate(decodeURIComponent(params.page));
-		}
-	}, []);
 
 	useEffect(() => {
 		const initialHeight = tg.viewportStableHeight;
@@ -117,6 +100,8 @@ function App() {
 					<Route path="/profile/subscription/subscribe/waiting-for-capture" element={<WaitingForCapturePage />} />
 					<Route path="/profile/api" element={<SetWbApi />} />
 					<Route path="/profile/notifications" element={<NotificationSettingsPage />} />
+					<Route path="/profile/verification" element={<VerificationPage />} />
+					<Route path="/profile/referral" element={<PartnershipPage />} />
 
 					<Route path="/store" element={<SelectedProductsProvider><Store /></SelectedProductsProvider>} />
 					<Route path="/store/categories/:subCategoryId"

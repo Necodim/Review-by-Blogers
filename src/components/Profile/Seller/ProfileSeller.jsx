@@ -44,19 +44,11 @@ const ProfileSeller = () => {
 		setIsApi(!!profile.api?.wildberries?.token);
 	}, [profile.api?.wildberries?.token]);
 
-	const goToNotificationsPage = () => {
-		navigate('/profile/notifications');
-	}
-
 	const goToSubscriptionPage = () => {
 		if (isSubscribed) {
 			showToast('У вас уже есть подписка', 'info');
 		}
 		navigate('/profile/subscription');
-	}
-
-	const goToSetApi = () => {
-		navigate('/profile/api');
 	}
 
 	return (
@@ -66,15 +58,17 @@ const ProfileSeller = () => {
 				<div className='list'>
 					<div className='list-item'>
 						<h1>{isSubscribed ? 'Подписка' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}</h1>
-						{!isAvaliable && canAddApi &&
+						{!isSubscribed && !isAvaliable && canAddApi &&
 							<small>{`Еще ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бартер', 'бартера', 'бартеров')}`}</small>
 						}
 					</div>
 				</div>
 				<div className='list'>
-					<Button className='list-item success' icon='key' onClick={goToSetApi} disabled={!canAddApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>
-					<Button className='list-item' icon='notifications' onClick={goToNotificationsPage}>Уведомления</Button>
-					<Button className='list-item' icon='account_balance_wallet' onClick={goToSubscriptionPage}>Подписка</Button>
+					<Button className={'list-item' + (!isApi && ' success')} icon='key' onClick={ () => { navigate('/profile/api') } } disabled={!canAddApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>
+					<Button className={'list-item' + (!isSubscribed && isApi && ' success')} icon='account_balance_wallet' onClick={goToSubscriptionPage}>Подписка</Button>
+					<Button className='list-item' icon='notifications' onClick={() => { navigate('/profile/notifications') } }>Уведомления</Button>
+					<Button className='list-item' icon='handshake' onClick={() => { navigate('/profile/referral') } }>Партнёрская программа</Button>
+					<Button className='list-item' icon='verified_user' disabled={!!profile.phone} onClick={() => { navigate('/profile/verification') } }>Верификация</Button>
 				</div>
 			</div>
 			{(isSubscribed || isAvaliable || profile.trial?.active) && profile.api?.wildberries?.token &&

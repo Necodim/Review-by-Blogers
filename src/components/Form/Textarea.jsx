@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './Form.css';
+import { useEvents } from '../../hooks/useEvents';
 
 const Textarea = ({ id, title, name, rows, placeholder, value, onChange, disabled, comment, error }) => {
+	const { handleFocus } = useEvents();
 	const [textareaValue, setTextareaValue] = useState('');
 
 	const handleTextareaChange = (event) => {
@@ -19,6 +21,7 @@ const Textarea = ({ id, title, name, rows, placeholder, value, onChange, disable
 				placeholder={placeholder || 'Введите текст'}
 				value={value || textareaValue}
 				onChange={onChange || handleTextareaChange}
+				onFocus={handleFocus}
 				disabled={disabled}
 			></textarea>
 			{comment && <small>{comment}</small>}

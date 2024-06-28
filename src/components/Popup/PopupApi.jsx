@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { useEvents } from '../../hooks/useEvents';
 import { useToastManager } from '../../hooks/useToast';
 import Popup from "./Popup"
 import Link from '../Button/Link';
@@ -14,7 +13,6 @@ import Icon from '../Icon/Icon';
 import moment from 'moment';
 
 const PopupApi = (props) => {
-	const { handleFocus } = useEvents();
 	const { showToast } = useToastManager();
 
 	const [errorMessage, setErrorMessage] = useState('');
@@ -173,7 +171,6 @@ const PopupApi = (props) => {
 					placeholder='eyJhbGciOiJ...'
 					value={token}
 					onChange={handleApiChange}
-					onFocus={handleFocus}
 					error={errorMessage}
 				/>
 			</Form>
