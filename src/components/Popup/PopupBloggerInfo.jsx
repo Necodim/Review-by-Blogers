@@ -5,6 +5,7 @@ import { useHelpers } from '../../hooks/useHelpers.js';
 import Popup from './Popup.jsx';
 import Button from '../Button/Button.jsx';
 import Input from '../Form/Input.jsx';
+import Icon from '../Icon/Icon.jsx';
 
 const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
   const { copyToClipboard } = useHelpers();
@@ -36,7 +37,7 @@ const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
           user.username ? setTelegramLink('https://t.me/' + user.username) : false;
           if (user?.phone) {
             const phoneNumber = '+' + user.phone;
-            setCardnumber(phoneNumber);
+            setPhone(phoneNumber);
           }
           if (user?.card_number) {
             const cardNumber = user.card_number.replace(/(\d{4})(?=\d)/g, '$1 ');
@@ -79,7 +80,8 @@ const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
   return (
     <Popup id='popup-blogger' isOpen={isOpen} onClose={onClose}>
       <div className='list'>
-        <div className='list-item'>
+        <div className='list-item justify-content-start gap-xs'>
+          {phone && <Icon icon='verified' style={ { opacity: .5 } } />}
           <h1>{(blogger.firstname || blogger.lastname) ? [blogger.firstname, blogger.lastname].join(' ') : 'Карточка блогера'}</h1>
         </div>
       </div>
