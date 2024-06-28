@@ -12,6 +12,7 @@ const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [blogger, setBlogger] = useState({});
+  const [phone, setPhone] = useState('');
   const [cardnumber, setCardnumber] = useState('');
   const [telegramLink, setTelegramLink] = useState('');
   const [instagramUsername, setInstagramUsername] = useState('');
@@ -33,9 +34,13 @@ const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
           setBlogger(user);
           console.log('blogger:', user)
           user.username ? setTelegramLink('https://t.me/' + user.username) : false;
+          if (user?.phone) {
+            const phoneNumber = '+' + user.phone;
+            setCardnumber(phoneNumber);
+          }
           if (user?.card_number) {
-            const number = user.card_number.replace(/(\d{4})(?=\d)/g, '$1 ');
-            setCardnumber(number);
+            const cardNumber = user.card_number.replace(/(\d{4})(?=\d)/g, '$1 ');
+            setCardnumber(cardNumber);
           }
           if (user?.instagram?.username) {
             const username = user?.instagram?.username.split('?')[0];
@@ -52,6 +57,11 @@ const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
     }
     fetchBlogger();
   }, [userId]);
+
+  const copyPhoneNumber = () => {
+    const result = copyToClipboard(phone, 'Вы успешно скопировали номер телефона', 'Не удалось скопировать номер телефона');
+    showToast(result.message, result.status);
+  }
 
   const copyCardNumber = () => {
     const result = copyToClipboard(cardnumber.replace(/\s/g, ''), 'Вы успешно скопировали номер карты', 'Не удалось скопировать номер карты');
@@ -81,6 +91,18 @@ const PopupBloggerInfo = ({ isOpen, onClose, userId }) => {
       </div>
       {instagramCoverage && <div className='list-item'>{`Средние охваты: ${instagramCoverage}`}</div>}
       <div className='list'>
+        {phone && 
+          <Input
+            id='phone'
+            name='phone'
+            title='Номер телефона'
+            value={phone}
+            icon='phone'
+            iconCallback={copyPhoneNumber}
+            onChange={() => {}}
+            readOnly={true}
+          />
+        }
         <Input
           id='card-number'
           name='card-number'
