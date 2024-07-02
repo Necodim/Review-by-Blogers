@@ -4,6 +4,7 @@ import { TonConnectButton } from '@tonconnect/ui-react';
 import { useNavigate } from 'react-router-dom';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import { useToastManager } from '../../hooks/useToast';
+import Heading1 from '../../components/Barters/Heading/Heading1';
 import Input from '../../components/Form/Input';
 import Button from '../../components/Button/Button';
 import Link from '../../components/Button/Link';
@@ -54,14 +55,11 @@ const SettingsPage = () => {
 			<div className='container' id='settings'>
 				<div className='list'>
 					<div className='list-item'>
-						<div className='list'>
-							<div className='list-item'>
-								<h1>Настройки</h1>
-							</div>
+						<Heading1 title='Настройки'>
 							<div className='list-item'>
 								<small>{'Ваш ID: ' + profile.id}</small>
 							</div>
-						</div>
+						</Heading1>
 						<div className='list-item justify-content-end'>
 							<TonConnectButton />
 						</div>

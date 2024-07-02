@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import BartersGrid from '../BartersGrid';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
+import Heading1 from '../Heading/Heading1';
+import BartersGrid from '../BartersGrid';
 
 const BartersQue = ({ offers }) => {
   const { role } = useUserProfile();
@@ -17,14 +18,9 @@ const BartersQue = ({ offers }) => {
 
   return (
     <div className='container' id='offers-que' >
-      <div className='list'>
-        <div className='list-item'>
-          <h1>В ожидании</h1>
-        </div>
-        <div className='list-item'>
-          <small>{roleText} завершить бартеры, которые находятся в работе, чтобы эти бартеры стали доступны.</small>
-        </div>
-      </div>
+      <Heading1 title='В ожидании'>
+        <div className='list-item'><small>{roleText} завершить бартеры, которые находятся в работе, чтобы эти бартеры стали доступны.</small></div>
+      </Heading1>
       <BartersGrid offers={offers} />
     </div>
   );

@@ -1,14 +1,11 @@
 import React from 'react';
+import Heading1 from '../Heading/Heading1';
 import BartersGrid from '../BartersGrid';
 
 const BartersCompleted = ({ offers }) => {
   return (
     <div className='container' id='offers-completed' >
-      <div className='list'>
-        <div className='list-item'>
-          <h1>Завершённые</h1>
-        </div>
-      </div>
+      <Heading1 title='Завершённые' />
       <BartersGrid offers={offers} />
     </div>
   );

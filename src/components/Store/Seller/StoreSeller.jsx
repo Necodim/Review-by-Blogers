@@ -6,6 +6,7 @@ import { useToastManager } from '../../../hooks/useToast';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useHelpers } from '../../../hooks/useHelpers';
 import Header from '../../Header/Header';
+import Heading1 from '../../Barters/Heading/Heading1';
 import SearchBar from '../../SearchBar/SearchBar';
 import Link from '../../Button/Link';
 import ProductsGrid from '../ProductsGrid';
@@ -124,15 +125,14 @@ const StoreSeller = () => {
       }
       {activeBarters.length > 0 &&
         <div className='container' id='products-active'>
-          <div className='list'>
-            <div className='list-item'>
-              <h1>В работе</h1>
-              <Link onClick={openActiveProductsPage}>Ещё</Link>
-            </div>
+          <Heading1
+            title='В работе'
+            text={<Link onClick={openActiveProductsPage}>Ещё</Link>}
+          >
             <div className='list-item'>
               <small>Всего {activeBarters.length + ' ' + getPlural(activeBarters.length, 'товар', 'товара', 'товаров')} </small>
             </div>
-          </div>
+          </Heading1>
           <ProductsGrid
             products={activeBarters.slice(0, 2)}
           />
@@ -140,15 +140,14 @@ const StoreSeller = () => {
       }
       {inactiveBarters.length > 0 &&
         <div className='container' id='products-inactive'>
-          <div className='list'>
-            <div className='list-item'>
-              <h1>На паузе</h1>
-              <Link onClick={openInactiveProductsPage}>Ещё</Link>
-            </div>
+          <Heading1
+            title='На паузе'
+            text={<Link onClick={openInactiveProductsPage}>Ещё</Link>}
+          >
             <div className='list-item'>
               <small>Всего {inactiveBarters.length + ' ' + getPlural(inactiveBarters.length, 'товар', 'товара', 'товаров')} </small>
             </div>
-          </div>
+          </Heading1>
           <ProductsGrid
             products={inactiveBarters.slice(0, 2)}
           />

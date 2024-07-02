@@ -5,6 +5,7 @@ import { useHelpers } from '../../../hooks/useHelpers.js';
 import { useToastManager } from '../../../hooks/useToast.js';
 import { useUserProfile } from '../../../hooks/UserProfileContext.js';
 import Header from '../../Header/Header.jsx';
+import Heading1 from '../../Barters/Heading/Heading1.jsx';
 import ProfileFooter from '../ProfileFooter.jsx';
 import Button from '../../Button/Button.jsx';
 import BrandsList from '../../BrandList/BrandList.jsx';
@@ -55,14 +56,10 @@ const ProfileSeller = () => {
 		<div className='content-wrapper'>
 			<Header />
 			<div className='container' id='profile'>
-				<div className='list'>
-					<div className='list-item'>
-						<h1>{isSubscribed ? 'Подписка' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}</h1>
-						{!isSubscribed && !isAvaliable && canAddApi &&
-							<small>{`Еще ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бартер', 'бартера', 'бартеров')}`}</small>
-						}
-					</div>
-				</div>
+				<Heading1
+					title={isSubscribed ? 'Подписка' : isAvaliable ? 'Подписка отменена' : profile.trial.active ? 'Пробный период' : 'Нет подписки'}
+					text={!isSubscribed && !isAvaliable && canAddApi && <small>{`Еще ${profile.trial['barters-left']} ${getPlural(profile.trial['barters-left'], 'бартер', 'бартера', 'бартеров')}`}</small>}
+				/>
 				<div className='list'>
 					<Button className={'list-item' + (!isApi && ' success')} icon='key' onClick={ () => { navigate('/profile/api') } } disabled={!canAddApi}>{`${isApi ? 'Изменить' : 'Добавить'} API-ключ`}</Button>
 					<Button className={'list-item' + (!isSubscribed && isApi && ' success')} icon='account_balance_wallet' onClick={goToSubscriptionPage}>Подписка</Button>
@@ -73,12 +70,10 @@ const ProfileSeller = () => {
 			</div>
 			{(isSubscribed || isAvaliable || profile.trial?.active) && profile.api?.wildberries?.token &&
 				<div className='container' id='brands' >
-					<div className='list'>
-						<div className='list-item'>
-							<h1>Мои бренды</h1>
-							<small>{`${totalProducts} ${getPlural(totalProducts, 'товар', 'товара', 'товаров')}`}</small>
-						</div>
-					</div>
+					<Heading1
+						title='Мои бренды'
+						text={<small>{`${totalProducts} ${getPlural(totalProducts, 'товар', 'товара', 'товаров')}`}</small>}
+					/>
 					<BrandsList setTotalProducts={setTotalProducts} />
 				</div>
 			}

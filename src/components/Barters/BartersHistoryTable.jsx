@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Barters.css';
 import '../Store/Store.css';
+import Heading1 from './Heading/Heading1';
 
 const BartersHistoryTable = ({ barters }) => {
   const navigate = useNavigate();
@@ -36,12 +37,7 @@ const BartersHistoryTable = ({ barters }) => {
 
   return (
     <div className='container' id='barter-history' >
-      <div className='list'>
-        <div className='list-item'>
-          <h1>История</h1>
-          <Link onClick={goToHistory}>Ещё</Link>
-        </div>
-      </div>
+      <Heading1 title='История' text={<Link onClick={goToHistory}>Ещё</Link>} />
       <div className='list'>
         {bartersHistory.map((barter, index) => (
           <div

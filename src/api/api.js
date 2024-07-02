@@ -99,6 +99,11 @@ const setApiWildberries = async (token) => {
   return response.data;
 }
 
+const getReferralsByUserID = async (data) => {
+  const response = await apiClient.get(`/user/referral`);
+  return response.data;
+}
+
 const addSellerSubscription = async (data) => {
   const response = await apiClient.post(`/user/subscription/add`, data);
   return response.data;
@@ -328,6 +333,11 @@ const createYookassaPayload = async (data) => {
   return response.data;
 }
 
+const getReferralsPaymentsByUserId = async () => {
+  const response = await apiClient.get(`/payment/referral`);
+  return response.data;
+}
+
 const sendSupportMessage = async (data) => {
   const response = await apiClient.post(`/other/support`, data);
   return response.data;
@@ -370,6 +380,7 @@ export default {
   createUser,
   upsertUser,
   setApiWildberries,
+  getReferralsByUserID,
   addSellerSubscription,
   cancelSellerSubscription,
 
@@ -419,6 +430,8 @@ export default {
   getYookassaPaymentStatus,
   getYookassaConfirmationToken,
   createYookassaPayload,
+  getReferralsPaymentsByUserId,
+
   sendSupportMessage,
 
   uploadImage,

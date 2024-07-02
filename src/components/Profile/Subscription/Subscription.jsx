@@ -8,6 +8,7 @@ import { useToastManager } from '../../../hooks/useToast';
 import { useHelpers } from '../../../hooks/useHelpers';
 import PreloaderPage from '../../Preloader/PreloaderPage';
 import Header from '../../Header/Header';
+import Heading1 from '../../Barters/Heading/Heading1';
 import PopupConfirmation from '../../Popup/PopupConfirmation';
 import Link from '../../Button/Link';
 import Button from '../../Button/Button';
@@ -135,6 +136,10 @@ const Subscription = () => {
     tonConnectUI.sendTransaction(transaction)
   }
 
+  const getInfoAboutTransaction = () => {
+    const apiKey = 'AFXMUDQ7YOYKIYYAAAAE6URISAXVEU3RAR4ZXKBSGTJF47MP5AYLCG6QGHMJGEVTDVBDOGA';
+  }
+
   const cancelSubscription = async () => {
 		try {
 			const result = await cancelSellerSubscription();
@@ -163,14 +168,7 @@ const Subscription = () => {
     <div className='content-wrapper'>
       <Header />
       <div className='container' id='subscription'>
-        <div className='list'>
-          <div className='list-item'>
-            <h1 onClick={testSubscription}>Подписка</h1>
-            {isSubscribed &&
-              <Link onClick={() => setIsPopupConfirmationOpen(true)}>Отменить</Link>
-            }
-          </div>
-        </div>
+        <Heading1 title='Подписка' text={isSubscribed && <Link onClick={() => setIsPopupConfirmationOpen(true)}>Отменить</Link>} onClick={testSubscription} />
         <div className='list'>
           <div className='list-item justify-content-start gap-s'>
             <h3>Текущий статус</h3>

@@ -8,6 +8,7 @@ import { useHelpers } from '../../../hooks/useHelpers';
 import PreloaderPage from '../../Preloader/PreloaderPage';
 import PreloaderContainer from '../../Preloader/PreloaderContainer';
 import Header from '../../Header/Header';
+import Heading1 from '../Heading/Heading1';
 import SearchBar from '../../SearchBar/SearchBar';
 import Link from '../../Button/Link';
 import BartersGrid from '../BartersGrid';
@@ -86,18 +87,10 @@ const BloggerBartersPage = () => {
   const createCards = (offers, type, title) => {
     if (offers.length > 0) {
       return (
-        <div className='container' id={`offers-${type}`} >
-          <div className='list'>
-            <div className='list-item'>
-              <h1>{title}</h1>
-              <Link onClick={() => goToBartersType(type, offers)}>Ещё</Link>
-            </div>
-            {type === 'que' &&
-              <div className='list-item'>
-                <small>Завершите работу по другим бартерам, чтобы приступить к этим</small>
-              </div>
-            }
-          </div>
+        <div className='container' id={`offers-${type}`}>
+          <Heading1 title={title} text={<Link onClick={() => goToBartersType(type, offers)}>Ещё</Link>}>
+            {type === 'que' && <div className='list-item'><small>Завершите работу по другим бартерам, чтобы приступить к этим</small></div>}
+          </Heading1>
           <BartersGrid offers={offers.slice(0, 2)} />
         </div>
       );

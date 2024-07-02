@@ -8,6 +8,7 @@ import { useHelpers } from '../../hooks/useHelpers';
 import PreloaderPage from '../Preloader/PreloaderPage';
 import Header from '../Header/Header';
 import SearchBar from '../SearchBar/SearchBar';
+import Heading1 from '../Barters/Heading/Heading1';
 import Button from '../Button/Button';
 import Link from '../Button/Link';
 import ProductsGrid from './ProductsGrid';
@@ -177,11 +178,11 @@ const ProductsPage = () => {
         </div>
       }
       <div className='container' id='products'>
+        <Heading1
+          title={title}
+          text={products.length > 0 && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
+        />
         <div className='list'>
-          <div className='list-item'>
-            <h1>{title}</h1>
-            {products.length > 0 && <Link onClick={toggleEdit}>{isEditing ? 'Отменить' : 'Редактировать'}</Link>}
-          </div>
           {isEditing &&
             <div className='list-item justify-content-start gap-xs'>
               <Link onClick={toggleSelectAllProducts}>

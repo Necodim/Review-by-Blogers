@@ -5,6 +5,7 @@ import api from '../../../api/api';
 import { useUserProfile } from '../../../hooks/UserProfileContext';
 import { useToastManager } from '../../../hooks/useToast';
 import Header from '../../Header/Header';
+import Heading1 from '../../Barters/Heading/Heading1';
 import Button from '../../Button/Button';
 
 const SubscribeHasSubscription = () => {
@@ -47,14 +48,11 @@ const SubscribeHasSubscription = () => {
 		<div className='content-wrapper'>
 			<Header />
 			<div className='container' id='subscribe'>
-				<div className='list'>
-					<div className='list-item'>
-						<h1>У вас есть подписка</h1>
-					</div>
+				<Heading1 title='У вас есть подписка'>
 					<div className='list-item'>
 						<p>Следующее списание {expiredDate}</p>
 					</div>
-				</div>
+				</Heading1>
 				<div className='list'>
 					<div className='list-item'>
 						<Button className='error w-100' disabled={isBtnDisabled} onClick={cancelSubscription}>Отменить подписку</Button>

@@ -3,6 +3,7 @@ import { parsePhoneNumberFromString, formatIncompletePhoneNumber } from 'libphon
 import { useToastManager } from '../../hooks/useToast';
 import { useApi } from '../../hooks/useApi';
 import Header from '../../components/Header/Header';
+import Heading1 from '../../components/Barters/Heading/Heading1';
 import Input from '../../components/Form/Input';
 import Form from '../../components/Form/Form';
 import api from '../../api/api';
@@ -61,18 +62,15 @@ const VerificationPage = () => {
   return (
     <div className='content-wrapper'>
       <Header />
-      <div className='container' id='verification' >
-        <div className='list'>
-          <div className='list-item'>
-            <h1>Верификация пользователя</h1>
-          </div>
+      <div className='container' id='verification'>
+        <Heading1 title='Верификация пользователя'>
           <div className='list-item'>
             <div className='list gap-xs'>
               <p>Чтобы пройти базовую верификацию, отправьте свой номер телефона в&nbsp;международном формате (напр. +79161234567) и&nbsp;дождитесь звонка.</p>
               <p>Во&nbsp;всплывающем окне введите последние 4&nbsp;цифры номера телефона входящего звонка.</p>
             </div>
           </div>
-        </div>
+        </Heading1>
         <div className='list'>
           <div className='list-item'>
             <Form isDisabled={isSubmitDisabled} onSubmit={handleSubmitForm}>

@@ -4,6 +4,7 @@ import api from '../../api/api';
 import { useUserProfile } from '../../hooks/UserProfileContext';
 import PreloaderContainer from '../../components/Preloader/PreloaderContainer';
 import Header from '../../components/Header/Header';
+import Heading1 from '../../components/Barters/Heading/Heading1';
 import Input from '../../components/Form/Input';
 
 const NotificationSettingsPage = () => {
@@ -78,12 +79,8 @@ const NotificationSettingsPage = () => {
   return (
     <div className='content-wrapper'>
       <Header />
-      <div className='container' id='notification-settings' >
-        <div className='list'>
-          <div className='list-item'>
-            <h1>Настройки уведомлений</h1>
-          </div>
-        </div>
+      <div className='container' id='notification-settings'>
+        <Heading1 title='Настройки уведомлений' />
         <div className='list'>
           {settings && settings.map(setting => (
             <div className='list-item' key={setting.event_type}>

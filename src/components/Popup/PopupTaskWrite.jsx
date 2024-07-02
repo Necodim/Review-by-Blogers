@@ -5,6 +5,7 @@ import { useUserProfile } from '../../hooks/UserProfileContext.js';
 import { useToastManager } from '../../hooks/useToast.js'
 import { useHelpers } from '../../hooks/useHelpers.js';
 import Popup from './Popup.jsx';
+import Heading1 from '../Barters/Heading/Heading1.jsx';
 import Form from '../Form/Form.jsx';
 import Textarea from '../Form/Textarea.jsx';
 import Input from '../Form/Input.jsx';
@@ -113,7 +114,7 @@ const PopupTaskWrite = ({ isOpen, onClose, selectedProducts }) => {
 					<p>{`Вы редактируете ${selectedProducts.length} ${getPlural(selectedProducts.length, 'товар', 'товара', 'товаров')}. ТЗ будет одинаковым для их бартеров${hasTasks ? ', а старое ТЗ изменится' : ''}.`}</p>
 				</Note>
 			}
-			<h1>Техническое задание</h1>
+			<Heading1 title='Техническое задание' />
 			<Form
 				onSubmit={submitForm}
 				btntext='Сохранить'

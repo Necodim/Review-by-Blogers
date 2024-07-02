@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Popup from './Popup.jsx';
 import { useToastManager } from '../../hooks/useToast.js';
 import { useHelpers } from '../../hooks/useHelpers.js';
+import Heading1 from '../Barters/Heading/Heading1.jsx';
 import Quote from '../Quote/Quote.jsx';
 import Button from '../Button/Button.jsx';
 import Input from '../Form/Input.jsx';
@@ -26,10 +27,7 @@ const PopupTaskRead = ({ isOpen, onClose, barter, onEdit }) => {
 
 	return (
 		<Popup id='popup-task' isOpen={isOpen} onClose={onClose}>
-			<div className='list'>
-				<div className='list-item'>
-					<h1>Техническое задание</h1>
-				</div>
+			<Heading1 title='Техническое задание'>
 				{barter?.task &&
 					<>
 						<div className='list-item'>
@@ -40,7 +38,7 @@ const PopupTaskRead = ({ isOpen, onClose, barter, onEdit }) => {
 						</div>
 					</>
 				}
-			</div>
+			</Heading1>
 			{(barter.brand_instagram || barter.need_feedback) && 
 				<div className='list'>
 					<div className='list-item'>

@@ -4,6 +4,7 @@ import api from '../../../api/api';
 import { useToastManager } from '../../../hooks/useToast';
 import PreloaderPage from '../../Preloader/PreloaderPage';
 import Header from '../../Header/Header';
+import Heading1 from '../../Barters/Heading/Heading1';
 import ProductsGrid from '../ProductsGrid';
 
 const CategoryPage = () => {
@@ -65,11 +66,7 @@ const CategoryPage = () => {
       <div className='content-wrapper'>
         <Header />
         <div className='container' id='category-barters'>
-          <div className='list'>
-            <div className='list-item'>
-              <h1>{categoryName}</h1>
-            </div>
-          </div>
+          <Heading1 title={categoryName} />
           <ProductsGrid
             products={products}
           />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../../api/api';
 import { useToastManager } from '../../hooks/useToast';
 import Header from '../../components/Header/Header';
+import Heading1 from '../../components/Barters/Heading/Heading1';
 import Form from '../../components/Form/Form';
 import Select from '../../components/Form/Select';
 import Textarea from '../../components/Form/Textarea';
@@ -132,14 +133,11 @@ const SupportPage = () => {
     <div className='content-wrapper'>
       <Header />
       <div className='container' id='support'>
-        <div className='list'>
-          <div className='list-item'>
-            <h1>Поддержка</h1>
-          </div>
+        <Heading1 title='Поддержка'>
           <div className='list-item'>
             <small>Подробно опишите свой вопрос, предложение или проблему и&nbsp;приложите скриншот, если необходимо. Мы&nbsp;ответим в&nbsp;ближайшее время</small>
           </div>
-        </div>
+        </Heading1>
         <Form 
           onSubmit={handleSubmit}
           isDisabled={isFormDisabled || fileLoading}

@@ -10,6 +10,7 @@ import Header from '../../Header/Header';
 import PreloaderPage from '../../Preloader/PreloaderPage';
 import Link from '../../Button/Link';
 import BartersGrid from '../BartersGrid';
+import Heading1 from '../Heading/Heading1';
 
 const SellerBartersPage = () => {
   const navigate = useNavigate();
@@ -94,12 +95,7 @@ const SellerBartersPage = () => {
     if (offers.length > 0) {
       return (
         <div className='container' id={`offers-${type}`} >
-          <div className='list'>
-            <div className='list-item'>
-              <h1>{title}</h1>
-              <Link onClick={() => goToBartersType(type, offers)}>Ещё</Link>
-            </div>
-          </div>
+          <Heading1 title={title} text={<Link onClick={() => goToBartersType(type, offers)}>Ещё</Link>} />
           <BartersGrid offers={offers.slice(0, 2)} />
         </div>
       );

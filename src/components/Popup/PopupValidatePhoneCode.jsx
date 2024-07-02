@@ -4,6 +4,7 @@ import api from '../../api/api.js';
 import { useUserProfile } from '../../hooks/UserProfileContext.js';
 import { useToastManager } from '../../hooks/useToast.js'
 import Popup from './Popup.jsx';
+import Heading1 from '../Barters/Heading/Heading1.jsx';
 import Form from '../Form/Form.jsx';
 import Input from '../Form/Input.jsx';
 
@@ -52,7 +53,7 @@ const PopupValidatePhoneCode = ({ isOpen, onClose }) => {
 
 	return (
 		<Popup id='popup-validate-phone-code' isOpen={isOpen} onClose={onClose}>
-			<h1>Проверка номера телефона</h1>
+			<Heading1 title='Проверка номера телефона' />
 			<Form
 				onSubmit={submitForm}
 				btntext='Проверить'

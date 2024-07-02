@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useToastManager } from '../../hooks/useToast';
 import Popup from "./Popup"
+import Heading1 from '../Barters/Heading/Heading1';
 import Link from '../Button/Link';
 import Form from '../Form/Form';
 import Input from '../Form/Input';
@@ -134,11 +135,7 @@ const PopupApi = (props) => {
 
 	return (
 		<Popup id={props.id} isOpen={props.isOpen} onClose={props.onClose} {...props}>
-			<div className='list'>
-				<div className='list-item'>
-					<h1>API-ключ</h1>
-					<Link onClick={toggleVisibility}>Где взять?</Link>
-				</div>
+			<Heading1 title='API-ключ' text={<Link onClick={toggleVisibility}>Где взять?</Link>}>
 				<animated.div className='list-item' style={{ ...animation, display }}>
 					<div ref={ref} className='hint-wrapper list'>
 						<div className='list-item vertical'>
@@ -159,7 +156,7 @@ const PopupApi = (props) => {
 						</div>
 					</div>
 				</animated.div>
-			</div>
+			</Heading1>
 			<Form className='form-wrapper' btnicon='save' btntext='Сохранить' isDisabled={!isValid} onSubmit={handleSubmit}>
 				<Input
 					id='input-token'

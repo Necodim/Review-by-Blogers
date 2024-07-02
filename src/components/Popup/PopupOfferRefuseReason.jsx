@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../api/api.js';
 import { useToastManager } from '../../hooks/useToast.js'
 import Popup from './Popup.jsx';
+import Heading1 from '../Barters/Heading/Heading1.jsx';
 import Form from '../Form/Form.jsx';
 import Textarea from '../Form/Textarea.jsx';
 
@@ -56,7 +57,7 @@ const PopupOfferRefuseReason = ({ isOpen, onClose, offer }) => {
 
 	return (
 		<Popup id='popup-reason' isOpen={isOpen} onClose={onClose}>
-			<h1>Причина отказа</h1>
+			<Heading1 title='Причина отказа' />
 			<div>Пожалуйста, расскажите, почему вы решили отказаться от предложения о бартере? Это поможет нам лучше понять потребности селлеров, а блогер сможет исправить недочёты, если они касаются его самого.</div>
 			<Form onSubmit={submitForm} btntext={btnSubmit}>
 				<Textarea
